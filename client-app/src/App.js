@@ -1,11 +1,15 @@
 import React from "react";
-import Navbar from "./components/views/Navbar/Navbar";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import LandingPage from "./components/views/LadingPage/LadingPage";
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={LandingPage} />
+      </Switch>
+    </Router>
   );
 }
 
