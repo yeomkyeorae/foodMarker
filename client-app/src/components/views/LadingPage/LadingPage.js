@@ -12,17 +12,50 @@ const Section = styled.section`
   background-size: cover;
 `;
 
+const Div = styled.div`
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+  max-width: none;
+`;
+
+const Content = styled.div`
+  max-width: 500px;
+  margin: auto;
+  text-align: center;
+`;
+
+const ContentH1 = styled.h1`
+  font-family: "Century Gothic", sans-serif;
+  color: #f9f3f4;
+  font-size: 500%;
+  text-shadow: 0 0 300px #000;
+`;
+
+const Btn = styled.a`
+  border-radius: 9px;
+  color: #f9f3f4;
+  text-decoration: none;
+  font-family: "Century Gothic", sans-serif;
+  border: 3px solid;
+  padding: 7px 13px;
+  font-weight: bold;
+  &:hover {
+    color: #2196f3;
+  }
+`;
+
 function LadingPage() {
   useEffect(() => {}, []);
 
   return (
     <Section>
-      <div className="in1">
-        <div className="content">
-          <h2>Food Marker</h2>
-          <a href="#">GET STARTED</a>
-        </div>
-      </div>
+      <Div className="in1">
+        <Content className="content">
+          <ContentH1>Food Marker</ContentH1>
+          <Btn href="#">GET STARTED</Btn>
+        </Content>
+      </Div>
     </Section>
   );
 }
