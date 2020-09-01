@@ -29,8 +29,8 @@ const userSchema = mongoose.Schema({
   }
 });
 
+// 비밀번호 암호화
 userSchema.pre("save", function(next) {
-  // 비밀번호 암호화
   let user = this;
 
   if (user.isModified("password")) {
@@ -43,3 +43,23 @@ userSchema.pre("save", function(next) {
     next();
   }
 });
+
+// plain 비밀번호와 암호화된 비밀번호를 비교해 같은지 체크
+userSchema.methods.comparePassword = function(plainPassword, cb) {
+  bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
+    if (err) return cb(err);
+    cb(null, isMatch);
+  });
+};
+
+// jsonwebtoken을 활용해서 token 생성하기
+userSchema.methods.generateToken = function(cb) {
+  let user = this;
+
+  let token = jwt.sign(user._id.toHexString(), "thisIsSecretToken");
+  user.token = token;
+  user.save(function(err, user) {
+    if (err) return cb(err);
+    cb(null, user);
+  });
+};
