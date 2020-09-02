@@ -28,7 +28,22 @@ app.get("/api/hello", (req, res) => {
   res.send("hello");
 });
 
-// signup 생략
+// singup
+app.post("/api/users/signup", (req, res) => {
+  // 회원가입할 떄 필요한 정보들을 client에서 가져오면 그것들을 DB에 넣음
+  const user = User(req.body);
+  user.save((err, userInfo) => {
+    if (err)
+      return res.json({
+        success: false,
+        err
+      });
+    return res.status(200).json({
+      success: true
+    });
+  });
+});
+
 // login
 app.post("/api/users/login", (req, res) => {
   // 1. 요청된 이메일이 데이터베이스에 있는지 찾는다.
