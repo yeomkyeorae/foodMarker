@@ -13,6 +13,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+mongoose
+  .connect(config.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  })
+  .then(() => console.log("mongoDB connected!!!"))
+  .catch(err => console.log(err));
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${[port]}`);
 });
