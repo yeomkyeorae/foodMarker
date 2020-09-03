@@ -53,7 +53,7 @@ function LadingPage() {
       <Div className="in1">
         <Content className="content">
           <ContentH1>Food Marker</ContentH1>
-          <Btn href="#">GET STARTED</Btn>
+          <Btn href="/loginSignup">GET STARTED</Btn>
         </Content>
       </Div>
     </Section>
