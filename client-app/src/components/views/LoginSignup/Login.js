@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useDispath } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginUser } from "../../../_actions/user_action";
 import { withRouter } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-function Login() {
+function Login(props) {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const dispatch = useDispatch();
@@ -35,11 +35,11 @@ function Login() {
 
   return (
     <div>
-      <form onSubmit={}>
+      <form onSubmit={onSubmitHandler}>
         <label>Email</label>
-        <input type="email" value={Email} onChange={} />
+        <input type="email" value={Email} onChange={onEmailHandler} />
         <label>Password</label>
-        <input type="password" value={Password} onChange={} />
+        <input type="password" value={Password} onChange={onPasswordHandler} />
         <br />
         <button type="submit">로그인</button>
       </form>
