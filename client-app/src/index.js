@@ -6,7 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 
 // Redux
 import { applyMiddleware, createStore } from "redux";
-import { Provider } from "react-router";
+import { Provider } from "react-redux";
 import promiseMiddleware from "redux-promise";
 import ReduxThunk from "redux-thunk";
 import Reducer from "./_reducers";
