@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styled, { css } from "styled-components";
 import Login from "./Login";
+import Signup from "./Signup";
 
 const Section = styled.section`
   width: 100%;
@@ -20,7 +21,7 @@ function LoginSignup() {
     <Section>
       <div className="in1">
         <h1 href="#">hhhh</h1>
-        <Login />
+        <Signup />
       </div>
     </Section>
   );
