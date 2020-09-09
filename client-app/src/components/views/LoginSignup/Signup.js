@@ -4,7 +4,7 @@ import { registerUser } from "../../../_actions/user_action";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
-const LoginBox = styled.div`
+const SignupBox = styled.div`
   width: 280px;
   position: absolute;
   top: 50%;
@@ -13,7 +13,7 @@ const LoginBox = styled.div`
   color: white;
 `;
 
-const LoginBoxH1 = styled.h1`
+const SignupBoxH1 = styled.h1`
   float: left;
   font-size: 40px;
   border-bottom: 6px solid #4caf50;
@@ -98,8 +98,8 @@ function Signup(props) {
   };
 
   return (
-    <LoginBox>
-      <LoginBoxH1>회원가입</LoginBoxH1>
+    <SignupBox>
+      <SignupBoxH1>회원가입</SignupBoxH1>
       <form onSubmit={onSubmitHandler} style={{ width: "90%", height: "50%" }}>
         <TextBox>
           <Input
@@ -135,7 +135,7 @@ function Signup(props) {
         </TextBox>
         <Btn type="button">회원가입</Btn>
       </form>
-    </LoginBox>
+    </SignupBox>
   );
 }
 
