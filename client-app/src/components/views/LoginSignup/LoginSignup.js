@@ -39,7 +39,7 @@ function LoginSignup() {
   return (
     <Section>
       <button onClick={onClickHandler}>{Text}</button>
-      <div className="in1">{loginOrSignup}</div>
+      <div>{loginOrSignup}</div>
     </Section>
   );
 }

@@ -50,7 +50,7 @@ function LadingPage() {
 
   return (
     <Section>
-      <Div className="in1">
+      <Div>
         <Content className="content">
           <ContentH1>Food Marker</ContentH1>
           <Btn href="/loginSignup">GET STARTED</Btn>
