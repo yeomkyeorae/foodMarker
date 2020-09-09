@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import Login from "./Login";
 import Signup from "./Signup";
@@ -17,12 +17,22 @@ const Section = styled.section`
 function LoginSignup() {
   useEffect(() => {}, []);
 
+  const [Toggle, setToggle] = useState(true);
+
+  const onClickHandler = () => {
+    setToggle(!Toggle);
+  };
+  let signupOrLogin;
+  if (Toggle) {
+    signupOrLogin = <Login />;
+  } else {
+    signupOrLogin = <Signup />;
+  }
+
   return (
     <Section>
-      <div className="in1">
-        <h1 href="#">hhhh</h1>
-        <Signup />
-      </div>
+      <button onClick={onClickHandler}>hahaha</button>
+      <div className="in1">{signupOrLogin}</div>
     </Section>
   );
 }
