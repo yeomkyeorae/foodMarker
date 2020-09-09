@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../../_actions/user_action";
 import { withRouter } from "react-router-dom";
+import styled from "styled-components";
 
 function Signup(props) {
+  const LoginBox = styled.div``;
+
+  const TextBox = styled.div``;
+
+  const Btn = styled.button``;
+
   const [Email, setEmail] = useState("");
   const [Name, setName] = useState("");
   const [Password, setPassword] = useState("");
@@ -49,24 +56,43 @@ function Signup(props) {
   };
 
   return (
-    <div>
+    <LoginBox>
       <form onSubmit={onSubmitHandler}>
-        <label>Email</label>
-        <input type="email" value={Email} onChange={onEmailHandler} />
-        <label>Name</label>
-        <input type="text" value={Name} onChange={onNameHandler} />
-        <label>Password</label>
-        <input type="password" value={Password} onChange={onPasswordHandler} />
-        <label>Confirm Password</label>
-        <input
-          type="password"
-          value={ConfirmPassword}
-          onChange={onConfirmedPassword}
-        />
-        <br />
-        <button type="submit">Sign Up</button>
+        <TextBox>
+          <input
+            type="email"
+            value={Email}
+            placeholder="email"
+            onChange={onEmailHandler}
+          />
+        </TextBox>
+        <TextBox>
+          <input
+            type="text"
+            value={Name}
+            placeholder="name"
+            onChange={onNameHandler}
+          />
+        </TextBox>
+        <TextBox>
+          <input
+            type="password"
+            value={Password}
+            placeholder="password"
+            onChange={onPasswordHandler}
+          />
+        </TextBox>
+        <TextBox>
+          <input
+            type="password"
+            value={ConfirmPassword}
+            placeholder="confirm password"
+            onChange={onConfirmedPassword}
+          />
+        </TextBox>
+        <Btn type="button">회원가입</Btn>
       </form>
-    </div>
+    </LoginBox>
   );
 }
 

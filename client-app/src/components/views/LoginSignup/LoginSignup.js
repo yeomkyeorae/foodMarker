@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import Login from "./Login";
 import Signup from "./Signup";
 
@@ -18,9 +18,15 @@ function LoginSignup() {
   useEffect(() => {}, []);
 
   const [Toggle, setToggle] = useState(true);
+  const [Text, setText] = useState("로그인");
 
   const onClickHandler = () => {
     setToggle(!Toggle);
+    if (Text === "회원가입") {
+      setText("로그인");
+    } else {
+      setText("회원가입");
+    }
   };
 
   let loginOrSignup;
@@ -32,7 +38,7 @@ function LoginSignup() {
 
   return (
     <Section>
-      <button onClick={onClickHandler}>hahaha</button>
+      <button onClick={onClickHandler}>{Text}</button>
       <div className="in1">{loginOrSignup}</div>
     </Section>
   );
