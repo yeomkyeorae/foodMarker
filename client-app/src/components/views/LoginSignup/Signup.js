@@ -22,7 +22,7 @@ const LoginBoxH1 = styled.h1`
 `;
 
 const TextBox = styled.div`
-  width: 50%;
+  width: 100%;
   overflow: hidden;
   font-size: 20px;
   padding: 8px 0;
@@ -44,7 +44,7 @@ const Input = styled.input`
 const Btn = styled.button`
   width: 100%;
   background: none;
-  border: 20px solid #4caf50;
+  border: 2px solid #4caf50;
   color: white;
   padding: 5px;
   font-size: 18px;
@@ -100,7 +100,7 @@ function Signup(props) {
   return (
     <LoginBox>
       <LoginBoxH1>회원가입</LoginBoxH1>
-      <form onSubmit={onSubmitHandler}>
+      <form onSubmit={onSubmitHandler} style={{ width: "90%", height: "50%" }}>
         <TextBox>
           <Input
             type="email"
