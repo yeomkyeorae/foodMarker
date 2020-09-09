@@ -22,17 +22,18 @@ function LoginSignup() {
   const onClickHandler = () => {
     setToggle(!Toggle);
   };
-  let signupOrLogin;
+
+  let loginOrSignup;
   if (Toggle) {
-    signupOrLogin = <Login />;
+    loginOrSignup = <Login />;
   } else {
-    signupOrLogin = <Signup />;
+    loginOrSignup = <Signup />;
   }
 
   return (
     <Section>
       <button onClick={onClickHandler}>hahaha</button>
-      <div className="in1">{signupOrLogin}</div>
+      <div className="in1">{loginOrSignup}</div>
     </Section>
   );
 }
