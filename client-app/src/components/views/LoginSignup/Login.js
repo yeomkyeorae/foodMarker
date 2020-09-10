@@ -101,7 +101,7 @@ function Login(props) {
             onChange={onPasswordHandler}
           />
         </TextBox>
-        <Btn type="button">로그인</Btn>
+        <Btn type="submit">로그인</Btn>
       </form>
     </LoginBox>
   );

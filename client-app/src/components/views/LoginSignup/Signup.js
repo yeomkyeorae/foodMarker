@@ -133,7 +133,7 @@ function Signup(props) {
             onChange={onConfirmedPassword}
           />
         </TextBox>
-        <Btn type="button">회원가입</Btn>
+        <Btn type="submit">회원가입</Btn>
       </form>
     </SignupBox>
   );

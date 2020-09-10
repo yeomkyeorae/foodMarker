@@ -4,13 +4,14 @@ import "./App.css";
 
 import LandingPage from "./components/views/LadingPage/LadingPage";
 import LoginSignup from "./components/views/LoginSignup/LoginSignup";
+import Auth from "./hoc/auth";
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={LandingPage} />
-        <Route exact path="/loginSignup" component={LoginSignup} />
+        <Route exact path="/" component={Auth(LandingPage, null)} />
+        <Route exact path="/loginSignup" component={Auth(LoginSignup, false)} />
       </Switch>
     </Router>
   );

@@ -18,7 +18,7 @@ function LoginSignup() {
   useEffect(() => {}, []);
 
   const [Toggle, setToggle] = useState(true);
-  const [Text, setText] = useState("로그인");
+  const [Text, setText] = useState("회원가입");
 
   const onClickHandler = () => {
     setToggle(!Toggle);
