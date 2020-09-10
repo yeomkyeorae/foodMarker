@@ -31,7 +31,6 @@ app.get("/api/hello", (req, res) => {
 // singup
 app.post("/api/users/signup", (req, res) => {
   // 회원가입할 떄 필요한 정보들을 client에서 가져오면 그것들을 DB에 넣음
-  console.log(3);
   const user = User(req.body);
   user.save((err, userInfo) => {
     if (err)

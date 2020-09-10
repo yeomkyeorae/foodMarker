@@ -21,7 +21,6 @@ export default function(SpecificComponent, option, adminRoute = null) {
           }
         } else {
           // 로그인한 상태
-          console.log(123123123123);
           props.history.push("/");
         }
       });
