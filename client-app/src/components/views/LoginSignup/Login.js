@@ -73,7 +73,7 @@ function Login(props) {
     };
     dispatch(loginUser(body)).then(response => {
       if (response.payload.loginSuccess) {
-        props.history.push("/");
+        props.history.push("/main");
       } else {
         console.log(response);
         alert("error");

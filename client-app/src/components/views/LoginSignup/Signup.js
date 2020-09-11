@@ -90,7 +90,7 @@ function Signup(props) {
 
     dispatch(registerUser(body)).then(response => {
       if (response.payload.success) {
-        props.history.push("/");
+        props.history.push("/loginSignup");
       } else {
         alert("failed to sign up");
       }
