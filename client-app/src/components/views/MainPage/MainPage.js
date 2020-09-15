@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import RestaurantList from "./RestaurantList";
+
 const { kakao } = window;
 
 function MainPage(props) {
@@ -28,6 +30,7 @@ function MainPage(props) {
   return (
     <div>
       <button onClick={onClickHandler}>로그아웃</button>
+      <RestaurantList />
       <div id={`map`} style={{ width: "500px", height: "400px" }}></div>
     </div>
   );
