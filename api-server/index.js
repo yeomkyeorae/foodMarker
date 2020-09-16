@@ -100,6 +100,21 @@ app.get("/api/users/logout", auth, (req, res) => {
   });
 });
 
+// get my restaurants
+app.get('/api/restaurant', (req, res) => {
+  console.log(123123123);
+})
+
+// create my restaurant
+app.post('/api/restaurant', (req, res) => {
+
+})
+
+// delete my restaurant
+app.delete('/api/restaurant', (req, res) => {
+  
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${[port]}`);
 });
