@@ -3,6 +3,7 @@ const app = express();
 const port = 5000;
 
 const { User } = require("./models/User");
+const { Restaurant } = require('./models/Restaurant');
 const { auth } = require("./middleware/auth");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -107,7 +108,17 @@ app.get('/api/restaurant', (req, res) => {
 
 // create my restaurant
 app.post('/api/restaurant', (req, res) => {
-
+  const restaurant = Restaurant(req.body);
+  restaurant.save((err, restaurantInfo) => {
+    if (err)
+      return res.json({
+        success: false,
+        err
+      });
+    return res.status(200).json({
+      success: true
+    });
+  });
 })
 
 // delete my restaurant
