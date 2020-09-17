@@ -102,8 +102,11 @@ app.get("/api/users/logout", auth, (req, res) => {
 });
 
 // get my restaurants
-app.get('/api/restaurant', (req, res) => {
-  console.log(123123123);
+app.post('/api/restaurants', (req, res) => {
+  const restaurants = Restaurant.find({ visitor: req.body.id}, (err, restaurants) => {
+    if(err) return res.json({ success: false, err});
+    return res.json(restaurants);
+  });
 })
 
 // create my restaurant
