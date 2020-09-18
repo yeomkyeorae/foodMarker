@@ -126,7 +126,17 @@ app.post('/api/restaurant', (req, res) => {
 
 // delete my restaurant
 app.delete('/api/restaurant', (req, res) => {
-  
+  const restaurant = Restaurant(req.query.id);
+  restaurant.remove((err, restaurantInfo) => {
+    if(err)
+      return res.json({
+        success: false,
+        err
+      });
+    return res.status(200).json({
+      success: true
+    });
+  });
 })
 
 app.listen(port, () => {
