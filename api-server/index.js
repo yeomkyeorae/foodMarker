@@ -113,7 +113,7 @@ app.post('/api/restaurants', (req, res) => {
 app.post('/api/restaurant', (req, res) => {
   const restaurant = Restaurant(req.body);
   restaurant.save((err, restaurantInfo) => {
-    if (err)
+    if(err)
       return res.json({
         success: false,
         err
@@ -126,8 +126,8 @@ app.post('/api/restaurant', (req, res) => {
 
 // delete my restaurant
 app.delete('/api/restaurant', (req, res) => {
-  const restaurant = Restaurant(req.query.id);
-  restaurant.remove((err, restaurantInfo) => {
+  console.log(req.query);
+  Restaurant.findOneAndRemove({_id: req.query._id}, (err, restaurantInfo) => {
     if(err)
       return res.json({
         success: false,
