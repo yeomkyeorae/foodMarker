@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../../_actions/user_action";
 import { withRouter } from "react-router-dom";
 import RestaurantList from "./RestaurantList";
 
@@ -7,6 +8,8 @@ const { kakao } = window;
 
 function MainPage(props) {
   const mapContainer = useRef();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     kakao.maps.load(() => {
       let container = document.getElementById("map");
@@ -18,10 +21,11 @@ function MainPage(props) {
   }, []);
 
   const onClickHandler = () => {
-    axios.get("/api/users/logout").then(response => {
-      if (response.data.success) {
+    dispatch(logoutUser()).then(response => {
+      if (response.payload.success) {
         props.history.push("/loginSignup");
       } else {
+        console.log(response);
         alert("failed to logout");
       }
     });
