@@ -1,16 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { readRestaurants } from "../../../_actions/restaurant_action";
 
-function RestaurantList() {
-  useEffect(() => {}, []);
+function RestaurantList(props) {
+  const dispatch = useDispatch();
+  const [restaurants, setRestaurants] = useState([]);
+  const body = {
+    "id": "5f5a349a5a348908bb89e550"
+  }
+  useEffect(() => {
+    dispatch(readRestaurants(body)).then(response => {
+      console.log(response.payload)
+    });
+  });
 
   return (
     <div>
-      <ul>
-        <li>우래옥</li>
-        <li>애플하우스</li>
-        <li>진짜해장국</li>
-      </ul>
+      {restaurants}
     </div>
   );
 }
