@@ -73,7 +73,10 @@ function Login(props) {
     };
     dispatch(loginUser(body)).then(response => {
       if (response.payload.loginSuccess) {
-        props.history.push("/main");
+        props.history.push({
+          pathname: "/main",
+          state: { userId: response.payload.userId }
+        });
       } else {
         console.log(response);
         alert("error");
