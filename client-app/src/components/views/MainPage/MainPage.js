@@ -35,7 +35,7 @@ function MainPage(props) {
   return (
     <div>
       <button onClick={onClickHandler}>로그아웃</button>
-      <RestaurantList userId={userId}/>
+      <RestaurantList userId={userId} />
       <div id={`map`} style={{ width: "500px", height: "400px" }}></div>
     </div>
   );
