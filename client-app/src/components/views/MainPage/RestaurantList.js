@@ -4,6 +4,12 @@ import { useDispatch } from "react-redux";
 import { readRestaurants } from "../../../_actions/restaurant_action";
 import styled from "styled-components";
 
+const Restaurants = styled.div`
+  width: 300px;
+  height: 400px;
+  display: inline-block;
+`;
+
 const List = styled.ol`
   list-style: none;
   width: 600px;
@@ -41,7 +47,7 @@ function RestaurantList(props) {
   }, [restaurants[0]._id]);
 
   return (
-    <div>
+    <Restaurants>
       <List>
         {restaurants.map(restaurant => (
           <Item key={restaurant._id}>
@@ -55,7 +61,7 @@ function RestaurantList(props) {
           </Item>
         ))}
       </List>
-    </div>
+    </Restaurants>
   );
 }
 
