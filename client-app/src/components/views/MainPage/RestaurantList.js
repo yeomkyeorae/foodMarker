@@ -8,6 +8,7 @@ const Restaurants = styled.div`
   width: 300px;
   height: 400px;
   display: inline-block;
+  overflow-y: scroll;
 `;
 
 const List = styled.ol`
