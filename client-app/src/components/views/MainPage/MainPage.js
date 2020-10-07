@@ -34,7 +34,9 @@ function MainPage(props) {
 
   return (
     <div>
-      <button onClick={onClickHandler}>로그아웃</button>
+      <button onClick={onClickHandler} style={{ float: "left" }}>
+        로그아웃
+      </button>
       <RestaurantList userId={userId} />
       <div
         id={`map`}

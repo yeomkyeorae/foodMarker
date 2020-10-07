@@ -51,14 +51,11 @@ function RestaurantList(props) {
     <Restaurants>
       <List>
         {restaurants.map(restaurant => (
-          <Item key={restaurant._id}>
-            <HeadLine>{restaurant.name}</HeadLine>{" "}
-            <span>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Veritatis, distinctio ad corporis, laboriosam unde provident,
-              architecto tenetur ea odio debitis delectus explicabo eum
-              obcaecati vitae facere iusto laborum consequuntur neque.
-            </span>
+          <Item key={restaurant._id} onClick={() => console.log(123123)}>
+            <HeadLine>{restaurant.name}</HeadLine>
+            <span>{restaurant.date}</span> <br />
+            <hr />
+            <span>{restaurant.address}</span>
           </Item>
         ))}
       </List>
