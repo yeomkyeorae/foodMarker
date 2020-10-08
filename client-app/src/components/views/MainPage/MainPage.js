@@ -47,7 +47,7 @@ function MainPage(props) {
         }
       });
     });
-  }, []);
+  });
 
   const onClickHandler = () => {
     dispatch(logoutUser()).then(response => {
