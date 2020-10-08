@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../_actions/user_action";
 import { withRouter } from "react-router-dom";
@@ -10,6 +10,7 @@ function MainPage(props) {
   const mapContainer = useRef();
   const dispatch = useDispatch();
   const userId = props.location.state.userId;
+  const [address, setAddress] = useState("서울 중구 창경궁로 62-29");
 
   useEffect(() => {
     kakao.maps.load(() => {
@@ -23,10 +24,7 @@ function MainPage(props) {
 
       // 주소로 좌표를 검색합니다
       // 서울 중구 창경궁로 62-29
-      geocoder.addressSearch("서울 중구 창경궁로 62-29", function(
-        result,
-        status
-      ) {
+      geocoder.addressSearch(address, function(result, status) {
         // 정상적으로 검색이 완료됐으면
         if (status === kakao.maps.services.Status.OK) {
           let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -67,7 +65,7 @@ function MainPage(props) {
       <button onClick={onClickHandler} style={{ float: "left" }}>
         로그아웃
       </button>
-      <RestaurantList userId={userId} />
+      <RestaurantList userId={userId} setAddress={setAddress} />
       <div
         id={`map`}
         style={{ width: "500px", height: "400px", display: "inline-block" }}
