@@ -40,8 +40,9 @@ function RestaurantList(props) {
     id: props.userId
   };
 
-  const clickRestaurant = restaurantName => {
-    props.setAddress(restaurantName);
+  const clickRestaurant = (restaurantAddress, restaurantName) => {
+    props.setAddress(restaurantAddress);
+    props.setRestaurantName(restaurantName);
   };
 
   useEffect(() => {
@@ -56,7 +57,7 @@ function RestaurantList(props) {
         {restaurants.map(restaurant => (
           <Item
             key={restaurant._id}
-            onClick={() => clickRestaurant(restaurant.address)}
+            onClick={() => clickRestaurant(restaurant.address, restaurant.name)}
           >
             <HeadLine>{restaurant.name}</HeadLine>
             <span>{restaurant.date}</span> <br />

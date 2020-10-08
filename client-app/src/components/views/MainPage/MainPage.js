@@ -11,6 +11,7 @@ function MainPage(props) {
   const dispatch = useDispatch();
   const userId = props.location.state.userId;
   const [address, setAddress] = useState("서울 중구 창경궁로 62-29");
+  const [restaurantName, setRestaurantName] = useState("우래옥");
 
   useEffect(() => {
     kakao.maps.load(() => {
@@ -38,7 +39,9 @@ function MainPage(props) {
           // 인포윈도우로 장소에 대한 설명을 표시합니다
           let infowindow = new kakao.maps.InfoWindow({
             content:
-              '<div style="width:150px;text-align:center;padding:6px 0;">우래옥</div>'
+              '<div style="width:150px;text-align:center;padding:6px 0;">' +
+              restaurantName +
+              "</div>"
           });
           infowindow.open(map, marker);
 
@@ -65,7 +68,11 @@ function MainPage(props) {
       <button onClick={onClickHandler} style={{ float: "left" }}>
         로그아웃
       </button>
-      <RestaurantList userId={userId} setAddress={setAddress} />
+      <RestaurantList
+        userId={userId}
+        setAddress={setAddress}
+        setRestaurantName={setRestaurantName}
+      />
       <div
         id={`map`}
         style={{ width: "500px", height: "400px", display: "inline-block" }}
