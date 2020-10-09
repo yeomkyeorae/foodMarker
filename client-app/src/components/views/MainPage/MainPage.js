@@ -63,10 +63,20 @@ function MainPage(props) {
     });
   };
 
+  const moveToEnroll = () => {
+    props.history.push("/main/enroll");
+  };
+
   return (
     <div>
       <button onClick={onClickHandler} style={{ float: "left" }}>
         로그아웃
+      </button>
+      <button
+        onClick={moveToEnroll}
+        style={{ float: "left", marginLeft: "20px" }}
+      >
+        등록하기
       </button>
       <RestaurantList
         userId={userId}
