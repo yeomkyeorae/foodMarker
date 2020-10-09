@@ -4,3 +4,4 @@ export const REGISTER_USER = "register_user";
 export const AUTH_USER = "auth_user";
 
 export const READ_RESTAURANTS = "read_restaurants";
+export const REGISTER_RESTAURANT = "register_restaurant";
