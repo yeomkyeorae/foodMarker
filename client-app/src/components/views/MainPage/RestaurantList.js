@@ -57,8 +57,6 @@ function RestaurantList(props) {
   const deleteHandler = restaurantId => {
     dispatch(deleteRestaurant(restaurantId)).then(response => {
       if (response.payload.success) {
-        props.setAddress(defaultName);
-        props.setRestaurantName(defaultAddress);
         setRestaurants(
           restaurants.filter(restaurant => restaurant._id !== restaurantId)
         );
