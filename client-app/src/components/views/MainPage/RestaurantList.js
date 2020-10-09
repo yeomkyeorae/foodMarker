@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { readRestaurants } from "../../../_actions/restaurant_action";
+import {
+  readRestaurants,
+  deleteRestaurant
+} from "../../../_actions/restaurant_action";
 import styled from "styled-components";
 
 const Restaurants = styled.div`
@@ -49,7 +52,16 @@ function RestaurantList(props) {
     dispatch(readRestaurants(body)).then(response => {
       setRestaurants(response.payload);
     });
-  }, [restaurants[0]._id]);
+  }, [JSON.stringify(restaurants)]);
+
+  const deleteHandler = restaurantId => {
+    dispatch(deleteRestaurant(restaurantId)).then(response => {
+      setRestaurants(
+        restaurants.filter(restaurant => restaurant._id !== restaurantId)
+      );
+      console.log(restaurants);
+    });
+  };
 
   return (
     <Restaurants>
@@ -60,6 +72,7 @@ function RestaurantList(props) {
             onClick={() => clickRestaurant(restaurant.address, restaurant.name)}
           >
             <HeadLine>{restaurant.name}</HeadLine>
+            <button onClick={() => deleteHandler(restaurant._id)}>삭제</button>
             <span>{restaurant.date}</span> <br />
             <hr />
             <span>{restaurant.address}</span>

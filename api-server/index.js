@@ -3,7 +3,7 @@ const app = express();
 const port = 5000;
 
 const { User } = require("./models/User");
-const { Restaurant } = require('./models/Restaurant');
+const { Restaurant } = require("./models/Restaurant");
 const { auth } = require("./middleware/auth");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -102,18 +102,21 @@ app.get("/api/users/logout", auth, (req, res) => {
 });
 
 // get my restaurants
-app.post('/api/restaurants', (req, res) => {
-  const restaurants = Restaurant.find({ visitor: req.body.id}, (err, restaurants) => {
-    if(err) return res.json({ success: false, err});
-    return res.json(restaurants);
-  });
-})
+app.post("/api/restaurants", (req, res) => {
+  const restaurants = Restaurant.find(
+    { visitor: req.body.id },
+    (err, restaurants) => {
+      if (err) return res.json({ success: false, err });
+      return res.json(restaurants);
+    }
+  );
+});
 
 // create my restaurant
-app.post('/api/restaurant', (req, res) => {
+app.post("/api/restaurant", (req, res) => {
   const restaurant = Restaurant(req.body);
   restaurant.save((err, restaurantInfo) => {
-    if(err)
+    if (err)
       return res.json({
         success: false,
         err
@@ -122,13 +125,12 @@ app.post('/api/restaurant', (req, res) => {
       success: true
     });
   });
-})
+});
 
 // delete my restaurant
-app.delete('/api/restaurant', (req, res) => {
-  console.log(req.query);
-  Restaurant.findOneAndRemove({_id: req.query._id}, (err, restaurantInfo) => {
-    if(err)
+app.delete("/api/restaurant", (req, res) => {
+  Restaurant.findOneAndRemove({ _id: req.query._id }, (err, restaurantInfo) => {
+    if (err)
       return res.json({
         success: false,
         err
@@ -137,7 +139,7 @@ app.delete('/api/restaurant', (req, res) => {
       success: true
     });
   });
-})
+});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${[port]}`);
