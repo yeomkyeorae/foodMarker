@@ -56,10 +56,13 @@ function RestaurantList(props) {
 
   const deleteHandler = restaurantId => {
     dispatch(deleteRestaurant(restaurantId)).then(response => {
-      setRestaurants(
-        restaurants.filter(restaurant => restaurant._id !== restaurantId)
-      );
-      console.log(restaurants);
+      if (response.payload.success) {
+        props.setAddress(defaultName);
+        props.setRestaurantName(defaultAddress);
+        setRestaurants(
+          restaurants.filter(restaurant => restaurant._id !== restaurantId)
+        );
+      }
     });
   };
 
