@@ -12,8 +12,10 @@ function EnrollRestaurant(props) {
   const userId = props.userId;
 
   const [SearchName, setSearchName] = useState("이태원 맛집");
+  const [Toggle, setToggle] = useState(true);
 
   useEffect(() => {
+    console.log("changed");
     kakao.maps.load(() => {
       // 마커를 담을 배열입니다
       var markers = [];
@@ -235,7 +237,7 @@ function EnrollRestaurant(props) {
         }
       }
     });
-  });
+  }, [Toggle]);
 
   const onNameHandler = e => {
     setName(e.currentTarget.value);
@@ -251,6 +253,10 @@ function EnrollRestaurant(props) {
 
   const onChangeSearchNameHandler = e => {
     setSearchName(e.currentTarget.value);
+  };
+
+  const toggleHandler = () => {
+    setToggle(!Toggle);
   };
 
   const dispatch = useDispatch();
@@ -291,17 +297,17 @@ function EnrollRestaurant(props) {
         <div id={`menu_wrap`} className="bg_white">
           <div className="option">
             <div>
-              <form onSubmit="searchPlaces(); return false;">
-                키워드 :{" "}
-                <input
-                  type="text"
-                  value={SearchName}
-                  onChange={onChangeSearchNameHandler}
-                  id={`keyword`}
-                  size="15"
-                />
-                <button type="submit">검색하기</button>
-              </form>
+              키워드 :{" "}
+              <input
+                type="text"
+                value={SearchName}
+                onChange={onChangeSearchNameHandler}
+                id={`keyword`}
+                size="15"
+              />
+              <button onClick={toggleHandler} type="submit">
+                검색하기
+              </button>
             </div>
           </div>
           <hr />
