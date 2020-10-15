@@ -328,6 +328,7 @@ function EnrollRestaurant(props) {
             value={Name}
             placeholder="식당 이름"
             onChange={onNameHandler}
+            readOnly
           />
         </div>
         <div>
@@ -336,6 +337,7 @@ function EnrollRestaurant(props) {
             value={Address}
             placeholder="주소"
             onChange={onAddressHandler}
+            readOnly
           />
         </div>
         <div>
