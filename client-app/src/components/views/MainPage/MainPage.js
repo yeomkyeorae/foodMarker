@@ -4,7 +4,7 @@ import { logoutUser } from "../../../_actions/user_action";
 import { withRouter } from "react-router-dom";
 import Restaurants from "./Restaurants";
 import EnrollRestaurant from "./EnrollRestaurant";
-import Navbar from "../Navbar/Navbar";
+import NavbarComp from "../Navbar/NavbarComp";
 
 function MainPage(props) {
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ function MainPage(props) {
 
   return (
     <div>
-      <Navbar />
+      <NavbarComp />
       <button onClick={onClickHandler} style={{ float: "left" }}>
         로그아웃
       </button>
