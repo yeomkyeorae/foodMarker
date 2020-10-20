@@ -22,11 +22,11 @@ export default function(SpecificComponent, option, adminRoute = null) {
         } else {
           // 로그인한 상태
           if (option === false) {
-            props.history.push("/main");
+            props.history.push("/main", response.payload._id);
           }
         }
       });
-    });
+    }, [props.location.pathname]);
     return <SpecificComponent />;
   }
 

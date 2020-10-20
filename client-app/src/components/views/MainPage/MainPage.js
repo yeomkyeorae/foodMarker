@@ -8,7 +8,7 @@ import NavbarComp from "../Navbar/NavbarComp";
 
 function MainPage(props) {
   const dispatch = useDispatch();
-  const userId = props.location.state.userId;
+  const userId = props.location.state;
   const [Toggle, setToggle] = useState(true);
   const [Menu, setMenu] = useState("식당 등록");
 
@@ -26,7 +26,6 @@ function MainPage(props) {
       if (response.payload.success) {
         props.history.push("/loginSignup");
       } else {
-        console.log(response);
         alert("failed to logout");
       }
     });

@@ -75,7 +75,7 @@ function Login(props) {
       if (response.payload.loginSuccess) {
         props.history.push({
           pathname: "/main",
-          state: { userId: response.payload.userId }
+          state: response.payload.userId
         });
       } else {
         console.log(response);
