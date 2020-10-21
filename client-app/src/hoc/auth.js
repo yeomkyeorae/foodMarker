@@ -12,9 +12,11 @@ export default function(SpecificComponent, option, adminRoute = null) {
   const dispatch = useDispatch();
 
   function AuthenticationCheck(props) {
+    console.log("hoc: ", props.location.pathname);
     useEffect(() => {
       dispatch(auth()).then(response => {
         // 로그인하지 않은 상태
+        console.log("dispatched!!!!");
         if (!response.payload.isAuth) {
           if (option) {
             props.history.push("/loginSignup");
@@ -25,6 +27,7 @@ export default function(SpecificComponent, option, adminRoute = null) {
             props.history.push("/main", response.payload._id);
           }
         }
+        console.log("passed");
       });
     }, [props.location.pathname]);
     return <SpecificComponent />;
