@@ -39,7 +39,6 @@ const HeadLine = styled.h2`
 function RestaurantList(props) {
   const dispatch = useDispatch();
   const [restaurants, setRestaurants] = useState([{ _id: 0 }]);
-  console.log("props: ", props);
   const body = {
     id: props.userId
   };
@@ -52,7 +51,6 @@ function RestaurantList(props) {
   useEffect(() => {
     dispatch(readRestaurants(body)).then(response => {
       setRestaurants(response.payload);
-      console.log("restaurants: ", restaurants);
     });
   }, [JSON.stringify(restaurants)]);
 

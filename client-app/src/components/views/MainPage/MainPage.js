@@ -11,6 +11,7 @@ function MainPage(props) {
   const userId = props.location.state;
   const [Toggle, setToggle] = useState(true);
   const [Menu, setMenu] = useState("식당 등록");
+  console.log("main props: ", props);
 
   const onClickChangeMenuHandler = () => {
     setToggle(!Toggle);
@@ -40,7 +41,7 @@ function MainPage(props) {
 
   return (
     <div>
-      <NavbarComp />
+      <NavbarComp userId={userId} />
       <button onClick={onClickHandler} style={{ float: "left" }}>
         로그아웃
       </button>

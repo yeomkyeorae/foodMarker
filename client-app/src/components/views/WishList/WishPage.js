@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../_actions/user_action";
 import { withRouter } from "react-router-dom";
@@ -8,6 +8,7 @@ function WishPage(props) {
   const dispatch = useDispatch();
   const userId = props.location.state;
   console.log("wish props: ", props);
+
   const onClickHandler = () => {
     dispatch(logoutUser()).then(response => {
       if (response.payload.success) {
@@ -20,7 +21,7 @@ function WishPage(props) {
 
   return (
     <div>
-      <NavbarComp />
+      <NavbarComp userId={userId} />
       <button onClick={onClickHandler} style={{ float: "left" }}>
         로그아웃
       </button>
