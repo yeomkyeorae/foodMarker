@@ -282,10 +282,7 @@ function EnrollRestaurant(props) {
         setAddress("");
         setVisitiedDate("");
         props.setToggle(true);
-        props.history.push({
-          pathname: "/main",
-          state: { userId: userId }
-        });
+        props.history.push("/main", userId);
       } else {
         console.log(response);
         alert("error");

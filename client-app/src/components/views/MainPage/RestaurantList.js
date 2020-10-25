@@ -17,7 +17,7 @@ const Restaurants = styled.div`
 const List = styled.ol`
   list-style: none;
   width: 600px;
-  max-width: 90%;
+  max-width: 70%;
 `;
 
 const Item = styled.li`
@@ -34,6 +34,11 @@ const HeadLine = styled.h2`
   padding: 0rem 0 0 0;
   margin: 0 0 1rem 0;
   font: normal 2rem var(--font-head);
+`;
+
+const FoodImg = styled.img`
+  max-width: 100%;
+  height: auto;
 `;
 
 function RestaurantList(props) {
@@ -72,6 +77,7 @@ function RestaurantList(props) {
             key={restaurant._id}
             onClick={() => clickRestaurant(restaurant.address, restaurant.name)}
           >
+            <FoodImg src="https://images.unsplash.com/photo-1595576359780-91004705b4f0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=975&q=80"></FoodImg>
             <HeadLine>{restaurant.name}</HeadLine>
             <button onClick={() => deleteHandler(restaurant._id)}>삭제</button>
             <span>{restaurant.date}</span> <br />
