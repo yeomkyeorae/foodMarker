@@ -4,6 +4,7 @@ const port = 5000;
 
 const { User } = require("./models/User");
 const { Restaurant } = require("./models/Restaurant");
+const { WishList } = require("./models/WishList");
 const { auth } = require("./middleware/auth");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -135,6 +136,22 @@ app.delete("/api/restaurant", (req, res) => {
         success: false,
         err
       });
+    return res.status(200).json({
+      success: true
+    });
+  });
+});
+
+// create my wishList
+app.post("/api/wishList", (req, res) => {
+  const wishList = WishList(req.body);
+  wishList.save((err, wishListInfo) => {
+    if (err) {
+      return res.json({
+        success: false,
+        err
+      });
+    }
     return res.status(200).json({
       success: true
     });
