@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { registerRestaurant } from "../../../_actions/restaurant_action";
+import { registerWishList } from "../../../_actions/wishList_action";
 
 const { kakao } = window;
 
@@ -10,6 +11,7 @@ function EnrollRestaurant(props) {
   const [Address, setAddress] = useState("");
   const [VisitiedDate, setVisitiedDate] = useState("");
   const userId = props.userId;
+  const parentCompName = props.parentCompName;
 
   const [SearchName, setSearchName] = useState("이태원 맛집");
   const [Toggle, setToggle] = useState(true);
@@ -275,19 +277,36 @@ function EnrollRestaurant(props) {
       address: Address,
       date: VisitiedDate
     };
-
-    dispatch(registerRestaurant(body)).then(response => {
-      if (response.payload.success) {
-        setName("");
-        setAddress("");
-        setVisitiedDate("");
-        props.setToggle(true);
-        props.history.push("/main", userId);
-      } else {
-        console.log(response);
-        alert("error");
-      }
-    });
+    if (parentCompName === "MainPage") {
+      dispatch(registerRestaurant(body)).then(response => {
+        if (response.payload.success) {
+          setName("");
+          setAddress("");
+          setVisitiedDate("");
+          props.setToggle(true);
+          props.history.push("/main", userId);
+        } else {
+          console.log(response);
+          alert("error");
+        }
+      });
+    } else if (parentCompName === "WishPage") {
+      body = {
+        user: userId,
+        name: Name,
+        address: Address
+      };
+      dispatch(registerWishList(body)).then(response => {
+        if (response.payload.success) {
+          setName("");
+          setAddress("");
+          props.history.push("/wish", userId);
+        } else {
+          console.log(response);
+          alert("error");
+        }
+      });
+    }
   };
 
   return (
@@ -339,14 +358,16 @@ function EnrollRestaurant(props) {
             readOnly
           />
         </div>
-        <div>
-          <input
-            type="date"
-            value={VisitiedDate}
-            placeholder="방문 일시"
-            onChange={onVisitiedDateHandler}
-          />
-        </div>
+        {parentCompName === "MainPage" ? (
+          <div>
+            <input
+              type="date"
+              value={VisitiedDate}
+              placeholder="방문 일시"
+              onChange={onVisitiedDateHandler}
+            />
+          </div>
+        ) : null}
         <button type="submit">등록</button>
       </form>
     </div>

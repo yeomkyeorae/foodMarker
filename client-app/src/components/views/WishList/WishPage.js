@@ -20,7 +20,9 @@ function WishPage(props) {
     });
   };
 
-  let MenuComponent = <EnrollRestaurant userId={userId} />;
+  let MenuComponent = (
+    <EnrollRestaurant userId={userId} parentCompName={"WishPage"} />
+  );
 
   return (
     <div>
