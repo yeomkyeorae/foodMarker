@@ -50,15 +50,15 @@ function MainPage(props) {
 
   return (
     <div>
+      <div
+        id={`map`}
+        style={{ width: "500px", height: "400px", display: "inline-block" }}
+      ></div>
       <RestaurantList
         userId={userId}
         setAddress={setAddress}
         setRestaurantName={setRestaurantName}
       />
-      <div
-        id={`map`}
-        style={{ width: "500px", height: "400px", display: "inline-block" }}
-      ></div>
     </div>
   );
 }

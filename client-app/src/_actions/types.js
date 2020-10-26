@@ -6,3 +6,5 @@ export const AUTH_USER = "auth_user";
 export const READ_RESTAURANTS = "read_restaurants";
 export const REGISTER_RESTAURANT = "register_restaurant";
 export const DELETE_RESTAURANT = "delete_restaurant";
+
+export const REGISTER_WISHLIST = "register_wishList";
