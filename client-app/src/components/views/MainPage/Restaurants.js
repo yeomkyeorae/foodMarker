@@ -4,7 +4,7 @@ import RestaurantList from "./RestaurantList";
 
 const { kakao } = window;
 
-function MainPage(props) {
+function Restaurants(props) {
   const userId = props.userId;
   const [address, setAddress] = useState("서울 중구 창경궁로 62-29");
   const [restaurantName, setRestaurantName] = useState("우래옥");
@@ -63,4 +63,4 @@ function MainPage(props) {
   );
 }
 
-export default withRouter(MainPage);
+export default withRouter(Restaurants);
