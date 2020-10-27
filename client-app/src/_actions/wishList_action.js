@@ -1,5 +1,5 @@
 import axios from "axios";
-import { READ_WISHLIST, REGISTER_WISHLIST } from "./types";
+import { READ_WISHLIST, REGISTER_WISHLIST, DELETE_WISHLIST } from "./types";
 
 export function readWishList(dataToSubmit) {
   const request = axios
@@ -19,6 +19,17 @@ export function registerWishList(dataToSubmit) {
 
   return {
     type: REGISTER_WISHLIST,
+    payload: request
+  };
+}
+
+export function deleteWishList(wishListId) {
+  const request = axios
+    .delete(`/api/wishList?_id=${wishListId}`)
+    .then(response => response.data);
+
+  return {
+    type: DELETE_WISHLIST,
     payload: request
   };
 }

@@ -166,6 +166,20 @@ app.post("/api/wishList", (req, res) => {
   });
 });
 
+// delete my wishList
+app.delete("/api/wishList", (req, res) => {
+  WishList.findOneAndRemove({ _id: req.query._id }, (err, wishListInfo) => {
+    if (err)
+      return res.json({
+        success: false,
+        err
+      });
+    return res.status(200).json({
+      success: true
+    });
+  });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${[port]}`);
 });

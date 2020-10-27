@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { readWishList } from "../../../_actions/wishList_action";
+import {
+  readWishList,
+  deleteWishList
+} from "../../../_actions/wishList_action";
 import styled from "styled-components";
 
 const WishLists = styled.div`
@@ -52,12 +55,10 @@ function WishListList(props) {
     });
   }, [JSON.stringify(wishLists)]);
 
-  const deleteHandler = restaurantId => {
-    dispatch(deleteRestaurant(restaurantId)).then(response => {
+  const deleteHandler = wishListId => {
+    dispatch(deleteWishList(wishListId)).then(response => {
       if (response.payload.success) {
-        setRestaurants(
-          restaurants.filter(restaurant => restaurant._id !== restaurantId)
-        );
+        setWishLists(wishLists.filter(wishList => wishList._id !== wishListId));
       }
     });
   };
@@ -68,7 +69,7 @@ function WishListList(props) {
         {wishLists.map(wishList => (
           <Item key={wishList._id}>
             <HeadLine>{wishList.name}</HeadLine>
-            <button onClick={() => deleteHandler(restaurant._id)}>삭제</button>
+            <button onClick={() => deleteHandler(wishList._id)}>삭제</button>
             <span>{wishList.address}</span> <br />
             <hr />
           </Item>

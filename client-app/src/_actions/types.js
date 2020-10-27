@@ -9,3 +9,4 @@ export const DELETE_RESTAURANT = "delete_restaurant";
 
 export const READ_WISHLIST = "read_wishList";
 export const REGISTER_WISHLIST = "register_wishList";
+export const DELETE_WISHLIST = "delete_wishList";
