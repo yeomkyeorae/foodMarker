@@ -142,6 +142,14 @@ app.delete("/api/restaurant", (req, res) => {
   });
 });
 
+// get my wishLists
+app.post("/api/wishLists", (req, res) => {
+  const wishLists = WishList.find({ user: req.body.id }, (err, wishLists) => {
+    if (err) return res.json({ success: false, err });
+    return res.json(wishLists);
+  });
+});
+
 // create my wishList
 app.post("/api/wishList", (req, res) => {
   const wishList = WishList(req.body);
