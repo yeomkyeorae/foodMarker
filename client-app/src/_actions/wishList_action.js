@@ -1,5 +1,16 @@
 import axios from "axios";
-import { REGISTER_WISHLIST } from "./types";
+import { READ_WISHLIST, REGISTER_WISHLIST } from "./types";
+
+export function readWishList(dataToSubmit) {
+  const request = axios
+    .post("/api/wishLists", dataToSubmit)
+    .then(response => response.data);
+
+  return {
+    type: READ_WISHLIST,
+    payload: request
+  };
+}
 
 export function registerWishList(dataToSubmit) {
   const request = axios
