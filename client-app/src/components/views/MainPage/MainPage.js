@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../_actions/user_action";
 import { withRouter } from "react-router-dom";
 import Restaurants from "./Restaurants";
-import EnrollRestaurant from "./EnrollRestaurant";
+import Enroll from "./Enroll";
 import NavbarComp from "../Navbar/NavbarComp";
 
 function MainPage(props) {
@@ -36,9 +36,7 @@ function MainPage(props) {
   if (Toggle) {
     MenuComponent = <Restaurants userId={userId} />;
   } else {
-    MenuComponent = (
-      <EnrollRestaurant userId={userId} parentCompName={"MainPage"} />
-    );
+    MenuComponent = <Enroll userId={userId} parentCompName={"MainPage"} />;
   }
 
   return (

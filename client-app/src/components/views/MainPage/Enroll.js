@@ -6,7 +6,7 @@ import { registerWishList } from "../../../_actions/wishList_action";
 
 const { kakao } = window;
 
-function EnrollRestaurant(props) {
+function Enroll(props) {
   const [Name, setName] = useState("");
   const [Address, setAddress] = useState("");
   const [VisitiedDate, setVisitiedDate] = useState("");
@@ -374,4 +374,4 @@ function EnrollRestaurant(props) {
   );
 }
 
-export default withRouter(EnrollRestaurant);
+export default withRouter(Enroll);
