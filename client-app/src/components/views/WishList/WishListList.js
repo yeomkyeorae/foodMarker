@@ -41,26 +41,26 @@ const FoodImg = styled.img`
 function WishListList(props) {
   const dispatch = useDispatch();
   const [wishLists, setWishLists] = useState([{ _id: 0 }]);
+  const userId = props.userId;
   const body = {
-    id: props.userId
+    id: userId
   };
 
   useEffect(() => {
     dispatch(readWishList(body)).then(response => {
       setWishLists(response.payload);
-      console.log(response, 123123);
     });
   }, [JSON.stringify(wishLists)]);
 
-  // const deleteHandler = restaurantId => {
-  //   dispatch(deleteRestaurant(restaurantId)).then(response => {
-  //     if (response.payload.success) {
-  //       setRestaurants(
-  //         restaurants.filter(restaurant => restaurant._id !== restaurantId)
-  //       );
-  //     }
-  //   });
-  // };
+  const deleteHandler = restaurantId => {
+    dispatch(deleteRestaurant(restaurantId)).then(response => {
+      if (response.payload.success) {
+        setRestaurants(
+          restaurants.filter(restaurant => restaurant._id !== restaurantId)
+        );
+      }
+    });
+  };
 
   return (
     <WishLists>
@@ -68,7 +68,7 @@ function WishListList(props) {
         {wishLists.map(wishList => (
           <Item key={wishList._id}>
             <HeadLine>{wishList.name}</HeadLine>
-            <button>삭제</button>
+            <button onClick={() => deleteHandler(restaurant._id)}>삭제</button>
             <span>{wishList.address}</span> <br />
             <hr />
           </Item>
