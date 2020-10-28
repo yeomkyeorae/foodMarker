@@ -300,6 +300,7 @@ function Enroll(props) {
         if (response.payload.success) {
           setName("");
           setAddress("");
+          props.setToggle(true);
           props.history.push("/wish", userId);
         } else {
           console.log(response);
