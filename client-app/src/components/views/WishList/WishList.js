@@ -39,6 +39,9 @@ function WishList(props) {
     dispatch(deleteWishList(wishListId)).then(response => {
       if (response.payload.success) {
         setWishLists(wishLists.filter(wishList => wishList._id !== wishListId));
+      } else {
+        console.log(response);
+        alert("error");
       }
     });
   };
@@ -52,6 +55,7 @@ function WishList(props) {
             wishListId={wishList._id}
             wishListName={wishList.name}
             wishListAddress={wishList.address}
+            userId={userId}
             deleteHandler={deleteHandler}
           />
         ))}
