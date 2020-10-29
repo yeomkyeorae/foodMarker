@@ -10,6 +10,7 @@ function Enroll(props) {
   const [Name, setName] = useState("");
   const [Address, setAddress] = useState("");
   const [VisitiedDate, setVisitiedDate] = useState("");
+  const [imageData, setImageData] = useState("");
   const userId = props.userId;
   const parentCompName = props.parentCompName;
 
@@ -260,6 +261,11 @@ function Enroll(props) {
     setVisitiedDate(e.currentTarget.value);
   };
 
+  const onImageDataHandler = e => {
+    console.log(e.currentTarget.value, 1111);
+    setImageData(e.currentTarget.value);
+  };
+
   const onChangeSearchNameHandler = e => {
     setSearchName(e.currentTarget.value);
   };
@@ -366,6 +372,11 @@ function Enroll(props) {
               value={VisitiedDate}
               placeholder="방문 일시"
               onChange={onVisitiedDateHandler}
+            />
+            <input
+              type="file"
+              value={imageData}
+              onChange={onImageDataHandler}
             />
           </div>
         ) : null}
