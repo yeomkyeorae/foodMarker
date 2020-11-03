@@ -1,12 +1,14 @@
 const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
-const { Types: { ObjectId }} = Schema;
+const {
+  Types: { ObjectId }
+} = Schema;
 const restaurantSchema = new Schema({
   visitor: {
     type: ObjectId,
     required: true,
-    ref: 'User'
+    ref: "User"
   },
   name: {
     type: String,
@@ -18,6 +20,9 @@ const restaurantSchema = new Schema({
   },
   date: {
     type: Date
+  },
+  img: {
+    type: String
   }
 });
 

@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { registerRestaurant } from "../../../_actions/restaurant_action";
 import { registerWishList } from "../../../_actions/wishList_action";
+import { Convert } from "mongo-image-converter";
+import heic2any from "heic2any";
 
 const { kakao } = window;
 
@@ -10,7 +12,7 @@ function Enroll(props) {
   const [Name, setName] = useState("");
   const [Address, setAddress] = useState("");
   const [VisitiedDate, setVisitiedDate] = useState("");
-  const [imageData, setImageData] = useState("");
+  const [ImageData, setImageData] = useState("");
   const userId = props.userId;
   const parentCompName = props.parentCompName;
 
@@ -262,8 +264,45 @@ function Enroll(props) {
   };
 
   const onImageDataHandler = e => {
-    console.log(e.currentTarget.value, 1111);
-    setImageData(e.currentTarget.value);
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.readAsDataURL(file);
+    reader.onloadend = imageData => {
+      const base64data = reader.result;
+      setImageData(base64data);
+      console.log(imageData, 123);
+    };
+
+    // const img = e.target.files[0];
+    // setImageData(img);
+
+    // const fileReader = new FileReader();
+    // fileReader.readAsArrayBuffer(img);
+    // fileReader.onload = function(e) {
+    //   const imgURL = e.target.result;
+    //   fetch(imgURL)
+    //     .then(res => res.blob())
+    //     .then(blob =>
+    //       heic2any({
+    //         blob,
+    //         toType: "image/jpeg",
+    //         quality: 0.8,
+    //         multiple: true
+    //       })
+    //     )
+    //     .then(conversionResult => {
+    //       console.log("conversionResult is saved");
+    //       setImageData(conversionResult[0]);
+    //       // const url = URL.createObjectURL(conversionResult[0]);
+    //       // document.getElementById("haha").src = url;
+    //     })
+    //     .catch(e => {
+    //       console.log("imgURL is saved");
+    //       setImageData(imgURL);
+    //     });
+    // };
   };
 
   const onChangeSearchNameHandler = e => {
@@ -346,7 +385,7 @@ function Enroll(props) {
         </div>
       </div>
 
-      <form onSubmit={onSubmitHandler}>
+      <form onSubmit={onSubmitHandler} encType="multipart/form-data">
         <div>
           <input
             type="text"
@@ -373,11 +412,7 @@ function Enroll(props) {
               placeholder="방문 일시"
               onChange={onVisitiedDateHandler}
             />
-            <input
-              type="file"
-              value={imageData}
-              onChange={onImageDataHandler}
-            />
+            <input type="file" onChange={onImageDataHandler} />
           </div>
         ) : null}
         <button type="submit">등록</button>
