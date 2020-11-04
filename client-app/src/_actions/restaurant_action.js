@@ -17,6 +17,7 @@ export function readRestaurants(dataToSubmit) {
 }
 
 export function registerRestaurant(dataToSubmit) {
+  console.log("dataToSubmit: ", dataToSubmit);
   const request = axios
     .post("/api/restaurant", dataToSubmit)
     .then(response => response.data);

@@ -33,9 +33,15 @@ function MainPage(props) {
 
   let MenuComponent;
   if (Toggle) {
-    MenuComponent = <Restaurants userId={userId} />;
+    MenuComponent = <Restaurants userId={userId} setToggle={setToggle} />;
   } else {
-    MenuComponent = <Enroll userId={userId} parentCompName={"MainPage"} />;
+    MenuComponent = (
+      <Enroll
+        userId={userId}
+        setToggle={setToggle}
+        parentCompName={"MainPage"}
+      />
+    );
   }
 
   return (

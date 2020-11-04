@@ -268,40 +268,12 @@ function Enroll(props) {
 
     let reader = new FileReader();
     let file = e.target.files[0];
-    reader.readAsDataURL(file);
-    reader.onloadend = imageData => {
-      const base64data = reader.result;
-      setImageData(base64data);
-      console.log(imageData, 123);
-    };
-
-    // const img = e.target.files[0];
-    // setImageData(img);
-
-    // const fileReader = new FileReader();
-    // fileReader.readAsArrayBuffer(img);
-    // fileReader.onload = function(e) {
-    //   const imgURL = e.target.result;
-    //   fetch(imgURL)
-    //     .then(res => res.blob())
-    //     .then(blob =>
-    //       heic2any({
-    //         blob,
-    //         toType: "image/jpeg",
-    //         quality: 0.8,
-    //         multiple: true
-    //       })
-    //     )
-    //     .then(conversionResult => {
-    //       console.log("conversionResult is saved");
-    //       setImageData(conversionResult[0]);
-    //       // const url = URL.createObjectURL(conversionResult[0]);
-    //       // document.getElementById("haha").src = url;
-    //     })
-    //     .catch(e => {
-    //       console.log("imgURL is saved");
-    //       setImageData(imgURL);
-    //     });
+    console.log(file, 123123123);
+    setImageData(file);
+    // reader.readAsDataURL(file);
+    // reader.onloadend = () => {
+    //   const buffer = reader.result;
+    //   setImageData(buffer);
     // };
   };
 
@@ -320,14 +292,17 @@ function Enroll(props) {
       visitor: userId,
       name: Name,
       address: Address,
-      date: VisitiedDate
+      date: VisitiedDate,
+      img: ImageData
     };
+    console.log("ImageData: ", ImageData);
     if (parentCompName === "MainPage") {
       dispatch(registerRestaurant(body)).then(response => {
         if (response.payload.success) {
           setName("");
           setAddress("");
           setVisitiedDate("");
+          setImageData("");
           props.setToggle(true);
           props.history.push("/main", userId);
         } else {

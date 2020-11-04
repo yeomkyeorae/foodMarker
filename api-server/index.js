@@ -117,6 +117,7 @@ app.post("/api/restaurants", (req, res) => {
 
 // create my restaurant
 app.post("/api/restaurant", (req, res) => {
+  console.log(req.body);
   const restaurant = Restaurant(req.body);
   restaurant.save((err, restaurantInfo) => {
     if (err)
