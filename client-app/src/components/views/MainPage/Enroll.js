@@ -269,7 +269,6 @@ function Enroll(props) {
 
     // let reader = new FileReader();
     let file = e.target.files[0];
-    console.log(file, 123123123);
 
     setImageData(file);
     // reader.readAsDataURL(file);
@@ -301,7 +300,6 @@ function Enroll(props) {
     if (parentCompName === "MainPage") {
       dispatch(registerRestaurant(formData)).then(response => {
         if (response.payload.success) {
-          console.log("response: ", response);
           setName("");
           setAddress("");
           setVisitiedDate("");
@@ -309,7 +307,6 @@ function Enroll(props) {
           props.setToggle(true);
           props.history.push("/main", userId);
         } else {
-          console.log(response);
           alert("error");
         }
       });
@@ -326,7 +323,6 @@ function Enroll(props) {
           props.setToggle(true);
           props.history.push("/wish", userId);
         } else {
-          console.log(response);
           alert("error");
         }
       });

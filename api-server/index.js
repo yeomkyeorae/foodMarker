@@ -9,23 +9,16 @@ const { auth } = require("./middleware/auth");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
+const crypto = require("crypto");
+const path = require("path");
 const multer = require("multer");
 const GridFsStorage = require("multer-gridfs-storage");
 const config = require("./config/key");
 
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
 app.use(bodyParser.json({ limit: "16mb", extended: true })); // Make sure you add these two lines
 app.use(bodyParser.urlencoded({ limit: "16mb", extended: true }));
 app.use(cookieParser());
 app.set("view engine", "ejs");
-
-// const conn = mongoose.createConnection(config.mongoURI, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-//   useCreateIndex: true,
-//   useFindAndModify: false
-// });
 
 mongoose
   .connect(config.mongoURI, {
@@ -34,11 +27,32 @@ mongoose
     useCreateIndex: true,
     useFindAndModify: false
   })
-  .then(() => {
+  .then((db, err) => {
+    gfs = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+      bucketName: "images"
+    });
     console.log("mongoDB connected!!!");
   })
   .catch(err => console.log(err));
-const storage = new GridFsStorage({ url: config.mongoURI });
+
+const storage = new GridFsStorage({
+  url: config.mongoURI,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString("hex") + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: "images"
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
 const upload = multer({ storage });
 
 // 테스트
@@ -129,9 +143,28 @@ app.post("/api/restaurants", (req, res) => {
   );
 });
 
+// get image by filename
+app.get("/api/image/:filename", (req, res) => {
+  const file = gfs
+    .find({
+      filename: req.params.filename
+    })
+    .toArray((err, files) => {
+      if (!files || files.length === 0) {
+        console.log("으아아아아아악");
+        return res.status(404).json({
+          err: "no files exist"
+        });
+      }
+      gfs.openDownloadStreamByName(req.params.filename).pipe(res);
+    });
+  console.log("api-server file: ", file);
+  return file;
+});
+
 // create my restaurant
 app.post("/api/restaurant", upload.single("img"), (req, res) => {
-  req.body.imgId = req.file.id;
+  req.body.filename = req.file.filename;
   const restaurant = Restaurant(req.body);
   restaurant.save((err, restaurantInfo) => {
     if (err)
