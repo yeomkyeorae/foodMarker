@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { registerRestaurant } from "../../../_actions/restaurant_action";
+import {
+  registerRestaurant,
+  uploadImage
+} from "../../../_actions/restaurant_action";
 import { registerWishList } from "../../../_actions/wishList_action";
-import { Convert } from "mongo-image-converter";
-import heic2any from "heic2any";
 
 const { kakao } = window;
 
@@ -266,9 +267,10 @@ function Enroll(props) {
   const onImageDataHandler = e => {
     e.preventDefault();
 
-    let reader = new FileReader();
+    // let reader = new FileReader();
     let file = e.target.files[0];
     console.log(file, 123123123);
+
     setImageData(file);
     // reader.readAsDataURL(file);
     // reader.onloadend = () => {
@@ -295,9 +297,25 @@ function Enroll(props) {
       date: VisitiedDate,
       img: ImageData
     };
-    console.log("ImageData: ", ImageData);
+
+    const formData = new FormData();
+    formData.append("visitor", userId);
+    formData.append("name", Name);
+    formData.append("address", Address);
+    formData.append("date", VisitiedDate);
+    formData.append("img", ImageData);
+
     if (parentCompName === "MainPage") {
-      dispatch(registerRestaurant(body)).then(response => {
+      // dispatch(uploadImage(formData)).then(response => {
+      //   if (response.payload.success) {
+      //     console.log(response);
+      //   } else {
+      //     console.log(response);
+      //     alert("error");
+      //   }
+      // });
+
+      dispatch(registerRestaurant(formData)).then(response => {
         if (response.payload.success) {
           setName("");
           setAddress("");

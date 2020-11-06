@@ -2,7 +2,8 @@ import axios from "axios";
 import {
   READ_RESTAURANTS,
   REGISTER_RESTAURANT,
-  DELETE_RESTAURANT
+  DELETE_RESTAURANT,
+  UPLOAD_IMAGE
 } from "./types";
 
 export function readRestaurants(dataToSubmit) {
@@ -35,6 +36,18 @@ export function deleteRestaurant(restaurantId) {
 
   return {
     type: DELETE_RESTAURANT,
+    payload: request
+  };
+}
+
+export function uploadImage(dataToSubmit) {
+  console.log("dataToSubmit: ", dataToSubmit);
+  const request = axios
+    .post("/api/upload", dataToSubmit)
+    .then(response => response.data);
+
+  return {
+    type: UPLOAD_IMAGE,
     payload: request
   };
 }

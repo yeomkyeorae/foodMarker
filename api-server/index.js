@@ -9,6 +9,8 @@ const { auth } = require("./middleware/auth");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
+const multer = require("multer");
+const GridFsStorage = require("multer-gridfs-storage");
 const config = require("./config/key");
 
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -16,6 +18,14 @@ const config = require("./config/key");
 app.use(bodyParser.json({ limit: "16mb", extended: true })); // Make sure you add these two lines
 app.use(bodyParser.urlencoded({ limit: "16mb", extended: true }));
 app.use(cookieParser());
+app.set("view engine", "ejs");
+
+// const conn = mongoose.createConnection(config.mongoURI, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   useCreateIndex: true,
+//   useFindAndModify: false
+// });
 
 mongoose
   .connect(config.mongoURI, {
@@ -24,8 +34,12 @@ mongoose
     useCreateIndex: true,
     useFindAndModify: false
   })
-  .then(() => console.log("mongoDB connected!!!"))
+  .then(() => {
+    console.log("mongoDB connected!!!");
+  })
   .catch(err => console.log(err));
+const storage = new GridFsStorage({ url: config.mongoURI });
+const upload = multer({ storage });
 
 // 테스트
 app.get("/api/hello", (req, res) => {
@@ -116,8 +130,7 @@ app.post("/api/restaurants", (req, res) => {
 });
 
 // create my restaurant
-app.post("/api/restaurant", (req, res) => {
-  console.log(req.body);
+app.post("/api/restaurant", upload.single("img"), (req, res) => {
   const restaurant = Restaurant(req.body);
   restaurant.save((err, restaurantInfo) => {
     if (err)
