@@ -314,7 +314,7 @@ function Enroll(props) {
         }
       });
     } else if (parentCompName === "WishPage") {
-      body = {
+      const body = {
         user: userId,
         name: Name,
         address: Address
