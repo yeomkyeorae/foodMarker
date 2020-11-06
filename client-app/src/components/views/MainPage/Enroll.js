@@ -290,13 +290,6 @@ function Enroll(props) {
   const dispatch = useDispatch();
   const onSubmitHandler = e => {
     e.preventDefault();
-    let body = {
-      visitor: userId,
-      name: Name,
-      address: Address,
-      date: VisitiedDate,
-      img: ImageData
-    };
 
     const formData = new FormData();
     formData.append("visitor", userId);
@@ -306,17 +299,9 @@ function Enroll(props) {
     formData.append("img", ImageData);
 
     if (parentCompName === "MainPage") {
-      // dispatch(uploadImage(formData)).then(response => {
-      //   if (response.payload.success) {
-      //     console.log(response);
-      //   } else {
-      //     console.log(response);
-      //     alert("error");
-      //   }
-      // });
-
       dispatch(registerRestaurant(formData)).then(response => {
         if (response.payload.success) {
+          console.log("response: ", response);
           setName("");
           setAddress("");
           setVisitiedDate("");

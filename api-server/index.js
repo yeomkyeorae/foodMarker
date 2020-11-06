@@ -131,6 +131,7 @@ app.post("/api/restaurants", (req, res) => {
 
 // create my restaurant
 app.post("/api/restaurant", upload.single("img"), (req, res) => {
+  req.body.imgId = req.file.id;
   const restaurant = Restaurant(req.body);
   restaurant.save((err, restaurantInfo) => {
     if (err)

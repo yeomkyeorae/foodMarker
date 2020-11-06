@@ -20,6 +20,9 @@ const restaurantSchema = new Schema({
   },
   date: {
     type: Date
+  },
+  imgId: {
+    type: String
   }
 });
 
