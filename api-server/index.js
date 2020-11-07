@@ -12,8 +12,8 @@ const mongoose = require("mongoose");
 const crypto = require("crypto");
 const path = require("path");
 const multer = require("multer");
+const axios = require("axios");
 const GridFsStorage = require("multer-gridfs-storage");
-const Grid = require("gridfs-stream");
 const config = require("./config/key");
 
 app.use(bodyParser.json({ limit: "16mb", extended: true })); // Make sure you add these two lines

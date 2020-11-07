@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import {
-  registerRestaurant,
-  uploadImage
-} from "../../../_actions/restaurant_action";
+import { registerRestaurant } from "../../../_actions/restaurant_action";
 import { registerWishList } from "../../../_actions/wishList_action";
 import axios from "axios";
 
@@ -285,10 +282,6 @@ function Enroll(props) {
     e.preventDefault();
 
     const formData = new FormData();
-    // formData.append("visitor", userId);
-    // formData.append("name", Name);
-    // formData.append("address", Address);
-    // formData.append("date", VisitiedDate);
     formData.append("image", ImageData);
 
     if (parentCompName === "MainPage") {
@@ -307,18 +300,22 @@ function Enroll(props) {
             date: VisitiedDate,
             imgURL: response.data.data.link
           };
-          dispatch(registerRestaurant(body)).then(response => {
-            if (response.payload.success) {
-              setName("");
-              setAddress("");
-              setVisitiedDate("");
-              setImageData("");
-              props.setToggle(true);
-              props.history.push("/main", userId);
-            } else {
-              alert("error");
-            }
-          });
+          dispatch(registerRestaurant(body))
+            .then(response => {
+              if (response.payload.success) {
+                setName("");
+                setAddress("");
+                setVisitiedDate("");
+                setImageData("");
+                props.setToggle(true);
+                props.history.push("/main", userId);
+              } else {
+                alert("error");
+              }
+            })
+            .catch(err => {
+              console.log("registerRestaurant err: ", err);
+            });
         })
         .catch(err => {
           console.log("imgur err: ", err);
