@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { registerRestaurant } from "../../../_actions/restaurant_action";
 import { registerWishList } from "../../../_actions/wishList_action";
 import axios from "axios";
+import heic2any from "heic2any";
 
 const { kakao } = window;
 
@@ -266,7 +267,28 @@ function Enroll(props) {
     e.preventDefault();
 
     let file = e.target.files[0];
-    setImageData(file);
+    console.log("file: ", file);
+    if (file.type === "image/heic") {
+      const reader = new FileReader();
+
+      reader.onloadend = function() {
+        const image = reader.result;
+        fetch(image)
+          .then(res => res.blob())
+          .then(blob => heic2any({ blob }))
+          .then(conversionResult => {
+            console.log("conver: ", conversionResult);
+            // conversionResult is a BLOB
+            setImageData(conversionResult);
+          })
+          .catch(err => {
+            console.log("err: ", err);
+          });
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImageData(file);
+    }
   };
 
   const onChangeSearchNameHandler = e => {
