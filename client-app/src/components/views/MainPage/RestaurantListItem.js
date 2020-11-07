@@ -28,25 +28,23 @@ const FoodImg = styled.img`
 function RestaurantListItem(props) {
   const restaurant = props.restaurant;
   const dispatch = useDispatch();
-  const [ImgSrc, setImgSrc] = useState(
-    "https://images.unsplash.com/photo-1595576359780-91004705b4f0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=975&q=80"
-  );
+  //   const [ImgSrc, setImgSrc] = useState(
+  //     "https://images.unsplash.com/photo-1595576359780-91004705b4f0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=975&q=80"
+  //   );
 
-  useEffect(() => {
-    console.log("useEffect!!!!");
-    dispatch(getImage(restaurant.filename)).then(response => {
-      //   var reader = new FileReader();
-      //   reader.onload = function(e) {
-      //     setImgSrc(reader.result);
-      //   };
-      //   reader.readAsDataURL(response.payload);
-      console.log("response: ", response);
-    });
-  });
+  //   useEffect(() => {
+  //     dispatch(getImage(restaurant.filename)).then(response => {
+  //       const base64data = new Buffer(response.payload).toString("base64");
+  //       console.log(base64data);
+
+  //       console.log("response payload: ", response.payload);
+  //       setImgSrc(base64data);
+  //     });
+  //   });
 
   return (
     <Item>
-      <FoodImg src={ImgSrc}></FoodImg>
+      <FoodImg src={restaurant.imgURL}></FoodImg>
       <HeadLine>{restaurant.name}</HeadLine>
       <button onClick={() => props.deleteHandler(restaurant._id)}>삭제</button>
       <span>{restaurant.date}</span> <br />

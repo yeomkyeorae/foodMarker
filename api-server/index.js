@@ -13,12 +13,15 @@ const crypto = require("crypto");
 const path = require("path");
 const multer = require("multer");
 const GridFsStorage = require("multer-gridfs-storage");
+const Grid = require("gridfs-stream");
 const config = require("./config/key");
 
 app.use(bodyParser.json({ limit: "16mb", extended: true })); // Make sure you add these two lines
 app.use(bodyParser.urlencoded({ limit: "16mb", extended: true }));
 app.use(cookieParser());
 app.set("view engine", "ejs");
+
+let gfs;
 
 mongoose
   .connect(config.mongoURI, {
@@ -31,6 +34,7 @@ mongoose
     gfs = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
       bucketName: "images"
     });
+
     console.log("mongoDB connected!!!");
   })
   .catch(err => console.log(err));
@@ -143,28 +147,8 @@ app.post("/api/restaurants", (req, res) => {
   );
 });
 
-// get image by filename
-app.get("/api/image/:filename", (req, res) => {
-  const file = gfs
-    .find({
-      filename: req.params.filename
-    })
-    .toArray((err, files) => {
-      if (!files || files.length === 0) {
-        console.log("으아아아아아악");
-        return res.status(404).json({
-          err: "no files exist"
-        });
-      }
-      gfs.openDownloadStreamByName(req.params.filename).pipe(res);
-    });
-  console.log("api-server file: ", file);
-  return file;
-});
-
 // create my restaurant
-app.post("/api/restaurant", upload.single("img"), (req, res) => {
-  req.body.filename = req.file.filename;
+app.post("/api/restaurant", (req, res) => {
   const restaurant = Restaurant(req.body);
   restaurant.save((err, restaurantInfo) => {
     if (err)

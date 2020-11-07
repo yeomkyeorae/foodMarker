@@ -21,7 +21,7 @@ const restaurantSchema = new Schema({
   date: {
     type: Date
   },
-  filename: {
+  imgURL: {
     type: String
   }
 });

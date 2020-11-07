@@ -18,7 +18,6 @@ export function readRestaurants(dataToSubmit) {
 }
 
 export function registerRestaurant(dataToSubmit) {
-  console.log("dataToSubmit: ", dataToSubmit);
   const request = axios
     .post("/api/restaurant", dataToSubmit)
     .then(response => response.data);
@@ -41,7 +40,6 @@ export function deleteRestaurant(restaurantId) {
 }
 
 export function getImage(filename) {
-  console.log("filename: ", filename);
   const request = axios
     .get(`/api/image/${filename}`)
     .then(response => response.data);

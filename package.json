@@ -19,6 +19,7 @@
     "cors": "^2.8.5",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "gridfs-stream": "^1.1.1",
     "heic2any": "0.0.3",
     "jsonwebtoken": "^8.5.1",
     "mongo-image-converter": "^1.0.2",

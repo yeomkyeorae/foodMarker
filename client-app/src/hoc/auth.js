@@ -15,7 +15,6 @@ export default function(SpecificComponent, option, adminRoute = null) {
     useEffect(() => {
       dispatch(auth()).then(response => {
         // 로그인하지 않은 상태
-        console.log("dispatched!!!!");
         if (!response.payload.isAuth) {
           if (option) {
             props.history.push("/loginSignup");

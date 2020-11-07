@@ -6,6 +6,7 @@ import {
   uploadImage
 } from "../../../_actions/restaurant_action";
 import { registerWishList } from "../../../_actions/wishList_action";
+import axios from "axios";
 
 const { kakao } = window;
 
@@ -267,15 +268,8 @@ function Enroll(props) {
   const onImageDataHandler = e => {
     e.preventDefault();
 
-    // let reader = new FileReader();
     let file = e.target.files[0];
-
     setImageData(file);
-    // reader.readAsDataURL(file);
-    // reader.onloadend = () => {
-    //   const buffer = reader.result;
-    //   setImageData(buffer);
-    // };
   };
 
   const onChangeSearchNameHandler = e => {
@@ -291,25 +285,44 @@ function Enroll(props) {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("visitor", userId);
-    formData.append("name", Name);
-    formData.append("address", Address);
-    formData.append("date", VisitiedDate);
-    formData.append("img", ImageData);
+    // formData.append("visitor", userId);
+    // formData.append("name", Name);
+    // formData.append("address", Address);
+    // formData.append("date", VisitiedDate);
+    formData.append("image", ImageData);
 
     if (parentCompName === "MainPage") {
-      dispatch(registerRestaurant(formData)).then(response => {
-        if (response.payload.success) {
-          setName("");
-          setAddress("");
-          setVisitiedDate("");
-          setImageData("");
-          props.setToggle(true);
-          props.history.push("/main", userId);
-        } else {
-          alert("error");
-        }
-      });
+      axios
+        .post("https://api.imgur.com/3/image", formData, {
+          headers: {
+            Authorization: "Client-ID e4dc4dac3124836",
+            Accept: "application/json"
+          }
+        })
+        .then(response => {
+          const body = {
+            visitor: userId,
+            name: Name,
+            address: Address,
+            date: VisitiedDate,
+            imgURL: response.data.data.link
+          };
+          dispatch(registerRestaurant(body)).then(response => {
+            if (response.payload.success) {
+              setName("");
+              setAddress("");
+              setVisitiedDate("");
+              setImageData("");
+              props.setToggle(true);
+              props.history.push("/main", userId);
+            } else {
+              alert("error");
+            }
+          });
+        })
+        .catch(err => {
+          console.log("imgur err: ", err);
+        });
     } else if (parentCompName === "WishPage") {
       const body = {
         user: userId,
