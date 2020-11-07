@@ -28,11 +28,6 @@ function RestaurantList(props) {
     id: props.userId
   };
 
-  const clickRestaurant = (restaurantAddress, restaurantName) => {
-    props.setAddress(restaurantAddress);
-    props.setRestaurantName(restaurantName);
-  };
-
   const deleteHandler = restaurantId => {
     dispatch(deleteRestaurant(restaurantId)).then(response => {
       if (response.payload.success) {
@@ -55,7 +50,8 @@ function RestaurantList(props) {
         {restaurants.map(restaurant => (
           <RestaurantListItem
             key={restaurant._id}
-            onClick={() => clickRestaurant(restaurant.address, restaurant.name)}
+            setAddress={props.setAddress}
+            setRestaurantName={props.setRestaurantName}
             restaurant={restaurant}
             deleteHandler={deleteHandler}
           ></RestaurantListItem>

@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { withRouter } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { getImage } from "../../../_actions/restaurant_action";
 import styled from "styled-components";
 
 const Item = styled.li`
@@ -27,23 +25,14 @@ const FoodImg = styled.img`
 
 function RestaurantListItem(props) {
   const restaurant = props.restaurant;
-  const dispatch = useDispatch();
-  //   const [ImgSrc, setImgSrc] = useState(
-  //     "https://images.unsplash.com/photo-1595576359780-91004705b4f0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=975&q=80"
-  //   );
 
-  //   useEffect(() => {
-  //     dispatch(getImage(restaurant.filename)).then(response => {
-  //       const base64data = new Buffer(response.payload).toString("base64");
-  //       console.log(base64data);
-
-  //       console.log("response payload: ", response.payload);
-  //       setImgSrc(base64data);
-  //     });
-  //   });
+  const clickRestaurant = (restaurantAddress, restaurantName) => {
+    props.setAddress(restaurantAddress);
+    props.setRestaurantName(restaurantName);
+  };
 
   return (
-    <Item>
+    <Item onClick={() => clickRestaurant(restaurant.address, restaurant.name)}>
       <FoodImg src={restaurant.imgURL}></FoodImg>
       <HeadLine>{restaurant.name}</HeadLine>
       <button onClick={() => props.deleteHandler(restaurant._id)}>삭제</button>

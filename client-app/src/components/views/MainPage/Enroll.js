@@ -275,9 +275,9 @@ function Enroll(props) {
         const image = reader.result;
         fetch(image)
           .then(res => res.blob())
-          .then(blob => heic2any({ blob }))
+          .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.2 }))
           .then(conversionResult => {
-            console.log("conver: ", conversionResult);
+            console.log("conversion: ", conversionResult);
             // conversionResult is a BLOB
             setImageData(conversionResult);
           })
