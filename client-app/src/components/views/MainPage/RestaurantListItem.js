@@ -39,14 +39,33 @@ function RestaurantListItem(props) {
     >
       <Card.Body>
         <Card.Title>{restaurant.name}</Card.Title>
-        <Card.Img variant="top" src={restaurant.imgURL} />
-        <Card.Text>
-          방문일시: {restaurant.date} <br />
+        <div
+          style={{
+            width: "200px",
+            minHeight: "200px",
+            maxHeight: "auto",
+            float: "left",
+            margin: "3px",
+            padding: "3px"
+          }}
+        >
+          <Card.Img
+            variant="top"
+            src={restaurant.imgURL}
+            style={{
+              maxWidth: "100%",
+              height: "auto"
+            }}
+          />
+        </div>
+        <Card.Text style={{ display: "inline-block" }}>
+          방문 일시: {restaurant.date} <br />
           주소: {restaurant.address}
         </Card.Text>
         <Button
           variant="primary"
           onClick={() => props.deleteHandler(restaurant._id)}
+          style={{ display: "inline-block" }}
         >
           삭제
         </Button>
