@@ -19,7 +19,7 @@ const restaurantSchema = new Schema({
     maxlength: 300
   },
   date: {
-    type: Date
+    type: String
   },
   imgURL: {
     type: String

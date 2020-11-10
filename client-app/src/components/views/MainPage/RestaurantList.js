@@ -9,7 +9,7 @@ import RestaurantListItem from "./RestaurantListItem";
 import styled from "styled-components";
 
 const Restaurants = styled.div`
-  width: 500px;
+  width: 300px;
   height: 400px;
   display: inline-block;
   overflow-y: scroll;
@@ -17,8 +17,8 @@ const Restaurants = styled.div`
 
 const List = styled.ol`
   list-style: none;
-  width: 600px;
-  max-width: 70%;
+  /* width: 600px; */
+  max-width: 100%;
 `;
 
 function RestaurantList(props) {

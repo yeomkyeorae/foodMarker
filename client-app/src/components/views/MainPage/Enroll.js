@@ -260,7 +260,7 @@ function Enroll(props) {
   };
 
   const onVisitiedDateHandler = e => {
-    setVisitiedDate(e.currentTarget.value);
+    setVisitiedDate(String(e.currentTarget.value));
   };
 
   const onImageDataHandler = e => {
