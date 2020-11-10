@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { Card, Button } from "react-bootstrap";
 import styled from "styled-components";
 
 const Item = styled.li`
@@ -32,14 +33,25 @@ function RestaurantListItem(props) {
   };
 
   return (
-    <Item onClick={() => clickRestaurant(restaurant.address, restaurant.name)}>
-      <FoodImg src={restaurant.imgURL}></FoodImg>
-      <HeadLine>{restaurant.name}</HeadLine>
-      <button onClick={() => props.deleteHandler(restaurant._id)}>삭제</button>
-      <span>{restaurant.date}</span> <br />
-      <hr />
-      <span>{restaurant.address}</span>
-    </Item>
+    <Card
+      style={{ width: "18rem" }}
+      onClick={() => clickRestaurant(restaurant.address, restaurant.name)}
+    >
+      <Card.Body>
+        <Card.Title>{restaurant.name}</Card.Title>
+        <Card.Img variant="top" src={restaurant.imgURL} />
+        <Card.Text>
+          방문일시: {restaurant.date} <br />
+          주소: {restaurant.address}
+        </Card.Text>
+        <Button
+          variant="primary"
+          onClick={() => props.deleteHandler(restaurant._id)}
+        >
+          삭제
+        </Button>
+      </Card.Body>
+    </Card>
   );
 }
 
