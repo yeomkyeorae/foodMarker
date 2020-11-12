@@ -45,6 +45,7 @@ function WishListItem(props) {
 
     dispatch(registerRestaurant(body)).then(response => {
       if (response.payload.success) {
+        props.setToggle(true);
         setPopUpToggle(false);
         props.deleteHandler(wishListId);
       } else {

@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { logoutUser } from "../../../_actions/user_action";
 import { withRouter } from "react-router-dom";
 import Restaurants from "./Restaurants";
 import Enroll from "./Enroll";
 import NavbarComp from "../Navbar/NavbarComp";
 
 function MainPage(props) {
-  const dispatch = useDispatch();
   const userId = props.location.state;
   const [Toggle, setToggle] = useState(true);
   const [Menu, setMenu] = useState("식당 등록");
@@ -19,16 +16,6 @@ function MainPage(props) {
     } else {
       setMenu("식당 등록");
     }
-  };
-
-  const onClickHandler = () => {
-    dispatch(logoutUser()).then(response => {
-      if (response.payload.success) {
-        props.history.push("/loginSignup");
-      } else {
-        alert("failed to logout");
-      }
-    });
   };
 
   let MenuComponent;
@@ -46,10 +33,7 @@ function MainPage(props) {
 
   return (
     <div>
-      <NavbarComp userId={userId} />
-      <button onClick={onClickHandler} style={{ float: "left" }}>
-        로그아웃
-      </button>
+      <NavbarComp userId={userId} history={props.history} />
       <button
         onClick={onClickChangeMenuHandler}
         style={{ marginLeft: "10px", floag: "left" }}

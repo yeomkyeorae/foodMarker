@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../../_actions/user_action";
 import styled from "styled-components";
 
 const NavDiv = styled.div`
@@ -11,6 +13,17 @@ const NavDiv = styled.div`
 
 function NavbarComp(props) {
   const userId = props.userId;
+  const dispatch = useDispatch();
+
+  const onClickHandler = () => {
+    dispatch(logoutUser()).then(response => {
+      if (response.payload.success) {
+        props.history.push("/loginSignup");
+      } else {
+        alert("failed to logout");
+      }
+    });
+  };
 
   return (
     <Navbar bg="primary" variant="dark">
@@ -24,6 +37,7 @@ function NavbarComp(props) {
         <Link to={{ pathname: "/wish", state: userId }}>
           <NavDiv>Wish Retaurants</NavDiv>
         </Link>
+        <NavDiv onClick={onClickHandler}>Logout</NavDiv>
       </Nav>
     </Navbar>
   );
