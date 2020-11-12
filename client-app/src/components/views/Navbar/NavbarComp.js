@@ -37,7 +37,14 @@ function NavbarComp(props) {
         <Link to={{ pathname: "/wish", state: userId }}>
           <NavDiv>Wish Retaurants</NavDiv>
         </Link>
-        <NavDiv onClick={onClickHandler}>Logout</NavDiv>
+        <NavDiv
+          onClick={onClickHandler}
+          style={{
+            cursor: "pointer"
+          }}
+        >
+          Logout
+        </NavDiv>
       </Nav>
     </Navbar>
   );
