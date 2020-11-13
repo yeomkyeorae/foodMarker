@@ -49,12 +49,12 @@ function Restaurants(props) {
   });
 
   return (
-    <div style={{}}>
+    <div style={{ display: "inline-block", width: "80%" }}>
       <div
         id={`map`}
         style={{
-          width: "600px",
-          height: "400px"
+          width: "100%",
+          height: "350px"
         }}
       ></div>
       <RestaurantList

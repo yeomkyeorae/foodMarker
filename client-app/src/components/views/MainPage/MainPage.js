@@ -41,8 +41,8 @@ function MainPage(props) {
         >
           {Menu}
         </button>
-        {MenuComponent}
       </div>
+      {MenuComponent}
     </div>
   );
 }
