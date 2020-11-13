@@ -34,7 +34,7 @@ function RestaurantListItem(props) {
 
   return (
     <Card
-      style={{ width: "18rem" }}
+      style={{ width: "100%" }}
       onClick={() => clickRestaurant(restaurant.address, restaurant.name)}
     >
       <Card.Body>

@@ -9,15 +9,15 @@ import RestaurantListItem from "./RestaurantListItem";
 import styled from "styled-components";
 
 const Restaurants = styled.div`
-  width: 300px;
+  width: 60%;
   height: 400px;
-  /* display: inline-block; */
+  display: inline-block;
   overflow-y: scroll;
 `;
 
 const List = styled.ol`
   list-style: none;
-  /* width: 600px; */
+  width: 600px;
   max-width: 100%;
 `;
 
