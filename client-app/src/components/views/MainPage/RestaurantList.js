@@ -11,7 +11,7 @@ import styled from "styled-components";
 const Restaurants = styled.div`
   width: 300px;
   height: 400px;
-  display: inline-block;
+  /* display: inline-block; */
   overflow-y: scroll;
 `;
 

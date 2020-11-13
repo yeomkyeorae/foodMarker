@@ -32,15 +32,17 @@ function MainPage(props) {
   }
 
   return (
-    <div>
+    <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
       <NavbarComp userId={userId} history={props.history} />
-      <button
-        onClick={onClickChangeMenuHandler}
-        style={{ marginLeft: "10px", floag: "left" }}
-      >
-        {Menu}
-      </button>
-      {MenuComponent}
+      <div style={{}}>
+        <button
+          onClick={onClickChangeMenuHandler}
+          style={{ textAlign: "center", margin: "20px" }}
+        >
+          {Menu}
+        </button>
+        {MenuComponent}
+      </div>
     </div>
   );
 }
