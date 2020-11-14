@@ -9,8 +9,8 @@ import RestaurantListItem from "./RestaurantListItem";
 import styled from "styled-components";
 
 const Restaurants = styled.div`
-  width: 60%;
-  height: 400px;
+  width: 50%;
+  height: 500px;
   display: inline-block;
   overflow-y: scroll;
 `;
