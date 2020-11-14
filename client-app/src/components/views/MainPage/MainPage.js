@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import Restaurants from "./Restaurants";
 import Enroll from "./Enroll";
 import NavbarComp from "../Navbar/NavbarComp";
+import { Button } from "react-bootstrap";
 
 function MainPage(props) {
   const userId = props.location.state;
@@ -35,12 +36,13 @@ function MainPage(props) {
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
       <NavbarComp userId={userId} history={props.history} />
       <div style={{}}>
-        <button
+        <Button
+          variant="danger"
           onClick={onClickChangeMenuHandler}
-          style={{ textAlign: "center", margin: "20px" }}
+          style={{ margin: "20px" }}
         >
           {Menu}
-        </button>
+        </Button>
       </div>
       {MenuComponent}
     </div>
