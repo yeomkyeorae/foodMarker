@@ -42,20 +42,17 @@ function RestaurantListItem(props) {
           <Card.Title>{restaurant.name}</Card.Title>
           <div
             style={{
-              width: "200px",
-              minHeight: "200px",
-              maxHeight: "auto",
-              float: "left",
-              margin: "3px",
-              padding: "3px"
+              width: "180px",
+              height: "240px",
+              overflow: "hidden"
             }}
           >
             <Card.Img
               variant="top"
               src={restaurant.imgURL}
               style={{
-                maxWidth: "100%",
-                height: "auto"
+                width: "100%",
+                height: "100%"
               }}
             />
           </div>
