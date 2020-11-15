@@ -6,10 +6,11 @@ import {
   deleteRestaurant
 } from "../../../_actions/restaurant_action";
 import RestaurantListItem from "./RestaurantListItem";
+import { Row } from "react-bootstrap";
 import styled from "styled-components";
 
 const Restaurants = styled.div`
-  width: 50%;
+  width: 60%;
   height: 500px;
   display: inline-block;
   overflow-y: scroll;
@@ -17,7 +18,7 @@ const Restaurants = styled.div`
 
 const List = styled.ol`
   list-style: none;
-  width: 600px;
+  width: 100%;
   max-width: 100%;
 `;
 
@@ -47,15 +48,17 @@ function RestaurantList(props) {
   return (
     <Restaurants>
       <List>
-        {restaurants.map(restaurant => (
-          <RestaurantListItem
-            key={restaurant._id}
-            setAddress={props.setAddress}
-            setRestaurantName={props.setRestaurantName}
-            restaurant={restaurant}
-            deleteHandler={deleteHandler}
-          ></RestaurantListItem>
-        ))}
+        <Row className="show-grid">
+          {restaurants.map(restaurant => (
+            <RestaurantListItem
+              key={restaurant._id}
+              setAddress={props.setAddress}
+              setRestaurantName={props.setRestaurantName}
+              restaurant={restaurant}
+              deleteHandler={deleteHandler}
+            ></RestaurantListItem>
+          ))}
+        </Row>
       </List>
     </Restaurants>
   );
