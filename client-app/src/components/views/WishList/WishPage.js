@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import Enroll from "../MainPage/Enroll";
 import WishList from "./WishList";
 import NavbarComp from "../Navbar/NavbarComp";
+import { Button } from "react-bootstrap";
 
 function WishPage(props) {
   const userId = props.location.state;
@@ -32,14 +33,17 @@ function WishPage(props) {
   }
 
   return (
-    <div>
+    <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
       <NavbarComp userId={userId} history={props.history} />
-      <button
-        onClick={onClickChangeMenuHandler}
-        style={{ marginLeft: "10px", floag: "left" }}
-      >
-        {Menu}
-      </button>
+      <div style={{}}>
+        <Button
+          variant="danger"
+          onClick={onClickChangeMenuHandler}
+          style={{ margin: "20px" }}
+        >
+          {Menu}
+        </Button>
+      </div>
       {MenuComponent}
     </div>
   );
