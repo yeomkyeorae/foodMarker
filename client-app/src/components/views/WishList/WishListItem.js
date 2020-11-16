@@ -77,10 +77,17 @@ function WishListItem(props) {
   );
 
   return (
-    <Item key={wishListId}>
+    <Item key={wishListId} style={{ width: "100%" }}>
       <HeadLine>{wishListName}</HeadLine>
-      <button onClick={() => props.deleteHandler(wishListId)}>삭제</button>
-      <button onClick={() => openPopUp()}>방문?</button>
+      <Button
+        onClick={() => props.deleteHandler(wishListId)}
+        style={{ margin: "2px" }}
+      >
+        삭제
+      </Button>
+      <Button onClick={() => openPopUp()} style={{ margin: "2px" }}>
+        방문
+      </Button>
       {popUpToggle && ModalComp}
       <span>{wishListAddress}</span> <br />
       <hr />

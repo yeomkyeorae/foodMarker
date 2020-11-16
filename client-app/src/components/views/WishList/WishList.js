@@ -9,16 +9,15 @@ import WishListItem from "./WishListItem";
 import styled from "styled-components";
 
 const WishLists = styled.div`
-  width: 300px;
-  height: 400px;
+  width: 40%;
+  height: 500px;
   display: inline-block;
   overflow-y: scroll;
 `;
 
 const List = styled.ol`
   list-style: none;
-  width: 600px;
-  max-width: 70%;
+  width: 100%;
 `;
 
 function WishList(props) {
