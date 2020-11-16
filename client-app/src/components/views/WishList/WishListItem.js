@@ -19,6 +19,7 @@ const HeadLine = styled.h2`
   padding: 0rem 0 0 0;
   margin: 0 0 1rem 0;
   font: normal 2rem var(--font-head);
+  font-size: 2rem;
 `;
 
 function WishListItem(props) {
@@ -70,7 +71,7 @@ function WishListItem(props) {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="primary" onClick={moveToMain}>
-          Save changes
+          방문 표시하기
         </Button>
       </Modal.Footer>
     </Modal.Dialog>
@@ -79,15 +80,22 @@ function WishListItem(props) {
   return (
     <Item key={wishListId} style={{ width: "100%" }}>
       <HeadLine>{wishListName}</HeadLine>
-      <Button
-        onClick={() => props.deleteHandler(wishListId)}
-        style={{ margin: "2px" }}
-      >
-        삭제
-      </Button>
-      <Button onClick={() => openPopUp()} style={{ margin: "2px" }}>
-        방문
-      </Button>
+      <div>
+        <Button
+          variant="success"
+          onClick={() => openPopUp()}
+          style={{ margin: "2px" }}
+        >
+          방문
+        </Button>
+        <Button
+          variant="danger"
+          onClick={() => props.deleteHandler(wishListId)}
+          style={{ margin: "2px" }}
+        >
+          삭제
+        </Button>
+      </div>
       {popUpToggle && ModalComp}
       <span>{wishListAddress}</span> <br />
       <hr />
