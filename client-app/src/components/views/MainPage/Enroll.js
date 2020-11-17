@@ -369,7 +369,11 @@ function Enroll(props) {
           style={{ width: "500px", height: "400px", display: "inline-block" }}
         ></div>
 
-        <div id={`menu_wrap`} className="bg_white">
+        <div
+          id={`menu_wrap`}
+          className="bg_white"
+          style={{ display: "inline-block", width: "50%" }}
+        >
           <div className="option">
             <div>
               키워드 :{" "}
@@ -386,7 +390,15 @@ function Enroll(props) {
             </div>
           </div>
           <hr />
-          <ul id={`placesList`}></ul>
+          <ul
+            id={`placesList`}
+            style={{
+              listStyle: "none",
+              height: "300px",
+              display: "inline-block",
+              overflowY: "scroll"
+            }}
+          ></ul>
           <div id={`pagination`}></div>
         </div>
       </div>
