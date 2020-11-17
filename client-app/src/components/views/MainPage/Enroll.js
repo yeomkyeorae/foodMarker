@@ -408,32 +408,38 @@ function Enroll(props) {
           <input
             type="text"
             value={Name}
-            placeholder="식당 이름"
+            placeholder="식당: 검색 후 선택하세요"
             onChange={onNameHandler}
             readOnly
+            style={{ width: "200px" }}
           />
         </div>
         <div>
           <input
             type="text"
             value={Address}
-            placeholder="주소"
+            placeholder="주소: 검색 후 선택하세요"
             onChange={onAddressHandler}
             readOnly
+            style={{ width: "200px" }}
           />
         </div>
         {parentCompName === "MainPage" ? (
-          <div>
+          <div style={{ display: "inline-block" }}>
             <input
               type="date"
               value={VisitiedDate}
               placeholder="방문 일시"
               onChange={onVisitiedDateHandler}
             />
-            <input type="file" onChange={onImageDataHandler} />
+            <div style={{ marginLeft: "100px" }}>
+              <input type="file" onChange={onImageDataHandler} />
+            </div>
           </div>
         ) : null}
-        <button type="submit">등록</button>
+        <div>
+          <button type="submit">등록</button>
+        </div>
       </form>
     </div>
   );
