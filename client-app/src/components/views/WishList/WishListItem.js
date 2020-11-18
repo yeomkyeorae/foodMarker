@@ -59,7 +59,7 @@ function WishListItem(props) {
   const ModalComp = (
     <Modal.Dialog>
       <Modal.Header closeButton onClick={() => openPopUp()}>
-        <Modal.Title>방문 전환</Modal.Title>
+        <Modal.Title>{wishListName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <input
@@ -69,7 +69,7 @@ function WishListItem(props) {
           onChange={onVisitiedDateHandler}
         />
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer style={{ textAlign: "center" }}>
         <Button variant="primary" onClick={moveToMain}>
           방문 표시하기
         </Button>
