@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
+import heic2any from "heic2any";
 import styled from "styled-components";
 import { registerRestaurant } from "../../../_actions/restaurant_action";
 
@@ -26,6 +27,7 @@ function WishListItem(props) {
   const { wishListId, wishListName, wishListAddress, userId } = props;
   const dispatch = useDispatch();
   const [popUpToggle, setPopUpToggle] = useState(false);
+  const [ImageData, setImageData] = useState("");
   const [VisitiedDate, setVisitiedDate] = useState("");
 
   const openPopUp = () => {
@@ -34,6 +36,34 @@ function WishListItem(props) {
 
   const onVisitiedDateHandler = e => {
     setVisitiedDate(String(e.currentTarget.value));
+  };
+
+  const onImageDataHandler = e => {
+    e.preventDefault();
+
+    let file = e.target.files[0];
+    console.log("file: ", file);
+    if (file.type === "image/heic") {
+      const reader = new FileReader();
+
+      reader.onloadend = function() {
+        const image = reader.result;
+        fetch(image)
+          .then(res => res.blob())
+          .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.2 }))
+          .then(conversionResult => {
+            console.log("conversion: ", conversionResult);
+            // conversionResult is a BLOB
+            setImageData(conversionResult);
+          })
+          .catch(err => {
+            console.log("err: ", err);
+          });
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImageData(file);
+    }
   };
 
   const moveToMain = () => {
@@ -57,7 +87,7 @@ function WishListItem(props) {
   };
 
   const ModalComp = (
-    <Modal.Dialog>
+    <Modal.Dialog style={{ textAlign: "center" }}>
       <Modal.Header closeButton onClick={() => openPopUp()}>
         <Modal.Title>{wishListName}</Modal.Title>
       </Modal.Header>
@@ -69,8 +99,13 @@ function WishListItem(props) {
           onChange={onVisitiedDateHandler}
         />
       </Modal.Body>
-      <Modal.Footer style={{ textAlign: "center" }}>
-        <Button variant="primary" onClick={moveToMain}>
+      <Modal.Footer>
+        <div style={{ marginLeft: "100px" }}>
+          <input type="file" onChange={onImageDataHandler} />
+        </div>
+      </Modal.Footer>
+      <Modal.Footer>
+        <Button variant="success" onClick={moveToMain}>
           방문 표시하기
         </Button>
       </Modal.Footer>
