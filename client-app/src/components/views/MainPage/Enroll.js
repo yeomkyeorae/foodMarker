@@ -330,6 +330,7 @@ function Enroll(props) {
                 setVisitiedDate("");
                 setImageData("");
                 props.setToggle(true);
+                props.setMenu("식당 등록");
                 props.history.push("/main", userId);
               } else {
                 alert("error");
@@ -353,6 +354,7 @@ function Enroll(props) {
           setName("");
           setAddress("");
           props.setToggle(true);
+          props.setMenu("위시리스트 등록");
           props.history.push("/wish", userId);
         } else {
           alert("error");

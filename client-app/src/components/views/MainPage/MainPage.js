@@ -28,6 +28,7 @@ function MainPage(props) {
         userId={userId}
         setToggle={setToggle}
         parentCompName={"MainPage"}
+        setMenu={setMenu}
       />
     );
   }

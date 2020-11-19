@@ -28,6 +28,7 @@ function WishPage(props) {
         userId={userId}
         parentCompName={"WishPage"}
         setToggle={setToggle}
+        setMenu={setMenu}
       />
     );
   }
