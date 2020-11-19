@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
 import heic2any from "heic2any";
+import axios from "axios";
 import styled from "styled-components";
 import { registerRestaurant } from "../../../_actions/restaurant_action";
 
@@ -66,24 +67,40 @@ function WishListItem(props) {
     }
   };
 
-  const moveToMain = () => {
-    let body = {
-      visitor: userId,
-      name: wishListName,
-      address: wishListAddress,
-      date: VisitiedDate
-    };
+  const moveToMain = e => {
+    e.preventDefault();
 
-    dispatch(registerRestaurant(body)).then(response => {
-      if (response.payload.success) {
-        props.setToggle(true);
-        setPopUpToggle(false);
-        props.deleteHandler(wishListId);
-      } else {
-        console.log(response);
-        alert("error");
-      }
-    });
+    const formData = new FormData();
+    formData.append("image", ImageData);
+
+    axios
+      .post("https://api.imgur.com/3/image", formData, {
+        headers: {
+          Authorization: "Client-ID e4dc4dac3124836",
+          Accept: "application/json"
+        }
+      })
+      .then(response => {
+        const body = {
+          visitor: userId,
+          name: wishListName,
+          address: wishListAddress,
+          date: VisitiedDate,
+          imgURL: response.data.data.link
+        };
+
+        dispatch(registerRestaurant(body)).then(response => {
+          if (response.payload.success) {
+            alert("방문 표시되었습니다.");
+            props.setToggle(true);
+            setPopUpToggle(false);
+            props.deleteHandler(wishListId);
+          } else {
+            console.log(response);
+            alert("error");
+          }
+        });
+      });
   };
 
   const ModalComp = (
@@ -115,6 +132,8 @@ function WishListItem(props) {
   return (
     <Item key={wishListId} style={{ width: "100%" }}>
       <HeadLine>{wishListName}</HeadLine>
+      {popUpToggle && ModalComp}
+      <span>{wishListAddress}</span> <br />
       <div>
         <Button
           variant="success"
@@ -131,8 +150,6 @@ function WishListItem(props) {
           삭제
         </Button>
       </div>
-      {popUpToggle && ModalComp}
-      <span>{wishListAddress}</span> <br />
       <hr />
     </Item>
   );
