@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { registerRestaurant } from "../../../_actions/restaurant_action";
 import { registerWishList } from "../../../_actions/wishList_action";
+import { Button } from "react-bootstrap";
 import axios from "axios";
 import heic2any from "heic2any";
 
@@ -440,7 +441,9 @@ function Enroll(props) {
           </div>
         ) : null}
         <div>
-          <button type="submit">등록</button>
+          <Button variant="primary" style={{ margin: "20px" }} type="submit">
+            등록
+          </Button>
         </div>
       </form>
     </div>
