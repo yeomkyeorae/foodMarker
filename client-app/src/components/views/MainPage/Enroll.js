@@ -217,6 +217,7 @@ function Enroll(props) {
         for (i = 1; i <= pagination.last; i++) {
           var el = document.createElement("a");
           el.href = "#";
+          el.style.cssText = "margin:10px";
           el.innerHTML = i;
 
           if (i === pagination.current) {
