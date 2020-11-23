@@ -61,9 +61,16 @@ function RestaurantListItem(props) {
             주소: {restaurant.address}
           </Card.Text>
           <Button
+            variant="warning"
+            onClick={() => console.log("should do")}
+            style={{ display: "inline-block", margin: "2px" }}
+          >
+            수정
+          </Button>
+          <Button
             variant="primary"
             onClick={() => props.deleteHandler(restaurant._id)}
-            style={{ display: "inline-block" }}
+            style={{ display: "inline-block", margin: "2px" }}
           >
             삭제
           </Button>
