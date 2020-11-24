@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { Card, Col, Button } from "react-bootstrap";
+import Enroll from "./Enroll";
 import styled from "styled-components";
 
 const Item = styled.li`
@@ -26,6 +27,18 @@ const FoodImg = styled.img`
 
 function RestaurantListItem(props) {
   const restaurant = props.restaurant;
+  const [Toggle, setToggle] = useState(true);
+
+  if (Toggle) {
+    // console.log(Toggle);
+  } else {
+    // console.log(Toggle);
+  }
+
+  const updateHandler = e => {
+    setToggle(!Toggle);
+    console.log("haha");
+  };
 
   const clickRestaurant = (restaurantAddress, restaurantName) => {
     props.setAddress(restaurantAddress);
@@ -62,7 +75,7 @@ function RestaurantListItem(props) {
           </Card.Text>
           <Button
             variant="warning"
-            onClick={() => console.log("should do")}
+            onClick={() => updateHandler()}
             style={{ display: "inline-block", margin: "2px" }}
           >
             수정
