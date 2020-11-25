@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { Card, Col, Button } from "react-bootstrap";
-import Enroll from "./Enroll";
+import { Card, Col, Button, Modal } from "react-bootstrap";
 import styled from "styled-components";
 
 const Item = styled.li`
@@ -27,17 +26,43 @@ const FoodImg = styled.img`
 
 function RestaurantListItem(props) {
   const restaurant = props.restaurant;
-  const [Toggle, setToggle] = useState(true);
+  const [Toggle, setToggle] = useState(false);
 
-  if (Toggle) {
-    // console.log(Toggle);
-  } else {
-    // console.log(Toggle);
-  }
+  const openPopUp = () => {
+    setToggle(!Toggle);
+  };
+
+  const ModalComp = (
+    <Modal.Dialog
+      style={{ textAlign: "center", position: "fixed", zIndex: "100" }}
+    >
+      <Modal.Header closeButton onClick={() => openPopUp()}>
+        <Modal.Title>{restaurant.name}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <input
+          type="date"
+          // value={VisitiedDate}
+          placeholder="방문 일시"
+          // onChange={onVisitiedDateHandler}
+        />
+      </Modal.Body>
+      <Modal.Footer>
+        <div style={{ marginLeft: "100px" }}>
+          {/* <input type="file" onChange={onImageDataHandler} /> */}
+          <input type="file" />
+        </div>
+      </Modal.Footer>
+      <Modal.Footer>
+        {/* <Button variant="success" onClick={moveToMain}> */}
+        <Button variant="success">수정하기</Button>
+      </Modal.Footer>
+    </Modal.Dialog>
+  );
 
   const updateHandler = e => {
     setToggle(!Toggle);
-    console.log("haha");
+    console.log(Toggle);
   };
 
   const clickRestaurant = (restaurantAddress, restaurantName) => {
@@ -47,6 +72,7 @@ function RestaurantListItem(props) {
 
   return (
     <Col md={4}>
+      {Toggle && ModalComp}
       <Card
         style={{ width: "100%" }}
         onClick={() => clickRestaurant(restaurant.address, restaurant.name)}
