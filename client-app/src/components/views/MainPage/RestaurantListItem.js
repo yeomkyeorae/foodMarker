@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { Card, Col, Button, Modal } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import heic2any from "heic2any";
 import axios from "axios";
 import styled from "styled-components";
@@ -31,6 +32,7 @@ function RestaurantListItem(props) {
   const [Toggle, setToggle] = useState(false);
   const [ImageData, setImageData] = useState("");
   const [VisitiedDate, setVisitiedDate] = useState("");
+  const dispatch = useDispatch();
 
   const openPopUp = () => {
     setToggle(!Toggle);
@@ -68,6 +70,42 @@ function RestaurantListItem(props) {
     }
   };
 
+  const changeRestaurant = e => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("image", ImageData);
+
+    axios
+      .post("https://api.imgur.com/3/image", formData, {
+        headers: {
+          Authorization: "Client-ID e4dc4dac3124836",
+          Accept: "application/json"
+        }
+      })
+      .then(response => {
+        const body = {
+          visitor: userId,
+          name: wishListName,
+          address: wishListAddress,
+          date: VisitiedDate,
+          imgURL: response.data.data.link
+        };
+
+        dispatch(registerRestaurant(body)).then(response => {
+          if (response.payload.success) {
+            alert("방문 표시되었습니다.");
+            props.setToggle(true);
+            setPopUpToggle(false);
+            props.deleteHandler(wishListId);
+          } else {
+            console.log(response);
+            alert("error");
+          }
+        });
+      });
+  };
+
   const ModalComp = (
     <Modal.Dialog
       style={{ textAlign: "center", position: "fixed", zIndex: "100" }}
@@ -89,7 +127,9 @@ function RestaurantListItem(props) {
         </div>
       </Modal.Footer>
       <Modal.Footer>
-        <Button variant="success">수정하기</Button>
+        <Button variant="success" onClick={changeRestaurant}>
+          수정하기
+        </Button>
       </Modal.Footer>
     </Modal.Dialog>
   );
