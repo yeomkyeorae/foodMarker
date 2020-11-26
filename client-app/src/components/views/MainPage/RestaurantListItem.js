@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { Card, Col, Button, Modal } from "react-bootstrap";
+import heic2any from "heic2any";
+import axios from "axios";
 import styled from "styled-components";
 
 const Item = styled.li`
@@ -27,9 +29,43 @@ const FoodImg = styled.img`
 function RestaurantListItem(props) {
   const restaurant = props.restaurant;
   const [Toggle, setToggle] = useState(false);
+  const [ImageData, setImageData] = useState("");
+  const [VisitiedDate, setVisitiedDate] = useState("");
 
   const openPopUp = () => {
     setToggle(!Toggle);
+  };
+
+  const onVisitiedDateHandler = e => {
+    setVisitiedDate(String(e.currentTarget.value));
+  };
+
+  const onImageDataHandler = e => {
+    e.preventDefault();
+
+    let file = e.target.files[0];
+    console.log("file: ", file);
+    if (file.type === "image/heic") {
+      const reader = new FileReader();
+
+      reader.onloadend = function() {
+        const image = reader.result;
+        fetch(image)
+          .then(res => res.blob())
+          .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.2 }))
+          .then(conversionResult => {
+            console.log("conversion: ", conversionResult);
+            // conversionResult is a BLOB
+            setImageData(conversionResult);
+          })
+          .catch(err => {
+            console.log("err: ", err);
+          });
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImageData(file);
+    }
   };
 
   const ModalComp = (
@@ -42,19 +78,17 @@ function RestaurantListItem(props) {
       <Modal.Body>
         <input
           type="date"
-          // value={VisitiedDate}
+          value={VisitiedDate}
           placeholder="방문 일시"
-          // onChange={onVisitiedDateHandler}
+          onChange={onVisitiedDateHandler}
         />
       </Modal.Body>
       <Modal.Footer>
         <div style={{ marginLeft: "100px" }}>
-          {/* <input type="file" onChange={onImageDataHandler} /> */}
-          <input type="file" />
+          <input type="file" onChange={onImageDataHandler} />
         </div>
       </Modal.Footer>
       <Modal.Footer>
-        {/* <Button variant="success" onClick={moveToMain}> */}
         <Button variant="success">수정하기</Button>
       </Modal.Footer>
     </Modal.Dialog>
