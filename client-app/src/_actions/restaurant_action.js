@@ -38,14 +38,3 @@ export function deleteRestaurant(restaurantId) {
     payload: request
   };
 }
-
-export function getImage(filename) {
-  const request = axios
-    .get(`/api/image/${filename}`)
-    .then(response => response.data);
-
-  return {
-    type: GET_IMAGE,
-    payload: request
-  };
-}
