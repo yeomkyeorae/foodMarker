@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { Card, Col, Button, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+import { updateRestaurant } from "../../../_actions/restaurant_action";
 import heic2any from "heic2any";
 import axios from "axios";
 import styled from "styled-components";
@@ -85,19 +86,15 @@ function RestaurantListItem(props) {
       })
       .then(response => {
         const body = {
-          visitor: userId,
-          name: wishListName,
-          address: wishListAddress,
+          restaurantId: restaurant._id,
           date: VisitiedDate,
           imgURL: response.data.data.link
         };
 
-        dispatch(registerRestaurant(body)).then(response => {
+        dispatch(updateRestaurant(body)).then(response => {
           if (response.payload.success) {
-            alert("방문 표시되었습니다.");
-            props.setToggle(true);
-            setPopUpToggle(false);
-            props.deleteHandler(wishListId);
+            alert("수정되었습니다.");
+            setToggle(!Toggle);
           } else {
             console.log(response);
             alert("error");

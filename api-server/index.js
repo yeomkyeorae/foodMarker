@@ -162,6 +162,26 @@ app.post("/api/restaurant", (req, res) => {
   });
 });
 
+// update my restaurant
+app.put("/api/restaurant", (req, res) => {
+  console.log("req.body: ", req.body);
+  Restaurant.findById(req.body.restaurantId, (err, restaurant) => {
+    restaurant.date = req.body.date;
+    restaurant.imgURL = req.body.imgURL;
+    console.log(restaurant);
+    restaurant.save((err, restaurantInfo) => {
+      if (err)
+        return res.json({
+          success: false,
+          err
+        });
+      return res.status(200).json({
+        success: true
+      });
+    });
+  });
+});
+
 // delete my restaurant
 app.delete("/api/restaurant", (req, res) => {
   Restaurant.findOneAndRemove({ _id: req.query._id }, (err, restaurantInfo) => {

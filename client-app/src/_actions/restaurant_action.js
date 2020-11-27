@@ -3,6 +3,7 @@ import {
   READ_RESTAURANTS,
   REGISTER_RESTAURANT,
   DELETE_RESTAURANT,
+  UPDATE_RESTAURANT,
   GET_IMAGE
 } from "./types";
 
@@ -35,6 +36,17 @@ export function deleteRestaurant(restaurantId) {
 
   return {
     type: DELETE_RESTAURANT,
+    payload: request
+  };
+}
+
+export function updateRestaurant(dataToSubmit) {
+  const request = axios
+    .put("/api/restaurant", dataToSubmit)
+    .then(response => response.data);
+
+  return {
+    type: UPDATE_RESTAURANT,
     payload: request
   };
 }
