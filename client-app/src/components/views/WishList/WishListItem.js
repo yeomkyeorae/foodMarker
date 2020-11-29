@@ -30,6 +30,7 @@ function WishListItem(props) {
   const [popUpToggle, setPopUpToggle] = useState(false);
   const [ImageData, setImageData] = useState("");
   const [VisitiedDate, setVisitiedDate] = useState("");
+  const [isConverting, setIsConverting] = useState(false);
 
   const openPopUp = () => {
     setPopUpToggle(!popUpToggle);
@@ -45,6 +46,7 @@ function WishListItem(props) {
     let file = e.target.files[0];
     console.log("file: ", file);
     if (file.type === "image/heic") {
+      setIsConverting(true);
       const reader = new FileReader();
 
       reader.onloadend = function() {
@@ -56,6 +58,7 @@ function WishListItem(props) {
             console.log("conversion: ", conversionResult);
             // conversionResult is a BLOB
             setImageData(conversionResult);
+            setIsConverting(false);
           })
           .catch(err => {
             console.log("err: ", err);
@@ -122,9 +125,15 @@ function WishListItem(props) {
         </div>
       </Modal.Footer>
       <Modal.Footer>
-        <Button variant="success" onClick={moveToMain}>
-          방문 표시하기
-        </Button>
+        {isConverting ? (
+          <Button variant="danger" disabled>
+            방문 표시하기
+          </Button>
+        ) : (
+          <Button variant="primary" onClick={moveToMain}>
+            방문 표시하기
+          </Button>
+        )}
       </Modal.Footer>
     </Modal.Dialog>
   );
