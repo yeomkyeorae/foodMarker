@@ -14,6 +14,7 @@ function Enroll(props) {
   const [Address, setAddress] = useState("");
   const [VisitiedDate, setVisitiedDate] = useState("");
   const [ImageData, setImageData] = useState("");
+  const [isConverting, setIsConverting] = useState(false);
   const userId = props.userId;
   const parentCompName = props.parentCompName;
 
@@ -271,6 +272,7 @@ function Enroll(props) {
     let file = e.target.files[0];
     console.log("file: ", file);
     if (file.type === "image/heic") {
+      setIsConverting(true);
       const reader = new FileReader();
 
       reader.onloadend = function() {
@@ -282,6 +284,7 @@ function Enroll(props) {
             console.log("conversion: ", conversionResult);
             // conversionResult is a BLOB
             setImageData(conversionResult);
+            setIsConverting(false);
           })
           .catch(err => {
             console.log("err: ", err);
@@ -442,9 +445,20 @@ function Enroll(props) {
           </div>
         ) : null}
         <div>
-          <Button variant="primary" style={{ margin: "20px" }} type="submit">
-            등록
-          </Button>
+          {isConverting ? (
+            <Button
+              variant="danger"
+              style={{ margin: "20px" }}
+              type="submit"
+              disabled
+            >
+              등록
+            </Button>
+          ) : (
+            <Button variant="primary" style={{ margin: "20px" }} type="submit">
+              등록
+            </Button>
+          )}
         </div>
       </form>
     </div>
