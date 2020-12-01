@@ -439,6 +439,7 @@ function Enroll(props) {
         </div>
         {parentCompName === "MainPage" ? (
           <div style={{ display: "inline-block", margin: "5px" }}>
+            방문 날짜 :
             <DatePicker
               selected={VisitiedDate}
               onChange={onVisitiedDateHandler}

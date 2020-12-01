@@ -118,6 +118,7 @@ function WishListItem(props) {
         <Modal.Title>{wishListName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        방문 날짜 :
         <DatePicker
           selected={VisitiedDate}
           onChange={onVisitiedDateHandler}
