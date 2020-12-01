@@ -6,6 +6,8 @@ import heic2any from "heic2any";
 import axios from "axios";
 import styled from "styled-components";
 import { registerRestaurant } from "../../../_actions/restaurant_action";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Item = styled.li`
   display: block;
@@ -36,8 +38,12 @@ function WishListItem(props) {
     setPopUpToggle(!popUpToggle);
   };
 
-  const onVisitiedDateHandler = e => {
-    setVisitiedDate(String(e.currentTarget.value));
+  const onVisitiedDateHandler = date => {
+    setVisitiedDate(date);
+  };
+
+  const handleDateChangeRaw = e => {
+    e.preventDefault();
   };
 
   const onImageDataHandler = e => {
@@ -112,11 +118,10 @@ function WishListItem(props) {
         <Modal.Title>{wishListName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <input
-          type="date"
-          value={VisitiedDate}
-          placeholder="방문 일시"
+        <DatePicker
+          selected={VisitiedDate}
           onChange={onVisitiedDateHandler}
+          onChangeRaw={handleDateChangeRaw}
         />
       </Modal.Body>
       <Modal.Footer>
