@@ -6,6 +6,8 @@ import { registerWishList } from "../../../_actions/wishList_action";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 import heic2any from "heic2any";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const { kakao } = window;
 
@@ -262,8 +264,12 @@ function Enroll(props) {
     setAddress(e.currentTarget.value);
   };
 
-  const onVisitiedDateHandler = e => {
-    setVisitiedDate(String(e.currentTarget.value));
+  const onVisitiedDateHandler = date => {
+    setVisitiedDate(date);
+  };
+
+  const handleDateChangeRaw = e => {
+    e.preventDefault();
   };
 
   const onImageDataHandler = e => {
@@ -433,11 +439,10 @@ function Enroll(props) {
         </div>
         {parentCompName === "MainPage" ? (
           <div style={{ display: "inline-block", margin: "5px" }}>
-            <input
-              type="date"
-              value={VisitiedDate}
-              placeholder="방문 일시"
+            <DatePicker
+              selected={VisitiedDate}
               onChange={onVisitiedDateHandler}
+              onChangeRaw={handleDateChangeRaw}
             />
             <div style={{ marginLeft: "100px", margin: "5px" }}>
               <input type="file" onChange={onImageDataHandler} />
