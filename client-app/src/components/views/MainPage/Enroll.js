@@ -411,7 +411,7 @@ function Enroll(props) {
       </div>
 
       <form onSubmit={onSubmitHandler} encType="multipart/form-data">
-        <div>
+        <div style={{ margin: "5px" }}>
           <input
             type="text"
             value={Name}
@@ -421,7 +421,7 @@ function Enroll(props) {
             style={{ width: "200px" }}
           />
         </div>
-        <div>
+        <div style={{ margin: "5px" }}>
           <input
             type="text"
             value={Address}
@@ -432,14 +432,14 @@ function Enroll(props) {
           />
         </div>
         {parentCompName === "MainPage" ? (
-          <div style={{ display: "inline-block" }}>
+          <div style={{ display: "inline-block", margin: "5px" }}>
             <input
               type="date"
               value={VisitiedDate}
               placeholder="방문 일시"
               onChange={onVisitiedDateHandler}
             />
-            <div style={{ marginLeft: "100px" }}>
+            <div style={{ marginLeft: "100px", margin: "5px" }}>
               <input type="file" onChange={onImageDataHandler} />
             </div>
           </div>
