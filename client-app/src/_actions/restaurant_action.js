@@ -3,8 +3,7 @@ import {
   READ_RESTAURANTS,
   REGISTER_RESTAURANT,
   DELETE_RESTAURANT,
-  UPDATE_RESTAURANT,
-  GET_IMAGE
+  UPDATE_RESTAURANT
 } from "./types";
 
 export function readRestaurants(dataToSubmit) {
