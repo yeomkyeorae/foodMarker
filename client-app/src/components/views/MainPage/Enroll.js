@@ -84,8 +84,7 @@ function Enroll(props) {
         var listEl = document.getElementById("placesList"),
           menuEl = document.getElementById("menu_wrap"),
           fragment = document.createDocumentFragment(),
-          bounds = new kakao.maps.LatLngBounds(),
-          listStr = "";
+          bounds = new kakao.maps.LatLngBounds();
 
         // 검색 결과 목록에 추가된 항목들을 제거합니다
         removeAllChildNods(listEl);

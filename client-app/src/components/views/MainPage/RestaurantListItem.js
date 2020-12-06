@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { updateRestaurant } from "../../../_actions/restaurant_action";
 import heic2any from "heic2any";
 import axios from "axios";
-import styled from "styled-components";
 
 function RestaurantListItem(props) {
   const restaurant = props.restaurant;
