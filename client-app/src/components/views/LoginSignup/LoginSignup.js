@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import styled from "styled-components";
 import Login from "./Login";
 import Signup from "./Signup";
@@ -30,15 +31,19 @@ function LoginSignup() {
   };
 
   let loginOrSignup;
+  let Btn;
   if (Toggle) {
     loginOrSignup = <Login />;
+    Btn = <Button variant="danger" onClick={onClickHandler} style={{margin: "10px"}}>{Text}</Button>
   } else {
     loginOrSignup = <Signup />;
+    Btn = <Button variant="primary" onClick={onClickHandler} style={{margin: "10px"}}>{Text}</Button>
+
   }
 
   return (
     <Section>
-      <button onClick={onClickHandler}>{Text}</button>
+      <div>{Btn}</div>
       <div>{loginOrSignup}</div>
     </Section>
   );
