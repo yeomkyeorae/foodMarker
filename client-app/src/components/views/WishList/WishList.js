@@ -32,7 +32,7 @@ function WishList(props) {
     dispatch(readWishList(body)).then(response => {
       setWishLists(response.payload);
     });
-  }, [JSON.stringify(wishLists)]);
+  }, []);
 
   const deleteHandler = wishListId => {
     dispatch(deleteWishList(wishListId)).then(response => {

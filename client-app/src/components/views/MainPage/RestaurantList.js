@@ -43,7 +43,7 @@ function RestaurantList(props) {
     dispatch(readRestaurants(body)).then(response => {
       setRestaurants(response.payload);
     });
-  }, [JSON.stringify(restaurants)]);
+  }, []);
 
   return (
     <Restaurants>
