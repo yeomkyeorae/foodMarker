@@ -163,7 +163,7 @@ function Enroll(props) {
           itemStr += "    <span>" + places.address_name + "</span>";
         }
 
-        itemStr += '  <span class="tel">' + places.phone + "</span>" + "</div>";
+        // itemStr += '  <span class="tel">' + places.phone + "</span>" + "</div>";
 
         el.innerHTML = itemStr;
         el.className = "item";
