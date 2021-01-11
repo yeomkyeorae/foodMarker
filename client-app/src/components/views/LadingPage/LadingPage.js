@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import background from "../../../assets/background.jpeg";
 
 const Section = styled.section`
   width: 100%;
   height: 100%;
   margin: auto;
-  background: url("https://images.unsplash.com/photo-1505935428862-770b6f24f629?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1947&q=80")
-    no-repeat 50% 50%;
+  background: url(${background}) no-repeat 50% 50%;
   top: 0;
   display: table;
   background-size: cover;
