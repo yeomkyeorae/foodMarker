@@ -27,21 +27,23 @@ const Content = styled.div`
 
 const ContentH1 = styled.h1`
   font-family: "Century Gothic", sans-serif;
-  color: #f9f3f4;
+  color: #cdb891;
   font-size: 500%;
-  text-shadow: 0 0 300px #000;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
 `;
 
 const Btn = styled.a`
   border-radius: 9px;
-  color: #f9f3f4;
+  color: #cdb891;
   text-decoration: none;
   font-family: "Century Gothic", sans-serif;
-  border: 3px solid;
-  padding: 7px 13px;
+  border: 2px solid black;
+  padding: 10px 15px;
   font-weight: bold;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   &:hover {
-    color: #2196f3;
+    color: #ff2400;
+    text-decoration: none;
   }
 `;
 
