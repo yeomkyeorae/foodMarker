@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
 import styled from "styled-components";
 import Login from "./Login";
 import Signup from "./Signup";
@@ -18,32 +17,17 @@ const Section = styled.section`
 function LoginSignup() {
   useEffect(() => {}, []);
 
-  const [Toggle, setToggle] = useState(true);
-  const [Text, setText] = useState("회원가입");
-
-  const onClickHandler = () => {
-    setToggle(!Toggle);
-    if (Text === "회원가입") {
-      setText("로그인");
-    } else {
-      setText("회원가입");
-    }
-  };
+  const [toggle, setToggle] = useState(true);
 
   let loginOrSignup;
-  let Btn;
-  if (Toggle) {
-    loginOrSignup = <Login />;
-    Btn = <Button variant="danger" onClick={onClickHandler} style={{margin: "10px"}}>{Text}</Button>
+  if (toggle) {
+    loginOrSignup = <Login toggle={toggle} setToggle={setToggle} />;
   } else {
-    loginOrSignup = <Signup />;
-    Btn = <Button variant="primary" onClick={onClickHandler} style={{margin: "10px"}}>{Text}</Button>
-
+    loginOrSignup = <Signup toggle={toggle} setToggle={setToggle} />;
   }
 
   return (
     <Section>
-      <div>{Btn}</div>
       <div>{loginOrSignup}</div>
     </Section>
   );

@@ -11,6 +11,7 @@ const LoginBox = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+  text-align: center;
 `;
 
 const LoginBoxH1 = styled.h1`
@@ -19,6 +20,7 @@ const LoginBoxH1 = styled.h1`
   border-bottom: 6px solid #4caf50;
   margin-bottom: 50px;
   padding: 13px 0;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
 `;
 
 const TextBox = styled.div`
@@ -27,7 +29,7 @@ const TextBox = styled.div`
   font-size: 20px;
   padding: 8px 0;
   margin: 8px 0;
-  border-bottom: 1px solid #4caf50;
+  border-bottom: 3px solid #4caf50;
 `;
 
 const Input = styled.input`
@@ -39,17 +41,32 @@ const Input = styled.input`
   width: 80%;
   float: left;
   margin: 0 10px;
+  ::placeholder {
+    color: white;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+  }
 `;
 
 const Btn = styled.button`
   width: 100%;
-  background: none;
-  border: 2px solid #4caf50;
+  background: #4caf50;
+  border: 3px solid #4caf50;
   color: white;
   padding: 5px;
   font-size: 18px;
   cursor: pointer;
   margin: 12px 0;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+  &:hover {
+    color: #4caf50;
+  }
+`;
+
+const Span = styled.span`
+  &:hover {
+    color: #e56717;
+    cursor: pointer;
+  }
 `;
 
 function Login(props) {
@@ -63,6 +80,10 @@ function Login(props) {
 
   const onPasswordHandler = e => {
     setPassword(e.currentTarget.value);
+  };
+
+  const onClickHandler = () => {
+    props.setToggle(!props.toggle);
   };
 
   const onSubmitHandler = e => {
@@ -106,6 +127,7 @@ function Login(props) {
         </TextBox>
         <Btn type="submit">로그인</Btn>
       </form>
+      <Span onClick={onClickHandler}>회원가입</Span>
     </LoginBox>
   );
 }

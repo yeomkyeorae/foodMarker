@@ -42,7 +42,7 @@ const Btn = styled.a`
   font-weight: bold;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   &:hover {
-    color: #ff2400;
+    color: #4caf50;
     text-decoration: none;
   }
 `;
