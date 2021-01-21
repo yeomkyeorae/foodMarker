@@ -131,7 +131,7 @@ function RestaurantListItem(props) {
           <div
             style={{
               width: "100%",
-              height: "240px",
+              height: "360px",
               overflow: "hidden"
             }}
           >

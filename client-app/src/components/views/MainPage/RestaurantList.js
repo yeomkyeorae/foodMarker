@@ -10,7 +10,7 @@ import { Row } from "react-bootstrap";
 import styled from "styled-components";
 
 const Restaurants = styled.div`
-  width: 60%;
+  width: 50%;
   height: 500px;
   display: inline-block;
   overflow-y: scroll;
