@@ -120,7 +120,7 @@ function RestaurantListItem(props) {
   };
 
   return (
-    <Col md={4}>
+    <Col md={12}>
       {Toggle && ModalComp}
       <Card
         style={{ width: "100%" }}
@@ -130,7 +130,7 @@ function RestaurantListItem(props) {
           <Card.Title>{restaurant.name}</Card.Title>
           <div
             style={{
-              width: "180px",
+              width: "100%",
               height: "240px",
               overflow: "hidden"
             }}
@@ -139,29 +139,34 @@ function RestaurantListItem(props) {
               variant="top"
               src={restaurant.imgURL}
               style={{
-                width: "100%",
+                width: "65%",
                 height: "100%"
               }}
             />
           </div>
-          <Card.Text style={{ display: "inline-block" }}>
-            방문 일시: {restaurant.date} <br />
-            주소: {restaurant.address}
-          </Card.Text>
-          <Button
-            variant="warning"
-            onClick={() => updateHandler()}
-            style={{ display: "inline-block", margin: "2px" }}
-          >
-            수정
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => props.deleteHandler(restaurant._id)}
-            style={{ display: "inline-block", margin: "2px" }}
-          >
-            삭제
-          </Button>
+          <div>
+            <Card.Text style={{ display: "inline-block" }}>
+              방문 일시: {restaurant.date} <br />
+              주소: {restaurant.address}
+            </Card.Text>
+          </div>
+          <div>
+            <Button
+              variant="warning"
+              onClick={() => updateHandler()}
+              ß
+              style={{ display: "inline-block", margin: "2px", color: "White" }}
+            >
+              수정
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => props.deleteHandler(restaurant._id)}
+              style={{ display: "inline-block", margin: "2px" }}
+            >
+              삭제
+            </Button>
+          </div>
         </Card.Body>
       </Card>
     </Col>
