@@ -44,7 +44,7 @@ function NavbarComp(props) {
   return (
     <div>
       <div href="/" style={{ color: "skyblue" }}>
-        <Link to={{ pathname: "/" }} style={{ textDecoration: "none" }}>
+        <Link to={{ pathname: "/main" }} style={{ textDecoration: "none" }}>
           <H1>Food Marker</H1>
         </Link>
       </div>
