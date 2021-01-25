@@ -154,7 +154,6 @@ function RestaurantListItem(props) {
             <Button
               variant="warning"
               onClick={() => updateHandler()}
-              ß
               style={{ display: "inline-block", margin: "2px", color: "White" }}
             >
               수정

@@ -70,7 +70,7 @@ function NavbarComp(props) {
         </Div>
         <Div>
           <Link
-            to={{ pathname: "/" }}
+            to={{ pathname: "/choizaroad" }}
             style={{
               textDecoration: "none",
               color: "red"
