@@ -5,7 +5,7 @@ import Enroll from "./Enroll";
 import NavbarComp from "../Navbar/NavbarComp";
 import { Button } from "react-bootstrap";
 
-function MainPage(props) {
+function MarkerPage(props) {
   const userId = props.location.state;
   const [Toggle, setToggle] = useState(true);
   const [Menu, setMenu] = useState("식당 등록");
@@ -27,7 +27,7 @@ function MainPage(props) {
       <Enroll
         userId={userId}
         setToggle={setToggle}
-        parentCompName={"MainPage"}
+        parentCompName={"MarkerPage"}
         setMenu={setMenu}
       />
     );
@@ -50,4 +50,4 @@ function MainPage(props) {
   );
 }
 
-export default withRouter(MainPage);
+export default withRouter(MarkerPage);

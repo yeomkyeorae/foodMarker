@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import Enroll from "../MainPage/Enroll";
+import Enroll from "../MarkerPage/Enroll";
 import WishList from "./WishList";
 import NavbarComp from "../Navbar/NavbarComp";
 import { Button } from "react-bootstrap";

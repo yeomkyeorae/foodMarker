@@ -318,7 +318,7 @@ function Enroll(props) {
     const formData = new FormData();
     formData.append("image", ImageData);
 
-    if (parentCompName === "MainPage") {
+    if (parentCompName === "MarkerPage") {
       axios
         .post("https://api.imgur.com/3/image", formData, {
           headers: {
@@ -343,7 +343,7 @@ function Enroll(props) {
                 setImageData("");
                 props.setToggle(true);
                 props.setMenu("식당 등록");
-                props.history.push("/main", userId);
+                props.history.push("/marker", userId);
               } else {
                 alert("error");
               }
@@ -438,7 +438,7 @@ function Enroll(props) {
             style={{ width: "200px" }}
           />
         </div>
-        {parentCompName === "MainPage" ? (
+        {parentCompName === "MarkerPage" ? (
           <div style={{ display: "inline-block", margin: "5px" }}>
             방문 날짜 :
             <DatePicker

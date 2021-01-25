@@ -51,7 +51,7 @@ function NavbarComp(props) {
       <div>
         <Div>
           <Link
-            to={{ pathname: "/main", state: userId }}
+            to={{ pathname: "/marker", state: userId }}
             style={{ textDecoration: "none" }}
           >
             <span style={{ color: "black" }}>나의 맛집</span>
