@@ -43,7 +43,8 @@ function RestaurantList(props) {
     dispatch(readRestaurants(body)).then(response => {
       setRestaurants(response.payload);
     });
-  }, [dispatch, body]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Restaurants>

@@ -32,7 +32,8 @@ function WishList(props) {
     dispatch(readWishList(body)).then(response => {
       setWishLists(response.payload);
     });
-  }, [dispatch, body]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const deleteHandler = wishListId => {
     dispatch(deleteWishList(wishListId)).then(response => {
