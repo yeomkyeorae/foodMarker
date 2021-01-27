@@ -44,7 +44,10 @@ function NavbarComp(props) {
   return (
     <div>
       <div href="/" style={{ color: "skyblue" }}>
-        <Link to={{ pathname: "/main" }} style={{ textDecoration: "none" }}>
+        <Link
+          to={{ pathname: "/main", state: userId }}
+          style={{ textDecoration: "none" }}
+        >
           <H1>Food Marker</H1>
         </Link>
       </div>
@@ -70,13 +73,13 @@ function NavbarComp(props) {
         </Div>
         <Div>
           <Link
-            to={{ pathname: "/choizaroad" }}
+            to={{ pathname: "/choizaroad", state: userId }}
             style={{
               textDecoration: "none",
               color: "red"
             }}
           >
-            <span style={{ color: "black" }}>최자 로드</span>
+            <span style={{ color: "black", state: userId }}>최자 로드</span>
           </Link>
         </Div>
         <LogoutDiv
