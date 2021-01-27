@@ -95,7 +95,7 @@ function Login(props) {
     dispatch(loginUser(body)).then(response => {
       if (response.payload.loginSuccess) {
         props.history.push({
-          pathname: "/marker",
+          pathname: "/main",
           state: response.payload.userId
         });
       } else {
