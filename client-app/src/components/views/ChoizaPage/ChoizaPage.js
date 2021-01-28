@@ -9,7 +9,7 @@ function ChoizaPage(props) {
   useEffect(() => {
     axios
       .get(
-        "https://www.googleapis.com/youtube/v3/search?key=AIzaSyAr_Xi495739tXcKNd_obqC0_v0dj6-m7A&channelId=UCgiO7Kxib0SZEG0DoeuBkdQ&part=snippet"
+        "https://www.googleapis.com/youtube/v3/search?key=&channelId=UCgiO7Kxib0SZEG0DoeuBkdQ&part=snippet"
       )
       .then(response => {
         console.log(response);
