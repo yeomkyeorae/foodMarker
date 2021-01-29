@@ -311,6 +311,14 @@ function Enroll(props) {
     setToggle(!Toggle);
   };
 
+  const onKeyDown = e => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleHandler();
+    }
+  };
+
   const dispatch = useDispatch();
   const onSubmitHandler = e => {
     e.preventDefault();
@@ -397,6 +405,7 @@ function Enroll(props) {
                 onChange={onChangeSearchNameHandler}
                 id={`keyword`}
                 size="15"
+                onKeyDown={onKeyDown}
               />
               <button onClick={toggleHandler} type="submit">
                 검색하기
