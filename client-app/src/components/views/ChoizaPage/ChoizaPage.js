@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import NavbarComp from "../Navbar/NavbarComp";
+import { youtubeURI } from "../../../config/dev";
 
 function ChoizaPage(props) {
   const userId = props.location.state;
@@ -9,7 +10,7 @@ function ChoizaPage(props) {
   useEffect(() => {
     axios
       .get(
-        "https://www.googleapis.com/youtube/v3/search?key=&channelId=UCgiO7Kxib0SZEG0DoeuBkdQ&part=snippet"
+        `https://www.googleapis.com/youtube/v3/search?key=${youtubeURI}&channelId=UCgiO7Kxib0SZEG0DoeuBkdQ&part=snippet`
       )
       .then(response => {
         console.log(response);
