@@ -150,45 +150,39 @@ function Enroll(props) {
 
   return (
     <div>
-      <div className="map_wrap">
-        <MapForEnroll
-          Toggle={Toggle}
-          setName={setName}
-          setAddress={setAddress}
-        />
-        <div
-          id={`menu_wrap`}
-          className="bg_white"
-          style={{ display: "inline-block", width: "50%" }}
-        >
-          <div className="option">
-            <div>
-              키워드 :{" "}
-              <input
-                type="text"
-                value={SearchName}
-                onChange={onChangeSearchNameHandler}
-                id={`keyword`}
-                size="15"
-                onKeyDown={onKeyDown}
-              />
-              <button onClick={toggleHandler} type="submit">
-                검색하기
-              </button>
-            </div>
+      <MapForEnroll Toggle={Toggle} setName={setName} setAddress={setAddress} />
+      <div
+        id={`menu_wrap`}
+        className="bg_white"
+        style={{ display: "inline-block", width: "50%" }}
+      >
+        <div className="option">
+          <div>
+            키워드 :{" "}
+            <input
+              type="text"
+              value={SearchName}
+              onChange={onChangeSearchNameHandler}
+              id={`keyword`}
+              size="15"
+              onKeyDown={onKeyDown}
+            />
+            <button onClick={toggleHandler} type="submit">
+              검색하기
+            </button>
           </div>
-          <hr />
-          <ul
-            id={`placesList`}
-            style={{
-              listStyle: "none",
-              height: "300px",
-              display: "inline-block",
-              overflowY: "scroll"
-            }}
-          ></ul>
-          <div id={`pagination`}></div>
         </div>
+        <hr />
+        <ul
+          id={`placesList`}
+          style={{
+            listStyle: "none",
+            height: "300px",
+            display: "inline-block",
+            overflowY: "scroll"
+          }}
+        ></ul>
+        <div id={`pagination`}></div>
       </div>
 
       <form onSubmit={onSubmitHandler} encType="multipart/form-data">

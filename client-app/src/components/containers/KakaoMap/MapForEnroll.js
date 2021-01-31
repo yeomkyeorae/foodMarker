@@ -241,13 +241,11 @@ function MapForEnroll(props) {
   }, [Toggle, setAddress, setName]);
 
   return (
-    <div>
-      <div className="map_wrap">
-        <div
-          id={`map`}
-          style={{ width: "500px", height: "400px", display: "inline-block" }}
-        ></div>
-      </div>
+    <div className="map_wrap" style={{ display: "inline-block", width: "50%" }}>
+      <div
+        id={`map`}
+        style={{ width: "80%", height: "400px", display: "inline-block" }}
+      ></div>
     </div>
   );
 }
