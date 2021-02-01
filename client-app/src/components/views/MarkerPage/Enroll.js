@@ -167,9 +167,14 @@ function Enroll(props) {
               size="15"
               onKeyDown={onKeyDown}
             />
-            <button onClick={toggleHandler} type="submit">
+            <Button
+              variant="success"
+              style={{ margin: "10px" }}
+              type="submit"
+              onClick={toggleHandler}
+            >
               검색하기
-            </button>
+            </Button>
           </div>
         </div>
         <hr />
