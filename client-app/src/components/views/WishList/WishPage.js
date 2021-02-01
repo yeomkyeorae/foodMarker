@@ -38,7 +38,7 @@ function WishPage(props) {
       <NavbarComp userId={userId} history={props.history} />
       <div style={{}}>
         <Button
-          variant="primary"
+          variant="secondary"
           onClick={onClickChangeMenuHandler}
           style={{ margin: "20px" }}
         >
