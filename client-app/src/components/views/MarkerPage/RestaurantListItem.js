@@ -120,7 +120,7 @@ function RestaurantListItem(props) {
   };
 
   return (
-    <Col md={12}>
+    <Col md={6}>
       {Toggle && ModalComp}
       <Card
         style={{ width: "100%" }}
@@ -139,7 +139,7 @@ function RestaurantListItem(props) {
               variant="top"
               src={restaurant.imgURL}
               style={{
-                width: "65%",
+                width: "100%",
                 height: "100%"
               }}
             />
