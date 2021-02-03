@@ -16,7 +16,12 @@ function MainPage(props) {
   return (
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
       <NavbarComp userId={userId} history={props.history} />
+      <hr />
+      <h2>나의 맛집들</h2>
+      <KakaoMap />
+      <hr />
       <div style={{ width: "50%", marginTop: "10px", margin: "auto" }}>
+        <h2>평점 가장 높은 맛집 리스트</h2>
         <Carousel
           autoPlay={2000}
           animationSpeed={1000}
@@ -38,7 +43,6 @@ function MainPage(props) {
         </Carousel>
       </div>
       <br />
-      <KakaoMap />
     </div>
   );
 }
