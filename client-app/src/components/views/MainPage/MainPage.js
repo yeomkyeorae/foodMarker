@@ -4,6 +4,11 @@ import NavbarComp from "../Navbar/NavbarComp";
 import KakaoMap from "../../containers/KakaoMap/KakaoMap";
 import Carousel, { autoplayPlugin } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
+import styled from "styled-components";
+
+const H2 = styled.h2`
+  font-family: "Do Hyeon", sans-serif;
+`;
 
 function MainPage(props) {
   const userId = props.location.state;
@@ -17,11 +22,11 @@ function MainPage(props) {
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
       <NavbarComp userId={userId} history={props.history} />
       <hr />
-      <h2>나의 맛집들</h2>
+      <H2>나의 맛집들</H2>
       <KakaoMap />
       <hr />
       <div style={{ width: "50%", marginTop: "10px", margin: "auto" }}>
-        <h2>평점 가장 높은 맛집 리스트</h2>
+        <H2>평점 가장 높은 맛집 리스트</H2>
         <Carousel
           autoPlay={2000}
           animationSpeed={1000}
