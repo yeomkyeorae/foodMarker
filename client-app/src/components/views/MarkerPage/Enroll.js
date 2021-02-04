@@ -9,7 +9,7 @@ import axios from "axios";
 import heic2any from "heic2any";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import StarRatings from "react-star-ratings";
+import ReactStars from "react-rating-stars-component";
 
 function Enroll(props) {
   const [Name, setName] = useState("");
@@ -219,13 +219,13 @@ function Enroll(props) {
         </div>
         {parentCompName === "MarkerPage" ? (
           <div style={{ display: "inline-block", margin: "5px" }}>
-            <StarRatings
-              rating={Rating}
-              starRatedColor="gold"
-              changeRating={onRatingHandler}
-              numberOfStars={5}
-              starDimension="40px"
-              name="rating"
+            <ReactStars
+              count={5}
+              value={Rating}
+              onChange={onRatingHandler}
+              size={52}
+              isHalf={true}
+              activeColor="#ffd700"
             />
             <br />
             방문 날짜 :

@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { Card, Col, Button, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { updateRestaurant } from "../../../_actions/restaurant_action";
-import StarRatings from "react-star-ratings";
+import ReactStars from "react-rating-stars-component";
 import heic2any from "heic2any";
 import axios from "axios";
 
@@ -12,7 +12,7 @@ function RestaurantListItem(props) {
   const [Toggle, setToggle] = useState(false);
   const [ImageData, setImageData] = useState("");
   const [VisitiedDate, setVisitiedDate] = useState("");
-  const [Rating, setRating] = useState(2.5); // 임시
+  // const [Rating] = useState(2.5);
   const dispatch = useDispatch();
 
   const openPopUp = () => {
@@ -130,13 +130,15 @@ function RestaurantListItem(props) {
       >
         <Card.Body>
           <Card.Title>{restaurant.name}</Card.Title>
-          <StarRatings
-            rating={Rating}
-            starRatedColor="gold"
-            numberOfStars={5}
-            starDimension="40px"
-            name="rating"
+          <ReactStars
+            count={5}
+            value={3.5}
+            edit={false}
+            size={52}
+            isHalf={true}
+            activeColor="#ffd700"
           />
+          ,
           <div
             style={{
               width: "100%",
