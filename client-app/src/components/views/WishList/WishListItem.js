@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { registerRestaurant } from "../../../_actions/restaurant_action";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import StarRatings from "react-star-ratings";
 
 const Item = styled.li`
   display: block;
@@ -33,6 +34,11 @@ function WishListItem(props) {
   const [ImageData, setImageData] = useState("");
   const [VisitiedDate, setVisitiedDate] = useState("");
   const [isConverting, setIsConverting] = useState(false);
+  const [Rating, setRating] = useState(0);
+
+  const onRatingHandler = newRating => {
+    setRating(newRating);
+  };
 
   const openPopUp = () => {
     setPopUpToggle(!popUpToggle);
@@ -118,6 +124,15 @@ function WishListItem(props) {
         <Modal.Title>{wishListName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <StarRatings
+          rating={Rating}
+          starRatedColor="gold"
+          changeRating={onRatingHandler}
+          numberOfStars={5}
+          starDimension="40px"
+          name="rating"
+        />
+        <br />
         방문 날짜 :
         <DatePicker
           selected={VisitiedDate}
