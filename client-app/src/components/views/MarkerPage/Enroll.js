@@ -9,6 +9,7 @@ import axios from "axios";
 import heic2any from "heic2any";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import StarRatings from "react-star-ratings";
 
 function Enroll(props) {
   const [Name, setName] = useState("");
@@ -21,6 +22,11 @@ function Enroll(props) {
 
   const [SearchName, setSearchName] = useState("이태원 맛집");
   const [Toggle, setToggle] = useState(true);
+  const [Rating, setRating] = useState(0);
+
+  const onRatingHandler = newRating => {
+    setRating(newRating);
+  };
 
   const onNameHandler = e => {
     setName(e.currentTarget.value);
@@ -213,6 +219,15 @@ function Enroll(props) {
         </div>
         {parentCompName === "MarkerPage" ? (
           <div style={{ display: "inline-block", margin: "5px" }}>
+            <StarRatings
+              rating={Rating}
+              starRatedColor="gold"
+              changeRating={onRatingHandler}
+              numberOfStars={5}
+              starDimension="40px"
+              name="rating"
+            />
+            <br />
             방문 날짜 :
             <DatePicker
               selected={VisitiedDate}
