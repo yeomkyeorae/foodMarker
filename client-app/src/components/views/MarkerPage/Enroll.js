@@ -111,7 +111,8 @@ function Enroll(props) {
             name: Name,
             address: Address,
             date: VisitiedDate,
-            imgURL: response.data.data.link
+            imgURL: response.data.data.link,
+            rating: Rating
           };
           dispatch(registerRestaurant(body))
             .then(response => {
@@ -120,6 +121,7 @@ function Enroll(props) {
                 setAddress("");
                 setVisitiedDate("");
                 setImageData("");
+                setRating(0);
                 props.setToggle(true);
                 props.setMenu("식당 등록");
                 props.history.push("/marker", userId);
