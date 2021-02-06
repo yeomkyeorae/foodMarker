@@ -101,7 +101,7 @@ function Enroll(props) {
       axios
         .post("https://api.imgur.com/3/image", formData, {
           headers: {
-            Authorization: "Client-ID e4dc4dac3124836",
+            Authorization: "Client-ID 21e4db556f22012",
             Accept: "application/json"
           }
         })
