@@ -23,6 +23,9 @@ const restaurantSchema = new Schema({
   },
   imgURL: {
     type: String
+  },
+  rating: {
+    type: Number
   }
 });
 
