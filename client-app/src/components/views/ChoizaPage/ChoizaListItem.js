@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { withRouter } from "react-router-dom";
 import { Card, Col } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import axios from "axios";
 
 function ChoizaListItem(props) {
   const choizaRoad = props.choizaRoad;
@@ -25,7 +23,7 @@ function ChoizaListItem(props) {
           >
             <Card.Img
               variant="top"
-              src={choizaRoad.thumbNail}
+              src={choizaRoad.thumbnailURL}
               style={{
                 width: "100%",
                 height: "100%"
