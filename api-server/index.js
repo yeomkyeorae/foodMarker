@@ -5,6 +5,7 @@ const port = 5000;
 const { User } = require("./models/User");
 const { Restaurant } = require("./models/Restaurant");
 const { WishList } = require("./models/WishList");
+const { ChoizaRoad } = require("./models/ChoizaRoad");
 const { auth } = require("./middleware/auth");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -222,6 +223,28 @@ app.post("/api/wishList", (req, res) => {
 // delete my wishList
 app.delete("/api/wishList", (req, res) => {
   WishList.findOneAndRemove({ _id: req.query._id }, (err, wishListInfo) => {
+    if (err)
+      return res.json({
+        success: false,
+        err
+      });
+    return res.status(200).json({
+      success: true
+    });
+  });
+});
+
+// get choizaRoads
+app.get("/api/choizaRoads", (req, res) => {
+  ChoizaRoad.find({}, (err, choizaRoad) => {
+    return res.status(200).json({ choizaRoads: choizaRoad });
+  });
+});
+
+// post choizaRoad
+app.post("/api/choizaRoads", (req, res) => {
+  const choizaRoad = ChoizaRoad(req.body);
+  choizaRoad.save((err, userInfo) => {
     if (err)
       return res.json({
         success: false,

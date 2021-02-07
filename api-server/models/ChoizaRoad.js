@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
-const { Schema } = mongoose;
-const choizaRoadSchema = new Schema({
+const choizaRoadSchema = mongoose.Schema({
   thumbnailURL: {
     type: String,
     maxlength: 1000
