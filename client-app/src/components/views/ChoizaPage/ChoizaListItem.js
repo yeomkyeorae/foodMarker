@@ -4,15 +4,17 @@ import { Card, Col } from "react-bootstrap";
 
 function ChoizaListItem(props) {
   const choizaRoad = props.choizaRoad;
-  //   const dispatch = useDispatch();
 
-  const clickChoizaRoad = () => {
-    console.log("clicked!");
+  const clickChoizaRoad = URL => {
+    window.open(URL, "_blank");
   };
 
   return (
     <Col md={3}>
-      <Card style={{ width: "100%" }} onClick={() => clickChoizaRoad()}>
+      <Card
+        style={{ width: "100%", cursor: "pointer" }}
+        onClick={() => clickChoizaRoad(choizaRoad.youtubeURL)}
+      >
         <Card.Body>
           <div
             style={{
