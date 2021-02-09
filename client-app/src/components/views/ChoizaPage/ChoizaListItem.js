@@ -32,6 +32,7 @@ function ChoizaListItem(props) {
               }}
             />
           </div>
+          {choizaRoad.title}
         </Card.Body>
       </Card>
     </Col>
