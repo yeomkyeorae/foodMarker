@@ -50,7 +50,7 @@ function KakaoMap(props) {
       id={`map`}
       style={{
         width: "45%",
-        height: "380px",
+        height: "540px",
         display: "inline-block"
       }}
     ></div>

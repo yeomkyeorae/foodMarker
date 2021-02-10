@@ -12,7 +12,7 @@ function ChoizaListItem(props) {
   return (
     <Col md={3}>
       <Card
-        style={{ width: "100%", cursor: "pointer" }}
+        style={{ width: "100%", height: "100%", cursor: "pointer" }}
         onClick={() => clickChoizaRoad(choizaRoad.youtubeURL)}
       >
         <Card.Body>

@@ -9,6 +9,7 @@ function ChoizaPage(props) {
   return (
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
       <NavbarComp userId={userId} history={props.history} />
+      <hr />
       <ChoizaList />
     </div>
   );
