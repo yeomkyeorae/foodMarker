@@ -32,7 +32,9 @@ function ChoizaListItem(props) {
               }}
             />
           </div>
-          {choizaRoad.title}
+          <p style={{ fontFamily: "Do Hyeon", fontSize: "20px" }}>
+            {choizaRoad.title}
+          </p>
         </Card.Body>
       </Card>
     </Col>
