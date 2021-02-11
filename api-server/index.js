@@ -236,7 +236,10 @@ app.delete("/api/wishList", (req, res) => {
 
 // get choizaRoads
 app.get("/api/choizaRoads", (req, res) => {
-  ChoizaRoad.find({}, (err, choizaRoad) => {
+  const season = req.query.season;
+  const body = { season: Number(season) };
+
+  ChoizaRoad.find(body, (err, choizaRoad) => {
     return res.status(200).json({ choizaRoads: choizaRoad });
   });
 });
