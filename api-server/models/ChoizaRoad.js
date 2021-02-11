@@ -8,6 +8,13 @@ const choizaRoadSchema = mongoose.Schema({
   youtubeURL: {
     type: String,
     maxlength: 1000
+  },
+  title: {
+    type: String,
+    maxlength: 1000
+  },
+  season: {
+    type: Number
   }
 });
 
