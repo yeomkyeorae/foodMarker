@@ -26,7 +26,6 @@ function ChoizaPage(props) {
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
       <NavbarComp userId={userId} history={props.history} />
       <hr />
-      <Div onClick={() => onClickHandler(0)}>전체</Div>
       <Div onClick={() => onClickHandler(1)}>시즌1</Div>
       <Div onClick={() => onClickHandler(2)}>시즌2</Div>
       <Div onClick={() => onClickHandler(3)}>시즌3</Div>

@@ -1,8 +1,14 @@
 import axios from "axios";
 import { READ_CHOIZAROAD, REGISTER_CHOIZAROAD } from "./types";
 
-export function readChoizaRoad(dataToSubmit) {
-  const request = axios.get("/api/choizaRoads").then(response => response);
+export function readChoizaRoad(season) {
+  const request = axios
+    .get("/api/choizaRoads", {
+      params: {
+        season: season
+      }
+    })
+    .then(response => response);
 
   return {
     type: READ_CHOIZAROAD,

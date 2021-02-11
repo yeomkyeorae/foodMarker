@@ -26,13 +26,14 @@ const List = styled.ol`
 function ChoizaList(props) {
   const dispatch = useDispatch();
   const [choizaRoads, setChoizaRoads] = useState([]);
+  const season = props.season;
 
   useEffect(() => {
-    dispatch(readChoizaRoad()).then(response => {
+    dispatch(readChoizaRoad(season)).then(response => {
       setChoizaRoads(response.payload.data.choizaRoads);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [season]);
 
   return (
     <ChoizaRoads>
