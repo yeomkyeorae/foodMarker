@@ -4,10 +4,7 @@ import { withRouter } from "react-router-dom";
 import { Row } from "react-bootstrap";
 import styled from "styled-components";
 import ChoizaListItem from "./ChoizaListItem";
-import {
-  readChoizaRoad
-  // registerCHoizaRoad
-} from "../../../_actions/choizaRoad_action";
+import { readChoizaRoad } from "../../../_actions/choizaRoad_action";
 
 const ChoizaRoads = styled.div`
   width: 100%;

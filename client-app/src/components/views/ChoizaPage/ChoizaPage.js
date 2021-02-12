@@ -16,7 +16,7 @@ const Div = styled.div`
 
 function ChoizaPage(props) {
   const userId = props.location.state;
-  const [season, setSeason] = useState(0);
+  const [season, setSeason] = useState(4);
 
   const onClickHandler = season => {
     setSeason(season);
@@ -30,6 +30,10 @@ function ChoizaPage(props) {
       <Div onClick={() => onClickHandler(2)}>시즌2</Div>
       <Div onClick={() => onClickHandler(3)}>시즌3</Div>
       <Div onClick={() => onClickHandler(4)}>시즌4</Div>
+      <br />
+      <h2 style={{ fontFamily: "Do Hyeon", marginTop: "50px" }}>
+        시즌{season}
+      </h2>
       <ChoizaList season={season} />
     </div>
   );
