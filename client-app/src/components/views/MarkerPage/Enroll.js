@@ -10,6 +10,25 @@ import heic2any from "heic2any";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ReactStars from "react-rating-stars-component";
+import styled from "styled-components";
+
+const Input = styled.input`
+  margin: 3px 0;
+  padding: 15px 10px;
+  width: 30%;
+  outline: none;
+  border: 1px solid #bbb;
+  border-radius: 20px;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -ms-transition: 0.2s ease all;
+  -o-transition: 0.2s ease all;
+  transition: 0.2s ease all;
+`;
 
 function Enroll(props) {
   const [Name, setName] = useState("");
@@ -167,7 +186,7 @@ function Enroll(props) {
         <div className="option">
           <div>
             키워드 :{" "}
-            <input
+            <Input
               type="text"
               value={SearchName}
               onChange={onChangeSearchNameHandler}
@@ -200,7 +219,7 @@ function Enroll(props) {
 
       <form onSubmit={onSubmitHandler} encType="multipart/form-data">
         <div style={{ margin: "5px" }}>
-          <input
+          <Input
             type="text"
             value={Name}
             placeholder="식당: 검색 후 선택하세요"
@@ -210,7 +229,7 @@ function Enroll(props) {
           />
         </div>
         <div style={{ margin: "5px" }}>
-          <input
+          <Input
             type="text"
             value={Address}
             placeholder="주소: 검색 후 선택하세요"
