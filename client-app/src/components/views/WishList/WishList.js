@@ -18,6 +18,7 @@ const WishLists = styled.div`
 const List = styled.ol`
   list-style: none;
   width: 100%;
+  padding-left: 0px;
 `;
 
 function WishList(props) {
