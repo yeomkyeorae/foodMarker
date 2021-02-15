@@ -218,6 +218,7 @@ function Enroll(props) {
         ></ul>
         <div id={`pagination`}></div>
       </div>
+      <hr />
 
       <form onSubmit={onSubmitHandler} encType="multipart/form-data">
         <div style={{ margin: "5px" }}>
@@ -251,7 +252,7 @@ function Enroll(props) {
               count={5}
               value={Rating}
               onChange={onRatingHandler}
-              size={52}
+              size={70}
               isHalf={true}
               activeColor="#ffd700"
             />
