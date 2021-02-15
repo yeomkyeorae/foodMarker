@@ -181,7 +181,7 @@ function Enroll(props) {
       <div
         id={`menu_wrap`}
         className="bg_white"
-        style={{ display: "inline-block", width: "50%" }}
+        style={{ display: "inline-block", width: "80%" }}
       >
         <div className="option">
           <div>
@@ -202,16 +202,18 @@ function Enroll(props) {
             >
               검색하기
             </Button>
+            <hr />
           </div>
         </div>
-        <hr />
         <ul
           id={`placesList`}
           style={{
             listStyle: "none",
             height: "300px",
+            width: "50%",
             display: "inline-block",
-            overflowY: "scroll"
+            overflowY: "scroll",
+            padding: "0px"
           }}
         ></ul>
         <div id={`pagination`}></div>
@@ -225,7 +227,7 @@ function Enroll(props) {
             placeholder="식당: 검색 후 선택하세요"
             onChange={onNameHandler}
             readOnly
-            style={{ width: "200px" }}
+            style={{ width: "300px" }}
           />
         </div>
         <div style={{ margin: "5px" }}>
@@ -235,11 +237,16 @@ function Enroll(props) {
             placeholder="주소: 검색 후 선택하세요"
             onChange={onAddressHandler}
             readOnly
-            style={{ width: "200px" }}
+            style={{ width: "300px" }}
           />
         </div>
         {parentCompName === "MarkerPage" ? (
-          <div style={{ display: "inline-block", margin: "5px" }}>
+          <div
+            style={{
+              display: "inline-block",
+              margin: "5px"
+            }}
+          >
             <ReactStars
               count={5}
               value={Rating}
@@ -249,7 +256,7 @@ function Enroll(props) {
               activeColor="#ffd700"
             />
             <br />
-            방문 날짜 :
+            방문 날짜
             <DatePicker
               selected={VisitiedDate}
               onChange={onVisitiedDateHandler}
