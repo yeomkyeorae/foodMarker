@@ -264,7 +264,11 @@ function Enroll(props) {
               onChangeRaw={handleDateChangeRaw}
             />
             <div style={{ marginLeft: "100px", margin: "5px" }}>
-              <input type="file" onChange={onImageDataHandler} />
+              <input
+                type="file"
+                onChange={onImageDataHandler}
+                style={{ width: "60%" }}
+              />
             </div>
           </div>
         ) : null}
