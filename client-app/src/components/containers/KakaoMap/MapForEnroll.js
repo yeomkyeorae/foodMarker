@@ -131,13 +131,16 @@ function MapForEnroll(props) {
             '<span class="markerbg marker_' +
             (index + 1) +
             '"></span>' +
-            '<div class="info" style="margin: 10px;">' +
+            '<div class="info" style="margin: 10px; border-radius: 25px; background: #00A86B; cursor: pointer;">' +
             `   <h3 style="margin:0px">` +
             places.place_name +
             "</h3>";
 
         if (places.road_address_name) {
-          itemStr += "<span>" + places.road_address_name + "</span>";
+          itemStr +=
+            '<span style="color: white">' +
+            places.road_address_name +
+            "</span>";
         } else {
           itemStr += "    <span>" + places.address_name + "</span>";
         }
