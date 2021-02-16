@@ -103,7 +103,7 @@ function MapForEnroll(props) {
           var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
             marker = addMarker(placePosition, i),
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-          const addrress_name = places[i].address_name;
+          const address_name = places[i].road_address_name;
           // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
           // LatLngBounds 객체에 좌표를 추가합니다
           bounds.extend(placePosition);
@@ -111,7 +111,7 @@ function MapForEnroll(props) {
           // 마커와 검색결과 항목에 mouseover 했을때
           // 해당 장소에 인포윈도우에 장소명을 표시합니다
           // mouseout 했을 때는 인포윈도우를 닫습니다
-          infoWindow(marker, places[i].place_name, itemEl, addrress_name);
+          infoWindow(marker, places[i].place_name, itemEl, address_name);
 
           fragment.appendChild(itemEl);
         }
@@ -131,19 +131,13 @@ function MapForEnroll(props) {
             '<span class="markerbg marker_' +
             (index + 1) +
             '"></span>' +
-            '<div class="info">' +
-            "   <h5>" +
+            '<div class="info" style="margin: 10px;">' +
+            `   <h3 style="margin:0px">` +
             places.place_name +
-            "</h5>";
+            "</h3>";
 
         if (places.road_address_name) {
-          itemStr +=
-            "    <span>" +
-            places.road_address_name +
-            "</span>" +
-            '   <span class="jibun gray">' +
-            places.address_name +
-            "</span>";
+          itemStr += "<span>" + places.road_address_name + "</span>";
         } else {
           itemStr += "    <span>" + places.address_name + "</span>";
         }
