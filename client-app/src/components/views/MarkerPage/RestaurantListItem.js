@@ -12,12 +12,7 @@ function RestaurantListItem(props) {
   const [Toggle, setToggle] = useState(false);
   const [ImageData, setImageData] = useState("");
   const [VisitiedDate, setVisitiedDate] = useState("");
-  // const [Rating] = useState(2.5);
   const dispatch = useDispatch();
-
-  const openPopUp = () => {
-    setToggle(!Toggle);
-  };
 
   const onVisitiedDateHandler = e => {
     setVisitiedDate(String(e.currentTarget.value));
@@ -93,7 +88,7 @@ function RestaurantListItem(props) {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton onClick={() => openPopUp()}>
+        <Modal.Header closeButton>
           <Modal.Title>{restaurant.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
