@@ -85,7 +85,13 @@ function RestaurantListItem(props) {
 
   const ModalComp = (
     <Modal.Dialog
-      style={{ textAlign: "center", position: "fixed", zIndex: "100" }}
+      style={{
+        textAlign: "center",
+        position: "fixed",
+        zIndex: "100",
+        left: "35%",
+        top: "30%"
+      }}
     >
       <Modal.Header closeButton onClick={() => openPopUp()}>
         <Modal.Title>{restaurant.name}</Modal.Title>
