@@ -13,6 +13,7 @@ function RestaurantListItem(props) {
   const [Toggle, setToggle] = useState(false);
   const [ImageData, setImageData] = useState("");
   const [VisitiedDate, setVisitiedDate] = useState("");
+  const [Rating, setRating] = useState(restaurant.rating);
   const dispatch = useDispatch();
 
   const onVisitiedDateHandler = e => {
@@ -159,6 +160,8 @@ function RestaurantListItem(props) {
         onVisitiedDateHandler={onVisitiedDateHandler}
         changeRestaurant={changeRestaurant}
         onImageDataHandler={onImageDataHandler}
+        Rating={Rating}
+        setRating={setRating}
       />
     </>
   );

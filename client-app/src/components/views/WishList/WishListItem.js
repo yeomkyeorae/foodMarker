@@ -191,6 +191,8 @@ function WishListItem(props) {
         onVisitiedDateHandler={onVisitiedDateHandler}
         changeRestaurant={moveToMain}
         onImageDataHandler={onImageDataHandler}
+        Rating={Rating}
+        setRating={setRating}
       />
     </Item>
   );

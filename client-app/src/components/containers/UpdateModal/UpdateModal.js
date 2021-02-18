@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
+import ReactStars from "react-rating-stars-component";
 
 function UpdateModal(props) {
   const {
@@ -10,7 +11,9 @@ function UpdateModal(props) {
     VisitiedDate,
     onVisitiedDateHandler,
     changeRestaurant,
-    onImageDataHandler
+    onImageDataHandler,
+    Rating,
+    setRating
   } = props;
 
   return (
@@ -27,6 +30,14 @@ function UpdateModal(props) {
         <Modal.Title>{restaurantName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <ReactStars
+          count={5}
+          value={Rating}
+          onChange={setRating}
+          size={52}
+          isHalf={true}
+          activeColor="#ffd700"
+        />
         <input
           type="date"
           value={VisitiedDate}
