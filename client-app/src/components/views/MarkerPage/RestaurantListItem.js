@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { Card, Col, Button, Modal } from "react-bootstrap";
+import { Card, Col, Button } from "react-bootstrap";
+import UpdateModal from "../../containers/UpdateModal/UpdateModal";
 import { useDispatch } from "react-redux";
 import { updateRestaurant } from "../../../_actions/restaurant_action";
 import ReactStars from "react-rating-stars-component";
@@ -78,44 +79,8 @@ function RestaurantListItem(props) {
       });
   };
 
-  const ModalComp = props => {
-    return (
-      <Modal
-        {...props}
-        style={{
-          textAlign: "center"
-        }}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{restaurant.name}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <input
-            type="date"
-            value={VisitiedDate}
-            placeholder="방문 일시"
-            onChange={onVisitiedDateHandler}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <div style={{ marginLeft: "100px" }}>
-            <input type="file" onChange={onImageDataHandler} />
-          </div>
-        </Modal.Footer>
-        <Modal.Footer>
-          <Button variant="success" onClick={changeRestaurant}>
-            수정하기
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  };
-
   const updateHandler = e => {
     setToggle(!Toggle);
-    console.log(Toggle);
   };
 
   const clickRestaurant = (restaurantAddress, restaurantName) => {
@@ -186,7 +151,15 @@ function RestaurantListItem(props) {
           </Card.Body>
         </Card>
       </Col>
-      <ModalComp show={Toggle} onHide={() => setToggle(false)} />
+      <UpdateModal
+        Toggle={Toggle}
+        setToggle={setToggle}
+        restaurant={restaurant}
+        VisitiedDate={VisitiedDate}
+        onVisitiedDateHandler={onVisitiedDateHandler}
+        changeRestaurant={changeRestaurant}
+        onImageDataHandler={onImageDataHandler}
+      />
     </>
   );
 }
