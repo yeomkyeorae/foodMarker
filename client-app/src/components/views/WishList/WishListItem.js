@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
+import UpdateModal from "../../containers/UpdateModal/UpdateModal";
 import heic2any from "heic2any";
 import axios from "axios";
 import styled from "styled-components";
@@ -164,7 +165,7 @@ function WishListItem(props) {
   return (
     <Item key={wishListId} style={{ width: "100%" }}>
       <HeadLine>{wishListName}</HeadLine>
-      {popUpToggle && ModalComp}
+      {/* {popUpToggle && ModalComp} */}
       <span>{wishListAddress}</span> <br />
       <div>
         <Button
@@ -182,6 +183,15 @@ function WishListItem(props) {
           삭제
         </Button>
       </div>
+      <UpdateModal
+        Toggle={popUpToggle}
+        setToggle={setPopUpToggle}
+        restaurantName={wishListName}
+        VisitiedDate={VisitiedDate}
+        onVisitiedDateHandler={onVisitiedDateHandler}
+        changeRestaurant={moveToMain}
+        onImageDataHandler={onImageDataHandler}
+      />
     </Item>
   );
 }

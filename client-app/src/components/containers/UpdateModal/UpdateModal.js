@@ -6,7 +6,7 @@ function UpdateModal(props) {
   const {
     Toggle,
     setToggle,
-    restaurant,
+    restaurantName,
     VisitiedDate,
     onVisitiedDateHandler,
     changeRestaurant,
@@ -24,7 +24,7 @@ function UpdateModal(props) {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title>{restaurant.name}</Modal.Title>
+        <Modal.Title>{restaurantName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <input

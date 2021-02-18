@@ -154,7 +154,7 @@ function RestaurantListItem(props) {
       <UpdateModal
         Toggle={Toggle}
         setToggle={setToggle}
-        restaurant={restaurant}
+        restaurantName={restaurant.name}
         VisitiedDate={VisitiedDate}
         onVisitiedDateHandler={onVisitiedDateHandler}
         changeRestaurant={changeRestaurant}
