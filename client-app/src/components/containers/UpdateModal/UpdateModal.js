@@ -26,18 +26,32 @@ function UpdateModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
+      <Modal.Header closeButton />
+      <Modal.Header
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
         <Modal.Title>{restaurantName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <ReactStars
-          count={5}
-          value={Rating}
-          onChange={setRating}
-          size={52}
-          isHalf={true}
-          activeColor="#ffd700"
-        />
+        <div
+          style={{
+            margin: "auto",
+            width: "36%"
+          }}
+        >
+          <ReactStars
+            count={5}
+            value={Rating}
+            onChange={setRating}
+            size={32}
+            isHalf={true}
+            activeColor="#ffd700"
+          />
+        </div>
         <input
           type="date"
           value={VisitedDate}
@@ -50,7 +64,12 @@ function UpdateModal(props) {
           <input type="file" onChange={onImageDataHandler} />
         </div>
       </Modal.Footer>
-      <Modal.Footer>
+      <Modal.Footer
+        style={{
+          display: "flex",
+          justifyContent: "center"
+        }}
+      >
         <Button variant="success" onClick={changeRestaurant}>
           수정하기
         </Button>
