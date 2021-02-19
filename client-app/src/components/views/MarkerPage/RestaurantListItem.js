@@ -100,7 +100,7 @@ function RestaurantListItem(props) {
             <Card.Title>{restaurant.name}</Card.Title>
             <ReactStars
               count={5}
-              value={3.5}
+              value={Rating}
               edit={false}
               size={52}
               isHalf={true}
@@ -160,7 +160,7 @@ function RestaurantListItem(props) {
         onVisitiedDateHandler={onVisitiedDateHandler}
         changeRestaurant={changeRestaurant}
         onImageDataHandler={onImageDataHandler}
-        Rating={Rating}
+        Rating={restaurant.rating}
         setRating={setRating}
       />
     </>
