@@ -8,8 +8,8 @@ function UpdateModal(props) {
     Toggle,
     setToggle,
     restaurantName,
-    VisitiedDate,
-    onVisitiedDateHandler,
+    VisitedDate,
+    onVisitedDateHandler,
     changeRestaurant,
     onImageDataHandler,
     Rating,
@@ -40,9 +40,9 @@ function UpdateModal(props) {
         />
         <input
           type="date"
-          value={VisitiedDate}
+          value={VisitedDate}
           placeholder="방문 일시"
-          onChange={e => onVisitiedDateHandler(e)}
+          onChange={e => onVisitedDateHandler(e)}
         />
       </Modal.Body>
       <Modal.Footer>

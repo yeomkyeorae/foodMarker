@@ -12,12 +12,12 @@ function RestaurantListItem(props) {
   const restaurant = props.restaurant;
   const [Toggle, setToggle] = useState(false);
   const [ImageData, setImageData] = useState("");
-  const [VisitiedDate, setVisitiedDate] = useState("");
+  const [VisitedDate, setVisitedDate] = useState("");
   const [Rating, setRating] = useState(restaurant.rating);
   const dispatch = useDispatch();
 
-  const onVisitiedDateHandler = e => {
-    setVisitiedDate(String(e.currentTarget.value));
+  const onVisitedDateHandler = e => {
+    setVisitedDate(String(e.currentTarget.value));
   };
 
   const onImageDataHandler = e => {
@@ -64,7 +64,7 @@ function RestaurantListItem(props) {
       .then(response => {
         const body = {
           restaurantId: restaurant._id,
-          date: VisitiedDate,
+          date: VisitedDate,
           imgURL: response.data.data.link
         };
 
@@ -156,8 +156,8 @@ function RestaurantListItem(props) {
         Toggle={Toggle}
         setToggle={setToggle}
         restaurantName={restaurant.name}
-        VisitiedDate={VisitiedDate}
-        onVisitiedDateHandler={onVisitiedDateHandler}
+        VisitedDate={VisitedDate}
+        onVisitedDateHandler={onVisitedDateHandler}
         changeRestaurant={changeRestaurant}
         onImageDataHandler={onImageDataHandler}
         Rating={restaurant.rating}

@@ -35,7 +35,7 @@ function WishListItem(props) {
   const dispatch = useDispatch();
   const [popUpToggle, setPopUpToggle] = useState(false);
   const [ImageData, setImageData] = useState("");
-  const [VisitiedDate, setVisitiedDate] = useState("");
+  const [VisitedDate, setVisitedDate] = useState("");
   const [isConverting, setIsConverting] = useState(false);
   const [Rating, setRating] = useState(0);
 
@@ -47,8 +47,8 @@ function WishListItem(props) {
     setPopUpToggle(!popUpToggle);
   };
 
-  const onVisitiedDateHandler = date => {
-    setVisitiedDate(date);
+  const onVisitedDateHandler = date => {
+    setVisitedDate(date);
   };
 
   const handleDateChangeRaw = e => {
@@ -103,7 +103,7 @@ function WishListItem(props) {
           visitor: userId,
           name: wishListName,
           address: wishListAddress,
-          date: VisitiedDate,
+          date: VisitedDate,
           imgURL: response.data.data.link
         };
 
@@ -138,8 +138,8 @@ function WishListItem(props) {
         <br />
         방문 날짜 :
         <DatePicker
-          selected={VisitiedDate}
-          onChange={onVisitiedDateHandler}
+          selected={VisitedDate}
+          onChange={onVisitedDateHandler}
           onChangeRaw={handleDateChangeRaw}
         />
       </Modal.Body>
@@ -187,8 +187,8 @@ function WishListItem(props) {
         Toggle={popUpToggle}
         setToggle={setPopUpToggle}
         restaurantName={wishListName}
-        VisitiedDate={VisitiedDate}
-        onVisitiedDateHandler={onVisitiedDateHandler}
+        VisitedDate={VisitedDate}
+        onVisitedDateHandler={onVisitedDateHandler}
         changeRestaurant={moveToMain}
         onImageDataHandler={onImageDataHandler}
         Rating={Rating}
