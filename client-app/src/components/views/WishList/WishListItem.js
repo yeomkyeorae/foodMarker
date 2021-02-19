@@ -47,8 +47,8 @@ function WishListItem(props) {
     setPopUpToggle(!popUpToggle);
   };
 
-  const onVisitedDateHandler = date => {
-    setVisitedDate(date);
+  const onVisitedDateHandler = e => {
+    setVisitedDate(String(e.currentTarget.value));
   };
 
   const handleDateChangeRaw = e => {
