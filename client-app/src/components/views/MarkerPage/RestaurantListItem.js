@@ -97,7 +97,13 @@ function RestaurantListItem(props) {
           onClick={() => clickRestaurant(restaurant.address, restaurant.name)}
         >
           <Card.Body>
-            <Card.Title>{restaurant.name}</Card.Title>
+            <div>
+              <Card.Title style={{ margin: "0px" }}>
+                {restaurant.name}
+                <span style={{ fontSize: "0.5em" }}>{restaurant.date}</span>
+              </Card.Title>
+              <span style={{ fontSize: "0.8em" }}>{restaurant.address}</span>
+            </div>
             <ReactStars
               count={5}
               value={Rating}
@@ -106,7 +112,6 @@ function RestaurantListItem(props) {
               isHalf={true}
               activeColor="#ffd700"
             />
-            ,
             <div
               style={{
                 width: "100%",
@@ -122,12 +127,6 @@ function RestaurantListItem(props) {
                   height: "100%"
                 }}
               />
-            </div>
-            <div>
-              <Card.Text style={{ display: "inline-block" }}>
-                방문 일시: {restaurant.date} <br />
-                주소: {restaurant.address}
-              </Card.Text>
             </div>
             <div>
               <Button
