@@ -2,85 +2,14 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { Card, Col, Button } from "react-bootstrap";
 import UpdateModal from "../../containers/UpdateModal/UpdateModal";
-import { useDispatch } from "react-redux";
-import { updateRestaurant } from "../../../_actions/restaurant_action";
 import ReactStars from "react-rating-stars-component";
-import heic2any from "heic2any";
-import axios from "axios";
 
 function RestaurantListItem(props) {
   const restaurant = props.restaurant;
   const restaurantDateSplit = String(restaurant.date).split("-");
   const restaurantDate = `${restaurantDateSplit[0]}년 ${restaurantDateSplit[1]}월 ${restaurantDateSplit[2]}일`;
   const [Toggle, setToggle] = useState(false);
-  const [ImageData, setImageData] = useState("");
-  const [VisitedDate, setVisitedDate] = useState("");
   const [Rating, setRating] = useState(restaurant.rating);
-  const dispatch = useDispatch();
-
-  const onVisitedDateHandler = e => {
-    setVisitedDate(String(e.currentTarget.value));
-  };
-
-  const onImageDataHandler = e => {
-    e.preventDefault();
-
-    let file = e.target.files[0];
-    console.log("file: ", file);
-    if (file.type === "image/heic") {
-      const reader = new FileReader();
-
-      reader.onloadend = function() {
-        const image = reader.result;
-        fetch(image)
-          .then(res => res.blob())
-          .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.2 }))
-          .then(conversionResult => {
-            console.log("conversion: ", conversionResult);
-            // conversionResult is a BLOB
-            setImageData(conversionResult);
-          })
-          .catch(err => {
-            console.log("err: ", err);
-          });
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setImageData(file);
-    }
-  };
-
-  const changeRestaurant = e => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("image", ImageData);
-
-    axios
-      .post("https://api.imgur.com/3/image", formData, {
-        headers: {
-          Authorization: "Client-ID e4dc4dac3124836",
-          Accept: "application/json"
-        }
-      })
-      .then(response => {
-        const body = {
-          restaurantId: restaurant._id,
-          date: VisitedDate,
-          imgURL: response.data.data.link
-        };
-
-        dispatch(updateRestaurant(body)).then(response => {
-          if (response.payload.success) {
-            alert("수정되었습니다.");
-            setToggle(!Toggle);
-          } else {
-            console.log(response);
-            alert("error");
-          }
-        });
-      });
-  };
 
   const updateHandler = e => {
     setToggle(!Toggle);
@@ -157,10 +86,7 @@ function RestaurantListItem(props) {
         Toggle={Toggle}
         setToggle={setToggle}
         restaurantName={restaurant.name}
-        VisitedDate={VisitedDate}
-        onVisitedDateHandler={onVisitedDateHandler}
-        changeRestaurant={changeRestaurant}
-        onImageDataHandler={onImageDataHandler}
+        restaurantId={restaurant._id}
         Rating={restaurant.rating}
         setRating={setRating}
       />
