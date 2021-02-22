@@ -10,6 +10,8 @@ import axios from "axios";
 
 function RestaurantListItem(props) {
   const restaurant = props.restaurant;
+  const restaurantDateSplit = String(restaurant.date).split("-");
+  const restaurantDate = `${restaurantDateSplit[0]}년 ${restaurantDateSplit[1]}월 ${restaurantDateSplit[2]}일`;
   const [Toggle, setToggle] = useState(false);
   const [ImageData, setImageData] = useState("");
   const [VisitedDate, setVisitedDate] = useState("");
@@ -100,7 +102,7 @@ function RestaurantListItem(props) {
             <div>
               <Card.Title style={{ margin: "0px" }}>
                 {restaurant.name}
-                <span style={{ fontSize: "0.5em" }}>{restaurant.date}</span>
+                <span style={{ fontSize: "0.5em" }}>{restaurantDate}</span>
               </Card.Title>
               <span style={{ fontSize: "0.8em" }}>{restaurant.address}</span>
             </div>
