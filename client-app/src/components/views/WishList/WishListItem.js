@@ -63,6 +63,7 @@ function WishListItem(props) {
         wishListId={wishListId}
         wishListName={wishListName}
         wishListAddress={wishListAddress}
+        type="WishListItem"
       />
     </Item>
   );

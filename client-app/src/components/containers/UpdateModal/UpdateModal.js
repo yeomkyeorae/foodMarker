@@ -194,12 +194,16 @@ function UpdateModal(props) {
             {type === "WishListItem" ? "방문 표시하기" : "수정하기"}
           </Button>
         ) : type === "WishListItem" ? (
-          <Button variant="primary" onClick={moveToMain}>
+          <Button variant="success" onClick={moveToMain}>
             방문 표시하기
           </Button>
         ) : (
-          <Button variant="primary" onClick={changeRestaurant}>
-            방문 표시하기
+          <Button
+            variant="warning"
+            onClick={changeRestaurant}
+            style={{ color: "white" }}
+          >
+            수정하기
           </Button>
         )}
       </Modal.Footer>

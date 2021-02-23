@@ -66,7 +66,7 @@ function RestaurantListItem(props) {
                 style={{
                   display: "inline-block",
                   margin: "2px",
-                  color: "White"
+                  color: "white"
                 }}
               >
                 수정
@@ -89,6 +89,7 @@ function RestaurantListItem(props) {
         restaurantId={restaurant._id}
         Rating={restaurant.rating}
         setRating={setRating}
+        type="RestaurantListItem"
       />
     </>
   );
