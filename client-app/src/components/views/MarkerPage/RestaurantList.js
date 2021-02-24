@@ -11,14 +11,14 @@ import styled from "styled-components";
 
 const Restaurants = styled.div`
   width: 50%;
-  height: 500px;
+  height: 540px;
   display: inline-block;
   overflow-y: scroll;
 `;
 
 const List = styled.ol`
   list-style: none;
-  width: 100%;
+  width: 95%;
   max-width: 100%;
 `;
 

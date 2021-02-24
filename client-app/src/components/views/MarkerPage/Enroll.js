@@ -33,7 +33,7 @@ const Input = styled.input`
 function Enroll(props) {
   const [Name, setName] = useState("");
   const [Address, setAddress] = useState("");
-  const [VisitiedDate, setVisitiedDate] = useState("");
+  const [VisitedDate, setVisitedDate] = useState("");
   const [ImageData, setImageData] = useState("");
   const [isConverting, setIsConverting] = useState(false);
   const userId = props.userId;
@@ -55,8 +55,8 @@ function Enroll(props) {
     setAddress(e.currentTarget.value);
   };
 
-  const onVisitiedDateHandler = date => {
-    setVisitiedDate(date);
+  const onVisitedDateHandler = date => {
+    setVisitedDate(date);
   };
 
   const handleDateChangeRaw = e => {
@@ -129,7 +129,7 @@ function Enroll(props) {
             visitor: userId,
             name: Name,
             address: Address,
-            date: VisitiedDate,
+            date: VisitedDate,
             imgURL: response.data.data.link,
             rating: Rating
           };
@@ -138,7 +138,7 @@ function Enroll(props) {
               if (response.payload.success) {
                 setName("");
                 setAddress("");
-                setVisitiedDate("");
+                setVisitedDate("");
                 setImageData("");
                 setRating(0);
                 props.setToggle(true);
@@ -259,8 +259,8 @@ function Enroll(props) {
             <br />
             방문 날짜
             <DatePicker
-              selected={VisitiedDate}
-              onChange={onVisitiedDateHandler}
+              selected={VisitedDate}
+              onChange={onVisitedDateHandler}
               onChangeRaw={handleDateChangeRaw}
             />
             <div style={{ marginLeft: "100px", margin: "5px" }}>
