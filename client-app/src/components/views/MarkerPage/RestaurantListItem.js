@@ -39,7 +39,7 @@ function RestaurantListItem(props) {
               count={5}
               value={Rating}
               edit={false}
-              size={52}
+              size={50}
               isHalf={true}
               activeColor="#ffd700"
             />
