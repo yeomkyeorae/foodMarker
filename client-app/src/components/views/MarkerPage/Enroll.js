@@ -7,7 +7,6 @@ import MapForEnroll from "../../containers/KakaoMap/MapForEnroll";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 import heic2any from "heic2any";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
@@ -55,12 +54,8 @@ function Enroll(props) {
     setAddress(e.currentTarget.value);
   };
 
-  const onVisitedDateHandler = date => {
-    setVisitedDate(date);
-  };
-
-  const handleDateChangeRaw = e => {
-    e.preventDefault();
+  const onVisitedDateHandler = e => {
+    setVisitedDate(String(e.currentTarget.value));
   };
 
   const onImageDataHandler = e => {
@@ -257,11 +252,11 @@ function Enroll(props) {
               activeColor="#ffd700"
             />
             <br />
-            방문 날짜
-            <DatePicker
-              selected={VisitedDate}
-              onChange={onVisitedDateHandler}
-              onChangeRaw={handleDateChangeRaw}
+            <input
+              type="date"
+              value={VisitedDate}
+              placeholder="방문 일시"
+              onChange={e => onVisitedDateHandler(e)}
             />
             <div style={{ marginLeft: "100px", margin: "5px" }}>
               <input
