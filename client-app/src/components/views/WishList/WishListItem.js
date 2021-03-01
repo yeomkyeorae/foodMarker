@@ -24,7 +24,13 @@ const HeadLine = styled.h2`
 `;
 
 function WishListItem(props) {
-  const { wishListId, wishListName, wishListAddress, userId } = props;
+  const {
+    wishListId,
+    wishListName,
+    wishListAddress,
+    userId,
+    deleteHandler
+  } = props;
   const [popUpToggle, setPopUpToggle] = useState(false);
   const [Rating, setRating] = useState(0);
 
@@ -46,7 +52,7 @@ function WishListItem(props) {
         </Button>
         <Button
           variant="danger"
-          onClick={() => props.deleteHandler(wishListId)}
+          onClick={() => deleteHandler(wishListId)}
           style={{ margin: "2px" }}
         >
           삭제
@@ -63,6 +69,7 @@ function WishListItem(props) {
         wishListId={wishListId}
         wishListName={wishListName}
         wishListAddress={wishListAddress}
+        deleteHandler={deleteHandler}
         type="WishListItem"
       />
     </Item>
