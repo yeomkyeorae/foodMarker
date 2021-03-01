@@ -41,7 +41,6 @@ function UpdateModal(props) {
     e.preventDefault();
 
     let file = e.target.files[0];
-    console.log("file: ", file);
     if (file.type === "image/heic") {
       setIsConverting(true);
       const reader = new FileReader();
@@ -52,10 +51,13 @@ function UpdateModal(props) {
           .then(res => res.blob())
           .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.2 }))
           .then(conversionResult => {
-            console.log("conversion: ", conversionResult);
             // conversionResult is a BLOB
-            setImageData(conversionResult);
-            setIsConverting(false);
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(conversionResult);
+            fileReader.onload = function(e) {
+              setImageData(e.target.result);
+              setIsConverting(false);
+            };
           })
           .catch(err => {
             console.log("err: ", err);
@@ -63,7 +65,11 @@ function UpdateModal(props) {
       };
       reader.readAsDataURL(file);
     } else {
-      setImageData(file);
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = function(e) {
+        setImageData(e.target.result);
+      };
     }
   };
 
@@ -102,37 +108,25 @@ function UpdateModal(props) {
   const moveToMain = e => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("image", ImageData);
+    const body = {
+      visitor: userId,
+      name: wishListName,
+      address: wishListAddress,
+      date: VisitedDate,
+      imgURL: ImageData
+    };
 
-    axios
-      .post("https://api.imgur.com/3/image", formData, {
-        headers: {
-          Authorization: "Client-ID e4dc4dac3124836",
-          Accept: "application/json"
-        }
-      })
-      .then(response => {
-        const body = {
-          visitor: userId,
-          name: wishListName,
-          address: wishListAddress,
-          date: VisitedDate,
-          imgURL: response.data.data.link
-        };
-
-        dispatch(registerRestaurant(body)).then(response => {
-          if (response.payload.success) {
-            alert("방문 표시되었습니다.");
-            props.setToggle(true);
-            setPopUpToggle(false);
-            props.deleteHandler(wishListId);
-          } else {
-            console.log(response);
-            alert("error");
-          }
-        });
-      });
+    dispatch(registerRestaurant(body)).then(response => {
+      if (response.payload.success) {
+        alert("방문 표시되었습니다.");
+        props.setToggle(true);
+        setPopUpToggle(false);
+        props.deleteHandler(wishListId);
+      } else {
+        console.log(response);
+        alert("error");
+      }
+    });
   };
 
   return (
