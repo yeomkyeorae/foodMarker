@@ -112,9 +112,6 @@ function Enroll(props) {
   const onSubmitHandler = e => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("image", ImageData);
-
     if (parentCompName === "MarkerPage") {
       const body = {
         visitor: userId,
