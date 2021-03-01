@@ -5,7 +5,6 @@ import { registerRestaurant } from "../../../_actions/restaurant_action";
 import { registerWishList } from "../../../_actions/wishList_action";
 import MapForEnroll from "../../containers/KakaoMap/MapForEnroll";
 import { Button } from "react-bootstrap";
-import axios from "axios";
 import heic2any from "heic2any";
 import "react-datepicker/dist/react-datepicker.css";
 import ReactStars from "react-rating-stars-component";
@@ -62,7 +61,6 @@ function Enroll(props) {
     e.preventDefault();
 
     let file = e.target.files[0];
-    console.log("file: ", file);
     if (file.type === "image/heic") {
       setIsConverting(true);
       const reader = new FileReader();
@@ -73,10 +71,12 @@ function Enroll(props) {
           .then(res => res.blob())
           .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.2 }))
           .then(conversionResult => {
-            console.log("conversion: ", conversionResult);
-            // conversionResult is a BLOB
-            setImageData(conversionResult);
-            setIsConverting(false);
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(conversionResult);
+            fileReader.onload = function(e) {
+              setImageData(e.target.result);
+              setIsConverting(false);
+            };
           })
           .catch(err => {
             console.log("err: ", err);
@@ -84,7 +84,11 @@ function Enroll(props) {
       };
       reader.readAsDataURL(file);
     } else {
-      setImageData(file);
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = function(e) {
+        setImageData(e.target.result);
+      };
     }
   };
 
@@ -112,43 +116,31 @@ function Enroll(props) {
     formData.append("image", ImageData);
 
     if (parentCompName === "MarkerPage") {
-      axios
-        .post("https://api.imgur.com/3/image", formData, {
-          headers: {
-            Authorization: "Client-ID 21e4db556f22012",
-            Accept: "application/json"
+      const body = {
+        visitor: userId,
+        name: Name,
+        address: Address,
+        date: VisitedDate,
+        imgURL: ImageData,
+        rating: Rating
+      };
+      dispatch(registerRestaurant(body))
+        .then(response => {
+          if (response.payload.success) {
+            setName("");
+            setAddress("");
+            setVisitedDate("");
+            setImageData("");
+            setRating(0);
+            props.setToggle(true);
+            props.setMenu("식당 등록");
+            props.history.push("/marker", userId);
+          } else {
+            alert("error");
           }
         })
-        .then(response => {
-          const body = {
-            visitor: userId,
-            name: Name,
-            address: Address,
-            date: VisitedDate,
-            imgURL: response.data.data.link,
-            rating: Rating
-          };
-          dispatch(registerRestaurant(body))
-            .then(response => {
-              if (response.payload.success) {
-                setName("");
-                setAddress("");
-                setVisitedDate("");
-                setImageData("");
-                setRating(0);
-                props.setToggle(true);
-                props.setMenu("식당 등록");
-                props.history.push("/marker", userId);
-              } else {
-                alert("error");
-              }
-            })
-            .catch(err => {
-              console.log("registerRestaurant err: ", err);
-            });
-        })
         .catch(err => {
-          console.log("imgur err: ", err);
+          console.log("registerRestaurant err: ", err);
         });
     } else if (parentCompName === "WishPage") {
       const body = {
