@@ -9,8 +9,13 @@ import RestaurantListItem from "./RestaurantListItem";
 import { Row } from "react-bootstrap";
 import styled from "styled-components";
 
-const Restaurants = styled.div`
+const Div = styled.div`
   width: 50%;
+  display: inline-block;
+`;
+
+const Restaurants = styled.div`
+  width: 100%;
   height: 540px;
   display: inline-block;
   overflow-y: scroll;
@@ -47,21 +52,29 @@ function RestaurantList(props) {
   }, []);
 
   return (
-    <Restaurants>
-      <List>
-        <Row className="show-grid">
-          {restaurants.map(restaurant => (
-            <RestaurantListItem
-              key={restaurant._id}
-              setAddress={props.setAddress}
-              setRestaurantName={props.setRestaurantName}
-              restaurant={restaurant}
-              deleteHandler={deleteHandler}
-            ></RestaurantListItem>
-          ))}
-        </Row>
-      </List>
-    </Restaurants>
+    <Div>
+      <span style={{ margin: "10px", display: "inline-block" }}>
+        식당 이름 순
+      </span>
+      <span style={{ margin: "10px", display: "inline-block" }}>
+        방문 날짜 순
+      </span>
+      <Restaurants>
+        <List>
+          <Row className="show-grid">
+            {restaurants.map(restaurant => (
+              <RestaurantListItem
+                key={restaurant._id}
+                setAddress={props.setAddress}
+                setRestaurantName={props.setRestaurantName}
+                restaurant={restaurant}
+                deleteHandler={deleteHandler}
+              ></RestaurantListItem>
+            ))}
+          </Row>
+        </List>
+      </Restaurants>
+    </Div>
   );
 }
 
