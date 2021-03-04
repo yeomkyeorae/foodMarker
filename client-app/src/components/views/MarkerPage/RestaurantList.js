@@ -44,8 +44,22 @@ function RestaurantList(props) {
     });
   };
 
+  const sortByName = () => {
+    restaurants.sort((a, b) => {
+      const nameA = a.name;
+      const nameB = b.name;
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+
   const sortByDate = () => {
-    const newRestaurants = restaurants.sort(function(a, b) {
+    restaurants.sort((a, b) => {
       const dateA = Number(new Date(a.date));
       const dateB = Number(new Date(b.date));
       if (dateA > dateB) {
@@ -56,7 +70,6 @@ function RestaurantList(props) {
       }
       return 0;
     });
-    setRestaurants(newRestaurants);
   };
 
   useEffect(() => {
@@ -65,10 +78,13 @@ function RestaurantList(props) {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log("res", restaurants);
+
   return (
     <Div>
-      <span style={{ margin: "10px", display: "inline-block" }}>
+      <span
+        style={{ margin: "10px", display: "inline-block", cursor: "pointer" }}
+        onClick={sortByName}
+      >
         식당 이름 순
       </span>
       <span
