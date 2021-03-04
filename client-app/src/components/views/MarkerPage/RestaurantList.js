@@ -45,7 +45,7 @@ function RestaurantList(props) {
   };
 
   const sortByName = () => {
-    restaurants.sort((a, b) => {
+    const newArr = [...restaurants].sort((a, b) => {
       const nameA = a.name;
       const nameB = b.name;
       if (nameA < nameB) {
@@ -56,10 +56,11 @@ function RestaurantList(props) {
       }
       return 0;
     });
+    setRestaurants(newArr);
   };
 
   const sortByDate = () => {
-    restaurants.sort((a, b) => {
+    const newArr = [...restaurants].sort((a, b) => {
       const dateA = Number(new Date(a.date));
       const dateB = Number(new Date(b.date));
       if (dateA > dateB) {
@@ -70,6 +71,7 @@ function RestaurantList(props) {
       }
       return 0;
     });
+    setRestaurants(newArr);
   };
 
   useEffect(() => {
