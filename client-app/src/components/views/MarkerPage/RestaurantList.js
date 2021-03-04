@@ -44,19 +44,37 @@ function RestaurantList(props) {
     });
   };
 
+  const sortByDate = () => {
+    const newRestaurants = restaurants.sort(function(a, b) {
+      const dateA = Number(new Date(a.date));
+      const dateB = Number(new Date(b.date));
+      if (dateA > dateB) {
+        return 1;
+      }
+      if (dateA < dateB) {
+        return -1;
+      }
+      return 0;
+    });
+    setRestaurants(newRestaurants);
+  };
+
   useEffect(() => {
     dispatch(readRestaurants(body)).then(response => {
       setRestaurants(response.payload);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  console.log("res", restaurants);
   return (
     <Div>
       <span style={{ margin: "10px", display: "inline-block" }}>
         식당 이름 순
       </span>
-      <span style={{ margin: "10px", display: "inline-block" }}>
+      <span
+        style={{ margin: "10px", display: "inline-block", cursor: "pointer" }}
+        onClick={sortByDate}
+      >
         방문 날짜 순
       </span>
       <Restaurants>
