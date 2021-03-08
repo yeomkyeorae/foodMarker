@@ -14,6 +14,9 @@ function KakaoMap(props) {
         level: 3 //지도의 레벨(확대, 축소 정도)
       });
 
+      const zoomControl = new kakao.maps.ZoomControl();
+      map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
       let geocoder = new kakao.maps.services.Geocoder();
 
       // 주소로 좌표를 검색합니다
