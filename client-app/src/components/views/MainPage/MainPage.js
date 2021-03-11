@@ -40,6 +40,11 @@ function MainPage(props) {
       setLatitude(36.338262);
       setLongitude(127.392768);
       setMapLevel(8);
+    } else if (option === 4) {
+      // 세종 종촌동
+      setLatitude(36.497149);
+      setLongitude(127.260632);
+      setMapLevel(8);
     }
   };
 
@@ -69,6 +74,13 @@ function MainPage(props) {
           style={{ margin: "10px", display: "inline-block" }}
         >
           대전
+        </Button>
+        <Button
+          variant="danger"
+          onClick={() => onClickHandler(4)}
+          style={{ margin: "10px", display: "inline-block" }}
+        >
+          세종
         </Button>
       </div>
       <KakaoMap latitude={latitude} longitude={longitude} mapLevel={mapLevel} />
