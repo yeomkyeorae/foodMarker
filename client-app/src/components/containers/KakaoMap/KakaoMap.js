@@ -4,14 +4,14 @@ import { withRouter } from "react-router-dom";
 const { kakao } = window;
 
 function KakaoMap(props) {
-  const { address, restaurantName } = props;
+  const { address, restaurantName, latitude, longitude, mapLevel } = props;
 
   useEffect(() => {
     kakao.maps.load(() => {
       let container = document.getElementById("map");
       let map = new kakao.maps.Map(container, {
-        center: new kakao.maps.LatLng(37.52393, 126.980493), // 초기값: 국립중앙박물관
-        level: 8 //지도의 레벨(확대, 축소 정도)
+        center: new kakao.maps.LatLng(latitude, longitude), // 초기값: 국립중앙박물관
+        level: mapLevel //지도의 레벨(확대, 축소 정도)
       });
 
       const zoomControl = new kakao.maps.ZoomControl();
