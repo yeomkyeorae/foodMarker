@@ -10,8 +10,8 @@ function KakaoMap(props) {
     kakao.maps.load(() => {
       let container = document.getElementById("map");
       let map = new kakao.maps.Map(container, {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-        level: 3 //지도의 레벨(확대, 축소 정도)
+        center: new kakao.maps.LatLng(37.52393, 126.980493), // 초기값: 국립중앙박물관
+        level: 8 //지도의 레벨(확대, 축소 정도)
       });
 
       const zoomControl = new kakao.maps.ZoomControl();
