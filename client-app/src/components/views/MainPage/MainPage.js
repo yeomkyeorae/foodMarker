@@ -83,7 +83,12 @@ function MainPage(props) {
           세종
         </Button>
       </div>
-      <KakaoMap latitude={latitude} longitude={longitude} mapLevel={mapLevel} />
+      <KakaoMap
+        userId={userId}
+        latitude={latitude}
+        longitude={longitude}
+        mapLevel={mapLevel}
+      />
       <hr />
       <div style={{ width: "50%", marginTop: "10px", margin: "auto" }}>
         <H2>평점 가장 높은 맛집 리스트</H2>
