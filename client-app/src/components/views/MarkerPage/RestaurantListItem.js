@@ -6,6 +6,7 @@ import ReactStars from "react-rating-stars-component";
 
 function RestaurantListItem(props) {
   const restaurant = props.restaurant;
+
   const restaurantDateSplit = String(restaurant.date).split("-");
   const restaurantDate = `${restaurantDateSplit[0]}년 ${restaurantDateSplit[1]}월 ${restaurantDateSplit[2]}일`;
   const [Toggle, setToggle] = useState(false);
@@ -20,7 +21,7 @@ function RestaurantListItem(props) {
     props.setRestaurantName(restaurantName);
   };
 
-  return (
+  return restaurant.address ? (
     <>
       <Col md={6}>
         <Card
@@ -92,7 +93,7 @@ function RestaurantListItem(props) {
         type="RestaurantListItem"
       />
     </>
-  );
+  ) : null;
 }
 
 export default withRouter(RestaurantListItem);
