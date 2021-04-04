@@ -37,7 +37,7 @@ const Btn = styled.a`
   color: #cdb891;
   text-decoration: none;
   font-family: "Century Gothic", sans-serif;
-  border: 2px solid black;
+  border: 1px solid black;
   padding: 10px 15px;
   font-weight: bold;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;

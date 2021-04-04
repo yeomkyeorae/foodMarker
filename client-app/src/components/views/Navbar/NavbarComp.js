@@ -7,6 +7,10 @@ import styled from "styled-components";
 const H1 = styled.h1`
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   color: #cdb891;
+  &:hover {
+    color: #4caf50;
+    text-decoration: none;
+  }
 `;
 
 const Div = styled.div`
