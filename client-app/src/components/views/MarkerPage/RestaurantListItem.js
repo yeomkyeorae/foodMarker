@@ -32,7 +32,10 @@ function RestaurantListItem(props) {
             <div>
               <Card.Title style={{ margin: "0px" }}>
                 {restaurant.name}
-                <span style={{ fontSize: "0.5em" }}>{restaurantDate}</span>
+                <span style={{ fontSize: "0.5em", height: "10px" }}>
+                  <br />
+                  {restaurantDate}
+                </span>
               </Card.Title>
               <span style={{ fontSize: "0.8em" }}>{restaurant.address}</span>
             </div>
