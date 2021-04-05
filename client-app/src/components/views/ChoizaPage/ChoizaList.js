@@ -7,10 +7,9 @@ import ChoizaListItem from "./ChoizaListItem";
 import { readChoizaRoad } from "../../../_actions/choizaRoad_action";
 
 const ChoizaRoads = styled.div`
-  width: 100%;
+  width: 95%;
   height: 100%;
   display: inline-block;
-  overflow-y: scroll;
   margin-top: 20px;
 `;
 
