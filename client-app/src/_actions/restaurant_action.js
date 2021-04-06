@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   READ_RESTAURANTS,
+  READ_RESTAURANTS_NO_IMAGE,
   REGISTER_RESTAURANT,
   DELETE_RESTAURANT,
   UPDATE_RESTAURANT
@@ -13,6 +14,17 @@ export function readRestaurants(dataToSubmit) {
 
   return {
     type: READ_RESTAURANTS,
+    payload: request
+  };
+}
+
+export function readRestaurantsNoImage(dataToSubmit) {
+  const request = axios
+    .post("/api/restaurants-no-image", dataToSubmit)
+    .then(response => response.data);
+
+  return {
+    type: READ_RESTAURANTS_NO_IMAGE,
     payload: request
   };
 }

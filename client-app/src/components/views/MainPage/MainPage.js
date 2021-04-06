@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { readRestaurantsNoImage } from "../../../_actions/restaurant_action";
 import NavbarComp from "../Navbar/NavbarComp";
 import KakaoMap from "../../containers/KakaoMap/KakaoMap";
 import { Button } from "react-bootstrap";
@@ -12,7 +14,19 @@ const H2 = styled.h2`
 `;
 
 function MainPage(props) {
+  const dispatch = useDispatch();
   const userId = props.location.state;
+  const body = {
+    id: userId
+  };
+
+  useEffect(() => {
+    dispatch(readRestaurantsNoImage(body)).then(response => {
+      console.log(response.payload);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [latitude, setLatitude] = useState(37.52393);
   const [longitude, setLongitude] = useState(126.980493);
   const [mapLevel, setMapLevel] = useState(8);
