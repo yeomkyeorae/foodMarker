@@ -160,8 +160,22 @@ app.post("/api/restaurants-no-image", (req, res) => {
     }
   );
 
+  const optionLocation = req.body.optionLocation;
   restaurants.exec((err, restaurants) => {
     if (err) return res.json({ success: false, err });
+
+    if (optionLocation) {
+      const filterdRestaurants = restaurants.filter(restaurant => {
+        const frontAddress = restaurant.address.split(" ")[0];
+        const slicedFrontAddress = frontAddress.slice(0, optionLocation.length);
+        if (slicedFrontAddress === optionLocation) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      return res.json(filterdRestaurants);
+    }
     return res.json(restaurants);
   });
 });

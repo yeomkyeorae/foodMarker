@@ -18,7 +18,8 @@ function MainPage(props) {
   const dispatch = useDispatch();
   const userId = props.location.state;
   const body = {
-    id: userId
+    id: userId,
+    option: "서울"
   };
 
   useEffect(() => {
@@ -40,6 +41,7 @@ function MainPage(props) {
     "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80";
 
   const onClickHandler = option => {
+    let optionLocation;
     if (option === 1) {
       // 영동군
       setLatitude(36.1746815);
@@ -50,17 +52,27 @@ function MainPage(props) {
       setLatitude(37.52393);
       setLongitude(126.980493);
       setMapLevel(8);
+      optionLocation = "서울";
     } else if (option === 3) {
       // 대전 용문역
       setLatitude(36.338262);
       setLongitude(127.392768);
       setMapLevel(8);
+      optionLocation = "대전";
     } else if (option === 4) {
       // 세종 종촌동
       setLatitude(36.497149);
       setLongitude(127.260632);
       setMapLevel(8);
+      optionLocation = "세종";
     }
+    const body = {
+      id: userId,
+      optionLocation: optionLocation ? optionLocation : undefined
+    };
+    dispatch(readRestaurantsNoImage(body)).then(response => {
+      setRestaurants(response.payload);
+    });
   };
 
   return (
