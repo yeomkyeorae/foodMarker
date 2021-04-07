@@ -147,6 +147,25 @@ app.post("/api/restaurants", (req, res) => {
   );
 });
 
+// get restaurants without image
+app.post("/api/restaurants-no-image", (req, res) => {
+  const restaurants = Restaurant.find(
+    { visitor: req.body.id },
+    {
+      _id: 1,
+      visitor: 1,
+      name: 1,
+      address: 1,
+      rating: 1
+    }
+  );
+
+  restaurants.exec((err, restaurants) => {
+    if (err) return res.json({ success: false, err });
+    return res.json(restaurants);
+  });
+});
+
 // create my restaurant
 app.post("/api/restaurant", (req, res) => {
   const restaurant = Restaurant(req.body);
