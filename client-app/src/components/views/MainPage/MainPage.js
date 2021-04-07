@@ -14,6 +14,7 @@ const H2 = styled.h2`
 `;
 
 function MainPage(props) {
+  const [restaurants, setRestaurants] = useState([]);
   const dispatch = useDispatch();
   const userId = props.location.state;
   const body = {
@@ -22,7 +23,7 @@ function MainPage(props) {
 
   useEffect(() => {
     dispatch(readRestaurantsNoImage(body)).then(response => {
-      console.log(response.payload);
+      setRestaurants(response.payload);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -98,10 +99,10 @@ function MainPage(props) {
         </Button>
       </div>
       <KakaoMap
-        userId={userId}
         latitude={latitude}
         longitude={longitude}
         mapLevel={mapLevel}
+        restaurants={restaurants}
       />
       <hr />
       <div style={{ width: "50%", marginTop: "10px", margin: "auto" }}>
