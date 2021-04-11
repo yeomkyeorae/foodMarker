@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   READ_RESTAURANTS,
+  READ_RESTAURANTS_COUNT,
   READ_RESTAURANTS_NO_IMAGE,
   REGISTER_RESTAURANT,
   DELETE_RESTAURANT,
@@ -14,6 +15,17 @@ export function readRestaurants(dataToSubmit) {
 
   return {
     type: READ_RESTAURANTS,
+    payload: request
+  };
+}
+
+export function readRestaurantsCount(dataToSubmit) {
+  const request = axios
+    .post("/api/restaurants/count", dataToSubmit)
+    .then(response => response.data);
+
+  return {
+    type: READ_RESTAURANTS_COUNT,
     payload: request
   };
 }

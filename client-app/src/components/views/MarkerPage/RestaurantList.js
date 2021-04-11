@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   readRestaurants,
+  readRestaurantsCount,
   deleteRestaurant
 } from "../../../_actions/restaurant_action";
 import RestaurantListItem from "./RestaurantListItem";
@@ -30,8 +31,11 @@ const List = styled.ol`
 function RestaurantList(props) {
   const dispatch = useDispatch();
   const [restaurants, setRestaurants] = useState([{ _id: 0 }]);
+  const [totalItemCount, setTotalItemCount] = useState(0);
+
   const body = {
-    id: props.userId
+    id: props.userId,
+    page: 2
   };
 
   const deleteHandler = restaurantId => {
@@ -75,8 +79,12 @@ function RestaurantList(props) {
   };
 
   useEffect(() => {
-    dispatch(readRestaurants(body)).then(response => {
-      setRestaurants(response.payload);
+    dispatch(readRestaurantsCount(body)).then(response => {
+      setTotalItemCount(response.payload);
+
+      dispatch(readRestaurants(body)).then(response => {
+        setRestaurants(response.payload);
+      });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
