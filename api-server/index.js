@@ -150,7 +150,7 @@ app.post("/api/restaurants", (req, res) => {
 
 // get my restaurants count
 app.post("/api/restaurants/count", (req, res) => {
-  const restaurants = Restaurant.count({ visitor: req.body.id });
+  const restaurants = Restaurant.countDocuments({ visitor: req.body.id });
 
   restaurants.exec((err, restaurants) => {
     if (err) return res.json({ success: false, err });
