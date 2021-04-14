@@ -28,6 +28,16 @@ const List = styled.ol`
   max-width: 100%;
 `;
 
+const Pagination = styled.div`
+  display: inline-block;
+  margin: 2px;
+  &:hover {
+    color: #4caf50;
+    text-decoration: none;
+    cursor: pointer;
+  }
+`;
+
 function RestaurantList(props) {
   const dispatch = useDispatch();
   const [restaurants, setRestaurants] = useState([{ _id: 0 }]);
@@ -89,6 +99,11 @@ function RestaurantList(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const pages = [];
+  for (let i = 0; i <= totalItemCount / 6; i++) {
+    pages.push(<Pagination key={"restaurantPage" + i}>{i + 1}</Pagination>);
+  }
+
   return (
     <Div>
       <span
@@ -118,6 +133,7 @@ function RestaurantList(props) {
           </Row>
         </List>
       </Restaurants>
+      {pages.map(page => page)}
     </Div>
   );
 }
