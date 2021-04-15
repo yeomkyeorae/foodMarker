@@ -32,9 +32,26 @@ const Pagination = styled.div`
   display: inline-block;
   margin: 3px;
   font-size: 1.5rem;
-  color: ${props => (props.selected ? "red" : "black")};
+  color: ${props => (props.selected ? "#1D800E" : "black")};
   &:hover {
     text-decoration: none;
+    cursor: pointer;
+  }
+`;
+
+const Arrow = styled.div`
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  display: inline-block;
+  ${props =>
+    props.right
+      ? `border-left: 10px solid #46CB18;`
+      : `border-right: 10px solid #46CB18;`}
+  ${props =>
+    props.right ? `margin-left: 10px;` : `margin-right: 10px;`}
+  &:hover {
     cursor: pointer;
   }
 `;
@@ -149,7 +166,11 @@ function RestaurantList(props) {
           </Row>
         </List>
       </Restaurants>
-      {pages.map(page => page)}
+      <div>
+        <Arrow right={false} />
+        <div style={{ display: "inline-block" }}>{pages.map(page => page)}</div>
+        <Arrow right={true} />
+      </div>
     </Div>
   );
 }
