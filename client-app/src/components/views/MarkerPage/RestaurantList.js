@@ -42,10 +42,11 @@ function RestaurantList(props) {
   const dispatch = useDispatch();
   const [restaurants, setRestaurants] = useState([{ _id: 0 }]);
   const [totalItemCount, setTotalItemCount] = useState(0);
+  const [page, setPage] = useState(1);
 
   const body = {
     id: props.userId,
-    page: 2
+    page: page
   };
 
   const deleteHandler = restaurantId => {
@@ -88,6 +89,10 @@ function RestaurantList(props) {
     setRestaurants(newArr);
   };
 
+  const onSetPageHandler = page => {
+    setPage(page);
+  };
+
   useEffect(() => {
     dispatch(readRestaurantsCount(body)).then(response => {
       setTotalItemCount(response.payload);
@@ -97,11 +102,18 @@ function RestaurantList(props) {
       });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [page]);
 
   const pages = [];
   for (let i = 0; i <= totalItemCount / 6; i++) {
-    pages.push(<Pagination key={"restaurantPage" + i}>{i + 1}</Pagination>);
+    pages.push(
+      <Pagination
+        key={"restaurantPage" + i}
+        onClick={() => onSetPageHandler(i + 1)}
+      >
+        {i + 1}
+      </Pagination>
+    );
   }
 
   return (
