@@ -139,8 +139,8 @@ app.get("/api/users/logout", auth, (req, res) => {
 // get my restaurants
 app.post("/api/restaurants", (req, res) => {
   const restaurants = Restaurant.find({ visitor: req.body.id })
-    .skip((req.body.page - 1) * 6)
-    .limit(6);
+    .skip((req.body.page - 1) * req.body.itemPerPage)
+    .limit(req.body.itemPerPage);
 
   restaurants.exec((err, restaurants) => {
     if (err) return res.json({ success: false, err });

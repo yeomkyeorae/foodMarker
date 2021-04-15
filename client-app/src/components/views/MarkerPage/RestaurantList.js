@@ -30,9 +30,10 @@ const List = styled.ol`
 
 const Pagination = styled.div`
   display: inline-block;
-  margin: 2px;
+  margin: 3px;
+  font-size: 1.5rem;
+  color: ${props => (props.selected ? "red" : "black")};
   &:hover {
-    color: #4caf50;
     text-decoration: none;
     cursor: pointer;
   }
@@ -44,9 +45,11 @@ function RestaurantList(props) {
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [page, setPage] = useState(1);
 
+  const itemPerPage = 1;
   const body = {
     id: props.userId,
-    page: page
+    page: page,
+    itemPerPage: itemPerPage
   };
 
   const deleteHandler = restaurantId => {
@@ -105,11 +108,12 @@ function RestaurantList(props) {
   }, [page]);
 
   const pages = [];
-  for (let i = 0; i <= totalItemCount / 6; i++) {
+  for (let i = 0; i < totalItemCount / itemPerPage; i++) {
     pages.push(
       <Pagination
         key={"restaurantPage" + i}
         onClick={() => onSetPageHandler(i + 1)}
+        selected={page === i + 1}
       >
         {i + 1}
       </Pagination>
