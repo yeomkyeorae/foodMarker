@@ -60,13 +60,15 @@ function RestaurantList(props) {
   const dispatch = useDispatch();
   const [restaurants, setRestaurants] = useState([{ _id: 0 }]);
   const [totalItemCount, setTotalItemCount] = useState(0);
+  const [pageSetNum, setPageSetNum] = useState(0);
   const [page, setPage] = useState(1);
 
-  const itemPerPage = 1;
+  const ITEMPERPAGE = 1;
+  const DISPLAYPAGENUM = 1;
   const body = {
     id: props.userId,
     page: page,
-    itemPerPage: itemPerPage
+    itemPerPage: ITEMPERPAGE
   };
 
   const deleteHandler = restaurantId => {
@@ -113,6 +115,18 @@ function RestaurantList(props) {
     setPage(page);
   };
 
+  const onSetPageSetNum = type => {
+    if (type === 0) {
+      if (pageSetNum > 0) {
+        setPageSetNum(pageSetNum - 1);
+      }
+    } else if (type === 1) {
+      if (totalItemCount > ITEMPERPAGE * DISPLAYPAGENUM * (pageSetNum + 1)) {
+        setPageSetNum(pageSetNum + 1);
+      }
+    }
+  };
+
   useEffect(() => {
     dispatch(readRestaurantsCount(body)).then(response => {
       setTotalItemCount(response.payload);
@@ -125,7 +139,14 @@ function RestaurantList(props) {
   }, [page]);
 
   const pages = [];
-  for (let i = 0; i < totalItemCount / itemPerPage; i++) {
+  const passingNum = DISPLAYPAGENUM * pageSetNum;
+  const limitPage = Math.ceil(totalItemCount / ITEMPERPAGE);
+  const limitPageSetNum =
+    limitPage > DISPLAYPAGENUM * (pageSetNum + 1)
+      ? DISPLAYPAGENUM * (pageSetNum + 1)
+      : (limitPage % DISPLAYPAGENUM) + DISPLAYPAGENUM * pageSetNum;
+
+  for (let i = passingNum; i < limitPageSetNum; i++) {
     pages.push(
       <Pagination
         key={"restaurantPage" + i}
@@ -167,9 +188,9 @@ function RestaurantList(props) {
         </List>
       </Restaurants>
       <div>
-        <Arrow right={false} />
+        <Arrow right={false} onClick={() => onSetPageSetNum(0)} />
         <div style={{ display: "inline-block" }}>{pages.map(page => page)}</div>
-        <Arrow right={true} />
+        <Arrow right={true} onClick={() => onSetPageSetNum(1)} />
       </div>
     </Div>
   );
