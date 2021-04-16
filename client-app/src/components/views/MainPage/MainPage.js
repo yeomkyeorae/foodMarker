@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { readRestaurantsNoImage } from "../../../_actions/restaurant_action";
 import NavbarComp from "../Navbar/NavbarComp";
 import KakaoMap from "../../containers/KakaoMap/KakaoMap";
+import Footer from "../Footer/Footer";
 import { Button } from "react-bootstrap";
 import Carousel, { autoplayPlugin } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
@@ -77,69 +78,81 @@ function MainPage(props) {
 
   return (
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
-      <NavbarComp userId={userId} history={props.history} />
-      <hr />
-      <H2>나의 맛집들</H2>
-      <div>
-        <Button
-          variant="success"
-          onClick={() => onClickHandler(1)}
-          style={{ margin: "10px", display: "inline-block" }}
-        >
-          전국
-        </Button>
-        <Button
-          variant="secondary"
-          onClick={() => onClickHandler(2)}
-          style={{ margin: "10px", display: "inline-block" }}
-        >
-          서울
-        </Button>
-        <Button
-          variant="primary"
-          onClick={() => onClickHandler(3)}
-          style={{ margin: "10px", display: "inline-block" }}
-        >
-          대전
-        </Button>
-        <Button
-          variant="danger"
-          onClick={() => onClickHandler(4)}
-          style={{ margin: "10px", display: "inline-block" }}
-        >
-          세종
-        </Button>
-      </div>
-      <KakaoMap
-        latitude={latitude}
-        longitude={longitude}
-        mapLevel={mapLevel}
-        restaurants={restaurants}
-      />
-      <hr />
-      <div style={{ width: "50%", marginTop: "10px", margin: "auto" }}>
-        <H2>평점 가장 높은 맛집 리스트</H2>
-        <Carousel
-          autoPlay={2000}
-          animationSpeed={1000}
-          infinite
-          plugins={[
-            "infinite",
-            {
-              resolve: autoplayPlugin,
-              options: {
-                interval: 2000
+      <div
+        style={{
+          position: "absolute",
+          top: "50px",
+          bottom: "50px",
+          left: "0px",
+          right: "0px",
+          overflow: "auto"
+        }}
+      >
+        <NavbarComp userId={userId} history={props.history} />
+        <hr />
+        <H2>나의 맛집들</H2>
+        <div>
+          <Button
+            variant="success"
+            onClick={() => onClickHandler(1)}
+            style={{ margin: "10px", display: "inline-block" }}
+          >
+            전국
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => onClickHandler(2)}
+            style={{ margin: "10px", display: "inline-block" }}
+          >
+            서울
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => onClickHandler(3)}
+            style={{ margin: "10px", display: "inline-block" }}
+          >
+            대전
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => onClickHandler(4)}
+            style={{ margin: "10px", display: "inline-block" }}
+          >
+            세종
+          </Button>
+        </div>
+        <KakaoMap
+          latitude={latitude}
+          longitude={longitude}
+          mapLevel={mapLevel}
+          restaurants={restaurants}
+        />
+        <hr />
+        <div style={{ width: "50%", marginTop: "10px", margin: "auto" }}>
+          <H2>평점 가장 높은 맛집 리스트</H2>
+          <Carousel
+            autoPlay={2000}
+            animationSpeed={1000}
+            infinite
+            plugins={[
+              "infinite",
+              {
+                resolve: autoplayPlugin,
+                options: {
+                  interval: 2000
+                }
               }
-            }
-          ]}
-          // animationSpeed={1000}
-        >
-          <img src={imgTmpUrl1} alt="" width="500px" />
-          <img src={imgTmpUrl2} alt="" width="500px" />
-          <img src={imgTmpUrl3} alt="" width="500px" />
-        </Carousel>
+            ]}
+            // animationSpeed={1000}
+          >
+            <img src={imgTmpUrl1} alt="" width="500px" />
+            <img src={imgTmpUrl2} alt="" width="500px" />
+            <img src={imgTmpUrl3} alt="" width="500px" />
+          </Carousel>
+        </div>
+        <br />
       </div>
-      <br />
+      <Footer />
     </div>
   );
 }
