@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import Restaurants from "./Restaurants";
 import Enroll from "./Enroll";
 import NavbarComp from "../Navbar/NavbarComp";
+import Footer from "../Footer/Footer";
 import { Button } from "react-bootstrap";
 
 function MarkerPage(props) {
@@ -35,18 +36,30 @@ function MarkerPage(props) {
 
   return (
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
-      <NavbarComp userId={userId} history={props.history} />
-      <hr />
-      <div style={{}}>
-        <Button
-          variant="secondary"
-          onClick={onClickChangeMenuHandler}
-          style={{ margin: "20px" }}
-        >
-          {Menu}
-        </Button>
+      <div
+        style={{
+          position: "absolute",
+          top: "50px",
+          bottom: "50px",
+          left: "0px",
+          right: "0px",
+          overflow: "auto"
+        }}
+      >
+        <NavbarComp userId={userId} history={props.history} />
+        <hr />
+        <div style={{}}>
+          <Button
+            variant="secondary"
+            onClick={onClickChangeMenuHandler}
+            style={{ margin: "20px" }}
+          >
+            {Menu}
+          </Button>
+        </div>
+        {MenuComponent}
       </div>
-      {MenuComponent}
+      <Footer />
     </div>
   );
 }

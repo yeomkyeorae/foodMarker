@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import NavbarComp from "../Navbar/NavbarComp";
+import Footer from "../Footer/Footer";
 import ChoizaList from "./ChoizaList";
 import styled from "styled-components";
 
@@ -24,18 +25,30 @@ function ChoizaPage(props) {
 
   return (
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
-      <NavbarComp userId={userId} history={props.history} />
-      <hr />
-      <Div onClick={() => onClickHandler(1)}>시즌1</Div>
-      <Div onClick={() => onClickHandler(2)}>시즌2</Div>
-      <Div onClick={() => onClickHandler(3)}>시즌3</Div>
-      <Div onClick={() => onClickHandler(4)}>시즌4</Div>
-      <Div onClick={() => onClickHandler(5)}>인더하우스</Div>
-      <br />
-      <h2 style={{ fontFamily: "Do Hyeon", marginTop: "50px" }}>
-        시즌{season}
-      </h2>
-      <ChoizaList season={season} />
+      <div
+        style={{
+          position: "absolute",
+          top: "50px",
+          bottom: "50px",
+          left: "0px",
+          right: "0px",
+          overflow: "auto"
+        }}
+      >
+        <NavbarComp userId={userId} history={props.history} />
+        <hr />
+        <Div onClick={() => onClickHandler(1)}>시즌1</Div>
+        <Div onClick={() => onClickHandler(2)}>시즌2</Div>
+        <Div onClick={() => onClickHandler(3)}>시즌3</Div>
+        <Div onClick={() => onClickHandler(4)}>시즌4</Div>
+        <Div onClick={() => onClickHandler(5)}>인더하우스</Div>
+        <br />
+        <h2 style={{ fontFamily: "Do Hyeon", marginTop: "50px" }}>
+          시즌{season}
+        </h2>
+        <ChoizaList season={season} />
+      </div>
+      <Footer />
     </div>
   );
 }
