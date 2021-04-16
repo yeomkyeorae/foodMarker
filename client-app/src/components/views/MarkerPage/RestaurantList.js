@@ -63,8 +63,8 @@ function RestaurantList(props) {
   const [pageSetNum, setPageSetNum] = useState(0);
   const [page, setPage] = useState(1);
 
-  const ITEMPERPAGE = 1;
-  const DISPLAYPAGENUM = 1;
+  const ITEMPERPAGE = 2;
+  const DISPLAYPAGENUM = 3;
   const body = {
     id: props.userId,
     page: page,
@@ -115,14 +115,16 @@ function RestaurantList(props) {
     setPage(page);
   };
 
-  const onSetPageSetNum = type => {
+  const onSetPageSetNum = (type, pageIfMove) => {
     if (type === 0) {
       if (pageSetNum > 0) {
         setPageSetNum(pageSetNum - 1);
+        setPage(pageIfMove);
       }
     } else if (type === 1) {
       if (totalItemCount > ITEMPERPAGE * DISPLAYPAGENUM * (pageSetNum + 1)) {
         setPageSetNum(pageSetNum + 1);
+        setPage(pageIfMove);
       }
     }
   };
@@ -142,11 +144,16 @@ function RestaurantList(props) {
   const passingNum = DISPLAYPAGENUM * pageSetNum;
   const limitPage = Math.ceil(totalItemCount / ITEMPERPAGE);
   const limitPageSetNum =
-    limitPage > DISPLAYPAGENUM * (pageSetNum + 1)
+    limitPage >= DISPLAYPAGENUM * (pageSetNum + 1)
       ? DISPLAYPAGENUM * (pageSetNum + 1)
       : (limitPage % DISPLAYPAGENUM) + DISPLAYPAGENUM * pageSetNum;
 
+  let beforeFirst, afterFirst;
   for (let i = passingNum; i < limitPageSetNum; i++) {
+    if (i === passingNum) {
+      beforeFirst = passingNum - DISPLAYPAGENUM + 1;
+      afterFirst = passingNum + DISPLAYPAGENUM + 1;
+    }
     pages.push(
       <Pagination
         key={"restaurantPage" + i}
@@ -188,9 +195,9 @@ function RestaurantList(props) {
         </List>
       </Restaurants>
       <div>
-        <Arrow right={false} onClick={() => onSetPageSetNum(0)} />
+        <Arrow right={false} onClick={() => onSetPageSetNum(0, beforeFirst)} />
         <div style={{ display: "inline-block" }}>{pages.map(page => page)}</div>
-        <Arrow right={true} onClick={() => onSetPageSetNum(1)} />
+        <Arrow right={true} onClick={() => onSetPageSetNum(1, afterFirst)} />
       </div>
     </Div>
   );
