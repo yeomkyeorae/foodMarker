@@ -28,7 +28,7 @@ function ChoizaPage(props) {
       <div
         style={{
           position: "absolute",
-          top: "50px",
+          top: "10px",
           bottom: "50px",
           left: "0px",
           right: "0px",
