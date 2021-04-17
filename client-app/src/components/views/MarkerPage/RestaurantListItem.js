@@ -91,6 +91,7 @@ function RestaurantListItem(props) {
         setToggle={setToggle}
         restaurantName={restaurant.name}
         restaurantId={restaurant._id}
+        restaurantDate={restaurant.date}
         Rating={restaurant.rating}
         setRating={setRating}
         type="RestaurantListItem"

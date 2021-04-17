@@ -17,6 +17,7 @@ function UpdateModal(props) {
     setToggle,
     restaurantName,
     restaurantId,
+    restaurantDate,
     Rating,
     setRating,
     userId,
@@ -28,7 +29,7 @@ function UpdateModal(props) {
   } = props;
 
   const [ImageData, setImageData] = useState("");
-  const [VisitedDate, setVisitedDate] = useState("");
+  const [VisitedDate, setVisitedDate] = useState(restaurantDate);
   const [isConverting, setIsConverting] = useState(false);
 
   const dispatch = useDispatch();
