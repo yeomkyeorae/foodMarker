@@ -191,6 +191,21 @@ app.post("/api/restaurants-no-image", (req, res) => {
   });
 });
 
+// get my 5 stars restaurant latest
+app.get("/api/restaurants/top5", (req, res) => {
+  const userId = req.query._id;
+  const body = { visitor: userId, rating: 5 };
+
+  const restaurants = Restaurant.find(body)
+    .sort({ date: -1 }) // 최신 먼저 고려
+    .limit(5);
+
+  restaurants.exec((err, restaurants) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({ restaurants: restaurants });
+  });
+});
+
 // create my restaurant
 app.post("/api/restaurant", (req, res) => {
   const restaurant = Restaurant(req.body);

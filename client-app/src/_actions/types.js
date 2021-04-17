@@ -6,6 +6,7 @@ export const AUTH_USER = "auth_user";
 export const READ_RESTAURANTS = "read_restaurants";
 export const READ_RESTAURANTS_COUNT = "read_restaurant_count";
 export const READ_RESTAURANTS_NO_IMAGE = "read_restaurants_no_image";
+export const READ_RESTAURANTS_TOP5 = "read_restaurants_top5";
 export const REGISTER_RESTAURANT = "register_restaurant";
 export const DELETE_RESTAURANT = "delete_restaurant";
 export const UPDATE_RESTAURANT = "update_restaurant";

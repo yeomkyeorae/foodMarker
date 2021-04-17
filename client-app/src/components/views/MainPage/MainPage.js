@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { readRestaurantsNoImage } from "../../../_actions/restaurant_action";
+import {
+  readRestaurantsNoImage,
+  readRestaurantsTop5
+} from "../../../_actions/restaurant_action";
 import NavbarComp from "../Navbar/NavbarComp";
 import KakaoMap from "../../containers/KakaoMap/KakaoMap";
 import Footer from "../Footer/Footer";
@@ -16,6 +19,7 @@ const H2 = styled.h2`
 
 function MainPage(props) {
   const [restaurants, setRestaurants] = useState([]);
+  const [topRestaurants, setTopRestaurants] = useState([]);
   const dispatch = useDispatch();
   const userId = props.location.state;
   const body = {
@@ -27,19 +31,28 @@ function MainPage(props) {
     dispatch(readRestaurantsNoImage(body)).then(response => {
       setRestaurants(response.payload);
     });
+    dispatch(readRestaurantsTop5(userId)).then(response => {
+      const restaurants = response.payload.data.restaurants;
+
+      const newTopRestaurants = [];
+      for (let i = 0; i < 5; i++) {
+        if (i < restaurants.length) {
+          newTopRestaurants.push(restaurants[i]);
+        } else {
+          newTopRestaurants.push({
+            imgURL:
+              "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+          });
+        }
+      }
+      setTopRestaurants(newTopRestaurants);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [latitude, setLatitude] = useState(37.52393);
   const [longitude, setLongitude] = useState(126.980493);
   const [mapLevel, setMapLevel] = useState(8);
-
-  const imgTmpUrl1 =
-    "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80";
-  const imgTmpUrl2 =
-    "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1951&q=80";
-  const imgTmpUrl3 =
-    "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80";
 
   const onClickHandler = option => {
     let optionLocation;
@@ -75,6 +88,8 @@ function MainPage(props) {
       setRestaurants(response.payload);
     });
   };
+
+  console.log(topRestaurants);
 
   return (
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
@@ -129,7 +144,7 @@ function MainPage(props) {
         />
         <hr />
         <div style={{ width: "50%", marginTop: "10px", margin: "auto" }}>
-          <H2>평점 가장 높은 맛집 리스트</H2>
+          <H2>가장 최근에 별점을 5개 받은 맛집</H2>
           <Carousel
             autoPlay={2000}
             animationSpeed={1000}
@@ -145,9 +160,14 @@ function MainPage(props) {
             ]}
             // animationSpeed={1000}
           >
-            <img src={imgTmpUrl1} alt="" width="500px" />
-            <img src={imgTmpUrl2} alt="" width="500px" />
-            <img src={imgTmpUrl3} alt="" width="500px" />
+            {topRestaurants.map((topRestaurant, index) => (
+              <img
+                key={index}
+                src={topRestaurant.imgURL}
+                alt=""
+                width="500px"
+              />
+            ))}
           </Carousel>
         </div>
         <br />

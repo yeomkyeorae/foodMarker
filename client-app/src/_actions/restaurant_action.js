@@ -3,6 +3,7 @@ import {
   READ_RESTAURANTS,
   READ_RESTAURANTS_COUNT,
   READ_RESTAURANTS_NO_IMAGE,
+  READ_RESTAURANTS_TOP5,
   REGISTER_RESTAURANT,
   DELETE_RESTAURANT,
   UPDATE_RESTAURANT
@@ -37,6 +38,21 @@ export function readRestaurantsNoImage(dataToSubmit) {
 
   return {
     type: READ_RESTAURANTS_NO_IMAGE,
+    payload: request
+  };
+}
+
+export function readRestaurantsTop5(userId) {
+  const request = axios
+    .get("/api/restaurants/top5", {
+      params: {
+        _id: userId
+      }
+    })
+    .then(response => response);
+
+  return {
+    type: READ_RESTAURANTS_TOP5,
     payload: request
   };
 }
