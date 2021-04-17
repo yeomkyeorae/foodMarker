@@ -208,11 +208,13 @@ app.post("/api/restaurant", (req, res) => {
 
 // update my restaurant
 app.put("/api/restaurant", (req, res) => {
-  console.log("req.body: ", req.body);
   Restaurant.findById(req.body.restaurantId, (err, restaurant) => {
     restaurant.date = req.body.date;
-    restaurant.imgURL = req.body.imgURL;
-    console.log(restaurant);
+    if (req.body.imgURL) {
+      restaurant.imgURL = req.body.imgURL;
+    }
+    restaurant.rating = req.body.rating;
+
     restaurant.save((err, restaurantInfo) => {
       if (err)
         return res.json({

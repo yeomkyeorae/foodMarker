@@ -9,8 +9,6 @@ import {
   registerRestaurant
 } from "../../../_actions/restaurant_action";
 
-import axios from "axios";
-
 function UpdateModal(props) {
   const {
     Toggle,
@@ -19,7 +17,6 @@ function UpdateModal(props) {
     restaurantId,
     restaurantDate,
     Rating,
-    setRating,
     userId,
     setPopUpToggle,
     wishListAddress,
@@ -30,6 +27,7 @@ function UpdateModal(props) {
 
   const [ImageData, setImageData] = useState("");
   const [VisitedDate, setVisitedDate] = useState(restaurantDate);
+  const [NewRating, setNewRating] = useState(Rating);
   const [isConverting, setIsConverting] = useState(false);
 
   const dispatch = useDispatch();
@@ -77,33 +75,22 @@ function UpdateModal(props) {
   const changeRestaurant = e => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("image", ImageData);
+    const body = {
+      restaurantId: restaurantId,
+      date: VisitedDate,
+      imgURL: ImageData,
+      rating: NewRating
+    };
 
-    axios
-      .post("https://api.imgur.com/3/image", formData, {
-        headers: {
-          Authorization: "Client-ID e4dc4dac3124836",
-          Accept: "application/json"
-        }
-      })
-      .then(response => {
-        const body = {
-          restaurantId: restaurantId,
-          date: VisitedDate,
-          imgURL: response.data.data.link
-        };
-
-        dispatch(updateRestaurant(body)).then(response => {
-          if (response.payload.success) {
-            alert("수정되었습니다.");
-            setToggle(!Toggle);
-          } else {
-            console.log(response);
-            alert("error");
-          }
-        });
-      });
+    dispatch(updateRestaurant(body)).then(response => {
+      if (response.payload.success) {
+        alert("수정되었습니다.");
+        setToggle(!Toggle);
+      } else {
+        console.log(response);
+        alert("error");
+      }
+    });
   };
 
   const moveToMain = e => {
@@ -159,8 +146,8 @@ function UpdateModal(props) {
         >
           <ReactStars
             count={5}
-            value={Rating}
-            onChange={setRating}
+            value={NewRating}
+            onChange={setNewRating}
             size={32}
             isHalf={true}
             activeColor="#ffd700"

@@ -10,7 +10,7 @@ function RestaurantListItem(props) {
   const restaurantDateSplit = String(restaurant.date).split("-");
   const restaurantDate = `${restaurantDateSplit[0]}년 ${restaurantDateSplit[1]}월 ${restaurantDateSplit[2]}일`;
   const [Toggle, setToggle] = useState(false);
-  const [Rating, setRating] = useState(restaurant.rating);
+  const Rating = restaurant.rating;
 
   const updateHandler = e => {
     setToggle(!Toggle);
@@ -92,8 +92,7 @@ function RestaurantListItem(props) {
         restaurantName={restaurant.name}
         restaurantId={restaurant._id}
         restaurantDate={restaurant.date}
-        Rating={restaurant.rating}
-        setRating={setRating}
+        Rating={Rating}
         type="RestaurantListItem"
       />
     </>
