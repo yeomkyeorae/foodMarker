@@ -10,7 +10,7 @@ function Restaurants(props) {
 
   return (
     <div style={{ display: "inline-block", width: "100%" }}>
-      <KakaoMap address={address} restaurantName={restaurantName} />
+      {/* <KakaoMap address={address} restaurantName={restaurantName} /> */}
       <RestaurantList
         userId={userId}
         setAddress={setAddress}
