@@ -11,13 +11,13 @@ import { Row } from "react-bootstrap";
 import styled from "styled-components";
 
 const Div = styled.div`
-  width: 50%;
+  width: 40%;
   display: inline-block;
 `;
 
 const Restaurants = styled.div`
   width: 100%;
-  height: 540px;
+  /* height: 100%; */
   display: inline-block;
   overflow-y: scroll;
 `;
@@ -63,8 +63,8 @@ function RestaurantList(props) {
   const [pageSetNum, setPageSetNum] = useState(0);
   const [page, setPage] = useState(1);
 
-  const ITEMPERPAGE = 2;
-  const DISPLAYPAGENUM = 3;
+  const ITEMPERPAGE = 6;
+  const DISPLAYPAGENUM = 5;
   const body = {
     id: props.userId,
     page: page,

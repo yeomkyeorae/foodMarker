@@ -23,7 +23,7 @@ function RestaurantListItem(props) {
 
   return restaurant.address ? (
     <>
-      <Col md={6}>
+      <Col md={12}>
         <Card
           style={{ width: "100%" }}
           onClick={() => clickRestaurant(restaurant.address, restaurant.name)}
@@ -39,14 +39,16 @@ function RestaurantListItem(props) {
               </Card.Title>
               <span style={{ fontSize: "0.8em" }}>{restaurant.address}</span>
             </div>
-            <ReactStars
-              count={5}
-              value={Rating}
-              edit={false}
-              size={50}
-              isHalf={true}
-              activeColor="#ffd700"
-            />
+            <div style={{ width: "40%", margin: "auto" }}>
+              <ReactStars
+                count={5}
+                value={Rating}
+                edit={false}
+                size={35}
+                isHalf={true}
+                activeColor="#ffd700"
+              />
+            </div>
             <div
               style={{
                 width: "100%",
