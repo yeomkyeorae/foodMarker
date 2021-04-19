@@ -1,8 +1,21 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { Card, Col, Button } from "react-bootstrap";
+import { Card, Col, Dropdown } from "react-bootstrap";
 import UpdateModal from "../../containers/UpdateModal/UpdateModal";
 import ReactStars from "react-rating-stars-component";
+
+const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+  <span
+    ref={ref}
+    onClick={e => {
+      e.preventDefault();
+      onClick(e);
+    }}
+    style={{ cursor: "pointer" }}
+  >
+    {children}
+  </span>
+));
 
 function RestaurantListItem(props) {
   const restaurant = props.restaurant;
@@ -29,6 +42,21 @@ function RestaurantListItem(props) {
           onClick={() => clickRestaurant(restaurant.address, restaurant.name)}
         >
           <Card.Body>
+            <div style={{ float: "right" }}>
+              <Dropdown>
+                <Dropdown.Toggle as={CustomToggle}>...</Dropdown.Toggle>
+                <Dropdown.Menu size="sm" title="">
+                  <Dropdown.Item onClick={() => updateHandler()}>
+                    수정
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => props.deleteHandler(restaurant._id)}
+                  >
+                    삭제
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
             <div>
               <Card.Title style={{ margin: "0px" }}>
                 {restaurant.name}
@@ -64,26 +92,6 @@ function RestaurantListItem(props) {
                   height: "100%"
                 }}
               />
-            </div>
-            <div>
-              <Button
-                variant="warning"
-                onClick={() => updateHandler()}
-                style={{
-                  display: "inline-block",
-                  margin: "2px",
-                  color: "white"
-                }}
-              >
-                수정
-              </Button>
-              <Button
-                variant="primary"
-                onClick={() => props.deleteHandler(restaurant._id)}
-                style={{ display: "inline-block", margin: "2px" }}
-              >
-                삭제
-              </Button>
             </div>
           </Card.Body>
         </Card>
