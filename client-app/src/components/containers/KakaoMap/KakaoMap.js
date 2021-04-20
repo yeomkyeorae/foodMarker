@@ -10,7 +10,8 @@ function KakaoMap(props) {
     latitude,
     longitude,
     mapLevel,
-    restaurants
+    restaurants,
+    width
   } = props;
 
   useEffect(() => {
@@ -102,7 +103,7 @@ function KakaoMap(props) {
     <div
       id={`map`}
       style={{
-        width: "45%",
+        width: `${width}`,
         height: "540px",
         display: "inline-block"
       }}

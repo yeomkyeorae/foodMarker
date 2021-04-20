@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { Card, Col, Dropdown } from "react-bootstrap";
 import UpdateModal from "../../containers/UpdateModal/UpdateModal";
+import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
 import ReactStars from "react-rating-stars-component";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -23,7 +24,12 @@ function RestaurantListItem(props) {
   const restaurantDateSplit = String(restaurant.date).split("-");
   const restaurantDate = `${restaurantDateSplit[0]}년 ${restaurantDateSplit[1]}월 ${restaurantDateSplit[2]}일`;
   const [Toggle, setToggle] = useState(false);
+  const [mapToggle, setMapToggle] = useState(false);
   const Rating = restaurant.rating;
+
+  const popUpMap = () => {
+    setMapToggle(true);
+  };
 
   const updateHandler = e => {
     setToggle(!Toggle);
@@ -46,6 +52,7 @@ function RestaurantListItem(props) {
               <Dropdown>
                 <Dropdown.Toggle as={CustomToggle}>...</Dropdown.Toggle>
                 <Dropdown.Menu size="sm" title="">
+                  <Dropdown.Item onClick={() => popUpMap()}>지도</Dropdown.Item>
                   <Dropdown.Item onClick={() => updateHandler()}>
                     수정
                   </Dropdown.Item>
@@ -104,6 +111,11 @@ function RestaurantListItem(props) {
         restaurantDate={restaurant.date}
         Rating={Rating}
         type="RestaurantListItem"
+      />
+      <KakaoMapModal
+        Toggle={mapToggle}
+        setToggle={setMapToggle}
+        restaurant={restaurant}
       />
     </>
   ) : null;

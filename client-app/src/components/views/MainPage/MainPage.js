@@ -141,6 +141,7 @@ function MainPage(props) {
           longitude={longitude}
           mapLevel={mapLevel}
           restaurants={restaurants}
+          width={"45%"}
         />
         <hr />
         <div style={{ width: "50%", marginTop: "10px", margin: "auto" }}>
