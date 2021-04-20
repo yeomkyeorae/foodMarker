@@ -42,7 +42,7 @@ function RestaurantListItem(props) {
 
   return restaurant.address ? (
     <>
-      <Col md={12}>
+      <Col md={12} style={{ paddingBottom: "10px" }}>
         <Card
           style={{ width: "100%" }}
           onClick={() => clickRestaurant(restaurant.address, restaurant.name)}
