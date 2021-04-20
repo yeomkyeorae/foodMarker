@@ -17,7 +17,7 @@ function KakaoMapModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton />
+      <Modal.Header closeButton>주소: {address}</Modal.Header>
       <Modal.Body>
         <div
           style={{
