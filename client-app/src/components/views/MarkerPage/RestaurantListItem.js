@@ -35,18 +35,10 @@ function RestaurantListItem(props) {
     setToggle(!Toggle);
   };
 
-  const clickRestaurant = (restaurantAddress, restaurantName) => {
-    props.setAddress(restaurantAddress);
-    props.setRestaurantName(restaurantName);
-  };
-
   return restaurant.address ? (
     <>
       <Col md={12} style={{ paddingBottom: "10px" }}>
-        <Card
-          style={{ width: "100%" }}
-          onClick={() => clickRestaurant(restaurant.address, restaurant.name)}
-        >
+        <Card style={{ width: "100%" }}>
           <Card.Body>
             <div style={{ float: "right" }}>
               <Dropdown>
