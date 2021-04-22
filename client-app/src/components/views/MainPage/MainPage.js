@@ -89,8 +89,6 @@ function MainPage(props) {
     });
   };
 
-  console.log(topRestaurants);
-
   return (
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
       <div
@@ -167,6 +165,7 @@ function MainPage(props) {
                 src={topRestaurant.imgURL}
                 alt=""
                 width="500px"
+                height="100%"
               />
             ))}
           </Carousel>
