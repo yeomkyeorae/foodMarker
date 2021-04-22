@@ -17,7 +17,7 @@ const Div = styled.div`
 
 function ChoizaPage(props) {
   const userId = props.location.state;
-  const [season, setSeason] = useState(4);
+  const [season, setSeason] = useState(5);
 
   const onClickHandler = season => {
     setSeason(season);
