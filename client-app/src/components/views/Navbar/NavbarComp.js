@@ -4,31 +4,32 @@ import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../_actions/user_action";
 import styled from "styled-components";
 
-const H1 = styled.h1`
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-  color: #cdb891;
+const H2 = styled.h2`
+  color: black;
   &:hover {
     color: #4caf50;
     text-decoration: none;
   }
+  font-weight: 500;
 `;
 
 const Div = styled.div`
   display: inline-block;
   width: 10rem;
+`;
+
+const Span = styled.span`
+  color: black;
   &:hover {
-    text-shadow: -1px 0 #cdb891, 0 1px #cdb891, 1px 0 #cdb891, 0 -1px #cdb891;
-    color: white;
+    color: #4caf50;
+    text-decoration: none;
   }
+  font-weight: 200;
 `;
 
 const LogoutDiv = styled.div`
-  display: inline-block;
   width: 10rem;
-  &:hover {
-    text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
-    color: white;
-  }
+  float: right;
 `;
 
 function NavbarComp(props) {
@@ -47,21 +48,28 @@ function NavbarComp(props) {
 
   return (
     <div>
-      <div href="/" style={{ color: "skyblue" }}>
+      <div
+        href="/"
+        style={{
+          color: "skyblue",
+          display: "inline-block",
+          float: "left"
+        }}
+      >
         <Link
           to={{ pathname: "/main", state: userId }}
           style={{ textDecoration: "none" }}
         >
-          <H1>Food Marker</H1>
+          <H2>Food Marker</H2>
         </Link>
       </div>
-      <div>
+      <div style={{ display: "inline-block" }}>
         <Div>
           <Link
             to={{ pathname: "/marker", state: userId }}
             style={{ textDecoration: "none" }}
           >
-            <span style={{ color: "black" }}>나의 맛집</span>
+            <Span>나의 맛집</Span>
           </Link>
         </Div>
         <Div>
@@ -72,7 +80,7 @@ function NavbarComp(props) {
               color: "red"
             }}
           >
-            <span style={{ color: "black" }}>위시 맛집</span>
+            <Span>위시 맛집</Span>
           </Link>
         </Div>
         <Div>
@@ -83,20 +91,20 @@ function NavbarComp(props) {
               color: "red"
             }}
           >
-            <span style={{ color: "black", state: userId }}>최자 로드</span>
+            <Span>최자 로드</Span>
           </Link>
         </Div>
-        <LogoutDiv
-          onClick={onClickHandler}
-          style={{
-            cursor: "pointer",
-            display: "inline-block",
-            width: "10rem"
-          }}
-        >
-          <span style={{ color: "red" }}>로그아웃</span>
-        </LogoutDiv>
       </div>
+      <LogoutDiv
+        onClick={onClickHandler}
+        style={{
+          cursor: "pointer",
+          display: "inline-block",
+          width: "10rem"
+        }}
+      >
+        <span style={{ color: "red" }}>로그아웃</span>
+      </LogoutDiv>
     </div>
   );
 }
