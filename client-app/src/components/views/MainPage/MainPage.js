@@ -11,15 +11,52 @@ import Footer from "../Footer/Footer";
 import { Button } from "react-bootstrap";
 import Carousel, { autoplayPlugin } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const H2 = styled.h2`
-  font-family: "Do Hyeon", sans-serif;
+  font-weight: 100;
+`;
+
+const move = keyframes`
+  from {
+     transform: translateX(0);
+  }
+  to {
+     transform: translateX(500px);
+  }
+`;
+
+/* animation: ${move} 1s ease-in-out 0.5s 2 alternate; */
+const ImgDiv = styled.div`
+  display: inline-block;
+`;
+
+const Arrow = styled.div`
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  display: inline-block;
+  ${props =>
+    props.right
+      ? `border-left: 10px solid black;`
+      : `border-right: 10px solid black;`}
+  ${props =>
+    props.right ? `margin-left: 10px;` : `margin-right: 10px;`}
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 function MainPage(props) {
   const [restaurants, setRestaurants] = useState([]);
   const [topRestaurants, setTopRestaurants] = useState([]);
+  const [carouselPage, setCarouselPage] = useState(0);
+  const [carouselImageList, setCarouselImageList] = useState([
+    "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+    "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+    "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80"
+  ]);
   const dispatch = useDispatch();
   const userId = props.location.state;
   const body = {
@@ -89,6 +126,10 @@ function MainPage(props) {
     });
   };
 
+  const nextClickHandler = type => {
+    setCarouselPage((carouselPage + 1) % 3);
+  };
+
   return (
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
       <div
@@ -103,8 +144,21 @@ function MainPage(props) {
       >
         <NavbarComp userId={userId} history={props.history} />
         <hr />
-        <H2>나의 맛집들</H2>
-        <div>
+        <ImgDiv>
+          <Arrow right={false} onClick={() => nextClickHandler(0)} />
+          <img
+            src={`${carouselImageList[carouselPage]}`}
+            alt=""
+            width="90%"
+            height="400px"
+          />
+          <Arrow right={true} onClick={() => nextClickHandler(1)} />
+        </ImgDiv>
+        <hr />
+        <div
+          style={{ display: "inline-block", width: "40%", marginLeft: "20px" }}
+        >
+          <H2>나의 맛집 지도</H2>
           <Button
             variant="success"
             onClick={() => onClickHandler(1)}
@@ -133,16 +187,25 @@ function MainPage(props) {
           >
             세종
           </Button>
+          <KakaoMap
+            latitude={latitude}
+            longitude={longitude}
+            mapLevel={mapLevel}
+            restaurants={restaurants}
+            width={"100%"}
+            inlineBlock={false}
+          />
         </div>
-        <KakaoMap
-          latitude={latitude}
-          longitude={longitude}
-          mapLevel={mapLevel}
-          restaurants={restaurants}
-          width={"45%"}
-        />
-        <hr />
-        <div style={{ width: "50%", marginTop: "10px", margin: "auto" }}>
+        {/* <hr /> */}
+        <div
+          style={{
+            width: "50%",
+            // marginTop: "10px",
+            margin: "auto",
+            display: "inline-block"
+            // height: ""
+          }}
+        >
           <H2>가장 최근에 별점을 5개 받은 맛집</H2>
           <Carousel
             autoPlay={2000}
@@ -158,14 +221,15 @@ function MainPage(props) {
               }
             ]}
             // animationSpeed={1000}
+            style={{ height: "100px" }}
           >
             {topRestaurants.map((topRestaurant, index) => (
               <img
                 key={index}
                 src={topRestaurant.imgURL}
                 alt=""
-                width="500px"
-                height="100%"
+                width="450px"
+                height="80%"
               />
             ))}
           </Carousel>
