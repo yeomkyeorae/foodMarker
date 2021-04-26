@@ -155,9 +155,7 @@ function MainPage(props) {
           <Arrow right={true} onClick={() => nextClickHandler(1)} />
         </ImgDiv>
         <hr />
-        <div
-          style={{ display: "inline-block", width: "40%", marginLeft: "20px" }}
-        >
+        <div style={{ width: "70%", margin: "auto" }}>
           <H2>나의 맛집 지도</H2>
           <Button
             variant="success"
@@ -196,14 +194,12 @@ function MainPage(props) {
             inlineBlock={false}
           />
         </div>
-        {/* <hr /> */}
+        <hr />
         <div
           style={{
             width: "50%",
-            // marginTop: "10px",
             margin: "auto",
             display: "inline-block"
-            // height: ""
           }}
         >
           <H2>가장 최근에 별점을 5개 받은 맛집</H2>
@@ -220,8 +216,39 @@ function MainPage(props) {
                 }
               }
             ]}
-            // animationSpeed={1000}
-            style={{ height: "100px" }}
+          >
+            {topRestaurants.map((topRestaurant, index) => (
+              <img
+                key={index}
+                src={topRestaurant.imgURL}
+                alt=""
+                width="450px"
+                height="80%"
+              />
+            ))}
+          </Carousel>
+        </div>
+        <div
+          style={{
+            width: "50%",
+            margin: "auto",
+            display: "inline-block"
+          }}
+        >
+          <H2>가장 많이 등록된 맛집</H2>
+          <Carousel
+            autoPlay={2000}
+            animationSpeed={1000}
+            infinite
+            plugins={[
+              "infinite",
+              {
+                resolve: autoplayPlugin,
+                options: {
+                  interval: 2000
+                }
+              }
+            ]}
           >
             {topRestaurants.map((topRestaurant, index) => (
               <img
