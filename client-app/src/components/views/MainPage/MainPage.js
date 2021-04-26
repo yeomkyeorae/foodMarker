@@ -127,8 +127,10 @@ function MainPage(props) {
   };
 
   const nextClickHandler = type => {
-    setCarouselPage((carouselPage + 1) % 3);
+    setCarouselPage((carouselPage + 1) % 5);
   };
+
+  console.log(topRestaurants);
 
   return (
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
@@ -144,16 +146,30 @@ function MainPage(props) {
       >
         <NavbarComp userId={userId} history={props.history} />
         <hr />
-        <ImgDiv>
-          <Arrow right={false} onClick={() => nextClickHandler(0)} />
-          <img
-            src={`${carouselImageList[carouselPage]}`}
-            alt=""
-            width="90%"
-            height="400px"
-          />
-          <Arrow right={true} onClick={() => nextClickHandler(1)} />
-        </ImgDiv>
+        <Carousel
+          autoPlay={2000}
+          animationSpeed={1000}
+          infinite
+          plugins={[
+            "infinite",
+            {
+              resolve: autoplayPlugin,
+              options: {
+                interval: 2000
+              }
+            }
+          ]}
+        >
+          {carouselImageList.map((carouselImageURL, index) => (
+            <img
+              key={index}
+              src={carouselImageURL}
+              alt=""
+              width="90%"
+              height="500px"
+            />
+          ))}
+        </Carousel>
         <hr />
         <div style={{ width: "70%", margin: "auto" }}>
           <H2>나의 맛집 지도</H2>
@@ -195,71 +211,54 @@ function MainPage(props) {
           />
         </div>
         <hr />
-        <div
-          style={{
-            width: "50%",
-            margin: "auto",
-            display: "inline-block"
-          }}
-        >
-          <H2>가장 최근에 별점을 5개 받은 맛집</H2>
-          <Carousel
-            autoPlay={2000}
-            animationSpeed={1000}
-            infinite
-            plugins={[
-              "infinite",
-              {
-                resolve: autoplayPlugin,
-                options: {
-                  interval: 2000
-                }
-              }
-            ]}
+        <div style={{ marginBottom: "10px" }}>
+          <div
+            style={{
+              width: "50%",
+              margin: "auto",
+              display: "inline-block"
+            }}
           >
-            {topRestaurants.map((topRestaurant, index) => (
+            <H2>가장 많이 등록된 맛집</H2>
+            <div>
               <img
-                key={index}
-                src={topRestaurant.imgURL}
+                src={
+                  "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80"
+                }
                 alt=""
-                width="450px"
+                width="550px"
                 height="80%"
               />
-            ))}
-          </Carousel>
-        </div>
-        <div
-          style={{
-            width: "50%",
-            margin: "auto",
-            display: "inline-block"
-          }}
-        >
-          <H2>가장 많이 등록된 맛집</H2>
-          <Carousel
-            autoPlay={2000}
-            animationSpeed={1000}
-            infinite
-            plugins={[
-              "infinite",
-              {
-                resolve: autoplayPlugin,
-                options: {
-                  interval: 2000
-                }
-              }
-            ]}
+              <div>
+                <span>
+                  호호식당
+                  <br /> 주소
+                  <br /> 등록 수: 10
+                </span>
+              </div>
+            </div>
+          </div>
+          <div
+            style={{
+              width: "40%",
+              margin: "auto",
+              display: "inline-block"
+            }}
           >
-            {topRestaurants.map((topRestaurant, index) => (
-              <img
-                key={index}
-                src={topRestaurant.imgURL}
-                alt=""
-                width="450px"
-                height="80%"
-              />
-            ))}
-          </Carousel>
+            <H2>가장 최근에 별점을 5개 받은 맛집</H2>
+            {topRestaurants.length > 0 && (
+              <ImgDiv>
+                <Arrow right={false} onClick={() => nextClickHandler(0)} />
+                <img
+                  src={`${topRestaurants[carouselPage].imgURL}`}
+                  alt=""
+                  width="80%"
+                  height="500px"
+                />
+                <Arrow right={true} onClick={() => nextClickHandler(1)} />
+              </ImgDiv>
+            )}
+          </div>
         </div>
         <br />
       </div>
