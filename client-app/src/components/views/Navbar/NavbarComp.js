@@ -53,7 +53,8 @@ function NavbarComp(props) {
         style={{
           color: "skyblue",
           display: "inline-block",
-          float: "left"
+          float: "left",
+          paddingLeft: "50px"
         }}
       >
         <Link
