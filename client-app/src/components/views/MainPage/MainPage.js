@@ -3,7 +3,8 @@ import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import {
   readRestaurantsNoImage,
-  readRestaurantsTop5
+  readRestaurantsTop5,
+  readRestaurantMost
 } from "../../../_actions/restaurant_action";
 import NavbarComp from "../Navbar/NavbarComp";
 import KakaoMap from "../../containers/KakaoMap/KakaoMap";
@@ -57,6 +58,12 @@ function MainPage(props) {
     "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
     "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80"
   ]);
+  const [mostRestaurant, setMostRestaurant] = useState({
+    name: "",
+    address: "",
+    count: ""
+  });
+
   const dispatch = useDispatch();
   const userId = props.location.state;
   const body = {
@@ -83,6 +90,13 @@ function MainPage(props) {
         }
       }
       setTopRestaurants(newTopRestaurants);
+    });
+    dispatch(readRestaurantMost()).then(response => {
+      const count = response.payload.data.restaurant[0].count;
+      const name = response.payload.data.restaurant[0]._id.name;
+      const address = response.payload.data.restaurant[0]._id.address;
+
+      setMostRestaurant({ name, address, count });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -220,9 +234,9 @@ function MainPage(props) {
             <H2>가장 많이 등록된 맛집</H2>
             <div>
               <span>
-                호호식당
-                <br /> 주소
-                <br /> 등록 수: 10
+                {mostRestaurant.name}
+                <br /> {mostRestaurant.address}
+                <br /> 등록 수: {mostRestaurant.count}
               </span>
             </div>
             <div>

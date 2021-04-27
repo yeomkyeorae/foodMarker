@@ -4,6 +4,7 @@ import {
   READ_RESTAURANTS_COUNT,
   READ_RESTAURANTS_NO_IMAGE,
   READ_RESTAURANTS_TOP5,
+  READ_RESTAURANT_MOST,
   REGISTER_RESTAURANT,
   DELETE_RESTAURANT,
   UPDATE_RESTAURANT
@@ -53,6 +54,15 @@ export function readRestaurantsTop5(userId) {
 
   return {
     type: READ_RESTAURANTS_TOP5,
+    payload: request
+  };
+}
+
+export function readRestaurantMost() {
+  const request = axios.get("/api/restaurant/most").then(response => response);
+
+  return {
+    type: READ_RESTAURANT_MOST,
     payload: request
   };
 }
