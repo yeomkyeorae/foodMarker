@@ -130,8 +130,6 @@ function MainPage(props) {
     setCarouselPage((carouselPage + 1) % 5);
   };
 
-  console.log(topRestaurants);
-
   return (
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
       <div
@@ -214,28 +212,28 @@ function MainPage(props) {
         <div style={{ marginBottom: "10px" }}>
           <div
             style={{
-              width: "50%",
+              width: "60%",
               margin: "auto",
               display: "inline-block"
             }}
           >
             <H2>가장 많이 등록된 맛집</H2>
             <div>
+              <span>
+                호호식당
+                <br /> 주소
+                <br /> 등록 수: 10
+              </span>
+            </div>
+            <div>
               <img
                 src={
                   "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80"
                 }
                 alt=""
-                width="550px"
+                width="80%"
                 height="80%"
               />
-              <div>
-                <span>
-                  호호식당
-                  <br /> 주소
-                  <br /> 등록 수: 10
-                </span>
-              </div>
             </div>
           </div>
           <div
