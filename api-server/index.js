@@ -206,6 +206,35 @@ app.get("/api/restaurants/top5", (req, res) => {
   });
 });
 
+// get restaurant with the most count
+app.get("/api/restaurant/most", (req, res) => {
+  const restaurant = Restaurant.aggregate([
+    {
+      $group: {
+        _id: {
+          name: "$name",
+          address: "$address"
+        },
+        count: {
+          $sum: 1
+        }
+      }
+    },
+    {
+      $sort: {
+        count: -1
+      }
+    },
+    {
+      $limit: 1
+    }
+  ]);
+  restaurant.exec((err, restaurant) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({ restaurant: restaurant });
+  });
+});
+
 // create my restaurant
 app.post("/api/restaurant", (req, res) => {
   const restaurant = Restaurant(req.body);
