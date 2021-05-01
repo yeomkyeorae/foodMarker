@@ -34,6 +34,8 @@ function Enroll(props) {
   const [VisitedDate, setVisitedDate] = useState("");
   const [ImageData, setImageData] = useState("");
   const [isConverting, setIsConverting] = useState(false);
+  const [eatingTime, setEatingTime] = useState(1);
+
   const userId = props.userId;
   const parentCompName = props.parentCompName;
 
@@ -247,6 +249,17 @@ function Enroll(props) {
               placeholder="방문 일시"
               onChange={e => onVisitedDateHandler(e)}
             />
+            <select
+              id="select"
+              value={eatingTime}
+              style={{ marginLeft: "5px" }}
+              onChange={e => setEatingTime(parseInt(e.target.value))}
+            >
+              <option value="1">아침</option>
+              <option value="2">점심</option>
+              <option value="3">저녁</option>
+              <option value="4">기타</option>
+            </select>
             <div style={{ marginLeft: "100px", margin: "5px" }}>
               <input
                 type="file"
