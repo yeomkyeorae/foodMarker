@@ -29,6 +29,7 @@ function UpdateModal(props) {
   const [VisitedDate, setVisitedDate] = useState(restaurantDate);
   const [NewRating, setNewRating] = useState(Rating);
   const [isConverting, setIsConverting] = useState(false);
+  const [eatingTime, setEatingTime] = useState(1);
 
   const dispatch = useDispatch();
 
@@ -159,6 +160,17 @@ function UpdateModal(props) {
           placeholder="방문 일시"
           onChange={e => onVisitedDateHandler(e)}
         />
+        <select
+          id="select"
+          value={eatingTime}
+          style={{ marginLeft: "5px" }}
+          onChange={e => setEatingTime(parseInt(e.target.value))}
+        >
+          <option value="1">아침</option>
+          <option value="2">점심</option>
+          <option value="3">저녁</option>
+          <option value="4">기타</option>
+        </select>
       </Modal.Body>
       <Modal.Footer>
         <div style={{ marginLeft: "100px" }}>
