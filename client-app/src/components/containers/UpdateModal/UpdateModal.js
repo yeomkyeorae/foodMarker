@@ -80,7 +80,8 @@ function UpdateModal(props) {
       restaurantId: restaurantId,
       date: VisitedDate,
       imgURL: ImageData,
-      rating: NewRating
+      rating: NewRating,
+      eatingTime: eatingTime
     };
 
     dispatch(updateRestaurant(body)).then(response => {

@@ -26,6 +26,9 @@ const restaurantSchema = new Schema({
   },
   rating: {
     type: Number
+  },
+  eatingTime: {
+    type: Number
   }
 });
 

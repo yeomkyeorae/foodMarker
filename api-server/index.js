@@ -258,6 +258,7 @@ app.put("/api/restaurant", (req, res) => {
       restaurant.imgURL = req.body.imgURL;
     }
     restaurant.rating = req.body.rating;
+    restaurant.eatingTime = req.body.eatingTime;
 
     restaurant.save((err, restaurantInfo) => {
       if (err)
