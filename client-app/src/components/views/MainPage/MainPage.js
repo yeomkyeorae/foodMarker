@@ -13,6 +13,9 @@ import { Button } from "react-bootstrap";
 import Carousel, { autoplayPlugin } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import styled, { keyframes } from "styled-components";
+import carousel_1 from "../../../assets/carousel_1.jpeg";
+import carousel_2 from "../../../assets/carousel_2.jpeg";
+import carousel_3 from "../../../assets/carousel_3.jpeg";
 
 const H2 = styled.h2`
   font-weight: 100;
@@ -54,9 +57,9 @@ function MainPage(props) {
   const [topRestaurants, setTopRestaurants] = useState([]);
   const [carouselPage, setCarouselPage] = useState(0);
   const [carouselImageList, setCarouselImageList] = useState([
-    "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-    "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-    "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80"
+    carousel_1,
+    carousel_2,
+    carousel_3
   ]);
   const [mostRestaurant, setMostRestaurant] = useState({
     name: "",
