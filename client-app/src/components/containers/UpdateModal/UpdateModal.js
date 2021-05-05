@@ -17,6 +17,7 @@ function UpdateModal(props) {
     restaurantId,
     restaurantDate,
     Rating,
+    eatingTime,
     userId,
     setPopUpToggle,
     wishListAddress,
@@ -29,7 +30,7 @@ function UpdateModal(props) {
   const [VisitedDate, setVisitedDate] = useState(restaurantDate);
   const [NewRating, setNewRating] = useState(Rating);
   const [isConverting, setIsConverting] = useState(false);
-  const [eatingTime, setEatingTime] = useState(1);
+  const [EatingTime, setEatingTime] = useState(eatingTime);
 
   const dispatch = useDispatch();
 
@@ -81,7 +82,7 @@ function UpdateModal(props) {
       date: VisitedDate,
       imgURL: ImageData,
       rating: NewRating,
-      eatingTime: eatingTime
+      eatingTime: EatingTime
     };
 
     dispatch(updateRestaurant(body)).then(response => {
@@ -103,7 +104,9 @@ function UpdateModal(props) {
       name: wishListName,
       address: wishListAddress,
       date: VisitedDate,
-      imgURL: ImageData
+      imgURL: ImageData,
+      rating: NewRating,
+      eatingTime: EatingTime
     };
 
     dispatch(registerRestaurant(body)).then(response => {
@@ -163,7 +166,7 @@ function UpdateModal(props) {
         />
         <select
           id="select"
-          value={eatingTime}
+          value={EatingTime}
           style={{ marginLeft: "5px" }}
           onChange={e => setEatingTime(parseInt(e.target.value))}
         >

@@ -162,7 +162,7 @@ function MainPage(props) {
         <NavbarComp userId={userId} history={props.history} />
         <hr />
         <Carousel
-          autoPlay={2000}
+          autoPlay={5000}
           animationSpeed={1000}
           infinite
           plugins={[

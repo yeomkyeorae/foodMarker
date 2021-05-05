@@ -102,6 +102,7 @@ function RestaurantListItem(props) {
         restaurantId={restaurant._id}
         restaurantDate={restaurant.date}
         Rating={Rating}
+        eatingTime={restaurant.eatingTime}
         type="RestaurantListItem"
       />
       <KakaoMapModal
