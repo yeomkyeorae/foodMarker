@@ -138,7 +138,6 @@ app.get("/api/users/logout", auth, (req, res) => {
 
 // get my restaurants
 app.post("/api/restaurants", (req, res) => {
-  console.log("called!!!!");
   const order = req.body.order;
   let sortMethod;
   if (order === 1) {
