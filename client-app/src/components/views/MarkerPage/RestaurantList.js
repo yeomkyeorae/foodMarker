@@ -62,13 +62,15 @@ function RestaurantList(props) {
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [pageSetNum, setPageSetNum] = useState(0);
   const [page, setPage] = useState(1);
+  const [order, setOrder] = useState(1);
 
   const ITEMPERPAGE = 6;
   const DISPLAYPAGENUM = 5;
   const body = {
     id: props.userId,
     page: page,
-    itemPerPage: ITEMPERPAGE
+    itemPerPage: ITEMPERPAGE,
+    order: order
   };
 
   const deleteHandler = restaurantId => {
@@ -81,34 +83,39 @@ function RestaurantList(props) {
     });
   };
 
-  const sortByName = () => {
-    const newArr = [...restaurants].sort((a, b) => {
-      const nameA = a.name;
-      const nameB = b.name;
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
-      }
-      return 0;
-    });
-    setRestaurants(newArr);
-  };
+  // const sortByName = () => {
+  //   const newArr = [...restaurants].sort((a, b) => {
+  //     const nameA = a.name;
+  //     const nameB = b.name;
+  //     if (nameA < nameB) {
+  //       return -1;
+  //     }
+  //     if (nameA > nameB) {
+  //       return 1;
+  //     }
+  //     return 0;
+  //   });
+  //   setRestaurants(newArr);
+  // };
 
-  const sortByDate = () => {
-    const newArr = [...restaurants].sort((a, b) => {
-      const dateA = Number(new Date(a.date));
-      const dateB = Number(new Date(b.date));
-      if (dateA > dateB) {
-        return 1;
-      }
-      if (dateA < dateB) {
-        return -1;
-      }
-      return 0;
-    });
-    setRestaurants(newArr);
+  // const sortByDate = () => {
+  //   const newArr = [...restaurants].sort((a, b) => {
+  //     const dateA = Number(new Date(a.date));
+  //     const dateB = Number(new Date(b.date));
+  //     if (dateA > dateB) {
+  //       return 1;
+  //     }
+  //     if (dateA < dateB) {
+  //       return -1;
+  //     }
+  //     return 0;
+  //   });
+  //   setRestaurants(newArr);
+  // };
+
+  const onSetOrderHandler = value => {
+    setOrder(value);
+    setPage(1);
   };
 
   const onSetPageHandler = page => {
@@ -168,16 +175,28 @@ function RestaurantList(props) {
   return (
     <Div>
       <span
-        style={{ margin: "10px", display: "inline-block", cursor: "pointer" }}
-        onClick={sortByName}
+        style={{
+          margin: "10px",
+          display: "inline-block",
+          cursor: "pointer",
+          width: "150px",
+          userSelect: "none"
+        }}
+        onClick={() => onSetOrderHandler(order === 1 ? 2 : 1)}
       >
-        식당 이름 순
+        식당 이름 순{order === 1 ? "(↑)" : order === 2 ? "(↓)" : ""}
       </span>
       <span
-        style={{ margin: "10px", display: "inline-block", cursor: "pointer" }}
-        onClick={sortByDate}
+        style={{
+          margin: "10px",
+          display: "inline-block",
+          cursor: "pointer",
+          width: "150px",
+          userSelect: "none"
+        }}
+        onClick={() => onSetOrderHandler(order === 3 ? 4 : 3)}
       >
-        방문 날짜 순
+        방문 날짜 순{order === 3 ? "(↑)" : order === 4 ? "(↓)" : ""}
       </span>
       <Restaurants>
         <List>

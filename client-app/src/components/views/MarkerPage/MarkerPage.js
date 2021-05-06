@@ -57,6 +57,7 @@ function MarkerPage(props) {
             {Menu}
           </Button>
         </div>
+        <hr />
         {MenuComponent}
       </div>
       <Footer />
