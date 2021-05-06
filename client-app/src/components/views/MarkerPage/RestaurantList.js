@@ -145,7 +145,7 @@ function RestaurantList(props) {
       });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  }, [page, order]);
 
   const pages = [];
   const passingNum = DISPLAYPAGENUM * pageSetNum;
@@ -196,7 +196,7 @@ function RestaurantList(props) {
         }}
         onClick={() => onSetOrderHandler(order === 3 ? 4 : 3)}
       >
-        방문 날짜 순{order === 3 ? "(↑)" : order === 4 ? "(↓)" : ""}
+        방문 날짜 순{order === 3 ? "(↓)" : order === 4 ? "(↑)" : ""}
       </span>
       <Restaurants>
         <List>

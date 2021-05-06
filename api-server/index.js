@@ -138,7 +138,21 @@ app.get("/api/users/logout", auth, (req, res) => {
 
 // get my restaurants
 app.post("/api/restaurants", (req, res) => {
+  console.log("called!!!!");
+  const order = req.body.order;
+  let sortMethod;
+  if (order === 1) {
+    sortMethod = { name: 1 }; // 가
+  } else if (order === 2) {
+    sortMethod = { name: -1 }; // 하
+  } else if (order === 3) {
+    sortMethod = { date: -1 }; // 최신
+  } else if (order === 4) {
+    sortMethod = { date: 1 }; // 옛날
+  }
+
   const restaurants = Restaurant.find({ visitor: req.body.id })
+    .sort(sortMethod)
     .skip((req.body.page - 1) * req.body.itemPerPage)
     .limit(req.body.itemPerPage);
 
