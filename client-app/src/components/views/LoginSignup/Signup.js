@@ -111,9 +111,10 @@ function Signup(props) {
 
     dispatch(registerUser(body)).then(response => {
       if (response.payload.success) {
-        props.history.push("/loginSignup");
+        alert("회원가입이 완료되었습니다");
+        props.setToggle(true);
       } else {
-        alert("failed to sign up");
+        alert("회원가입이 실패했습니다");
       }
     });
   };
