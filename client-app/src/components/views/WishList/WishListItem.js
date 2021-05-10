@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Dropdown } from "react-bootstrap";
 import UpdateModal from "../../containers/UpdateModal/UpdateModal";
+import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
 import styled from "styled-components";
 
 const Item = styled.li`
@@ -23,6 +24,19 @@ const HeadLine = styled.h2`
   font-size: 2rem;
 `;
 
+const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+  <span
+    ref={ref}
+    onClick={e => {
+      e.preventDefault();
+      onClick(e);
+    }}
+    style={{ cursor: "pointer" }}
+  >
+    {children}
+  </span>
+));
+
 function WishListItem(props) {
   const {
     wishListId,
@@ -33,13 +47,31 @@ function WishListItem(props) {
   } = props;
   const [popUpToggle, setPopUpToggle] = useState(false);
   const [Rating, setRating] = useState(0);
+  const [mapToggle, setMapToggle] = useState(false);
+
+  const restaurant = {
+    name: wishListName,
+    address: wishListAddress
+  };
 
   const openPopUp = () => {
     setPopUpToggle(!popUpToggle);
   };
 
+  const popUpMap = () => {
+    setMapToggle(true);
+  };
+
   return (
     <Item key={wishListId} style={{ width: "100%" }}>
+      <div style={{ float: "right", marginRight: "10px" }}>
+        <Dropdown>
+          <Dropdown.Toggle as={CustomToggle}>...</Dropdown.Toggle>
+          <Dropdown.Menu size="sm" title="">
+            <Dropdown.Item onClick={() => popUpMap()}>지도</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      </div>
       <HeadLine>{wishListName}</HeadLine>
       <span>{wishListAddress}</span> <br />
       <div>
@@ -71,6 +103,11 @@ function WishListItem(props) {
         wishListAddress={wishListAddress}
         deleteHandler={deleteHandler}
         type="WishListItem"
+      />
+      <KakaoMapModal
+        Toggle={mapToggle}
+        setToggle={setMapToggle}
+        restaurant={restaurant}
       />
     </Item>
   );

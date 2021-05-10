@@ -10,7 +10,7 @@ import styled from "styled-components";
 
 const WishLists = styled.div`
   width: 40%;
-  height: 500px;
+  height: 550px;
   display: inline-block;
   overflow-y: scroll;
 `;
