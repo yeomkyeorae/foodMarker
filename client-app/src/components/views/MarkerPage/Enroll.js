@@ -35,6 +35,7 @@ function Enroll(props) {
   const [ImageData, setImageData] = useState("");
   const [isConverting, setIsConverting] = useState(false);
   const [eatingTime, setEatingTime] = useState(1);
+  const [menuItemNum, setMenuItemNum] = useState(1);
 
   const userId = props.userId;
   const parentCompName = props.parentCompName;
@@ -163,6 +164,10 @@ function Enroll(props) {
     }
   };
 
+  const onMenuHandler = e => {
+    // e.preventDefault();
+  };
+
   return (
     <div>
       <MapForEnroll Toggle={Toggle} setName={setName} setAddress={setAddress} />
@@ -262,6 +267,15 @@ function Enroll(props) {
               <option value="3">저녁</option>
               <option value="4">기타</option>
             </select>
+            <div>
+              <Button
+                variant="success"
+                style={{ margin: "10px", display: "inline-block" }}
+                onClick={() => onMenuHandler()}
+              >
+                메뉴 추가
+              </Button>
+            </div>
             <div style={{ marginLeft: "100px", margin: "5px" }}>
               <input
                 type="file"
