@@ -35,6 +35,8 @@ function Enroll(props) {
   const [ImageData, setImageData] = useState("");
   const [isConverting, setIsConverting] = useState(false);
   const [eatingTime, setEatingTime] = useState(1);
+  const [newMenuItem, setNewMenuItem] = useState("");
+  const [menuItems, setMenuItems] = useState([]);
 
   const userId = props.userId;
   const parentCompName = props.parentCompName;
@@ -96,6 +98,10 @@ function Enroll(props) {
 
   const onChangeSearchNameHandler = e => {
     setSearchName(e.currentTarget.value);
+  };
+
+  const onChangeNewMenuItem = e => {
+    setNewMenuItem(e.currentTarget.value);
   };
 
   const toggleHandler = () => {
@@ -161,6 +167,11 @@ function Enroll(props) {
         }
       });
     }
+  };
+
+  const onMenuHandler = () => {
+    setMenuItems(menuItems.concat(newMenuItem));
+    setNewMenuItem("");
   };
 
   return (
@@ -262,6 +273,25 @@ function Enroll(props) {
               <option value="3">저녁</option>
               <option value="4">기타</option>
             </select>
+            <div>
+              <div style={{ margin: "5px" }}>
+                <Input
+                  type="text"
+                  value={newMenuItem}
+                  placeholder="메뉴 입력 후 버튼을 클릭!"
+                  onChange={e => onChangeNewMenuItem(e)}
+                  style={{ width: "200px" }}
+                />
+                <Button
+                  variant="success"
+                  style={{ margin: "10px", display: "inline-block" }}
+                  onClick={() => onMenuHandler()}
+                >
+                  메뉴 추가
+                </Button>
+              </div>
+            </div>
+            {menuItems.length ? menuItems.map(menu => <div>{menu}</div>) : null}
             <div style={{ marginLeft: "100px", margin: "5px" }}>
               <input
                 type="file"

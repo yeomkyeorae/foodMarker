@@ -18,9 +18,11 @@ const Div = styled.div`
 function ChoizaPage(props) {
   const userId = props.location.state;
   const [season, setSeason] = useState(5);
+  const [seasonName, setSeasonName] = useState("인더하우스");
 
-  const onClickHandler = season => {
+  const onClickHandler = (seansonName, season) => {
     setSeason(season);
+    setSeasonName(seansonName);
   };
 
   return (
@@ -37,14 +39,14 @@ function ChoizaPage(props) {
       >
         <NavbarComp userId={userId} history={props.history} />
         <hr />
-        <Div onClick={() => onClickHandler(1)}>시즌1</Div>
-        <Div onClick={() => onClickHandler(2)}>시즌2</Div>
-        <Div onClick={() => onClickHandler(3)}>시즌3</Div>
-        <Div onClick={() => onClickHandler(4)}>시즌4</Div>
-        <Div onClick={() => onClickHandler(5)}>인더하우스</Div>
+        <Div onClick={() => onClickHandler("시즌1", 1)}>시즌1</Div>
+        <Div onClick={() => onClickHandler("시즌2", 2)}>시즌2</Div>
+        <Div onClick={() => onClickHandler("시즌3", 3)}>시즌3</Div>
+        <Div onClick={() => onClickHandler("시즌4", 4)}>시즌4</Div>
+        <Div onClick={() => onClickHandler("인더하우스", 5)}>인더하우스</Div>
         <br />
         <h2 style={{ fontFamily: "Do Hyeon", marginTop: "50px" }}>
-          시즌{season}
+          {seasonName}
         </h2>
         <ChoizaList season={season} />
       </div>
