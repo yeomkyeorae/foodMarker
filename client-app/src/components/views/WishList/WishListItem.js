@@ -18,8 +18,8 @@ const Item = styled.li`
 `;
 
 const HeadLine = styled.h2`
-  padding: 0rem 0 0 0;
-  margin: 1rem 0 1rem 0;
+  padding: 0;
+  margin: 0;
   font: normal 2rem var(--font-head);
   font-size: 2rem;
 `;
@@ -42,6 +42,7 @@ function WishListItem(props) {
     wishListId,
     wishListName,
     wishListAddress,
+    wishListCreated,
     userId,
     deleteHandler
   } = props;
@@ -73,6 +74,7 @@ function WishListItem(props) {
         </Dropdown>
       </div>
       <HeadLine>{wishListName}</HeadLine>
+      <span style={{ fontSize: "10px" }}>{wishListCreated}</span> <br />
       <span>{wishListAddress}</span> <br />
       <div>
         <Button

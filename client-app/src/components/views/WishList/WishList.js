@@ -56,6 +56,7 @@ function WishList(props) {
             wishListId={wishList._id}
             wishListName={wishList.name}
             wishListAddress={wishList.address}
+            wishListCreated={wishList.created}
             userId={userId}
             deleteHandler={deleteHandler}
             setToggle={props.setToggle}
