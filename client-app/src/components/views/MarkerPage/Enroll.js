@@ -153,7 +153,8 @@ function Enroll(props) {
       const body = {
         user: userId,
         name: Name,
-        address: Address
+        address: Address,
+        created: new Date().toLocaleString()
       };
       dispatch(registerWishList(body)).then(response => {
         if (response.payload.success) {
