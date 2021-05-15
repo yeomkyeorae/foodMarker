@@ -19,7 +19,8 @@ const Item = styled.li`
 
 const HeadLine = styled.h2`
   padding: 0;
-  margin: 0;
+  margin-left: 25px;
+  margin-bottom: 0;
   font: normal 2rem var(--font-head);
   font-size: 2rem;
 `;
