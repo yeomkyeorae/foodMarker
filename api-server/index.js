@@ -343,8 +343,11 @@ app.get("/api/choizaRoads", (req, res) => {
   const season = req.query.season;
   const body = { season: Number(season) };
 
-  ChoizaRoad.find(body, (err, choizaRoad) => {
-    return res.status(200).json({ choizaRoads: choizaRoad });
+  const choizaRoads = ChoizaRoad.find(body).sort({ ep: 1 });
+
+  choizaRoads.exec((err, choizaRoads) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({ choizaRoads });
   });
 });
 
