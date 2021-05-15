@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { Button, Dropdown } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import UpdateModal from "../../containers/UpdateModal/UpdateModal";
 import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
 import styled from "styled-components";
@@ -70,28 +70,16 @@ function WishListItem(props) {
           <Dropdown.Toggle as={CustomToggle}>...</Dropdown.Toggle>
           <Dropdown.Menu size="sm" title="">
             <Dropdown.Item onClick={() => popUpMap()}>지도</Dropdown.Item>
+            <Dropdown.Item onClick={() => openPopUp()}>방문</Dropdown.Item>
+            <Dropdown.Item onClick={() => deleteHandler(wishListId)}>
+              삭제
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>
       <HeadLine>{wishListName}</HeadLine>
       <span style={{ fontSize: "10px" }}>{wishListCreated}</span> <br />
       <span>{wishListAddress}</span> <br />
-      <div>
-        <Button
-          variant="success"
-          onClick={() => openPopUp()}
-          style={{ margin: "2px" }}
-        >
-          방문
-        </Button>
-        <Button
-          variant="danger"
-          onClick={() => deleteHandler(wishListId)}
-          style={{ margin: "2px" }}
-        >
-          삭제
-        </Button>
-      </div>
       <UpdateModal
         Toggle={popUpToggle}
         setToggle={setPopUpToggle}
