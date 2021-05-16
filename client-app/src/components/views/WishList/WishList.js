@@ -10,7 +10,7 @@ import styled from "styled-components";
 
 const WishLists = styled.div`
   width: 40%;
-  height: 550px;
+  height: 80%;
   display: inline-block;
   overflow-y: scroll;
 `;
@@ -56,6 +56,7 @@ function WishList(props) {
             wishListId={wishList._id}
             wishListName={wishList.name}
             wishListAddress={wishList.address}
+            wishListCreated={wishList.created}
             userId={userId}
             deleteHandler={deleteHandler}
             setToggle={props.setToggle}

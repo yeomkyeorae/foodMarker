@@ -6,7 +6,7 @@ import { registerWishList } from "../../../_actions/wishList_action";
 import MapForEnroll from "../../containers/KakaoMap/MapForEnroll";
 import { Button } from "react-bootstrap";
 import heic2any from "heic2any";
-import "react-datepicker/dist/react-datepicker.css";
+// import "react-datepicker/dist/react-datepicker.css";
 import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
 
@@ -128,7 +128,8 @@ function Enroll(props) {
         date: VisitedDate,
         imgURL: ImageData,
         rating: Rating,
-        eatingTime: eatingTime
+        eatingTime: eatingTime,
+        menus: JSON.stringify(menuItems)
       };
       dispatch(registerRestaurant(body))
         .then(response => {
@@ -139,6 +140,7 @@ function Enroll(props) {
             setImageData("");
             setRating(0);
             setEatingTime(1);
+            setMenuItems([]);
             props.setToggle(true);
             props.setMenu("식당 등록");
             props.history.push("/marker", userId);
@@ -153,7 +155,8 @@ function Enroll(props) {
       const body = {
         user: userId,
         name: Name,
-        address: Address
+        address: Address,
+        created: new Date().toLocaleString()
       };
       dispatch(registerWishList(body)).then(response => {
         if (response.payload.success) {
@@ -169,9 +172,13 @@ function Enroll(props) {
     }
   };
 
-  const onMenuHandler = () => {
+  const onMenuAddHandler = () => {
     setMenuItems(menuItems.concat(newMenuItem));
     setNewMenuItem("");
+  };
+
+  const onMenuDeleteHandler = index => {
+    setMenuItems(menuItems.filter((menu, menuIx) => menuIx !== index));
   };
 
   return (
@@ -285,13 +292,26 @@ function Enroll(props) {
                 <Button
                   variant="success"
                   style={{ margin: "10px", display: "inline-block" }}
-                  onClick={() => onMenuHandler()}
+                  onClick={() => onMenuAddHandler()}
                 >
                   메뉴 추가
                 </Button>
               </div>
             </div>
-            {menuItems.length ? menuItems.map(menu => <div>{menu}</div>) : null}
+            {menuItems.length
+              ? menuItems.map((menu, index) => (
+                  <div key={index} style={{ marginTop: "2px" }}>
+                    {menu}
+                    <Button
+                      variant="danger"
+                      style={{ marginLeft: "10px" }}
+                      onClick={() => onMenuDeleteHandler(index)}
+                    >
+                      X
+                    </Button>
+                  </div>
+                ))
+              : null}
             <div style={{ marginLeft: "100px", margin: "5px" }}>
               <input
                 type="file"

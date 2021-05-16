@@ -15,6 +15,9 @@ const choizaRoadSchema = mongoose.Schema({
   },
   season: {
     type: Number
+  },
+  ep: {
+    type: Number
   }
 });
 

@@ -27,6 +27,17 @@ function RestaurantListItem(props) {
   const [mapToggle, setMapToggle] = useState(false);
   const Rating = restaurant.rating;
 
+  let menus = "";
+  if (restaurant.menus) {
+    const menusArr = JSON.parse(restaurant.menus);
+    menusArr.forEach((menu, index) => {
+      menus += menu;
+      if (menusArr.length - 1 !== index) {
+        menus += ", ";
+      }
+    });
+  }
+
   const popUpMap = () => {
     setMapToggle(true);
   };
@@ -76,6 +87,7 @@ function RestaurantListItem(props) {
                 activeColor="#ffd700"
               />
             </div>
+            <span style={{ fontSize: "0.8em" }}>{menus}</span>
             <div
               style={{
                 width: "100%",

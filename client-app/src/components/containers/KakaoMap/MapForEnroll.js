@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import "react-datepicker/dist/react-datepicker.css";
+// import "react-datepicker/dist/react-datepicker.css";
 
 const { kakao } = window;
 

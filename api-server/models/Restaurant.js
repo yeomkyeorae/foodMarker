@@ -29,6 +29,9 @@ const restaurantSchema = new Schema({
   },
   eatingTime: {
     type: Number
+  },
+  menus: {
+    type: String
   }
 });
 

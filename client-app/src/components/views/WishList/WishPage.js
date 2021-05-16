@@ -9,14 +9,14 @@ import { Button } from "react-bootstrap";
 function WishPage(props) {
   const userId = props.location.state;
   const [Toggle, setToggle] = useState(true);
-  const [Menu, setMenu] = useState("위시리스트 등록");
+  const [Menu, setMenu] = useState("위시 맛집 등록하기");
 
   const onClickChangeMenuHandler = () => {
     setToggle(!Toggle);
-    if (Menu === "위시리스트 등록") {
-      setMenu("위시리스트 목록");
+    if (Menu === "위시 맛집 등록하기") {
+      setMenu("위시 맛집 목록으로");
     } else {
-      setMenu("위시리스트 등록");
+      setMenu("위시 맛집 등록하기");
     }
   };
 
@@ -50,7 +50,7 @@ function WishPage(props) {
         <hr />
         <div style={{}}>
           <Button
-            variant="secondary"
+            variant="success"
             onClick={onClickChangeMenuHandler}
             style={{ margin: "20px" }}
           >
