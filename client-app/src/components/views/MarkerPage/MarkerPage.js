@@ -9,14 +9,14 @@ import { Button } from "react-bootstrap";
 function MarkerPage(props) {
   const userId = props.location.state;
   const [Toggle, setToggle] = useState(true);
-  const [Menu, setMenu] = useState("식당 등록");
+  const [Menu, setMenu] = useState("나의 맛집 등록하기");
 
   const onClickChangeMenuHandler = () => {
     setToggle(!Toggle);
-    if (Menu === "식당 등록") {
-      setMenu("식당 리스트");
+    if (Menu === "나의 맛집 등록하기") {
+      setMenu("나의 맛집 목록으로");
     } else {
-      setMenu("식당 등록");
+      setMenu("나의 맛집 등록하기");
     }
   };
 
@@ -50,7 +50,7 @@ function MarkerPage(props) {
         <hr />
         <div style={{}}>
           <Button
-            variant="secondary"
+            variant="info"
             onClick={onClickChangeMenuHandler}
             style={{ margin: "20px" }}
           >
