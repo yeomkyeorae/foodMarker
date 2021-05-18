@@ -201,7 +201,7 @@ function Enroll(props) {
                 borderBottom: "2px solid black"
               }}
             >
-              맛집 이름
+              맛집 검색
             </div>
             <Input
               type="text"
@@ -238,10 +238,23 @@ function Enroll(props) {
 
       <form onSubmit={onSubmitHandler} encType="multipart/form-data">
         <div style={{ margin: "5px" }}>
+          <div
+            style={{
+              width: "30%",
+              margin: "auto",
+              fontWeight: "bold",
+              fontSize: "1rem",
+              textAlign: "left",
+              borderBottom: "1px solid black",
+              marginBottom: "5px"
+            }}
+          >
+            맛집 이름 & 주소(위에서 맛집 검색 후 선택)
+          </div>
           <Input
             type="text"
             value={Name}
-            placeholder="식당: 검색 후 선택하세요"
+            placeholder="맛집 이름"
             onChange={onNameHandler}
             readOnly
             style={{ width: "300px" }}
@@ -251,53 +264,97 @@ function Enroll(props) {
           <Input
             type="text"
             value={Address}
-            placeholder="주소: 검색 후 선택하세요"
+            placeholder="맛집 주소"
             onChange={onAddressHandler}
             readOnly
             style={{ width: "300px" }}
           />
         </div>
         {parentCompName === "MarkerPage" ? (
-          <div
-            style={{
-              display: "inline-block",
-              margin: "5px"
-            }}
-          >
-            <ReactStars
-              count={5}
-              value={Rating}
-              onChange={onRatingHandler}
-              size={70}
-              isHalf={true}
-              activeColor="#ffd700"
-            />
-            <br />
-            <input
-              type="date"
-              value={VisitedDate}
-              placeholder="방문 일시"
-              onChange={e => onVisitedDateHandler(e)}
-            />
-            <select
-              id="select"
-              value={eatingTime}
-              style={{ marginLeft: "5px" }}
-              onChange={e => setEatingTime(parseInt(e.target.value))}
+          <>
+            <div
+              style={{
+                margin: "5px"
+              }}
             >
-              <option value="1">아침</option>
-              <option value="2">점심</option>
-              <option value="3">저녁</option>
-              <option value="4">기타</option>
-            </select>
+              <div
+                style={{
+                  width: "30%",
+                  margin: "auto",
+                  fontWeight: "bold",
+                  fontSize: "1rem",
+                  textAlign: "left",
+                  borderBottom: "1px solid black"
+                }}
+              >
+                별점
+              </div>
+              <div style={{ display: "inline-block" }}>
+                <ReactStars
+                  count={5}
+                  value={Rating}
+                  onChange={onRatingHandler}
+                  size={70}
+                  isHalf={true}
+                  activeColor="#ffd700"
+                />
+              </div>
+            </div>
+
+            <div style={{ margin: "5px" }}>
+              <div
+                style={{
+                  width: "30%",
+                  margin: "auto",
+                  fontWeight: "bold",
+                  fontSize: "1rem",
+                  textAlign: "left",
+                  borderBottom: "1px solid black",
+                  marginBottom: "10px"
+                }}
+              >
+                방문 일시
+              </div>
+              <input
+                type="date"
+                value={VisitedDate}
+                placeholder="방문 일시"
+                onChange={e => onVisitedDateHandler(e)}
+              />
+              <select
+                id="select"
+                value={eatingTime}
+                style={{ marginLeft: "5px" }}
+                onChange={e => setEatingTime(parseInt(e.target.value))}
+              >
+                <option value="1">아침</option>
+                <option value="2">점심</option>
+                <option value="3">저녁</option>
+                <option value="4">기타</option>
+              </select>
+            </div>
+
             <div>
               <div style={{ margin: "5px" }}>
+                <div
+                  style={{
+                    width: "30%",
+                    margin: "auto",
+                    fontWeight: "bold",
+                    fontSize: "1rem",
+                    textAlign: "left",
+                    borderBottom: "1px solid black",
+                    marginBottom: "10px"
+                  }}
+                >
+                  메뉴
+                </div>
                 <Input
                   type="text"
                   value={newMenuItem}
-                  placeholder="메뉴 입력 후 버튼을 클릭!"
+                  placeholder="메뉴 입력 버튼 클릭"
                   onChange={e => onChangeNewMenuItem(e)}
-                  style={{ width: "200px" }}
+                  style={{ width: "10%" }}
                 />
                 <Button
                   variant="success"
@@ -322,14 +379,34 @@ function Enroll(props) {
                   </div>
                 ))
               : null}
-            <div style={{ marginLeft: "100px", margin: "5px" }}>
-              <input
-                type="file"
-                onChange={onImageDataHandler}
-                style={{ width: "60%" }}
-              />
+
+            <div
+              style={{
+                margin: "5px"
+              }}
+            >
+              <div
+                style={{
+                  width: "30%",
+                  margin: "auto",
+                  fontWeight: "bold",
+                  fontSize: "1rem",
+                  textAlign: "left",
+                  borderBottom: "1px solid black",
+                  marginBottom: "10px"
+                }}
+              >
+                이미지 업로드
+              </div>
+              <div style={{ display: "inline-block" }}>
+                <input
+                  type="file"
+                  onChange={onImageDataHandler}
+                  style={{ width: "60%" }}
+                />
+              </div>
             </div>
-          </div>
+          </>
         ) : null}
         <div>
           <hr />
@@ -343,7 +420,11 @@ function Enroll(props) {
               등록
             </Button>
           ) : (
-            <Button variant="primary" style={{ margin: "20px" }} type="submit">
+            <Button
+              variant="primary"
+              style={{ margin: "20px", width: "10%" }}
+              type="submit"
+            >
               등록
             </Button>
           )}
