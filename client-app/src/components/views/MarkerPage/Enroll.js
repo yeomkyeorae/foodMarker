@@ -191,7 +191,18 @@ function Enroll(props) {
       >
         <div className="option">
           <div>
-            키워드 :{" "}
+            <div
+              style={{
+                width: "50%",
+                margin: "auto",
+                fontWeight: "bold",
+                fontSize: "1.5rem",
+                textAlign: "left",
+                borderBottom: "2px solid black"
+              }}
+            >
+              맛집 이름
+            </div>
             <Input
               type="text"
               value={SearchName}
@@ -208,7 +219,6 @@ function Enroll(props) {
             >
               검색하기
             </Button>
-            <hr />
           </div>
         </div>
         <ul
@@ -322,6 +332,7 @@ function Enroll(props) {
           </div>
         ) : null}
         <div>
+          <hr />
           {isConverting ? (
             <Button
               variant="danger"
