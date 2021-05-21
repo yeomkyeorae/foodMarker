@@ -47,7 +47,7 @@ function NavbarComp(props) {
   };
 
   return (
-    <div>
+    <div style={{ height: "50px" }}>
       <div
         href="/"
         style={{

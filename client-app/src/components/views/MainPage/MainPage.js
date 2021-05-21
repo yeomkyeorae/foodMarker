@@ -10,24 +10,11 @@ import NavbarComp from "../Navbar/NavbarComp";
 import KakaoMap from "../../containers/KakaoMap/KakaoMap";
 import Footer from "../Footer/Footer";
 import { Button } from "react-bootstrap";
-import Carousel, { autoplayPlugin } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
-import styled, { keyframes } from "styled-components";
-import carousel_1 from "../../../assets/carousel_1.jpeg";
-import carousel_2 from "../../../assets/carousel_2.jpeg";
-import carousel_3 from "../../../assets/carousel_3.jpeg";
+import styled from "styled-components";
 
 const H2 = styled.h2`
   font-weight: 100;
-`;
-
-const move = keyframes`
-  from {
-     transform: translateX(0);
-  }
-  to {
-     transform: translateX(500px);
-  }
 `;
 
 /* animation: ${move} 1s ease-in-out 0.5s 2 alternate; */
@@ -56,11 +43,7 @@ function MainPage(props) {
   const [restaurants, setRestaurants] = useState([]);
   const [topRestaurants, setTopRestaurants] = useState([]);
   const [carouselPage, setCarouselPage] = useState(0);
-  const [carouselImageList, setCarouselImageList] = useState([
-    carousel_1,
-    carousel_2,
-    carousel_3
-  ]);
+
   const [mostRestaurant, setMostRestaurant] = useState({
     name: "",
     address: "",
@@ -160,33 +143,65 @@ function MainPage(props) {
         }}
       >
         <NavbarComp userId={userId} history={props.history} />
-        <hr />
-        <Carousel
-          autoPlay={5000}
-          animationSpeed={1000}
-          infinite
-          plugins={[
-            "infinite",
-            {
-              resolve: autoplayPlugin,
-              options: {
-                interval: 2000
-              }
-            }
-          ]}
-        >
-          {carouselImageList.map((carouselImageURL, index) => (
-            <img
-              key={index}
-              src={carouselImageURL}
-              alt=""
-              width="90%"
-              height="500px"
-            />
-          ))}
-        </Carousel>
-        <hr />
-        <div style={{ width: "70%", margin: "auto" }}>
+        <div style={{ backgroundColor: "#FAF7F2" }}>
+          <div
+            style={{
+              display: "flex",
+              height: "10vh",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <div
+              style={{
+                width: "90%",
+                textAlign: "left"
+              }}
+            >
+              <span style={{ fontWeight: "800", fontSize: "2rem" }}>
+                푸드마커로 맛집의 지도를 완성해 보세요
+              </span>
+            </div>
+          </div>
+          <div
+            style={{
+              height: "30vh",
+              display: "flex",
+              justifyContent: "center"
+            }}
+          >
+            <div style={{ margin: "auto", textAlign: "left" }}>
+              <span style={{ fontWeight: "500", fontSize: "1.5rem" }}>
+                나의 맛집
+              </span>
+              <br />
+              <span>당신이 최근에 방문한 최고의 맛집은 어디인가요?</span>
+              <br />
+              <span>인상 깊은 식당을 등록해 보세요.</span>
+            </div>
+            <div style={{ margin: "auto", textAlign: "left" }}>
+              <span style={{ fontWeight: "500", fontSize: "1.5rem" }}>
+                위시 맛집
+              </span>
+              <br />
+              <span>시선을 사로잡은 맛집은 어디인가요?</span>
+              <br />
+              <span>방문하고자 하는 식당을 기록해 보세요.</span>
+            </div>
+            <div style={{ margin: "auto", textAlign: "left" }}>
+              <span style={{ fontWeight: "500", fontSize: "1.5rem" }}>
+                최자로드
+              </span>
+              <br />
+              <span>최자로드에 등장한 맛집이 궁금하신가요?</span>
+              <br />
+              <span>자형과 함께 해보세요.</span>
+              <br />
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div style={{ width: "70%", margin: "auto", padding: "5px" }}>
           <H2>나의 맛집 지도</H2>
           <Button
             variant="success"
