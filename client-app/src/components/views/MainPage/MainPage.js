@@ -9,12 +9,22 @@ import {
 import NavbarComp from "../Navbar/NavbarComp";
 import KakaoMap from "../../containers/KakaoMap/KakaoMap";
 import Footer from "../Footer/Footer";
-import { Button } from "react-bootstrap";
 import "@brainhubeu/react-carousel/lib/style.css";
 import styled from "styled-components";
 
 const H2 = styled.h2`
   font-weight: 100;
+`;
+
+const P = styled.p`
+  width: 50px;
+  cursor: pointer;
+  border-radius: 20px;
+  background-color: #e5f3e6;
+  font-weight: 200;
+  &:hover {
+    background-color: #c1e8c2;
+  }
 `;
 
 /* animation: ${move} 1s ease-in-out 0.5s 2 alternate; */
@@ -201,36 +211,52 @@ function MainPage(props) {
             </div>
           </div>
         </div>
-        <div style={{ width: "70%", margin: "auto", padding: "5px" }}>
+        <div style={{ padding: "5px" }}>
           <H2>나의 맛집 지도</H2>
-          <Button
-            variant="success"
-            onClick={() => onClickHandler(1)}
-            style={{ margin: "10px", display: "inline-block" }}
+        </div>
+        <ul
+          style={{
+            padding: "0px",
+            display: "flex",
+            justifyContent: "center",
+            listStyle: "none",
+            margin: "0px"
+          }}
+        >
+          <li
+            style={{
+              margin: "5px"
+
+              // display: "flex",
+              // justifyContent: "center",
+              // alignContent: "center"
+            }}
           >
-            전국
-          </Button>
-          <Button
-            variant="secondary"
-            onClick={() => onClickHandler(2)}
-            style={{ margin: "10px", display: "inline-block" }}
+            <P onClick={() => onClickHandler(1)}>전국</P>
+          </li>
+          <li
+            style={{
+              margin: "5px"
+            }}
           >
-            서울
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => onClickHandler(3)}
-            style={{ margin: "10px", display: "inline-block" }}
+            <P onClick={() => onClickHandler(2)}>서울</P>
+          </li>
+          <li
+            style={{
+              margin: "5px"
+            }}
           >
-            대전
-          </Button>
-          <Button
-            variant="danger"
-            onClick={() => onClickHandler(4)}
-            style={{ margin: "10px", display: "inline-block" }}
+            <P onClick={() => onClickHandler(3)}>대전</P>
+          </li>
+          <li
+            style={{
+              margin: "5px"
+            }}
           >
-            세종
-          </Button>
+            <P onClick={() => onClickHandler(4)}>세종</P>
+          </li>
+        </ul>
+        <div>
           <KakaoMap
             latitude={latitude}
             longitude={longitude}
