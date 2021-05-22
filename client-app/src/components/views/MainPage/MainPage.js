@@ -9,24 +9,21 @@ import {
 import NavbarComp from "../Navbar/NavbarComp";
 import KakaoMap from "../../containers/KakaoMap/KakaoMap";
 import Footer from "../Footer/Footer";
-import { Button } from "react-bootstrap";
-import Carousel, { autoplayPlugin } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
-import styled, { keyframes } from "styled-components";
-import carousel_1 from "../../../assets/carousel_1.jpeg";
-import carousel_2 from "../../../assets/carousel_2.jpeg";
-import carousel_3 from "../../../assets/carousel_3.jpeg";
+import styled from "styled-components";
 
 const H2 = styled.h2`
   font-weight: 100;
 `;
 
-const move = keyframes`
-  from {
-     transform: translateX(0);
-  }
-  to {
-     transform: translateX(500px);
+const P = styled.p`
+  width: 50px;
+  cursor: pointer;
+  border-radius: 20px;
+  background-color: #e5f3e6;
+  font-weight: 200;
+  &:hover {
+    background-color: #c1e8c2;
   }
 `;
 
@@ -43,8 +40,8 @@ const Arrow = styled.div`
   display: inline-block;
   ${props =>
     props.right
-      ? `border-left: 10px solid black;`
-      : `border-right: 10px solid black;`}
+      ? `border-left: 10px solid #a5e2a6;`
+      : `border-right: 10px solid #a5e2a6;`}
   ${props =>
     props.right ? `margin-left: 10px;` : `margin-right: 10px;`}
   &:hover {
@@ -56,11 +53,7 @@ function MainPage(props) {
   const [restaurants, setRestaurants] = useState([]);
   const [topRestaurants, setTopRestaurants] = useState([]);
   const [carouselPage, setCarouselPage] = useState(0);
-  const [carouselImageList, setCarouselImageList] = useState([
-    carousel_1,
-    carousel_2,
-    carousel_3
-  ]);
+
   const [mostRestaurant, setMostRestaurant] = useState({
     name: "",
     address: "",
@@ -160,62 +153,106 @@ function MainPage(props) {
         }}
       >
         <NavbarComp userId={userId} history={props.history} />
-        <hr />
-        <Carousel
-          autoPlay={5000}
-          animationSpeed={1000}
-          infinite
-          plugins={[
-            "infinite",
-            {
-              resolve: autoplayPlugin,
-              options: {
-                interval: 2000
-              }
-            }
-          ]}
-        >
-          {carouselImageList.map((carouselImageURL, index) => (
-            <img
-              key={index}
-              src={carouselImageURL}
-              alt=""
-              width="90%"
-              height="500px"
-            />
-          ))}
-        </Carousel>
-        <hr />
-        <div style={{ width: "70%", margin: "auto" }}>
+        <div style={{ backgroundColor: "#FAF7F2" }}>
+          <div
+            style={{
+              display: "flex",
+              height: "10vh",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <div
+              style={{
+                width: "90%",
+                textAlign: "left"
+              }}
+            >
+              <span style={{ fontWeight: "800", fontSize: "2rem" }}>
+                푸드마커로 맛집의 지도를 완성해 보세요
+              </span>
+            </div>
+          </div>
+          <div
+            style={{
+              height: "30vh",
+              display: "flex",
+              justifyContent: "center"
+            }}
+          >
+            <div style={{ margin: "auto", textAlign: "left" }}>
+              <span style={{ fontWeight: "500", fontSize: "1.5rem" }}>
+                나의 맛집
+              </span>
+              <br />
+              <span>당신이 최근에 방문한 최고의 맛집은 어디인가요?</span>
+              <br />
+              <span>인상 깊은 식당을 등록해 보세요.</span>
+            </div>
+            <div style={{ margin: "auto", textAlign: "left" }}>
+              <span style={{ fontWeight: "500", fontSize: "1.5rem" }}>
+                위시 맛집
+              </span>
+              <br />
+              <span>시선을 사로잡은 맛집은 어디인가요?</span>
+              <br />
+              <span>방문하고자 하는 식당을 기록해 보세요.</span>
+            </div>
+            <div style={{ margin: "auto", textAlign: "left" }}>
+              <span style={{ fontWeight: "500", fontSize: "1.5rem" }}>
+                최자로드
+              </span>
+              <br />
+              <span>최자로드에 등장한 맛집이 궁금하신가요?</span>
+              <br />
+              <span>자형과 함께 해보세요.</span>
+              <br />
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div style={{ padding: "5px" }}>
           <H2>나의 맛집 지도</H2>
-          <Button
-            variant="success"
-            onClick={() => onClickHandler(1)}
-            style={{ margin: "10px", display: "inline-block" }}
+        </div>
+        <ul
+          style={{
+            padding: "0px",
+            display: "flex",
+            justifyContent: "center",
+            listStyle: "none",
+            margin: "0px"
+          }}
+        >
+          <li
+            style={{
+              margin: "5px"
+            }}
           >
-            전국
-          </Button>
-          <Button
-            variant="secondary"
-            onClick={() => onClickHandler(2)}
-            style={{ margin: "10px", display: "inline-block" }}
+            <P onClick={() => onClickHandler(1)}>전국</P>
+          </li>
+          <li
+            style={{
+              margin: "5px"
+            }}
           >
-            서울
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => onClickHandler(3)}
-            style={{ margin: "10px", display: "inline-block" }}
+            <P onClick={() => onClickHandler(2)}>서울</P>
+          </li>
+          <li
+            style={{
+              margin: "5px"
+            }}
           >
-            대전
-          </Button>
-          <Button
-            variant="danger"
-            onClick={() => onClickHandler(4)}
-            style={{ margin: "10px", display: "inline-block" }}
+            <P onClick={() => onClickHandler(3)}>대전</P>
+          </li>
+          <li
+            style={{
+              margin: "5px"
+            }}
           >
-            세종
-          </Button>
+            <P onClick={() => onClickHandler(4)}>세종</P>
+          </li>
+        </ul>
+        <div>
           <KakaoMap
             latitude={latitude}
             longitude={longitude}
@@ -225,21 +262,29 @@ function MainPage(props) {
             inlineBlock={false}
           />
         </div>
-        <hr />
-        <div style={{ marginBottom: "10px" }}>
+        <div
+          style={{
+            marginBottom: "10px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#edfcee",
+            margin: "0",
+            height: "60vh"
+          }}
+        >
           <div
             style={{
-              width: "60%",
-              margin: "auto",
-              display: "inline-block"
+              width: "30%",
+              marginTop: "10px"
             }}
           >
             <H2>가장 많이 등록된 맛집</H2>
             <div>
-              <span>
+              <span style={{ fontWeight: "300" }}>
                 {mostRestaurant.name}
                 <br /> {mostRestaurant.address}
-                <br /> 등록 수: {mostRestaurant.count}
+                <br /> 등록 횟수 {mostRestaurant.count}회
               </span>
             </div>
             <div>
@@ -255,23 +300,28 @@ function MainPage(props) {
           </div>
           <div
             style={{
-              width: "40%",
-              margin: "auto",
-              display: "inline-block"
+              width: "30%",
+              marginTop: "10px"
             }}
           >
-            <H2>가장 최근에 별점을 5개 받은 맛집</H2>
+            <H2>최근에 별점 5개 받은 맛집</H2>
             {topRestaurants.length > 0 && (
-              <ImgDiv>
-                <Arrow right={false} onClick={() => nextClickHandler(0)} />
-                <img
-                  src={`${topRestaurants[carouselPage].imgURL}`}
-                  alt=""
-                  width="80%"
-                  height="500px"
-                />
-                <Arrow right={true} onClick={() => nextClickHandler(1)} />
-              </ImgDiv>
+              <>
+                <span style={{ display: "inline-block", fontWeight: "300" }}>
+                  {topRestaurants[carouselPage].name}
+                  <br /> {topRestaurants[carouselPage].address}
+                </span>
+                <ImgDiv>
+                  <Arrow right={false} onClick={() => nextClickHandler(0)} />
+                  <img
+                    src={`${topRestaurants[carouselPage].imgURL}`}
+                    alt=""
+                    width="300px"
+                    height="300px"
+                  />
+                  <Arrow right={true} onClick={() => nextClickHandler(1)} />
+                </ImgDiv>
+              </>
             )}
           </div>
         </div>
