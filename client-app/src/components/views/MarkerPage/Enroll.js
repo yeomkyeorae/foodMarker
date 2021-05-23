@@ -129,7 +129,8 @@ function Enroll(props) {
         imgURL: ImageData,
         rating: Rating,
         eatingTime: eatingTime,
-        menus: JSON.stringify(menuItems)
+        menus: JSON.stringify(menuItems),
+        created: new Date().toLocaleString()
       };
       dispatch(registerRestaurant(body))
         .then(response => {

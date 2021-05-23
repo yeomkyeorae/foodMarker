@@ -32,6 +32,10 @@ const restaurantSchema = new Schema({
   },
   menus: {
     type: String
+  },
+  created: {
+    type: String,
+    maxlength: 300
   }
 });
 
