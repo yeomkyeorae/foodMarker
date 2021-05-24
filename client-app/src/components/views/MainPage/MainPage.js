@@ -265,67 +265,87 @@ function MainPage(props) {
         <div
           style={{
             marginBottom: "10px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
             backgroundColor: "#edfcee",
             margin: "0",
             height: "60vh"
           }}
         >
-          <div
+          <div style={{ paddingTop: "20px" }}>
+            <H2>최근에 등록된 나의 맛집들</H2>
+          </div>
+          <ol
             style={{
-              width: "30%",
-              marginTop: "10px"
+              listStyle: "none",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              alignItems: "center",
+              height: "80%",
+              margin: "0",
+              padding: "0"
             }}
           >
-            <H2>가장 많이 등록된 맛집</H2>
-            <div>
-              <span style={{ fontWeight: "300" }}>
-                {mostRestaurant.name}
-                <br /> {mostRestaurant.address}
-                <br /> 등록 횟수 {mostRestaurant.count}회
-              </span>
-            </div>
-            <div>
-              <img
-                src={
-                  "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80"
-                }
-                alt=""
-                width="80%"
-                height="80%"
-              />
-            </div>
-          </div>
-          <div
-            style={{
-              width: "30%",
-              marginTop: "10px"
-            }}
-          >
-            <H2>최근에 별점 5개 받은 맛집</H2>
-            {topRestaurants.length > 0 && (
-              <>
-                <span style={{ display: "inline-block", fontWeight: "300" }}>
-                  {topRestaurants[carouselPage].name}
-                  <br /> {topRestaurants[carouselPage].address}
-                </span>
-                <ImgDiv>
-                  <Arrow right={false} onClick={() => nextClickHandler(0)} />
-                  <img
-                    src={`${topRestaurants[carouselPage].imgURL}`}
-                    alt=""
-                    width="300px"
-                    height="300px"
-                  />
-                  <Arrow right={true} onClick={() => nextClickHandler(1)} />
-                </ImgDiv>
-              </>
-            )}
-          </div>
+            {Array(10)
+              .fill(0)
+              .map((el, ix) => (
+                <li style={{ width: "20%" }} key={ix}>
+                  <div>
+                    <img
+                      src={
+                        "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80"
+                      }
+                      alt=""
+                      width="180px"
+                      height="200px"
+                    />
+                  </div>
+                  <div>
+                    <span style={{ fontWeight: "300" }}>
+                      {mostRestaurant.name}
+                    </span>
+                  </div>
+                </li>
+              ))}
+          </ol>
         </div>
-        <br />
+        <div
+          style={{
+            marginBottom: "10px",
+            backgroundColor: "#FAFDF3",
+            margin: "0",
+            height: "60vh"
+          }}
+        >
+          <div style={{ paddingTop: "20px" }}>
+            <H2>최근에 등록된 위시 맛집들</H2>
+          </div>
+          <ol
+            style={{
+              listStyle: "none",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              alignItems: "center",
+              height: "80%",
+              margin: "0",
+              padding: "0"
+            }}
+          >
+            {Array(10)
+              .fill(0)
+              .map((el, ix) => (
+                <li style={{ width: "20%" }} key={ix}>
+                  <div>
+                    <span style={{ fontWeight: "300" }}>
+                      {mostRestaurant.name} <br />
+                      {mostRestaurant.address} <br />
+                      duarufp06
+                    </span>
+                  </div>
+                </li>
+              ))}
+          </ol>
+        </div>
       </div>
       <Footer />
     </div>
