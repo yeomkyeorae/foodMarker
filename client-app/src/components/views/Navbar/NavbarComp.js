@@ -33,7 +33,7 @@ const LogoutDiv = styled.div`
 `;
 
 function NavbarComp(props) {
-  const userId = props.userId;
+  const userId = window.sessionStorage.getItem("userId");
   const dispatch = useDispatch();
 
   const onClickHandler = () => {

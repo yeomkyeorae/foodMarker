@@ -38,7 +38,8 @@ function Enroll(props) {
   const [newMenuItem, setNewMenuItem] = useState("");
   const [menuItems, setMenuItems] = useState([]);
 
-  const userId = props.userId;
+  const userId = window.sessionStorage.getItem("userId");
+
   const parentCompName = props.parentCompName;
 
   const [SearchName, setSearchName] = useState("이태원 맛집");

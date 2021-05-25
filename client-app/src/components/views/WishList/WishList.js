@@ -24,7 +24,7 @@ const List = styled.ol`
 function WishList(props) {
   const dispatch = useDispatch();
   const [wishLists, setWishLists] = useState([{ _id: 0 }]);
-  const userId = props.userId;
+  const userId = window.sessionStorage.getItem("userId");
   const body = {
     id: userId
   };
