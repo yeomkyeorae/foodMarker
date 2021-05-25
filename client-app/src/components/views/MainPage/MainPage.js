@@ -6,6 +6,7 @@ import {
   readRestaurantsTop5,
   readRestaurantMost
 } from "../../../_actions/restaurant_action";
+import { readTenWishList } from "../../../_actions/wishList_action";
 import NavbarComp from "../Navbar/NavbarComp";
 import KakaoMap from "../../containers/KakaoMap/KakaoMap";
 import Footer from "../Footer/Footer";
@@ -53,6 +54,7 @@ function MainPage(props) {
   const [restaurants, setRestaurants] = useState([]);
   const [topRestaurants, setTopRestaurants] = useState([]);
   const [carouselPage, setCarouselPage] = useState(0);
+  const [tenWishList, setTenWishList] = useState([]);
 
   const [mostRestaurant, setMostRestaurant] = useState({
     name: "",
@@ -87,12 +89,8 @@ function MainPage(props) {
       }
       setTopRestaurants(newTopRestaurants);
     });
-    dispatch(readRestaurantMost()).then(response => {
-      const count = response.payload.data.restaurant[0].count;
-      const name = response.payload.data.restaurant[0]._id.name;
-      const address = response.payload.data.restaurant[0]._id.address;
-
-      setMostRestaurant({ name, address, count });
+    dispatch(readTenWishList()).then(response => {
+      setTenWishList(response.payload.wishLists);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -331,19 +329,23 @@ function MainPage(props) {
               padding: "0"
             }}
           >
-            {Array(10)
-              .fill(0)
-              .map((el, ix) => (
-                <li style={{ width: "20%" }} key={ix}>
+            {tenWishList.map((wishListItem, ix) => (
+              <li style={{ width: "20%" }} key={ix}>
+                <div>
                   <div>
-                    <span style={{ fontWeight: "300" }}>
-                      {mostRestaurant.name} <br />
-                      {mostRestaurant.address} <br />
-                      duarufp06
-                    </span>
+                    <p style={{ fontWeight: "500", fontSize: "2rem" }}>
+                      {wishListItem.name}
+                    </p>
+                    <p style={{ fontWeight: "300", margin: "0" }}>
+                      {wishListItem.address}
+                    </p>
+                    <p style={{ fontWeight: "400", margin: "0" }}>
+                      {wishListItem.username}
+                    </p>
                   </div>
-                </li>
-              ))}
+                </div>
+              </li>
+            ))}
           </ol>
         </div>
       </div>

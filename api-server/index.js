@@ -309,6 +309,18 @@ app.post("/api/wishLists", (req, res) => {
   });
 });
 
+// get 10 wishLists
+app.get("/api/wishLists", (req, res) => {
+  const body = {};
+
+  const wishLists = WishList.find(body).limit(10);
+
+  wishLists.exec((err, wishLists) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({ wishLists: wishLists });
+  });
+});
+
 // create my wishList
 app.post("/api/wishList", (req, res) => {
   const wishList = WishList(req.body);
