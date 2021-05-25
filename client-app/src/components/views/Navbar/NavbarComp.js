@@ -39,6 +39,7 @@ function NavbarComp(props) {
   const onClickHandler = () => {
     dispatch(logoutUser()).then(response => {
       if (response.payload.success) {
+        window.sessionStorage.clear();
         props.history.push("/loginSignup");
       } else {
         alert("failed to logout");

@@ -94,6 +94,8 @@ function Login(props) {
     };
     dispatch(loginUser(body)).then(response => {
       if (response.payload.loginSuccess) {
+        window.sessionStorage.setItem("userId", response.payload.userId);
+        window.sessionStorage.setItem("username", response.payload.name);
         props.history.push({
           pathname: "/main",
           state: response.payload.userId
