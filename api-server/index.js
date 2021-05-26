@@ -104,7 +104,7 @@ app.post("/api/users/login", (req, res) => {
 
         // 토큰을 저장한다.
         res
-          .cookie("x_auth", user.token)
+          .cookie("x_auth", user.token, { maxAge: 1800000 })
           .status(200)
           .json({
             loginSuccess: true,
