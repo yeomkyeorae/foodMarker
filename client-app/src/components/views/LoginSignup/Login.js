@@ -97,8 +97,7 @@ function Login(props) {
         window.sessionStorage.setItem("userId", response.payload.userId);
         window.sessionStorage.setItem("username", response.payload.name);
         props.history.push({
-          pathname: "/main",
-          state: response.payload.userId
+          pathname: "/main"
         });
       } else {
         console.log(response);

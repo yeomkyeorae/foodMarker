@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import {
-  readRestaurantsNoImage,
-  readRestaurantsTop5,
-  readRestaurantMost
-} from "../../../_actions/restaurant_action";
+import { readRestaurantsNoImage } from "../../../_actions/restaurant_action";
 import { readTenWishList } from "../../../_actions/wishList_action";
 import NavbarComp from "../Navbar/NavbarComp";
 import KakaoMap from "../../containers/KakaoMap/KakaoMap";
@@ -28,42 +24,12 @@ const P = styled.p`
   }
 `;
 
-/* animation: ${move} 1s ease-in-out 0.5s 2 alternate; */
-const ImgDiv = styled.div`
-  display: inline-block;
-`;
-
-const Arrow = styled.div`
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  display: inline-block;
-  ${props =>
-    props.right
-      ? `border-left: 10px solid #a5e2a6;`
-      : `border-right: 10px solid #a5e2a6;`}
-  ${props =>
-    props.right ? `margin-left: 10px;` : `margin-right: 10px;`}
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
 function MainPage(props) {
   const [restaurants, setRestaurants] = useState([]);
-  const [topRestaurants, setTopRestaurants] = useState([]);
-  const [carouselPage, setCarouselPage] = useState(0);
   const [tenWishList, setTenWishList] = useState([]);
 
-  const [mostRestaurant, setMostRestaurant] = useState({
-    name: "",
-    address: "",
-    count: ""
-  });
-
   const dispatch = useDispatch();
-  const userId = props.location.state;
+  const userId = window.sessionStorage.getItem("userId");
   const body = {
     id: userId,
     option: "서울"
@@ -72,22 +38,6 @@ function MainPage(props) {
   useEffect(() => {
     dispatch(readRestaurantsNoImage(body)).then(response => {
       setRestaurants(response.payload);
-    });
-    dispatch(readRestaurantsTop5(userId)).then(response => {
-      const restaurants = response.payload.data.restaurants;
-
-      const newTopRestaurants = [];
-      for (let i = 0; i < 5; i++) {
-        if (i < restaurants.length) {
-          newTopRestaurants.push(restaurants[i]);
-        } else {
-          newTopRestaurants.push({
-            imgURL:
-              "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-          });
-        }
-      }
-      setTopRestaurants(newTopRestaurants);
     });
     dispatch(readTenWishList()).then(response => {
       setTenWishList(response.payload.wishLists);
@@ -132,10 +82,6 @@ function MainPage(props) {
     dispatch(readRestaurantsNoImage(body)).then(response => {
       setRestaurants(response.payload);
     });
-  };
-
-  const nextClickHandler = type => {
-    setCarouselPage((carouselPage + 1) % 5);
   };
 
   return (
@@ -265,7 +211,7 @@ function MainPage(props) {
             marginBottom: "10px",
             backgroundColor: "#edfcee",
             margin: "0",
-            height: "60vh"
+            height: "70vh"
           }}
         >
           <div style={{ paddingTop: "20px" }}>
@@ -298,9 +244,21 @@ function MainPage(props) {
                     />
                   </div>
                   <div>
-                    <span style={{ fontWeight: "300" }}>
-                      {mostRestaurant.name}
-                    </span>
+                    <div>
+                      <p
+                        style={{
+                          fontWeight: "500",
+                          fontSize: "1.5rem",
+                          marginBottom: "5px"
+                        }}
+                      >
+                        남영돈
+                      </p>
+                      <p style={{ fontWeight: "300", margin: "0" }}>
+                        서울 중구 남영로42
+                      </p>
+                      <p style={{ fontWeight: "300", margin: "0" }}>하뭉겨뭉</p>
+                    </div>
                   </div>
                 </li>
               ))}
