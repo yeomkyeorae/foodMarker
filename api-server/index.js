@@ -104,11 +104,12 @@ app.post("/api/users/login", (req, res) => {
 
         // 토큰을 저장한다.
         res
-          .cookie("x_auth", user.token)
+          .cookie("x_auth", user.token, { maxAge: 1800000 })
           .status(200)
           .json({
             loginSuccess: true,
-            userId: user._id
+            userId: user._id,
+            name: user.name
           });
       });
     });
@@ -305,6 +306,18 @@ app.post("/api/wishLists", (req, res) => {
   const wishLists = WishList.find({ user: req.body.id }, (err, wishLists) => {
     if (err) return res.json({ success: false, err });
     return res.json(wishLists);
+  });
+});
+
+// get 10 wishLists
+app.get("/api/wishLists", (req, res) => {
+  const body = {};
+
+  const wishLists = WishList.find(body).limit(10);
+
+  wishLists.exec((err, wishLists) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({ wishLists: wishLists });
   });
 });
 

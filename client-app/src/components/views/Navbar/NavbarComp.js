@@ -33,12 +33,13 @@ const LogoutDiv = styled.div`
 `;
 
 function NavbarComp(props) {
-  const userId = props.userId;
+  const userId = window.sessionStorage.getItem("userId");
   const dispatch = useDispatch();
 
   const onClickHandler = () => {
     dispatch(logoutUser()).then(response => {
       if (response.payload.success) {
+        window.sessionStorage.clear();
         props.history.push("/loginSignup");
       } else {
         alert("failed to logout");

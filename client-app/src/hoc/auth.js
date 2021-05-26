@@ -22,6 +22,8 @@ export default function(SpecificComponent, option, adminRoute = null) {
         } else {
           // 로그인한 상태
           if (option === false) {
+            window.sessionStorage.setItem("userId", response.payload._id);
+            window.sessionStorage.setItem("username", response.payload.name);
             props.history.push("/main", response.payload._id);
           }
         }

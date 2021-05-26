@@ -67,7 +67,7 @@ function RestaurantList(props) {
   const ITEMPERPAGE = 6;
   const DISPLAYPAGENUM = 5;
   const body = {
-    id: props.userId,
+    id: window.sessionStorage.getItem("userId"),
     page: page,
     itemPerPage: ITEMPERPAGE,
     order: order

@@ -38,7 +38,9 @@ function Enroll(props) {
   const [newMenuItem, setNewMenuItem] = useState("");
   const [menuItems, setMenuItems] = useState([]);
 
-  const userId = props.userId;
+  const userId = window.sessionStorage.getItem("userId");
+  const username = window.sessionStorage.getItem("username");
+
   const parentCompName = props.parentCompName;
 
   const [SearchName, setSearchName] = useState("이태원 맛집");
@@ -129,7 +131,8 @@ function Enroll(props) {
         imgURL: ImageData,
         rating: Rating,
         eatingTime: eatingTime,
-        menus: JSON.stringify(menuItems)
+        menus: JSON.stringify(menuItems),
+        created: new Date().toLocaleString()
       };
       dispatch(registerRestaurant(body))
         .then(response => {
@@ -154,6 +157,7 @@ function Enroll(props) {
     } else if (parentCompName === "WishPage") {
       const body = {
         user: userId,
+        username: username,
         name: Name,
         address: Address,
         created: new Date().toLocaleString()
