@@ -6,7 +6,6 @@ import { registerWishList } from "../../../_actions/wishList_action";
 import MapForEnroll from "../../containers/KakaoMap/MapForEnroll";
 import { Button } from "react-bootstrap";
 import heic2any from "heic2any";
-// import "react-datepicker/dist/react-datepicker.css";
 import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
 
