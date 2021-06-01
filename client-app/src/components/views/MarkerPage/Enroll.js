@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { registerRestaurant } from "../../../_actions/restaurant_action";
+import {
+  registerRestaurant,
+  registerImg
+} from "../../../_actions/restaurant_action";
 import { registerWishList } from "../../../_actions/wishList_action";
 import MapForEnroll from "../../containers/KakaoMap/MapForEnroll";
 import { Button } from "react-bootstrap";
@@ -76,9 +79,20 @@ function Enroll(props) {
           .then(res => res.blob())
           .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.2 }))
           .then(conversionResult => {
+            // const formData = new FormData();
+            // formData.append("restaurant_img", conversionResult);
+            // setImageData(conversionResult);
+            // setIsConverting(false);
+            // console.log("conversionResult", conversionResult);
+            // setImageData(conversionResult);
             const fileReader = new FileReader();
             fileReader.readAsDataURL(conversionResult);
             fileReader.onload = function(e) {
+              // console.log(e.target.result);
+              // const formData = new FormData();
+              // formData.append("restaurant_img", e.target.result);
+              // setImageData(formData);
+
               setImageData(e.target.result);
               setIsConverting(false);
             };
@@ -89,11 +103,15 @@ function Enroll(props) {
       };
       reader.readAsDataURL(file);
     } else {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = function(e) {
-        setImageData(e.target.result);
-      };
+      const formData = new FormData();
+      formData.append("restaurant_img", file);
+      setImageData(formData);
+
+      // const fileReader = new FileReader();
+      // fileReader.readAsArrayBuffer(file);
+      // fileReader.onload = function(e) {
+      //   setImageData(e.target.result);
+      // };
     }
   };
 
@@ -122,37 +140,49 @@ function Enroll(props) {
     e.preventDefault();
 
     if (parentCompName === "MarkerPage") {
+      // const formData = new FormData();
+      // formData.append("restaurant_img", ImageData);
+      // console.log("formData", formData);
       const body = {
-        visitor: userId,
-        name: Name,
-        address: Address,
-        date: VisitedDate,
-        imgURL: ImageData,
-        rating: Rating,
-        eatingTime: eatingTime,
-        menus: JSON.stringify(menuItems),
-        created: new Date().toLocaleString()
+        img: ImageData
       };
-      dispatch(registerRestaurant(body))
-        .then(response => {
-          if (response.payload.success) {
-            setName("");
-            setAddress("");
-            setVisitedDate("");
-            setImageData("");
-            setRating(0);
-            setEatingTime(1);
-            setMenuItems([]);
-            props.setToggle(true);
-            props.setMenu("식당 등록");
-            props.history.push("/marker", userId);
-          } else {
-            alert("error");
-          }
-        })
-        .catch(err => {
-          console.log("registerRestaurant err: ", err);
-        });
+      console.log("imageData", ImageData);
+
+      dispatch(registerImg(body)).then(response => {
+        console.log("response", response);
+      });
+
+      // const body = {
+      //   visitor: userId,
+      //   name: Name,
+      //   address: Address,
+      //   date: VisitedDate,
+      //   imgURL: ImageData,
+      //   rating: Rating,
+      //   eatingTime: eatingTime,
+      //   menus: JSON.stringify(menuItems),
+      //   created: new Date().toLocaleString()
+      // };
+      // dispatch(registerRestaurant(body))
+      //   .then(response => {
+      //     if (response.payload.success) {
+      //       setName("");
+      //       setAddress("");
+      //       setVisitedDate("");
+      //       setImageData("");
+      //       setRating(0);
+      //       setEatingTime(1);
+      //       setMenuItems([]);
+      //       props.setToggle(true);
+      //       props.setMenu("식당 등록");
+      //       props.history.push("/marker", userId);
+      //     } else {
+      //       alert("error");
+      //     }
+      //   })
+      //   .catch(err => {
+      //     console.log("registerRestaurant err: ", err);
+      //   });
     } else if (parentCompName === "WishPage") {
       const body = {
         user: userId,
@@ -416,7 +446,7 @@ function Enroll(props) {
           {isConverting ? (
             <Button
               variant="danger"
-              style={{ margin: "20px" }}
+              style={{ margin: "20px", width: "10%" }}
               type="submit"
               disabled
             >
