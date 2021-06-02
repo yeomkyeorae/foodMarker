@@ -249,18 +249,23 @@ app.get("/api/restaurant/most", (req, res) => {
 
 // post img
 app.post("/api/img", (req, res) => {
-  const data = req.body.img;
-  fs.writeFileSync("uploads/my-file", data);
-  // console.log(req.body.img);
+  const imgName = req.body.imgName;
 
-  // upload(req, res, err => {
-  //   if (err) {
-  //     console.log("error 발생!");
-  //     return res.json({ success: false, err });
-  //   }
-  //   console.log("성공?");
-  //   console.log("res", res.req.file);
-  // });
+  if (imgName) {
+    const img = req.body.img.replace(/^data:image\/jpeg;base64,/, "");
+    const imgFullName = `uploads/${Date.now()}_${imgName}.jpeg`;
+    fs.writeFileSync(imgFullName, img, "base64", err => {
+      return res.json({ success: false, err });
+    });
+    return res.json({ success: true, path: imgFullName });
+  } else {
+    upload(req, res, err => {
+      if (err) {
+        return res.json({ success: false, err });
+      }
+      return res.json({ success: true, path: res.req.file.path });
+    });
+  }
 });
 
 // create my restaurant
