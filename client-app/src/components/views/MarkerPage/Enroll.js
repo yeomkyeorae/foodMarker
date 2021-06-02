@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { registerRestaurant } from "../../../_actions/restaurant_action";
+import {
+  registerRestaurant,
+  registerImg
+} from "../../../_actions/restaurant_action";
 import { registerWishList } from "../../../_actions/wishList_action";
 import MapForEnroll from "../../containers/KakaoMap/MapForEnroll";
 import { Button } from "react-bootstrap";
 import heic2any from "heic2any";
-// import "react-datepicker/dist/react-datepicker.css";
 import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
 
@@ -33,6 +35,7 @@ function Enroll(props) {
   const [Address, setAddress] = useState("");
   const [VisitedDate, setVisitedDate] = useState("");
   const [ImageData, setImageData] = useState("");
+  const [ImageName, setImageName] = useState("");
   const [isConverting, setIsConverting] = useState(false);
   const [eatingTime, setEatingTime] = useState(1);
   const [newMenuItem, setNewMenuItem] = useState("");
@@ -77,10 +80,16 @@ function Enroll(props) {
           .then(res => res.blob())
           .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.2 }))
           .then(conversionResult => {
+            // heic type 제거한 imageName
+            const splited = file.name.split(".");
+            const removedType = splited.slice(0, splited.length - 1);
+            const newImageName = removedType.join("");
+
             const fileReader = new FileReader();
             fileReader.readAsDataURL(conversionResult);
             fileReader.onload = function(e) {
               setImageData(e.target.result);
+              setImageName(newImageName);
               setIsConverting(false);
             };
           })
@@ -90,11 +99,10 @@ function Enroll(props) {
       };
       reader.readAsDataURL(file);
     } else {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = function(e) {
-        setImageData(e.target.result);
-      };
+      const formData = new FormData();
+      formData.append("restaurant_img", file);
+      setImageData(formData);
+      setImageName("");
     }
   };
 
@@ -123,24 +131,40 @@ function Enroll(props) {
     e.preventDefault();
 
     if (parentCompName === "MarkerPage") {
-      const body = {
-        visitor: userId,
-        name: Name,
-        address: Address,
-        date: VisitedDate,
-        imgURL: ImageData,
-        rating: Rating,
-        eatingTime: eatingTime,
-        menus: JSON.stringify(menuItems),
-        created: new Date().toLocaleString()
-      };
-      dispatch(registerRestaurant(body))
+      let body;
+      if (ImageName === "") {
+        body = ImageData;
+      } else {
+        body = {
+          img: ImageData,
+          imgName: ImageName
+        };
+      }
+      dispatch(registerImg(body))
+        .then(response => {
+          const imgURL = response.payload.path;
+
+          const body = {
+            visitor: userId,
+            name: Name,
+            address: Address,
+            date: VisitedDate,
+            imgURL: imgURL,
+            rating: Rating,
+            eatingTime: eatingTime,
+            menus: JSON.stringify(menuItems),
+            created: new Date().toLocaleString()
+          };
+
+          return dispatch(registerRestaurant(body));
+        })
         .then(response => {
           if (response.payload.success) {
             setName("");
             setAddress("");
             setVisitedDate("");
             setImageData("");
+            setImageName("");
             setRating(0);
             setEatingTime(1);
             setMenuItems([]);
@@ -417,7 +441,7 @@ function Enroll(props) {
           {isConverting ? (
             <Button
               variant="danger"
-              style={{ margin: "20px" }}
+              style={{ margin: "20px", width: "10%" }}
               type="submit"
               disabled
             >

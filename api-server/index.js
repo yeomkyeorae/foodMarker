@@ -13,7 +13,7 @@ const mongoose = require("mongoose");
 const crypto = require("crypto");
 const path = require("path");
 const multer = require("multer");
-const GridFsStorage = require("multer-gridfs-storage");
+const fs = require("fs");
 const config = require("./config/key");
 
 app.use(bodyParser.json({ limit: "16mb", extended: true })); // Make sure you add these two lines
@@ -39,25 +39,23 @@ mongoose
   })
   .catch(err => console.log(err));
 
-const storage = new GridFsStorage({
-  url: config.mongoURI,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err);
-        }
-        const filename = buf.toString("hex") + path.extname(file.originalname);
-        const fileInfo = {
-          filename: filename,
-          bucketName: "images"
-        };
-        resolve(fileInfo);
-      });
-    });
+try {
+  fs.readdirSync("uploads");
+} catch (error) {
+  console.log("uploads 폴더 생성");
+  fs.mkdirSync("uploads");
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}_${file.originalname}`);
   }
 });
-const upload = multer({ storage });
+
+const upload = multer({ storage }).single("restaurant_img");
 
 // 테스트
 app.get("/api/hello", (req, res) => {
@@ -247,6 +245,27 @@ app.get("/api/restaurant/most", (req, res) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).json({ restaurant: restaurant });
   });
+});
+
+// post img
+app.post("/api/img", (req, res) => {
+  const imgName = req.body.imgName;
+
+  if (imgName) {
+    const img = req.body.img.replace(/^data:image\/jpeg;base64,/, "");
+    const imgFullName = `uploads/${Date.now()}_${imgName}.jpeg`;
+    fs.writeFileSync(imgFullName, img, "base64", err => {
+      return res.json({ success: false, err });
+    });
+    return res.json({ success: true, path: imgFullName });
+  } else {
+    upload(req, res, err => {
+      if (err) {
+        return res.json({ success: false, err });
+      }
+      return res.json({ success: true, path: res.req.file.path });
+    });
+  }
 });
 
 // create my restaurant

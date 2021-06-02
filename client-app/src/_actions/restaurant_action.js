@@ -7,7 +7,8 @@ import {
   READ_RESTAURANT_MOST,
   REGISTER_RESTAURANT,
   DELETE_RESTAURANT,
-  UPDATE_RESTAURANT
+  UPDATE_RESTAURANT,
+  REGISTER_IMG
 } from "./types";
 
 export function readRestaurants(dataToSubmit) {
@@ -96,6 +97,17 @@ export function updateRestaurant(dataToSubmit) {
 
   return {
     type: UPDATE_RESTAURANT,
+    payload: request
+  };
+}
+
+export function registerImg(dataToSubmit) {
+  const request = axios
+    .post("/api/img", dataToSubmit)
+    .then(response => response.data);
+
+  return {
+    type: REGISTER_IMG,
     payload: request
   };
 }
