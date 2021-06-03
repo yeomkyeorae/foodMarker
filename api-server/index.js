@@ -40,15 +40,15 @@ mongoose
   .catch(err => console.log(err));
 
 try {
-  fs.readdirSync("uploads");
+  fs.readdirSync("../uploads");
 } catch (error) {
   console.log("uploads 폴더 생성");
-  fs.mkdirSync("uploads");
+  fs.mkdirSync("../uploads");
 }
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/");
+    cb(null, "../uploads");
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}_${file.originalname}`);
@@ -253,7 +253,7 @@ app.post("/api/img", (req, res) => {
 
   if (imgName) {
     const img = req.body.img.replace(/^data:image\/jpeg;base64,/, "");
-    const imgFullName = `uploads/${Date.now()}_${imgName}.jpeg`;
+    const imgFullName = `../uploads/${Date.now()}_${imgName}.jpeg`;
     fs.writeFileSync(imgFullName, img, "base64", err => {
       return res.json({ success: false, err });
     });
