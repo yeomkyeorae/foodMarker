@@ -20,6 +20,7 @@ app.use(bodyParser.json({ limit: "16mb", extended: true })); // Make sure you ad
 app.use(bodyParser.urlencoded({ limit: "16mb", extended: true }));
 app.use(cookieParser());
 app.set("view engine", "ejs");
+app.use("/food", express.static("uploads"));
 
 let gfs;
 
@@ -40,15 +41,15 @@ mongoose
   .catch(err => console.log(err));
 
 try {
-  fs.readdirSync("../uploads");
+  fs.readdirSync("uploads/");
 } catch (error) {
   console.log("uploads 폴더 생성");
-  fs.mkdirSync("../uploads");
+  fs.mkdirSync("uploads/");
 }
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "../uploads");
+    cb(null, "uploads/");
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}_${file.originalname}`);
@@ -253,17 +254,19 @@ app.post("/api/img", (req, res) => {
 
   if (imgName) {
     const img = req.body.img.replace(/^data:image\/jpeg;base64,/, "");
-    const imgFullName = `../uploads/${Date.now()}_${imgName}.jpeg`;
+    const imgFullName = `uploads/${Date.now()}_${imgName}.jpeg`;
+    const imgClientPath = `food/${Date.now()}_${imgName}.jpeg`;
+
     fs.writeFileSync(imgFullName, img, "base64", err => {
       return res.json({ success: false, err });
     });
-    return res.json({ success: true, path: imgFullName });
+    return res.json({ success: true, path: imgClientPath });
   } else {
     upload(req, res, err => {
       if (err) {
         return res.json({ success: false, err });
       }
-      return res.json({ success: true, path: res.req.file.path });
+      return res.json({ success: true, path: `food/` + res.req.file.filename });
     });
   }
 });
