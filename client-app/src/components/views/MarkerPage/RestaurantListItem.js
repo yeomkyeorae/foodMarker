@@ -20,7 +20,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 
 function RestaurantListItem(props) {
   const restaurant = props.restaurant;
-  console.log("restaurant", restaurant);
+
   const restaurantDateSplit = String(restaurant.date).split("-");
   const restaurantDate = `${restaurantDateSplit[0]}년 ${restaurantDateSplit[1]}월 ${restaurantDateSplit[2]}일`;
   const [Toggle, setToggle] = useState(false);
@@ -99,7 +99,7 @@ function RestaurantListItem(props) {
                 variant="top"
                 src={`http://localhost:5000/${restaurant.imgURL}`}
                 style={{
-                  width: "100%",
+                  width: "80%",
                   height: "100%"
                 }}
               />
