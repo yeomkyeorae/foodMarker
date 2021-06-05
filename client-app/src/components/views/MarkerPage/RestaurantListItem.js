@@ -5,6 +5,13 @@ import UpdateModal from "../../containers/UpdateModal/UpdateModal";
 import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
 import ReactStars from "react-rating-stars-component";
 
+const eatingObj = {
+  "1": "아침",
+  "2": "점심",
+  "3": "저녁",
+  "4": "기타"
+};
+
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <span
     ref={ref}
@@ -72,7 +79,7 @@ function RestaurantListItem(props) {
                 {restaurant.name}
                 <span style={{ fontSize: "0.5em", height: "10px" }}>
                   <br />
-                  {restaurantDate}
+                  {restaurantDate}({eatingObj[restaurant.eatingTime]})
                 </span>
               </Card.Title>
               <span style={{ fontSize: "0.8em" }}>{restaurant.address}</span>
