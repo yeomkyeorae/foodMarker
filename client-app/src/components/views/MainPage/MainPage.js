@@ -260,7 +260,9 @@ function MainPage(props) {
                     <p style={{ fontWeight: "300", margin: "0" }}>
                       {el.address}
                     </p>
-                    <p style={{ fontWeight: "400", margin: "0" }}>하뭉겨뭉</p>
+                    <p style={{ fontWeight: "400", margin: "0" }}>
+                      {el.username}
+                    </p>
                   </div>
                 </div>
               </li>

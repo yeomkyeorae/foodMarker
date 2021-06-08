@@ -146,6 +146,7 @@ function Enroll(props) {
 
           const body = {
             visitor: userId,
+            username: username,
             name: Name,
             address: Address,
             date: VisitedDate,

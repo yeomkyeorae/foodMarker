@@ -10,6 +10,10 @@ const restaurantSchema = new Schema({
     required: true,
     ref: "User"
   },
+  username: {
+    type: String,
+    maxlength: 100
+  },
   name: {
     type: String,
     maxlength: 100
