@@ -146,10 +146,9 @@ function RestaurantList(props) {
     <Div>
       <span
         style={{
-          margin: "10px",
           display: "inline-block",
           cursor: "pointer",
-          width: "150px",
+          width: "120px",
           userSelect: "none"
         }}
         onClick={() => onSetOrderHandler(order === 1 ? 2 : 1)}
@@ -158,7 +157,6 @@ function RestaurantList(props) {
       </span>
       <span
         style={{
-          margin: "10px",
           display: "inline-block",
           cursor: "pointer",
           width: "150px",
@@ -168,6 +166,17 @@ function RestaurantList(props) {
       >
         방문 날짜 순
         {order === 3 ? "(최신 순)" : order === 4 ? "(오래된 순)" : ""}
+      </span>
+      <span
+        style={{
+          display: "inline-block",
+          cursor: "pointer",
+          width: "120px",
+          userSelect: "none"
+        }}
+        onClick={() => onSetOrderHandler(order === 5 ? 6 : 5)}
+      >
+        별점 순{order === 5 ? "(높은 순)" : order === 6 ? "(낮은 순)" : ""}
       </span>
       <Restaurants>
         <List>
