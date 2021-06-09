@@ -84,7 +84,14 @@ function RestaurantListItem(props) {
               </Card.Title>
               <span style={{ fontSize: "0.8em" }}>{restaurant.address}</span>
             </div>
-            <div style={{ width: "40%", margin: "auto" }}>
+            <div
+              style={{
+                width: "40%",
+                margin: "auto",
+                display: "flex",
+                justifyContent: "center"
+              }}
+            >
               <ReactStars
                 count={5}
                 value={Rating}
