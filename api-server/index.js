@@ -148,6 +148,10 @@ app.post("/api/restaurants", (req, res) => {
     sortMethod = { date: -1 }; // 최신
   } else if (order === 4) {
     sortMethod = { date: 1 }; // 옛날
+  } else if (order === 5) {
+    sortMethod = { rating: -1 }; // 별점 높은 순
+  } else if (order === 6) {
+    sortMethod = { rating: 1 }; // 별점 낮은 순
   }
 
   const restaurants = Restaurant.find({ visitor: req.body.id })
