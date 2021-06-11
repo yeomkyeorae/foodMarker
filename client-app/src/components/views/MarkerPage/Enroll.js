@@ -78,7 +78,7 @@ function Enroll(props) {
         const image = reader.result;
         fetch(image)
           .then(res => res.blob())
-          .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.2 }))
+          .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.7 }))
           .then(conversionResult => {
             // heic type 제거한 imageName
             const splited = file.name.split(".");
@@ -146,6 +146,7 @@ function Enroll(props) {
 
           const body = {
             visitor: userId,
+            username: username,
             name: Name,
             address: Address,
             date: VisitedDate,

@@ -20,6 +20,7 @@ app.use(bodyParser.json({ limit: "16mb", extended: true })); // Make sure you ad
 app.use(bodyParser.urlencoded({ limit: "16mb", extended: true }));
 app.use(cookieParser());
 app.set("view engine", "ejs");
+app.use("/food", express.static("uploads"));
 
 let gfs;
 
@@ -39,12 +40,12 @@ mongoose
   })
   .catch(err => console.log(err));
 
-try {
-  fs.readdirSync("uploads");
-} catch (error) {
-  console.log("uploads 폴더 생성");
-  fs.mkdirSync("uploads");
-}
+// try {
+// fs.readdirSync("uploads/");
+// } catch (error) {
+// console.log("uploads 폴더 생성");
+// fs.mkdirSync("uploads/");
+// }
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -147,6 +148,10 @@ app.post("/api/restaurants", (req, res) => {
     sortMethod = { date: -1 }; // 최신
   } else if (order === 4) {
     sortMethod = { date: 1 }; // 옛날
+  } else if (order === 5) {
+    sortMethod = { rating: -1 }; // 별점 높은 순
+  } else if (order === 6) {
+    sortMethod = { rating: 1 }; // 별점 낮은 순
   }
 
   const restaurants = Restaurant.find({ visitor: req.body.id })
@@ -203,14 +208,13 @@ app.post("/api/restaurants-no-image", (req, res) => {
   });
 });
 
-// get my 5 stars restaurant latest
-app.get("/api/restaurants/top5", (req, res) => {
-  const userId = req.query._id;
-  const body = { visitor: userId, rating: 5 };
+// get 10 restaurants latest
+app.get("/api/ten-restaurants", (req, res) => {
+  const body = {};
 
   const restaurants = Restaurant.find(body)
     .sort({ date: -1 }) // 최신 먼저 고려
-    .limit(5);
+    .limit(10);
 
   restaurants.exec((err, restaurants) => {
     if (err) return res.json({ success: false, err });
@@ -254,16 +258,18 @@ app.post("/api/img", (req, res) => {
   if (imgName) {
     const img = req.body.img.replace(/^data:image\/jpeg;base64,/, "");
     const imgFullName = `uploads/${Date.now()}_${imgName}.jpeg`;
+    const imgClientPath = `food/${Date.now()}_${imgName}.jpeg`;
+
     fs.writeFileSync(imgFullName, img, "base64", err => {
       return res.json({ success: false, err });
     });
-    return res.json({ success: true, path: imgFullName });
+    return res.json({ success: true, path: imgClientPath });
   } else {
     upload(req, res, err => {
       if (err) {
         return res.json({ success: false, err });
       }
-      return res.json({ success: true, path: res.req.file.path });
+      return res.json({ success: true, path: `food/` + res.req.file.filename });
     });
   }
 });
@@ -332,7 +338,9 @@ app.post("/api/wishLists", (req, res) => {
 app.get("/api/wishLists", (req, res) => {
   const body = {};
 
-  const wishLists = WishList.find(body).limit(10);
+  const wishLists = WishList.find(body)
+    .sort({ date: -1 })
+    .limit(10);
 
   wishLists.exec((err, wishLists) => {
     if (err) return res.json({ success: false, err });

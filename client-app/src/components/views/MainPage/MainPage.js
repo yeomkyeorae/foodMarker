@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { readRestaurantsNoImage } from "../../../_actions/restaurant_action";
+import {
+  readRestaurantsNoImage,
+  readTenRestaurants
+} from "../../../_actions/restaurant_action";
 import { readTenWishList } from "../../../_actions/wishList_action";
 import NavbarComp from "../Navbar/NavbarComp";
 import KakaoMap from "../../containers/KakaoMap/KakaoMap";
@@ -26,6 +29,7 @@ const P = styled.p`
 
 function MainPage(props) {
   const [restaurants, setRestaurants] = useState([]);
+  const [tenRestaurants, setTenRestaurants] = useState([]);
   const [tenWishList, setTenWishList] = useState([]);
 
   const dispatch = useDispatch();
@@ -38,6 +42,9 @@ function MainPage(props) {
   useEffect(() => {
     dispatch(readRestaurantsNoImage(body)).then(response => {
       setRestaurants(response.payload);
+    });
+    dispatch(readTenRestaurants()).then(response => {
+      setTenRestaurants(response.payload.data.restaurants);
     });
     dispatch(readTenWishList()).then(response => {
       setTenWishList(response.payload.wishLists);
@@ -229,39 +236,37 @@ function MainPage(props) {
               padding: "0"
             }}
           >
-            {Array(10)
-              .fill(0)
-              .map((el, ix) => (
-                <li style={{ width: "20%" }} key={ix}>
+            {tenRestaurants.map((el, ix) => (
+              <li style={{ width: "20%" }} key={ix}>
+                <div>
+                  <img
+                    src={`http://localhost:5000/${el.imgURL}`}
+                    alt=""
+                    width="180px"
+                    height="200px"
+                  />
+                </div>
+                <div>
                   <div>
-                    <img
-                      src={
-                        "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80"
-                      }
-                      alt=""
-                      width="180px"
-                      height="200px"
-                    />
+                    <p
+                      style={{
+                        fontWeight: "500",
+                        fontSize: "1.5rem",
+                        marginBottom: "5px"
+                      }}
+                    >
+                      {el.name}
+                    </p>
+                    <p style={{ fontWeight: "300", margin: "0" }}>
+                      {el.address}
+                    </p>
+                    <p style={{ fontWeight: "400", margin: "0" }}>
+                      {el.username}
+                    </p>
                   </div>
-                  <div>
-                    <div>
-                      <p
-                        style={{
-                          fontWeight: "500",
-                          fontSize: "1.5rem",
-                          marginBottom: "5px"
-                        }}
-                      >
-                        남영돈
-                      </p>
-                      <p style={{ fontWeight: "300", margin: "0" }}>
-                        서울 중구 남영로42
-                      </p>
-                      <p style={{ fontWeight: "300", margin: "0" }}>하뭉겨뭉</p>
-                    </div>
-                  </div>
-                </li>
-              ))}
+                </div>
+              </li>
+            ))}
           </ol>
         </div>
         <div
