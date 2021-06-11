@@ -40,12 +40,12 @@ mongoose
   })
   .catch(err => console.log(err));
 
-try {
-  fs.readdirSync("uploads/");
-} catch (error) {
-  console.log("uploads 폴더 생성");
-  fs.mkdirSync("uploads/");
-}
+// try {
+// fs.readdirSync("uploads/");
+// } catch (error) {
+// console.log("uploads 폴더 생성");
+// fs.mkdirSync("uploads/");
+// }
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {

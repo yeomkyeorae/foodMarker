@@ -113,7 +113,7 @@ function RestaurantListItem(props) {
                 variant="top"
                 src={`http://localhost:5000/${restaurant.imgURL}`}
                 style={{
-                  width: "80%",
+                  width: "60%",
                   height: "100%"
                 }}
               />
