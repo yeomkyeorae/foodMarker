@@ -1,30 +1,35 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { withRouter } from "react-router-dom";
-import { Card, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Card, Col, OverlayTrigger, Popover } from "react-bootstrap";
 
 function ChoizaListItem(props) {
   const choizaRoad = props.choizaRoad;
-  const [showTooltip, setShowTooltip] = useState(false);
 
   const clickChoizaRoad = URL => {
     window.open(URL, "_blank");
   };
 
   return (
-    <OverlayTrigger
-      key="bottom"
-      placement="bottom"
-      overlay={<Tooltip id={`tooltip-bottom`}>툴팁 테스트</Tooltip>}
-    >
-      <Col md={3}>
-        <Card
-          style={{ width: "100%", height: "100%", cursor: "pointer" }}
-          onClick={() => clickChoizaRoad(choizaRoad.youtubeURL)}
-          onMouseEnter={() => setShowTooltip(true)}
-          onMouseLeave={() => setShowTooltip(false)}
-        >
-          <Card.Body>
+    <Col md={3}>
+      <Card style={{ width: "100%", height: "100%" }}>
+        <Card.Body>
+          <OverlayTrigger
+            trigger="click"
+            key="bottom"
+            placement="bottom"
+            overlay={
+              <Popover id={`popover-positioned-bottom`}>
+                <Popover.Title as="h3">최자로드 식당</Popover.Title>
+                <Popover.Content>예시 - 남영돈</Popover.Content>
+              </Popover>
+            }
+          >
+            <div style={{ cursor: "pointer" }}>pop up trigger</div>
+          </OverlayTrigger>
+          <div
+            onClick={() => clickChoizaRoad(choizaRoad.youtubeURL)}
+            style={{ cursor: "pointer" }}
+          >
             <div
               style={{
                 width: "100%",
@@ -44,10 +49,10 @@ function ChoizaListItem(props) {
             <p style={{ fontFamily: "Do Hyeon", fontSize: "20px" }}>
               {choizaRoad.title}
             </p>
-          </Card.Body>
-        </Card>
-      </Col>
-    </OverlayTrigger>
+          </div>
+        </Card.Body>
+      </Card>
+    </Col>
   );
 }
 
