@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { withRouter } from "react-router-dom";
 import { Card, Col, OverlayTrigger, Popover } from "react-bootstrap";
+import { FaMapMarkedAlt } from "react-icons/fa";
 
 function ChoizaListItem(props) {
   const choizaRoad = props.choizaRoad;
@@ -15,16 +16,24 @@ function ChoizaListItem(props) {
         <Card.Body>
           <OverlayTrigger
             trigger="click"
-            key="bottom"
-            placement="bottom"
+            key="right"
+            placement="right"
             overlay={
-              <Popover id={`popover-positioned-bottom`}>
-                <Popover.Title as="h3">최자로드 식당</Popover.Title>
+              <Popover id={`popover-positioned-right`}>
+                <Popover.Title as="h3">최자로드 식당 검색</Popover.Title>
                 <Popover.Content>예시 - 남영돈</Popover.Content>
               </Popover>
             }
           >
-            <div style={{ cursor: "pointer" }}>pop up trigger</div>
+            <div
+              style={{
+                cursor: "pointer",
+                marginBottom: "5px",
+                textAlign: "right"
+              }}
+            >
+              <FaMapMarkedAlt color="#4caf50" size="24" />
+            </div>
           </OverlayTrigger>
           <div
             onClick={() => clickChoizaRoad(choizaRoad.youtubeURL)}
