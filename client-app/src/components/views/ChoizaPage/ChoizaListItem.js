@@ -5,6 +5,7 @@ import { FaMapMarkedAlt } from "react-icons/fa";
 
 function ChoizaListItem(props) {
   const choizaRoad = props.choizaRoad;
+  const choizaRestaurants = choizaRoad.restaurants;
 
   const clickChoizaRoad = URL => {
     window.open(URL, "_blank");
@@ -21,7 +22,22 @@ function ChoizaListItem(props) {
             overlay={
               <Popover id={`popover-positioned-right`}>
                 <Popover.Title as="h3">최자로드 식당 검색</Popover.Title>
-                <Popover.Content>예시 - 남영돈</Popover.Content>
+                {choizaRestaurants ? (
+                  choizaRestaurants.split(",").map(restaurant => (
+                    <Popover.Content>
+                      <a
+                        href={`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=${restaurant}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ textDecoration: "none" }}
+                      >
+                        {restaurant}
+                      </a>
+                    </Popover.Content>
+                  ))
+                ) : (
+                  <Popover.Content>미등록</Popover.Content>
+                )}
               </Popover>
             }
           >

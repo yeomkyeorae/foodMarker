@@ -18,6 +18,10 @@ const choizaRoadSchema = mongoose.Schema({
   },
   ep: {
     type: Number
+  },
+  restaurants: {
+    type: String,
+    maxlength: 1000
   }
 });
 
