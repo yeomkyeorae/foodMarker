@@ -48,7 +48,7 @@ function ChoizaListItem(props) {
                 textAlign: "right"
               }}
             >
-              <FaMapMarkedAlt color="#4caf50" size="24" />
+              <FaMapMarkedAlt color="#999DA0" size="28" />
             </div>
           </OverlayTrigger>
           <div
