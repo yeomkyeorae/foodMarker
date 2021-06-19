@@ -17,10 +17,10 @@ function ChoizaListItem(props) {
         <Card.Body>
           <OverlayTrigger
             trigger="click"
-            key="right"
-            placement="right"
+            key="top"
+            placement="top"
             overlay={
-              <Popover id={`popover-positioned-right`}>
+              <Popover id={`popover-positioned-left`}>
                 <Popover.Title as="h3">최자로드 식당 검색</Popover.Title>
                 {choizaRestaurants ? (
                   choizaRestaurants.split(",").map(restaurant => (
@@ -44,8 +44,7 @@ function ChoizaListItem(props) {
             <div
               style={{
                 cursor: "pointer",
-                marginBottom: "5px",
-                textAlign: "right"
+                marginBottom: "5px"
               }}
             >
               <FaMapMarkedAlt color="#999DA0" size="28" />
