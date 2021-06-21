@@ -19,7 +19,7 @@ const Div = styled.div`
 `;
 
 const Span = styled.span`
-  color: black;
+  color: ${props => (props.color ? props.color : "black")};
   &:hover {
     color: #4caf50;
     text-decoration: none;
@@ -66,6 +66,14 @@ function NavbarComp(props) {
         </Link>
       </div>
       <div style={{ display: "inline-block" }}>
+        <Div>
+          <Link
+            to={{ pathname: "/current-location", state: userId }}
+            style={{ textDecoration: "none" }}
+          >
+            <Span color={"#ff6600"}>현재 주변 맛집</Span>
+          </Link>
+        </Div>
         <Div>
           <Link
             to={{ pathname: "/marker", state: userId }}
