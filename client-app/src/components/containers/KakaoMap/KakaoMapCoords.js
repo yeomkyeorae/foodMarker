@@ -7,6 +7,9 @@ function KakaoMapCoords(props) {
   const { latitude, longitude, mapLevel } = props;
   const [dong, setDong] = useState();
 
+  const userId = window.sessionStorage.getItem("userId");
+  const username = window.sessionStorage.getItem("username");
+
   useEffect(() => {
     kakao.maps.load(async () => {
       let container = document.getElementById("map");
@@ -82,6 +85,11 @@ function KakaoMapCoords(props) {
                 "</div>"
             );
             infowindow.open(map, marker);
+            const markerElement = document.getElementsByClassName("marker");
+
+            markerElement[0].addEventListener("click", () => {
+              console.log("place: ", place);
+            });
           });
         }
       }
