@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
+import { registerWishList } from "../../../_actions/wishList_action";
+import { useDispatch } from "react-redux";
 
 const { kakao } = window;
 
 function KakaoMapCoords(props) {
   const { latitude, longitude, mapLevel } = props;
   const [dong, setDong] = useState();
+
+  const dispatch = useDispatch();
 
   const userId = window.sessionStorage.getItem("userId");
   const username = window.sessionStorage.getItem("username");
@@ -21,7 +25,10 @@ function KakaoMapCoords(props) {
       const zoomControl = new kakao.maps.ZoomControl();
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-      let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+      let infowindow = new kakao.maps.InfoWindow({
+        zIndex: 1,
+        removable: true
+      });
       let geocoder = new kakao.maps.services.Geocoder();
 
       searchDetailAddrFromCoords(longitude, latitude, displayCenterInfo);
@@ -88,13 +95,22 @@ function KakaoMapCoords(props) {
             const markerElement = document.getElementsByClassName("marker");
 
             markerElement[0].addEventListener("click", () => {
-              console.log("place: ", place);
+              const body = {
+                user: userId,
+                username: username,
+                name: place.place_name,
+                address: place.address_name,
+                created: new Date().toLocaleString()
+              };
+              dispatch(registerWishList(body)).then(response => {
+                alert("위시 맛집에 등록되었습니다");
+              });
             });
           });
         }
       }
     });
-  }, [latitude, longitude, mapLevel, dong]);
+  }, [latitude, longitude, mapLevel, dong, dispatch, userId, username]);
 
   return (
     <div
