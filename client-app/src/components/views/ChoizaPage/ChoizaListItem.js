@@ -24,7 +24,7 @@ function ChoizaListItem(props) {
                 <Popover.Title as="h3">최자로드 식당 검색</Popover.Title>
                 {choizaRestaurants ? (
                   choizaRestaurants.split(",").map(restaurant => (
-                    <Popover.Content>
+                    <Popover.Content key={restaurant}>
                       <a
                         href={`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=${restaurant}`}
                         target="_blank"
