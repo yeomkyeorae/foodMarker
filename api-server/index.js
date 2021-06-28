@@ -40,12 +40,12 @@ mongoose
   })
   .catch(err => console.log(err));
 
-// try {
-// fs.readdirSync("uploads/");
-// } catch (error) {
-// console.log("uploads 폴더 생성");
-// fs.mkdirSync("uploads/");
-// }
+try {
+  fs.readdirSync("uploads/");
+} catch (error) {
+  console.log("uploads 폴더 생성");
+  fs.mkdirSync("uploads/");
+}
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -315,11 +315,19 @@ app.put("/api/restaurant", (req, res) => {
 // delete my restaurant
 app.delete("/api/restaurant", (req, res) => {
   Restaurant.findOneAndRemove({ _id: req.query._id }, (err, restaurantInfo) => {
+    res;
+
     if (err)
       return res.json({
         success: false,
         err
       });
+
+    const filePath = "uploads/" + restaurantInfo.imgURL.split("food/")[1];
+    if (filePath) {
+      fs.unlinkSync(filePath);
+    }
+
     return res.status(200).json({
       success: true
     });
