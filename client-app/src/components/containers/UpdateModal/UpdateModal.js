@@ -8,6 +8,25 @@ import {
   updateRestaurant,
   registerRestaurant
 } from "../../../_actions/restaurant_action";
+import styled from "styled-components";
+
+const Input = styled.input`
+  margin: 3px 0;
+  padding: 15px 10px;
+  width: 30%;
+  outline: none;
+  border: 1px solid #bbb;
+  border-radius: 20px;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -ms-transition: 0.2s ease all;
+  -o-transition: 0.2s ease all;
+  transition: 0.2s ease all;
+`;
 
 function UpdateModal(props) {
   const {
@@ -23,19 +42,37 @@ function UpdateModal(props) {
     wishListAddress,
     wishListName,
     wishListId,
+    menus,
     type
   } = props;
+
+  const tmpMenuItems = menus ? JSON.parse(menus) : [];
 
   const [ImageData, setImageData] = useState("");
   const [VisitedDate, setVisitedDate] = useState(restaurantDate);
   const [NewRating, setNewRating] = useState(Rating);
   const [isConverting, setIsConverting] = useState(false);
   const [EatingTime, setEatingTime] = useState(eatingTime);
+  const [newMenuItem, setNewMenuItem] = useState("");
+  const [menuItems, setMenuItems] = useState(menus ? tmpMenuItems : []);
 
   const dispatch = useDispatch();
 
   const onVisitedDateHandler = e => {
     setVisitedDate(String(e.currentTarget.value));
+  };
+
+  const onChangeNewMenuItem = e => {
+    setNewMenuItem(e.currentTarget.value);
+  };
+
+  const onMenuAddHandler = () => {
+    setMenuItems(menuItems.concat(newMenuItem));
+    setNewMenuItem("");
+  };
+
+  const onMenuDeleteHandler = index => {
+    setMenuItems(menuItems.filter((menu, menuIx) => menuIx !== index));
   };
 
   const onImageDataHandler = e => {
@@ -82,7 +119,8 @@ function UpdateModal(props) {
       date: VisitedDate,
       imgURL: ImageData,
       rating: NewRating,
-      eatingTime: EatingTime
+      eatingTime: EatingTime,
+      menus: JSON.stringify(menuItems)
     };
 
     dispatch(updateRestaurant(body)).then(response => {
@@ -106,7 +144,8 @@ function UpdateModal(props) {
       date: VisitedDate,
       imgURL: ImageData,
       rating: NewRating,
-      eatingTime: EatingTime
+      eatingTime: EatingTime,
+      menus: JSON.stringify(menuItems)
     };
 
     dispatch(registerRestaurant(body)).then(response => {
@@ -158,6 +197,41 @@ function UpdateModal(props) {
             activeColor="#ffd700"
           />
         </div>
+        <div>
+          <div style={{ margin: "5px" }}>
+            <Input
+              type="text"
+              value={newMenuItem}
+              placeholder="메뉴 입력"
+              onChange={e => onChangeNewMenuItem(e)}
+              style={{ width: "30%" }}
+            />
+            <Button
+              variant="success"
+              style={{ margin: "10px", display: "inline-block" }}
+              onClick={() => onMenuAddHandler()}
+            >
+              +
+            </Button>
+          </div>
+        </div>
+        {menuItems.length
+          ? menuItems.map((menu, index) => (
+              <div
+                key={index}
+                style={{ marginTop: "2px", marginBottom: "10px" }}
+              >
+                {menu}
+                <Button
+                  variant="danger"
+                  style={{ marginLeft: "10px" }}
+                  onClick={() => onMenuDeleteHandler(index)}
+                >
+                  X
+                </Button>
+              </div>
+            ))
+          : null}
         <input
           type="date"
           value={VisitedDate}
