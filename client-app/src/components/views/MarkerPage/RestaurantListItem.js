@@ -121,17 +121,19 @@ function RestaurantListItem(props) {
           </Card.Body>
         </Card>
       </Col>
-      <UpdateModal
-        Toggle={Toggle}
-        setToggle={setToggle}
-        restaurantName={restaurant.name}
-        restaurantId={restaurant._id}
-        restaurantDate={restaurant.date}
-        Rating={Rating}
-        eatingTime={restaurant.eatingTime}
-        menus={restaurant.menus}
-        type="RestaurantListItem"
-      />
+      {Toggle ? (
+        <UpdateModal
+          Toggle={Toggle}
+          setToggle={setToggle}
+          restaurantName={restaurant.name}
+          restaurantId={restaurant._id}
+          restaurantDate={restaurant.date}
+          Rating={Rating}
+          eatingTime={restaurant.eatingTime}
+          menus={restaurant.menus}
+          type="RestaurantListItem"
+        />
+      ) : null}
       <KakaoMapModal
         Toggle={mapToggle}
         setToggle={setMapToggle}
