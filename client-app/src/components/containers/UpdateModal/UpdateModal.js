@@ -120,22 +120,42 @@ function UpdateModal(props) {
   const changeRestaurant = e => {
     e.preventDefault();
 
-    let body;
-    if (ImageName === "") {
-      body = ImageData;
-    } else {
-      body = {
-        img: ImageData,
-        imgName: ImageName
-      };
-    }
-    dispatch(registerImg(body)).then(response => {
-      const imgURL = response.payload.path;
+    if (ImageData !== "") {
+      let body;
+      if (ImageName === "") {
+        body = ImageData;
+      } else {
+        body = {
+          img: ImageData,
+          imgName: ImageName
+        };
+      }
+      dispatch(registerImg(body)).then(response => {
+        const imgURL = response.payload.path;
 
+        const body = {
+          restaurantId: restaurantId,
+          date: VisitedDate,
+          imgURL: imgURL,
+          rating: NewRating,
+          eatingTime: EatingTime,
+          menus: JSON.stringify(menuItems)
+        };
+
+        dispatch(updateRestaurant(body)).then(response => {
+          if (response.payload.success) {
+            alert("수정되었습니다.");
+            setToggle(!Toggle);
+          } else {
+            console.log(response);
+            alert("error");
+          }
+        });
+      });
+    } else {
       const body = {
         restaurantId: restaurantId,
         date: VisitedDate,
-        imgURL: imgURL,
         rating: NewRating,
         eatingTime: EatingTime,
         menus: JSON.stringify(menuItems)
@@ -145,12 +165,14 @@ function UpdateModal(props) {
         if (response.payload.success) {
           alert("수정되었습니다.");
           setToggle(!Toggle);
+          setImageData("");
+          setImageName("");
         } else {
           console.log(response);
           alert("error");
         }
       });
-    });
+    }
   };
 
   const moveToMain = e => {
