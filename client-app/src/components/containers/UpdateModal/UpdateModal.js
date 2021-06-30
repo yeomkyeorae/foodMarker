@@ -6,7 +6,8 @@ import ReactStars from "react-rating-stars-component";
 import { useDispatch } from "react-redux";
 import {
   updateRestaurant,
-  registerRestaurant
+  registerRestaurant,
+  registerImg
 } from "../../../_actions/restaurant_action";
 import styled from "styled-components";
 
@@ -49,6 +50,7 @@ function UpdateModal(props) {
   const tmpMenuItems = menus ? JSON.parse(menus) : [];
 
   const [ImageData, setImageData] = useState("");
+  const [ImageName, setImageName] = useState("");
   const [VisitedDate, setVisitedDate] = useState(restaurantDate);
   const [NewRating, setNewRating] = useState(Rating);
   const [isConverting, setIsConverting] = useState(false);
@@ -87,13 +89,18 @@ function UpdateModal(props) {
         const image = reader.result;
         fetch(image)
           .then(res => res.blob())
-          .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.2 }))
+          .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.7 }))
           .then(conversionResult => {
-            // conversionResult is a BLOB
+            // heic type 제거한 imageName
+            const splited = file.name.split(".");
+            const removedType = splited.slice(0, splited.length - 1);
+            const newImageName = removedType.join("");
+
             const fileReader = new FileReader();
             fileReader.readAsDataURL(conversionResult);
             fileReader.onload = function(e) {
               setImageData(e.target.result);
+              setImageName(newImageName);
               setIsConverting(false);
             };
           })
@@ -103,34 +110,46 @@ function UpdateModal(props) {
       };
       reader.readAsDataURL(file);
     } else {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = function(e) {
-        setImageData(e.target.result);
-      };
+      const formData = new FormData();
+      formData.append("restaurant_img", file);
+      setImageData(formData);
+      setImageName("");
     }
   };
 
   const changeRestaurant = e => {
     e.preventDefault();
 
-    const body = {
-      restaurantId: restaurantId,
-      date: VisitedDate,
-      imgURL: ImageData,
-      rating: NewRating,
-      eatingTime: EatingTime,
-      menus: JSON.stringify(menuItems)
-    };
+    let body;
+    if (ImageName === "") {
+      body = ImageData;
+    } else {
+      body = {
+        img: ImageData,
+        imgName: ImageName
+      };
+    }
+    dispatch(registerImg(body)).then(response => {
+      const imgURL = response.payload.path;
 
-    dispatch(updateRestaurant(body)).then(response => {
-      if (response.payload.success) {
-        alert("수정되었습니다.");
-        setToggle(!Toggle);
-      } else {
-        console.log(response);
-        alert("error");
-      }
+      const body = {
+        restaurantId: restaurantId,
+        date: VisitedDate,
+        imgURL: imgURL,
+        rating: NewRating,
+        eatingTime: EatingTime,
+        menus: JSON.stringify(menuItems)
+      };
+
+      dispatch(updateRestaurant(body)).then(response => {
+        if (response.payload.success) {
+          alert("수정되었습니다.");
+          setToggle(!Toggle);
+        } else {
+          console.log(response);
+          alert("error");
+        }
+      });
     });
   };
 
