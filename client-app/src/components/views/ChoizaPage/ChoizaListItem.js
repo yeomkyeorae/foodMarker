@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { Card, Col, OverlayTrigger, Popover } from "react-bootstrap";
-import { FaMapMarkedAlt } from "react-icons/fa";
+import { FaMapMarkedAlt, FaPlus } from "react-icons/fa";
 
 function ChoizaListItem(props) {
   const choizaRoad = props.choizaRoad;
@@ -15,41 +15,75 @@ function ChoizaListItem(props) {
     <Col md={3}>
       <Card style={{ width: "100%", height: "100%" }}>
         <Card.Body>
-          <OverlayTrigger
-            trigger="click"
-            key="top"
-            placement="top"
-            overlay={
-              <Popover id={`popover-positioned-left`}>
-                <Popover.Title as="h3">최자로드 식당 검색</Popover.Title>
-                {choizaRestaurants ? (
-                  choizaRestaurants.split(",").map(restaurant => (
-                    <Popover.Content key={restaurant}>
-                      <a
-                        href={`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=${restaurant}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ textDecoration: "none" }}
-                      >
-                        {restaurant}
-                      </a>
-                    </Popover.Content>
-                  ))
-                ) : (
-                  <Popover.Content>미등록</Popover.Content>
-                )}
-              </Popover>
-            }
-          >
-            <div
-              style={{
-                cursor: "pointer",
-                marginBottom: "5px"
-              }}
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <OverlayTrigger
+              trigger="click"
+              key="top"
+              placement="top"
+              overlay={
+                <Popover id={`popover-positioned-left`}>
+                  <Popover.Title as="h3">최자로드 식당 검색</Popover.Title>
+                  {choizaRestaurants ? (
+                    choizaRestaurants.split(",").map(restaurant => (
+                      <Popover.Content key={restaurant}>
+                        <a
+                          href={`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=${restaurant}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ textDecoration: "none" }}
+                        >
+                          {restaurant}
+                        </a>
+                      </Popover.Content>
+                    ))
+                  ) : (
+                    <Popover.Content>미등록</Popover.Content>
+                  )}
+                </Popover>
+              }
             >
-              <FaMapMarkedAlt color="#999DA0" size="28" />
-            </div>
-          </OverlayTrigger>
+              <div
+                style={{
+                  cursor: "pointer",
+                  marginBottom: "5px",
+                  marginRight: "5px"
+                }}
+              >
+                <FaMapMarkedAlt color="#999DA0" size="28" />
+              </div>
+            </OverlayTrigger>
+            <OverlayTrigger
+              trigger="click"
+              key="top"
+              placement="top"
+              overlay={
+                <Popover id={`popover-positioned-left`}>
+                  <Popover.Title as="h3">최자로드 식당 방문 체크</Popover.Title>
+                  {choizaRestaurants ? (
+                    choizaRestaurants
+                      .split(",")
+                      .map(restaurant => (
+                        <Popover.Content key={restaurant}>
+                          {restaurant}
+                        </Popover.Content>
+                      ))
+                  ) : (
+                    <Popover.Content>미등록</Popover.Content>
+                  )}
+                </Popover>
+              }
+            >
+              <div
+                style={{
+                  cursor: "pointer",
+                  marginBottom: "5px",
+                  marginLeft: "5px"
+                }}
+              >
+                <FaPlus color="#999DA0" size="28" />
+              </div>
+            </OverlayTrigger>
+          </div>
           <div
             onClick={() => clickChoizaRoad(choizaRoad.youtubeURL)}
             style={{ cursor: "pointer" }}
