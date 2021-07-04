@@ -15,13 +15,12 @@ function ChoizaListItem(props) {
     window.open(URL, "_blank");
   };
 
-  const checkVisitedChoizaRoad = () => {
+  const checkVisitedChoizaRoad = restaurantName => {
     const userId = window.sessionStorage.getItem("userId");
-    const choizaRoadId = choizaRoad._id;
 
     const body = {
       userId,
-      choizaRoadId,
+      restaurantName,
       season
     };
     dispatch(registerVisitedChoizaRoad(body))
@@ -99,7 +98,7 @@ function ChoizaListItem(props) {
                               marginLeft: "5px",
                               margin: "0px"
                             }}
-                            onClick={() => checkVisitedChoizaRoad()}
+                            onClick={() => checkVisitedChoizaRoad(restaurant)}
                           >
                             <FaCheck color="green" size="20" />
                           </div>
