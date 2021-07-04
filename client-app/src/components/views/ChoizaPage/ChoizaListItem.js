@@ -7,8 +7,7 @@ import { registerVisitedChoizaRoad } from "../../../_actions/choizaRoad_action";
 
 function ChoizaListItem(props) {
   const dispatch = useDispatch();
-  const choizaRoad = props.choizaRoad;
-  const season = props.season;
+  const { choizaRoad, season, visitedChoizaRoads } = props;
   const choizaRestaurants = choizaRoad.restaurants;
 
   const clickChoizaRoad = URL => {
@@ -83,28 +82,38 @@ function ChoizaListItem(props) {
                 <Popover id={`popover-positioned-left`}>
                   <Popover.Title as="h3">최자로드 식당 방문 체크</Popover.Title>
                   {choizaRestaurants ? (
-                    choizaRestaurants.split(",").map(restaurant => (
-                      <Popover.Content key={restaurant}>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-around"
-                          }}
-                        >
-                          <div>{restaurant}</div>
+                    choizaRestaurants.split(",").map(restaurant => {
+                      const isVisited = visitedChoizaRoads.find(
+                        visitedChoizaRoad =>
+                          visitedChoizaRoad.restaurantName === restaurant
+                      );
+
+                      return (
+                        <Popover.Content key={restaurant}>
                           <div
                             style={{
-                              cursor: "pointer",
-                              marginLeft: "5px",
-                              margin: "0px"
+                              display: "flex",
+                              justifyContent: "space-around"
                             }}
-                            onClick={() => checkVisitedChoizaRoad(restaurant)}
                           >
-                            <FaCheck color="green" size="20" />
+                            <div>{restaurant}</div>
+                            <div
+                              style={{
+                                cursor: "pointer",
+                                marginLeft: "5px",
+                                margin: "0px"
+                              }}
+                              onClick={() => checkVisitedChoizaRoad(restaurant)}
+                            >
+                              <FaCheck
+                                color={isVisited ? "green" : "gray"}
+                                size="20"
+                              />
+                            </div>
                           </div>
-                        </div>
-                      </Popover.Content>
-                    ))
+                        </Popover.Content>
+                      );
+                    })
                   ) : (
                     <Popover.Content>미등록</Popover.Content>
                   )}
