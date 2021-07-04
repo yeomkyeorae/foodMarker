@@ -419,7 +419,7 @@ app.post("/api/choizaRoads", (req, res) => {
 // get visitedChoizaRoad
 app.get("/api/visitedChoizaRoads", (req, res) => {
   const { userId, season } = req.query;
-  console.log(userId, season);
+
   const body = { userId, season: Number(season) };
 
   const visitedChoizaRoads = VisitedChoizaRoad.find(body);
@@ -427,6 +427,21 @@ app.get("/api/visitedChoizaRoads", (req, res) => {
   visitedChoizaRoads.exec((err, visitedChoizaRoads) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).json({ visitedChoizaRoads });
+  });
+});
+
+// post visitiedChoizaRoad
+app.post("/api/visitedChoizaRoads", (req, res) => {
+  const visitiedChoizaRoad = VisitedChoizaRoad(req.body);
+  visitiedChoizaRoad.save((err, info) => {
+    if (err)
+      return res.json({
+        success: false,
+        err
+      });
+    return res.status(200).json({
+      success: true
+    });
   });
 });
 

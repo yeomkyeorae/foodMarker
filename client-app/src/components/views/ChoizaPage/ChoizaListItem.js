@@ -1,14 +1,36 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Card, Col, OverlayTrigger, Popover } from "react-bootstrap";
 import { FaMapMarkedAlt, FaPlus, FaCheck } from "react-icons/fa";
+import { registerVisitedChoizaRoad } from "../../../_actions/choizaRoad_action";
 
 function ChoizaListItem(props) {
+  const dispatch = useDispatch();
   const choizaRoad = props.choizaRoad;
+  const season = props.season;
   const choizaRestaurants = choizaRoad.restaurants;
 
   const clickChoizaRoad = URL => {
     window.open(URL, "_blank");
+  };
+
+  const checkVisitedChoizaRoad = () => {
+    const userId = window.sessionStorage.getItem("userId");
+    const choizaRoadId = choizaRoad._id;
+
+    const body = {
+      userId,
+      choizaRoadId,
+      season
+    };
+    dispatch(registerVisitedChoizaRoad(body))
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   return (
@@ -77,6 +99,7 @@ function ChoizaListItem(props) {
                               marginLeft: "5px",
                               margin: "0px"
                             }}
+                            onClick={() => checkVisitedChoizaRoad()}
                           >
                             <FaCheck color="green" size="20" />
                           </div>

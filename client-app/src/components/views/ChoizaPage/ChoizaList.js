@@ -49,6 +49,7 @@ function ChoizaList(props) {
             <ChoizaListItem
               key={choizaRoad._id}
               choizaRoad={choizaRoad}
+              season={season}
             ></ChoizaListItem>
           ))}
         </Row>
