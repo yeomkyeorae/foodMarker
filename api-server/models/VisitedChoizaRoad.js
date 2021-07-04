@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
+
+const { Schema } = mongoose;
 const {
   Types: { ObjectId }
 } = Schema;
 
 const visitedChoizaRoadSchema = mongoose.Schema({
-  user: {
+  userId: {
     type: ObjectId,
     required: true,
     ref: "User"

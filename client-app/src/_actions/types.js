@@ -18,6 +18,7 @@ export const REGISTER_WISHLIST = "register_wishList";
 export const DELETE_WISHLIST = "delete_wishList";
 
 export const READ_CHOIZAROAD = "read_choizaRoad";
+export const READ_VISITED_CHOIZAROAD = "read_visited_choizaRoad";
 export const REGISTER_CHOIZAROAD = "register_choizaRoad";
 
 export const REGISTER_IMG = "register_img";

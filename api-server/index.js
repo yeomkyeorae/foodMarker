@@ -6,6 +6,7 @@ const { User } = require("./models/User");
 const { Restaurant } = require("./models/Restaurant");
 const { WishList } = require("./models/WishList");
 const { ChoizaRoad } = require("./models/ChoizaRoad");
+const { VisitedChoizaRoad } = require("./models/VisitedChoizaRoad");
 const { auth } = require("./middleware/auth");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -412,6 +413,20 @@ app.post("/api/choizaRoads", (req, res) => {
     return res.status(200).json({
       success: true
     });
+  });
+});
+
+// get visitedChoizaRoad
+app.get("/api/visitedChoizaRoads", (req, res) => {
+  const { userId, season } = req.query;
+  console.log(userId, season);
+  const body = { userId, season: Number(season) };
+
+  const visitedChoizaRoads = VisitedChoizaRoad.find(body);
+
+  visitedChoizaRoads.exec((err, visitedChoizaRoads) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({ visitedChoizaRoads });
   });
 });
 
