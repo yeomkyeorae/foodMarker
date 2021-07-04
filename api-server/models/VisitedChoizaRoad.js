@@ -11,10 +11,9 @@ const visitedChoizaRoadSchema = mongoose.Schema({
     required: true,
     ref: "User"
   },
-  choizaRoadId: {
-    type: ObjectId,
-    required: true,
-    ref: "ChoizaRoad"
+  restaurantName: {
+    type: String,
+    maxlength: 1000
   },
   season: {
     type: Number
