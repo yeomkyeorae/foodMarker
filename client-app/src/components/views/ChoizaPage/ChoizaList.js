@@ -50,6 +50,7 @@ function ChoizaList(props) {
               key={choizaRoad._id}
               choizaRoad={choizaRoad}
               season={season}
+              visitedChoizaRoads={visitedChoizaRoads}
             ></ChoizaListItem>
           ))}
         </Row>

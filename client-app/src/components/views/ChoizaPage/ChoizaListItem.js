@@ -1,34 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Card, Col, OverlayTrigger, Popover } from "react-bootstrap";
 import { FaMapMarkedAlt, FaPlus, FaCheck } from "react-icons/fa";
 import { registerVisitedChoizaRoad } from "../../../_actions/choizaRoad_action";
+import "./ChoizaListItem.css";
 
 function ChoizaListItem(props) {
   const dispatch = useDispatch();
   const { choizaRoad, season, visitedChoizaRoads } = props;
   const choizaRestaurants = choizaRoad.restaurants;
 
+  const [visitedList, setVisitedList] = useState([]);
+
+  useEffect(() => {
+    const firstVisitedList = choizaRestaurants.split(",").map(restaurant => {
+      const isVisited = visitedChoizaRoads.find(
+        visitedChoizaRoad => visitedChoizaRoad.restaurantName === restaurant
+      );
+      return isVisited ? true : false;
+    });
+
+    setVisitedList(firstVisitedList);
+  }, [choizaRestaurants, visitedChoizaRoads]);
+
   const clickChoizaRoad = URL => {
     window.open(URL, "_blank");
   };
 
-  const checkVisitedChoizaRoad = restaurantName => {
-    const userId = window.sessionStorage.getItem("userId");
+  const checkVisitedChoizaRoad = (restaurantName, index) => {
+    const newVisitedList = visitedList.map((visited, ix) => {
+      if (ix === index) {
+        return !visited;
+      }
+      return visited;
+    });
 
-    const body = {
-      userId,
-      restaurantName,
-      season
-    };
-    dispatch(registerVisitedChoizaRoad(body))
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    setVisitedList(newVisitedList);
+
+    // 체크돼 있으면 방문 삭제, 안돼 있으면 방문 체크
+    // const userId = window.sessionStorage.getItem("userId");
+
+    // const body = {
+    //   userId,
+    //   restaurantName,
+    //   season
+    // };
+    // dispatch(registerVisitedChoizaRoad(body))
+    //   .then(response => {
+    //     console.log(response);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   };
 
   return (
@@ -80,13 +104,12 @@ function ChoizaListItem(props) {
               placement="top"
               overlay={
                 <Popover id={`popover-positioned-left`}>
-                  <Popover.Title as="h3">최자로드 식당 방문 체크</Popover.Title>
+                  <Popover.Title as="h3" className="noselect">
+                    최자로드 식당 방문 체크
+                  </Popover.Title>
                   {choizaRestaurants ? (
-                    choizaRestaurants.split(",").map(restaurant => {
-                      const isVisited = visitedChoizaRoads.find(
-                        visitedChoizaRoad =>
-                          visitedChoizaRoad.restaurantName === restaurant
-                      );
+                    choizaRestaurants.split(",").map((restaurant, ix) => {
+                      const isVisited = visitedList[ix];
 
                       return (
                         <Popover.Content key={restaurant}>
@@ -96,14 +119,16 @@ function ChoizaListItem(props) {
                               justifyContent: "space-around"
                             }}
                           >
-                            <div>{restaurant}</div>
+                            <div className="noselect">{restaurant}</div>
                             <div
                               style={{
                                 cursor: "pointer",
                                 marginLeft: "5px",
                                 margin: "0px"
                               }}
-                              onClick={() => checkVisitedChoizaRoad(restaurant)}
+                              onClick={() =>
+                                checkVisitedChoizaRoad(restaurant, ix)
+                              }
                             >
                               <FaCheck
                                 color={isVisited ? "green" : "gray"}
