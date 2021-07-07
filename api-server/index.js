@@ -440,7 +440,8 @@ app.post("/api/visitedChoizaRoads", (req, res) => {
         err
       });
     return res.status(200).json({
-      success: true
+      success: true,
+      info
     });
   });
 });
