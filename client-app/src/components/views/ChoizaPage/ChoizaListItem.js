@@ -15,10 +15,20 @@ function ChoizaListItem(props) {
 
   useEffect(() => {
     const firstVisitedList = choizaRestaurants.split(",").map(restaurant => {
-      const isVisited = visitedChoizaRoads.find(
+      const visitedItem = visitedChoizaRoads.find(
         visitedChoizaRoad => visitedChoizaRoad.restaurantName === restaurant
       );
-      return isVisited ? true : false;
+
+      if (visitedItem) {
+        return {
+          isVisited: true,
+          ...visitedItem
+        };
+      } else {
+        return {
+          isVisited: false
+        };
+      }
     });
 
     setVisitedList(firstVisitedList);
@@ -29,30 +39,48 @@ function ChoizaListItem(props) {
   };
 
   const checkVisitedChoizaRoad = (restaurantName, index) => {
-    const newVisitedList = visitedList.map((visited, ix) => {
+    let toBeEnrolled;
+    const newVisitedList = visitedList.map((visitedItem, ix) => {
       if (ix === index) {
-        return !visited;
+        toBeEnrolled = !visitedItem.isVisited;
+        return {
+          ...visitedItem,
+          isVisited: !visitedItem.isVisited
+        };
       }
-      return visited;
+      return visitedItem;
     });
 
     setVisitedList(newVisitedList);
 
     // 체크돼 있으면 방문 삭제, 안돼 있으면 방문 체크
-    // const userId = window.sessionStorage.getItem("userId");
+    if (toBeEnrolled) {
+      const userId = window.sessionStorage.getItem("userId");
 
-    // const body = {
-    //   userId,
-    //   restaurantName,
-    //   season
-    // };
-    // dispatch(registerVisitedChoizaRoad(body))
-    //   .then(response => {
-    //     console.log(response);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+      const body = {
+        userId,
+        restaurantName,
+        season
+      };
+      dispatch(registerVisitedChoizaRoad(body))
+        .then(response => {
+          const newVisitedList = visitedList.map((visitedItem, ix) => {
+            if (ix === index) {
+              return {
+                ...response.payload.info,
+                isVisited: true
+              };
+            }
+            return visitedItem;
+          });
+
+          setVisitedList(newVisitedList);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else {
+    }
   };
 
   return (
@@ -107,9 +135,9 @@ function ChoizaListItem(props) {
                   <Popover.Title as="h3" className="noselect">
                     최자로드 식당 방문 체크
                   </Popover.Title>
-                  {choizaRestaurants ? (
+                  {choizaRestaurants && visitedList.length > 0 ? (
                     choizaRestaurants.split(",").map((restaurant, ix) => {
-                      const isVisited = visitedList[ix];
+                      const isVisited = visitedList[ix].isVisited;
 
                       return (
                         <Popover.Content key={restaurant}>
