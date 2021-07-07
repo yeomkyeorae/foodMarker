@@ -1,5 +1,10 @@
 import axios from "axios";
-import { READ_CHOIZAROAD, REGISTER_CHOIZAROAD } from "./types";
+import {
+  READ_CHOIZAROAD,
+  READ_VISITED_CHOIZAROAD,
+  REGISTER_CHOIZAROAD,
+  REGISTER_VISITED_CHOIZAROAD
+} from "./types";
 
 export function readChoizaRoad(season) {
   const request = axios
@@ -16,6 +21,22 @@ export function readChoizaRoad(season) {
   };
 }
 
+export function readVisitedChoizaRoad(userId, season) {
+  const request = axios
+    .get("/api/visitedChoizaRoads", {
+      params: {
+        userId,
+        season
+      }
+    })
+    .then(response => response);
+
+  return {
+    type: READ_VISITED_CHOIZAROAD,
+    payload: request
+  };
+}
+
 export function registerCHoizaRoad(dataToSubmit) {
   const request = axios
     .post("/api/choizaRoads", dataToSubmit)
@@ -23,6 +44,17 @@ export function registerCHoizaRoad(dataToSubmit) {
 
   return {
     type: REGISTER_CHOIZAROAD,
+    payload: request
+  };
+}
+
+export function registerVisitedChoizaRoad(dataToSubmit) {
+  const request = axios
+    .post("/api/visitedChoizaRoads", dataToSubmit)
+    .then(response => response.data);
+
+  return {
+    type: REGISTER_VISITED_CHOIZAROAD,
     payload: request
   };
 }

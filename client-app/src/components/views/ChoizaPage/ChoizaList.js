@@ -4,7 +4,10 @@ import { withRouter } from "react-router-dom";
 import { Row } from "react-bootstrap";
 import styled from "styled-components";
 import ChoizaListItem from "./ChoizaListItem";
-import { readChoizaRoad } from "../../../_actions/choizaRoad_action";
+import {
+  readChoizaRoad,
+  readVisitedChoizaRoad
+} from "../../../_actions/choizaRoad_action";
 
 const ChoizaRoads = styled.div`
   width: 95%;
@@ -22,11 +25,18 @@ const List = styled.ol`
 function ChoizaList(props) {
   const dispatch = useDispatch();
   const [choizaRoads, setChoizaRoads] = useState([]);
+  const [visitedChoizaRoads, setVisitedChoizaRoads] = useState([]);
+
+  const userId = window.sessionStorage.getItem("userId");
   const season = props.season;
 
   useEffect(() => {
     dispatch(readChoizaRoad(season)).then(response => {
       setChoizaRoads(response.payload.data.choizaRoads);
+
+      dispatch(readVisitedChoizaRoad(userId, season)).then(response => {
+        setVisitedChoizaRoads(response.payload.data.visitedChoizaRoads);
+      });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [season]);
@@ -39,6 +49,8 @@ function ChoizaList(props) {
             <ChoizaListItem
               key={choizaRoad._id}
               choizaRoad={choizaRoad}
+              season={season}
+              visitedChoizaRoads={visitedChoizaRoads}
             ></ChoizaListItem>
           ))}
         </Row>

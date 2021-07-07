@@ -6,8 +6,28 @@ import ReactStars from "react-rating-stars-component";
 import { useDispatch } from "react-redux";
 import {
   updateRestaurant,
-  registerRestaurant
+  registerRestaurant,
+  registerImg
 } from "../../../_actions/restaurant_action";
+import styled from "styled-components";
+
+const Input = styled.input`
+  margin: 3px 0;
+  padding: 15px 10px;
+  width: 30%;
+  outline: none;
+  border: 1px solid #bbb;
+  border-radius: 20px;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -ms-transition: 0.2s ease all;
+  -o-transition: 0.2s ease all;
+  transition: 0.2s ease all;
+`;
 
 function UpdateModal(props) {
   const {
@@ -23,19 +43,38 @@ function UpdateModal(props) {
     wishListAddress,
     wishListName,
     wishListId,
+    menus,
     type
   } = props;
 
+  const tmpMenuItems = menus ? JSON.parse(menus) : [];
+
   const [ImageData, setImageData] = useState("");
+  const [ImageName, setImageName] = useState("");
   const [VisitedDate, setVisitedDate] = useState(restaurantDate);
   const [NewRating, setNewRating] = useState(Rating);
   const [isConverting, setIsConverting] = useState(false);
   const [EatingTime, setEatingTime] = useState(eatingTime);
+  const [newMenuItem, setNewMenuItem] = useState("");
+  const [menuItems, setMenuItems] = useState(menus ? tmpMenuItems : []);
 
   const dispatch = useDispatch();
 
   const onVisitedDateHandler = e => {
     setVisitedDate(String(e.currentTarget.value));
+  };
+
+  const onChangeNewMenuItem = e => {
+    setNewMenuItem(e.currentTarget.value);
+  };
+
+  const onMenuAddHandler = () => {
+    setMenuItems(menuItems.concat(newMenuItem));
+    setNewMenuItem("");
+  };
+
+  const onMenuDeleteHandler = index => {
+    setMenuItems(menuItems.filter((menu, menuIx) => menuIx !== index));
   };
 
   const onImageDataHandler = e => {
@@ -50,13 +89,18 @@ function UpdateModal(props) {
         const image = reader.result;
         fetch(image)
           .then(res => res.blob())
-          .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.2 }))
+          .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.7 }))
           .then(conversionResult => {
-            // conversionResult is a BLOB
+            // heic type 제거한 imageName
+            const splited = file.name.split(".");
+            const removedType = splited.slice(0, splited.length - 1);
+            const newImageName = removedType.join("");
+
             const fileReader = new FileReader();
             fileReader.readAsDataURL(conversionResult);
             fileReader.onload = function(e) {
               setImageData(e.target.result);
+              setImageName(newImageName);
               setIsConverting(false);
             };
           })
@@ -66,34 +110,69 @@ function UpdateModal(props) {
       };
       reader.readAsDataURL(file);
     } else {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = function(e) {
-        setImageData(e.target.result);
-      };
+      const formData = new FormData();
+      formData.append("restaurant_img", file);
+      setImageData(formData);
+      setImageName("");
     }
   };
 
   const changeRestaurant = e => {
     e.preventDefault();
 
-    const body = {
-      restaurantId: restaurantId,
-      date: VisitedDate,
-      imgURL: ImageData,
-      rating: NewRating,
-      eatingTime: EatingTime
-    };
-
-    dispatch(updateRestaurant(body)).then(response => {
-      if (response.payload.success) {
-        alert("수정되었습니다.");
-        setToggle(!Toggle);
+    if (ImageData !== "") {
+      let body;
+      if (ImageName === "") {
+        body = ImageData;
       } else {
-        console.log(response);
-        alert("error");
+        body = {
+          img: ImageData,
+          imgName: ImageName
+        };
       }
-    });
+      dispatch(registerImg(body)).then(response => {
+        const imgURL = response.payload.path;
+
+        const body = {
+          restaurantId: restaurantId,
+          date: VisitedDate,
+          imgURL: imgURL,
+          rating: NewRating,
+          eatingTime: EatingTime,
+          menus: JSON.stringify(menuItems)
+        };
+
+        dispatch(updateRestaurant(body)).then(response => {
+          if (response.payload.success) {
+            alert("수정되었습니다.");
+            setToggle(!Toggle);
+          } else {
+            console.log(response);
+            alert("error");
+          }
+        });
+      });
+    } else {
+      const body = {
+        restaurantId: restaurantId,
+        date: VisitedDate,
+        rating: NewRating,
+        eatingTime: EatingTime,
+        menus: JSON.stringify(menuItems)
+      };
+
+      dispatch(updateRestaurant(body)).then(response => {
+        if (response.payload.success) {
+          alert("수정되었습니다.");
+          setToggle(!Toggle);
+          setImageData("");
+          setImageName("");
+        } else {
+          console.log(response);
+          alert("error");
+        }
+      });
+    }
   };
 
   const moveToMain = e => {
@@ -106,7 +185,8 @@ function UpdateModal(props) {
       date: VisitedDate,
       imgURL: ImageData,
       rating: NewRating,
-      eatingTime: EatingTime
+      eatingTime: EatingTime,
+      menus: JSON.stringify(menuItems)
     };
 
     dispatch(registerRestaurant(body)).then(response => {
@@ -158,6 +238,41 @@ function UpdateModal(props) {
             activeColor="#ffd700"
           />
         </div>
+        <div>
+          <div style={{ margin: "5px" }}>
+            <Input
+              type="text"
+              value={newMenuItem}
+              placeholder="메뉴 입력"
+              onChange={e => onChangeNewMenuItem(e)}
+              style={{ width: "30%" }}
+            />
+            <Button
+              variant="success"
+              style={{ margin: "10px", display: "inline-block" }}
+              onClick={() => onMenuAddHandler()}
+            >
+              +
+            </Button>
+          </div>
+        </div>
+        {menuItems.length
+          ? menuItems.map((menu, index) => (
+              <div
+                key={index}
+                style={{ marginTop: "2px", marginBottom: "10px" }}
+              >
+                {menu}
+                <Button
+                  variant="danger"
+                  style={{ marginLeft: "10px" }}
+                  onClick={() => onMenuDeleteHandler(index)}
+                >
+                  X
+                </Button>
+              </div>
+            ))
+          : null}
         <input
           type="date"
           value={VisitedDate}

@@ -1,55 +1,189 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Card, Col, OverlayTrigger, Popover } from "react-bootstrap";
-import { FaMapMarkedAlt } from "react-icons/fa";
+import { FaMapMarkedAlt, FaPlus, FaCheck } from "react-icons/fa";
+import { registerVisitedChoizaRoad } from "../../../_actions/choizaRoad_action";
+import "./ChoizaListItem.css";
 
 function ChoizaListItem(props) {
-  const choizaRoad = props.choizaRoad;
+  const dispatch = useDispatch();
+  const { choizaRoad, season, visitedChoizaRoads } = props;
   const choizaRestaurants = choizaRoad.restaurants;
+
+  const [visitedList, setVisitedList] = useState([]);
+
+  useEffect(() => {
+    const firstVisitedList = choizaRestaurants.split(",").map(restaurant => {
+      const visitedItem = visitedChoizaRoads.find(
+        visitedChoizaRoad => visitedChoizaRoad.restaurantName === restaurant
+      );
+
+      if (visitedItem) {
+        return {
+          isVisited: true,
+          ...visitedItem
+        };
+      } else {
+        return {
+          isVisited: false
+        };
+      }
+    });
+
+    setVisitedList(firstVisitedList);
+  }, [choizaRestaurants, visitedChoizaRoads]);
 
   const clickChoizaRoad = URL => {
     window.open(URL, "_blank");
+  };
+
+  const checkVisitedChoizaRoad = (restaurantName, index) => {
+    let toBeEnrolled;
+    const newVisitedList = visitedList.map((visitedItem, ix) => {
+      if (ix === index) {
+        toBeEnrolled = !visitedItem.isVisited;
+        return {
+          ...visitedItem,
+          isVisited: !visitedItem.isVisited
+        };
+      }
+      return visitedItem;
+    });
+
+    setVisitedList(newVisitedList);
+
+    // 체크돼 있으면 방문 삭제, 안돼 있으면 방문 체크
+    if (toBeEnrolled) {
+      const userId = window.sessionStorage.getItem("userId");
+
+      const body = {
+        userId,
+        restaurantName,
+        season
+      };
+      dispatch(registerVisitedChoizaRoad(body))
+        .then(response => {
+          const newVisitedList = visitedList.map((visitedItem, ix) => {
+            if (ix === index) {
+              return {
+                ...response.payload.info,
+                isVisited: true
+              };
+            }
+            return visitedItem;
+          });
+
+          setVisitedList(newVisitedList);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else {
+    }
   };
 
   return (
     <Col md={3}>
       <Card style={{ width: "100%", height: "100%" }}>
         <Card.Body>
-          <OverlayTrigger
-            trigger="click"
-            key="top"
-            placement="top"
-            overlay={
-              <Popover id={`popover-positioned-left`}>
-                <Popover.Title as="h3">최자로드 식당 검색</Popover.Title>
-                {choizaRestaurants ? (
-                  choizaRestaurants.split(",").map(restaurant => (
-                    <Popover.Content>
-                      <a
-                        href={`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=${restaurant}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ textDecoration: "none" }}
-                      >
-                        {restaurant}
-                      </a>
-                    </Popover.Content>
-                  ))
-                ) : (
-                  <Popover.Content>미등록</Popover.Content>
-                )}
-              </Popover>
-            }
-          >
-            <div
-              style={{
-                cursor: "pointer",
-                marginBottom: "5px"
-              }}
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <OverlayTrigger
+              trigger="click"
+              key="top"
+              placement="top"
+              overlay={
+                <Popover id={`popover-positioned-left`}>
+                  <Popover.Title as="h3">최자로드 식당 검색</Popover.Title>
+                  {choizaRestaurants ? (
+                    choizaRestaurants.split(",").map(restaurant => (
+                      <Popover.Content key={restaurant}>
+                        <div style={{ textAlign: "center" }}>
+                          <a
+                            href={`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=${restaurant}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ textDecoration: "none" }}
+                          >
+                            {restaurant}
+                          </a>
+                        </div>
+                      </Popover.Content>
+                    ))
+                  ) : (
+                    <Popover.Content>미등록</Popover.Content>
+                  )}
+                </Popover>
+              }
             >
-              <FaMapMarkedAlt color="#999DA0" size="28" />
-            </div>
-          </OverlayTrigger>
+              <div
+                style={{
+                  cursor: "pointer",
+                  marginBottom: "5px",
+                  marginRight: "5px"
+                }}
+              >
+                <FaMapMarkedAlt color="#999DA0" size="28" />
+              </div>
+            </OverlayTrigger>
+            <OverlayTrigger
+              trigger="click"
+              key="top_wish"
+              placement="top"
+              overlay={
+                <Popover id={`popover-positioned-left`}>
+                  <Popover.Title as="h3" className="noselect">
+                    최자로드 식당 방문 체크
+                  </Popover.Title>
+                  {choizaRestaurants && visitedList.length > 0 ? (
+                    choizaRestaurants.split(",").map((restaurant, ix) => {
+                      const isVisited = visitedList[ix].isVisited;
+
+                      return (
+                        <Popover.Content key={restaurant}>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-around"
+                            }}
+                          >
+                            <div className="noselect">{restaurant}</div>
+                            <div
+                              style={{
+                                cursor: "pointer",
+                                marginLeft: "5px",
+                                margin: "0px"
+                              }}
+                              onClick={() =>
+                                checkVisitedChoizaRoad(restaurant, ix)
+                              }
+                            >
+                              <FaCheck
+                                color={isVisited ? "green" : "gray"}
+                                size="20"
+                              />
+                            </div>
+                          </div>
+                        </Popover.Content>
+                      );
+                    })
+                  ) : (
+                    <Popover.Content>미등록</Popover.Content>
+                  )}
+                </Popover>
+              }
+            >
+              <div
+                style={{
+                  cursor: "pointer",
+                  marginBottom: "5px",
+                  marginLeft: "5px"
+                }}
+              >
+                <FaPlus color="#999DA0" size="28" />
+              </div>
+            </OverlayTrigger>
+          </div>
           <div
             onClick={() => clickChoizaRoad(choizaRoad.youtubeURL)}
             style={{ cursor: "pointer" }}

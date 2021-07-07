@@ -6,6 +6,7 @@ const { User } = require("./models/User");
 const { Restaurant } = require("./models/Restaurant");
 const { WishList } = require("./models/WishList");
 const { ChoizaRoad } = require("./models/ChoizaRoad");
+const { VisitedChoizaRoad } = require("./models/VisitedChoizaRoad");
 const { auth } = require("./middleware/auth");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -40,12 +41,12 @@ mongoose
   })
   .catch(err => console.log(err));
 
-// try {
-// fs.readdirSync("uploads/");
-// } catch (error) {
-// console.log("uploads 폴더 생성");
-// fs.mkdirSync("uploads/");
-// }
+try {
+  fs.readdirSync("uploads/");
+} catch (error) {
+  console.log("uploads 폴더 생성");
+  fs.mkdirSync("uploads/");
+}
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -298,6 +299,7 @@ app.put("/api/restaurant", (req, res) => {
     }
     restaurant.rating = req.body.rating;
     restaurant.eatingTime = req.body.eatingTime;
+    restaurant.menus = req.body.menus;
 
     restaurant.save((err, restaurantInfo) => {
       if (err)
@@ -315,11 +317,19 @@ app.put("/api/restaurant", (req, res) => {
 // delete my restaurant
 app.delete("/api/restaurant", (req, res) => {
   Restaurant.findOneAndRemove({ _id: req.query._id }, (err, restaurantInfo) => {
+    res;
+
     if (err)
       return res.json({
         success: false,
         err
       });
+
+    const filePath = "uploads/" + restaurantInfo.imgURL.split("food/")[1];
+    if (filePath) {
+      fs.unlinkSync(filePath);
+    }
+
     return res.status(200).json({
       success: true
     });
@@ -402,6 +412,36 @@ app.post("/api/choizaRoads", (req, res) => {
       });
     return res.status(200).json({
       success: true
+    });
+  });
+});
+
+// get visitedChoizaRoad
+app.get("/api/visitedChoizaRoads", (req, res) => {
+  const { userId, season } = req.query;
+
+  const body = { userId, season: Number(season) };
+
+  const visitedChoizaRoads = VisitedChoizaRoad.find(body);
+
+  visitedChoizaRoads.exec((err, visitedChoizaRoads) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({ visitedChoizaRoads });
+  });
+});
+
+// post visitiedChoizaRoad
+app.post("/api/visitedChoizaRoads", (req, res) => {
+  const visitiedChoizaRoad = VisitedChoizaRoad(req.body);
+  visitiedChoizaRoad.save((err, info) => {
+    if (err)
+      return res.json({
+        success: false,
+        err
+      });
+    return res.status(200).json({
+      success: true,
+      info
     });
   });
 });
