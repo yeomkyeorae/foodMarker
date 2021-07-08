@@ -446,6 +446,20 @@ app.post("/api/visitedChoizaRoads", (req, res) => {
   });
 });
 
+// delete visitedChoizaRoad
+app.delete("/api/visitedChoizaRoads", (req, res) => {
+  VisitedChoizaRoad.findOneAndRemove({ _id: req.query._id }, (err, info) => {
+    if (err)
+      return res.json({
+        success: false,
+        err
+      });
+    return res.status(200).json({
+      success: true
+    });
+  });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${[port]}`);
 });
