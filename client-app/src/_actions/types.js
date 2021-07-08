@@ -21,5 +21,6 @@ export const READ_CHOIZAROAD = "read_choizaRoad";
 export const READ_VISITED_CHOIZAROAD = "read_visited_choizaRoad";
 export const REGISTER_CHOIZAROAD = "register_choizaRoad";
 export const REGISTER_VISITED_CHOIZAROAD = "register_visited_choizaRoad";
+export const DELETE_VISITED_CHOIZAROAD = "delete_visited_choizaRoad";
 
 export const REGISTER_IMG = "register_img";
