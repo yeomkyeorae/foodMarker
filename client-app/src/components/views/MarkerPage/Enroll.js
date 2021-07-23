@@ -35,7 +35,7 @@ function Enroll(props) {
   const [Address, setAddress] = useState("");
   const [VisitedDate, setVisitedDate] = useState("");
   const [ImageData, setImageData] = useState("");
-  const [ImageName, setImageName] = useState("");
+  const [ImageName, setImageName] = useState([]);
   const [isConverting, setIsConverting] = useState(false);
   const [eatingTime, setEatingTime] = useState(1);
   const [newMenuItem, setNewMenuItem] = useState("");
@@ -69,41 +69,56 @@ function Enroll(props) {
   const onImageDataHandler = e => {
     e.preventDefault();
 
-    let file = e.target.files[0];
-    if (file.type === "image/heic") {
-      setIsConverting(true);
-      const reader = new FileReader();
-
-      reader.onloadend = function() {
-        const image = reader.result;
-        fetch(image)
-          .then(res => res.blob())
-          .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.7 }))
-          .then(conversionResult => {
-            // heic type 제거한 imageName
-            const splited = file.name.split(".");
-            const removedType = splited.slice(0, splited.length - 1);
-            const newImageName = removedType.join("");
-
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(conversionResult);
-            fileReader.onload = function(e) {
-              setImageData(e.target.result);
-              setImageName(newImageName);
-              setIsConverting(false);
-            };
-          })
-          .catch(err => {
-            console.log("err: ", err);
-          });
-      };
-      reader.readAsDataURL(file);
-    } else {
-      const formData = new FormData();
-      formData.append("restaurant_img", file);
-      setImageData(formData);
-      setImageName("");
+    if (Object.keys(e.target.files).length > 10) {
+      alert("이미지 파일은 10개를 초과할 수 없습니다");
+      return;
     }
+
+    setIsConverting(true);
+
+    const imageData = [];
+    const imageNames = [];
+    Object.keys(e.target.files).forEach(key => {
+      const file = e.target.files[key];
+      if (file.type === "image/heic") {
+        const reader = new FileReader();
+
+        reader.onloadend = function() {
+          const image = reader.result;
+          fetch(image)
+            .then(res => res.blob())
+            .then(blob =>
+              heic2any({ blob, toType: "image/jpeg", quality: 0.7 })
+            )
+            .then(conversionResult => {
+              // heic type 제거한 imageName
+              const splited = file.name.split(".");
+              const removedType = splited.slice(0, splited.length - 1);
+              const newImageName = removedType.join("");
+
+              const fileReader = new FileReader();
+              fileReader.readAsDataURL(conversionResult);
+              fileReader.onload = function(e) {
+                imageData.push(e.target.result);
+                imageNames.push(newImageName);
+              };
+            })
+            .catch(err => {
+              console.log("err: ", err);
+            });
+        };
+        reader.readAsDataURL(file);
+      } else {
+        const formData = new FormData();
+        formData.append("restaurant_img", file);
+        imageData.push(formData);
+        imageNames.push(null);
+      }
+    });
+
+    setIsConverting(false);
+    setImageData(imageData);
+    setImageName(imageNames);
   };
 
   const onChangeSearchNameHandler = e => {
@@ -131,15 +146,11 @@ function Enroll(props) {
     e.preventDefault();
 
     if (parentCompName === "MarkerPage") {
-      let body;
-      if (ImageName === "") {
-        body = ImageData;
-      } else {
-        body = {
-          img: ImageData,
-          imgName: ImageName
-        };
-      }
+      const body = {
+        img: ImageData,
+        imgName: ImageName
+      };
+
       dispatch(registerImg(body))
         .then(response => {
           const imgURL = response.payload.path;
@@ -432,6 +443,7 @@ function Enroll(props) {
                   type="file"
                   onChange={onImageDataHandler}
                   style={{ width: "60%" }}
+                  multiple
                 />
               </div>
             </div>
