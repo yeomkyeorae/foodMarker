@@ -34,12 +34,13 @@ function Enroll(props) {
   const [Name, setName] = useState("");
   const [Address, setAddress] = useState("");
   const [VisitedDate, setVisitedDate] = useState("");
-  const [ImageData, setImageData] = useState("");
+  const [ImageData, setImageData] = useState([]);
   const [ImageName, setImageName] = useState([]);
   const [isConverting, setIsConverting] = useState(false);
   const [eatingTime, setEatingTime] = useState(1);
   const [newMenuItem, setNewMenuItem] = useState("");
   const [menuItems, setMenuItems] = useState([]);
+  const [preImages, setPreImages] = useState("");
 
   const userId = window.sessionStorage.getItem("userId");
   const username = window.sessionStorage.getItem("username");
@@ -69,22 +70,36 @@ function Enroll(props) {
   const onImageDataHandler = e => {
     e.preventDefault();
 
-    if (Object.keys(e.target.files).length > 10) {
+    const inputImageCnt = Object.keys(e.target.files).length;
+    if (inputImageCnt > 10) {
       alert("이미지 파일은 10개를 초과할 수 없습니다");
       return;
     }
 
+    let heicTotalCnt = 0;
+    Object.keys(e.target.files).forEach(key => {
+      if (e.target.files[key].type === "image/heic") {
+        heicTotalCnt += 1;
+      }
+    });
+
     setIsConverting(true);
 
+    const preImages = [];
     const imageData = [];
     const imageNames = [];
-    Object.keys(e.target.files).forEach(key => {
+
+    let heicCnt = 0;
+    Object.keys(e.target.files).forEach((key, index) => {
       const file = e.target.files[key];
       if (file.type === "image/heic") {
+        heicCnt += 1;
         const reader = new FileReader();
 
         reader.onloadend = function() {
           const image = reader.result;
+          setPreImages(preImages.concat([image]));
+
           fetch(image)
             .then(res => res.blob())
             .then(blob =>
@@ -97,11 +112,19 @@ function Enroll(props) {
               const newImageName = removedType.join("");
 
               const fileReader = new FileReader();
-              fileReader.readAsDataURL(conversionResult);
               fileReader.onload = function(e) {
-                imageData.push(e.target.result);
-                imageNames.push(newImageName);
+                setPreImages(preImages.concat([e.target.result]));
+
+                setImageData(imageData.concat([e.target.result]));
+                setImageName(imageNames.concat([newImageName]));
+
+                if (heicCnt === heicTotalCnt) {
+                  setIsConverting(false);
+                }
+                // imageData.push(e.target.result);
+                // imageNames.push(newImageName);
               };
+              fileReader.readAsDataURL(conversionResult);
             })
             .catch(err => {
               console.log("err: ", err);
@@ -111,14 +134,31 @@ function Enroll(props) {
       } else {
         const formData = new FormData();
         formData.append("restaurant_img", file);
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          preImages.push(reader.result);
+          setPreImages(preImages.concat([reader.result]));
+
+          if (heicTotalCnt === 0) {
+            setIsConverting(false);
+          }
+        };
+        reader.readAsDataURL(file);
+
+        setImageData(imageData.concat([formData]));
+        setImageName(imageNames.concat([null]));
+
         imageData.push(formData);
         imageNames.push(null);
       }
     });
 
-    setIsConverting(false);
-    setImageData(imageData);
-    setImageName(imageNames);
+    // TODO. 위에서 비동기 처리 떄문에 이미지 처리 전에 false로 처리됨
+    // setIsConverting(false);
+
+    // setImageData(imageData);
+    // setImageName(imageNames);
   };
 
   const onChangeSearchNameHandler = e => {
@@ -151,45 +191,47 @@ function Enroll(props) {
         imgName: ImageName
       };
 
-      dispatch(registerImg(body))
-        .then(response => {
-          const imgURL = response.payload.path;
+      console.log(body);
 
-          const body = {
-            visitor: userId,
-            username: username,
-            name: Name,
-            address: Address,
-            date: VisitedDate,
-            imgURL: imgURL,
-            rating: Rating,
-            eatingTime: eatingTime,
-            menus: JSON.stringify(menuItems),
-            created: new Date().toLocaleString()
-          };
+      // dispatch(registerImg(body))
+      //   .then(response => {
+      //     const imgURL = response.payload.path;
 
-          return dispatch(registerRestaurant(body));
-        })
-        .then(response => {
-          if (response.payload.success) {
-            setName("");
-            setAddress("");
-            setVisitedDate("");
-            setImageData("");
-            setImageName("");
-            setRating(0);
-            setEatingTime(1);
-            setMenuItems([]);
-            props.setToggle(true);
-            props.setMenu("식당 등록");
-            props.history.push("/marker", userId);
-          } else {
-            alert("error");
-          }
-        })
-        .catch(err => {
-          console.log("registerRestaurant err: ", err);
-        });
+      //     const body = {
+      //       visitor: userId,
+      //       username: username,
+      //       name: Name,
+      //       address: Address,
+      //       date: VisitedDate,
+      //       imgURL: imgURL,
+      //       rating: Rating,
+      //       eatingTime: eatingTime,
+      //       menus: JSON.stringify(menuItems),
+      //       created: new Date().toLocaleString()
+      //     };
+
+      //     return dispatch(registerRestaurant(body));
+      //   })
+      //   .then(response => {
+      //     if (response.payload.success) {
+      //       setName("");
+      //       setAddress("");
+      //       setVisitedDate("");
+      //       setImageData("");
+      //       setImageName("");
+      //       setRating(0);
+      //       setEatingTime(1);
+      //       setMenuItems([]);
+      //       props.setToggle(true);
+      //       props.setMenu("식당 등록");
+      //       props.history.push("/marker", userId);
+      //     } else {
+      //       alert("error");
+      //     }
+      //   })
+      //   .catch(err => {
+      //     console.log("registerRestaurant err: ", err);
+      //   });
     } else if (parentCompName === "WishPage") {
       const body = {
         user: userId,
@@ -445,6 +487,22 @@ function Enroll(props) {
                   style={{ width: "60%" }}
                   multiple
                 />
+              </div>
+              <div style={{ marginTop: "10px" }}>
+                {preImages.length > 0
+                  ? preImages.map(preImage => {
+                      return (
+                        <div style={{ display: "inline-block", margin: "5px" }}>
+                          <img
+                            src={preImage}
+                            alt={"변환중 또는 인식 불가"}
+                            width="100px"
+                            height="100px"
+                          />
+                        </div>
+                      );
+                    })
+                  : null}
               </div>
             </div>
           </>
