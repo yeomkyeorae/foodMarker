@@ -3,7 +3,8 @@ import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import {
   registerRestaurant,
-  registerImg
+  registerJpegImg,
+  registerHeicImg
 } from "../../../_actions/restaurant_action";
 import { registerWishList } from "../../../_actions/wishList_action";
 import MapForEnroll from "../../containers/KakaoMap/MapForEnroll";
@@ -11,6 +12,16 @@ import { Button } from "react-bootstrap";
 import heic2any from "heic2any";
 import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
+
+const InputTitle = styled.div`
+  width: 30%;
+  margin: auto;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: left;
+  border-bottom: 1px solid black;
+  margin-bottom: 10px;
+`;
 
 const Input = styled.input`
   margin: 3px 0;
@@ -34,8 +45,14 @@ function Enroll(props) {
   const [Name, setName] = useState("");
   const [Address, setAddress] = useState("");
   const [VisitedDate, setVisitedDate] = useState("");
-  const [ImageData, setImageData] = useState([]);
-  const [ImageName, setImageName] = useState([]);
+
+  const [jpegImageData, setJpegImageData] = useState([]);
+  const [jpegCount, setJpegCount] = useState(0);
+
+  const [heicImageData, setHeicImageData] = useState([]);
+  const [heicImageName, setHeicImageName] = useState([]);
+  const [heicCount, setHeicCount] = useState(0);
+
   const [isConverting, setIsConverting] = useState(false);
   const [eatingTime, setEatingTime] = useState(1);
   const [newMenuItem, setNewMenuItem] = useState("");
@@ -70,6 +87,8 @@ function Enroll(props) {
   const onImageDataHandler = e => {
     e.preventDefault();
 
+    const formData = new FormData();
+
     const inputImageCnt = Object.keys(e.target.files).length;
     if (inputImageCnt > 10) {
       alert("이미지 파일은 10개를 초과할 수 없습니다");
@@ -89,9 +108,11 @@ function Enroll(props) {
     const imageData = [];
     const imageNames = [];
 
+    let jpegCnt = 0;
     let heicCnt = 0;
     Object.keys(e.target.files).forEach((key, index) => {
       const file = e.target.files[key];
+
       if (file.type === "image/heic") {
         heicCnt += 1;
         const reader = new FileReader();
@@ -115,14 +136,12 @@ function Enroll(props) {
               fileReader.onload = function(e) {
                 setPreImages(preImages.concat([e.target.result]));
 
-                setImageData(imageData.concat([e.target.result]));
-                setImageName(imageNames.concat([newImageName]));
+                setHeicImageData(imageData.concat([e.target.result]));
+                setHeicImageName(imageNames.concat([newImageName]));
 
                 if (heicCnt === heicTotalCnt) {
                   setIsConverting(false);
                 }
-                // imageData.push(e.target.result);
-                // imageNames.push(newImageName);
               };
               fileReader.readAsDataURL(conversionResult);
             })
@@ -132,9 +151,8 @@ function Enroll(props) {
         };
         reader.readAsDataURL(file);
       } else {
-        const formData = new FormData();
-        formData.append("restaurant_img", file);
-
+        jpegCnt += 1;
+        formData.append("restaurant_jpeg_img", file);
         const reader = new FileReader();
         reader.onload = () => {
           preImages.push(reader.result);
@@ -145,20 +163,11 @@ function Enroll(props) {
           }
         };
         reader.readAsDataURL(file);
-
-        setImageData(imageData.concat([formData]));
-        setImageName(imageNames.concat([null]));
-
-        imageData.push(formData);
-        imageNames.push(null);
       }
     });
-
-    // TODO. 위에서 비동기 처리 떄문에 이미지 처리 전에 false로 처리됨
-    // setIsConverting(false);
-
-    // setImageData(imageData);
-    // setImageName(imageNames);
+    setHeicCount(heicCnt);
+    setJpegCount(jpegCnt);
+    setJpegImageData(formData);
   };
 
   const onChangeSearchNameHandler = e => {
@@ -182,57 +191,66 @@ function Enroll(props) {
   };
 
   const dispatch = useDispatch();
-  const onSubmitHandler = e => {
+
+  const onSubmitHandler = async e => {
     e.preventDefault();
 
+    // 나의 맛집
     if (parentCompName === "MarkerPage") {
+      // jpeg 저장
+      let jpegPath = [];
+      if (jpegCount) {
+        const response = await dispatch(registerJpegImg(jpegImageData));
+        jpegPath = response.payload.fileNames;
+      }
+
+      // heic 저장
+      let heicPath = [];
+      if (heicCount) {
+        const heicBody = {
+          images: heicImageData,
+          imgNames: heicImageName
+        };
+        const response = await dispatch(registerHeicImg(heicBody));
+        heicPath = response.payload.fileNames;
+      }
+
+      const imagePath = jpegPath.concat(heicPath).join(",");
+
       const body = {
-        img: ImageData,
-        imgName: ImageName
+        visitor: userId,
+        username: username,
+        name: Name,
+        address: Address,
+        date: VisitedDate,
+        imgURL: imagePath,
+        rating: Rating,
+        eatingTime: eatingTime,
+        menus: JSON.stringify(menuItems),
+        created: new Date().toLocaleString()
       };
 
-      console.log(body);
-
-      // dispatch(registerImg(body))
-      //   .then(response => {
-      //     const imgURL = response.payload.path;
-
-      //     const body = {
-      //       visitor: userId,
-      //       username: username,
-      //       name: Name,
-      //       address: Address,
-      //       date: VisitedDate,
-      //       imgURL: imgURL,
-      //       rating: Rating,
-      //       eatingTime: eatingTime,
-      //       menus: JSON.stringify(menuItems),
-      //       created: new Date().toLocaleString()
-      //     };
-
-      //     return dispatch(registerRestaurant(body));
-      //   })
-      //   .then(response => {
-      //     if (response.payload.success) {
-      //       setName("");
-      //       setAddress("");
-      //       setVisitedDate("");
-      //       setImageData("");
-      //       setImageName("");
-      //       setRating(0);
-      //       setEatingTime(1);
-      //       setMenuItems([]);
-      //       props.setToggle(true);
-      //       props.setMenu("식당 등록");
-      //       props.history.push("/marker", userId);
-      //     } else {
-      //       alert("error");
-      //     }
-      //   })
-      //   .catch(err => {
-      //     console.log("registerRestaurant err: ", err);
-      //   });
+      dispatch(registerRestaurant(body))
+        .then(response => {
+          if (response.payload.success) {
+            setName("");
+            setAddress("");
+            setVisitedDate("");
+            setRating(0);
+            setEatingTime(1);
+            setMenuItems([]);
+            props.setToggle(true);
+            props.setMenu("식당 등록");
+            props.history.push("/marker", userId);
+          } else {
+            alert("error");
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     } else if (parentCompName === "WishPage") {
+      // 위시 맛집
       const body = {
         user: userId,
         username: username,
@@ -320,19 +338,7 @@ function Enroll(props) {
 
       <form onSubmit={onSubmitHandler} encType="multipart/form-data">
         <div style={{ margin: "5px" }}>
-          <div
-            style={{
-              width: "30%",
-              margin: "auto",
-              fontWeight: "bold",
-              fontSize: "1rem",
-              textAlign: "left",
-              borderBottom: "1px solid black",
-              marginBottom: "5px"
-            }}
-          >
-            맛집 이름 & 주소(위에서 맛집 검색 후 선택)
-          </div>
+          <InputTitle>맛집 이름 & 주소(위에서 맛집 검색 후 선택)</InputTitle>
           <Input
             type="text"
             value={Name}
@@ -359,18 +365,7 @@ function Enroll(props) {
                 margin: "5px"
               }}
             >
-              <div
-                style={{
-                  width: "30%",
-                  margin: "auto",
-                  fontWeight: "bold",
-                  fontSize: "1rem",
-                  textAlign: "left",
-                  borderBottom: "1px solid black"
-                }}
-              >
-                별점
-              </div>
+              <InputTitle>별점</InputTitle>
               <div style={{ display: "inline-block" }}>
                 <ReactStars
                   count={5}
@@ -384,19 +379,7 @@ function Enroll(props) {
             </div>
 
             <div style={{ margin: "5px" }}>
-              <div
-                style={{
-                  width: "30%",
-                  margin: "auto",
-                  fontWeight: "bold",
-                  fontSize: "1rem",
-                  textAlign: "left",
-                  borderBottom: "1px solid black",
-                  marginBottom: "10px"
-                }}
-              >
-                방문 일시
-              </div>
+              <InputTitle>방문 일시</InputTitle>
               <input
                 type="date"
                 value={VisitedDate}
@@ -418,19 +401,7 @@ function Enroll(props) {
 
             <div>
               <div style={{ margin: "5px" }}>
-                <div
-                  style={{
-                    width: "30%",
-                    margin: "auto",
-                    fontWeight: "bold",
-                    fontSize: "1rem",
-                    textAlign: "left",
-                    borderBottom: "1px solid black",
-                    marginBottom: "10px"
-                  }}
-                >
-                  메뉴
-                </div>
+                <InputTitle>메뉴</InputTitle>
                 <Input
                   type="text"
                   value={newMenuItem}
@@ -462,24 +433,8 @@ function Enroll(props) {
                 ))
               : null}
 
-            <div
-              style={{
-                margin: "5px"
-              }}
-            >
-              <div
-                style={{
-                  width: "30%",
-                  margin: "auto",
-                  fontWeight: "bold",
-                  fontSize: "1rem",
-                  textAlign: "left",
-                  borderBottom: "1px solid black",
-                  marginBottom: "10px"
-                }}
-              >
-                이미지 업로드
-              </div>
+            <div style={{ margin: "5px" }}>
+              <InputTitle>이미지 업로드</InputTitle>
               <div style={{ display: "inline-block" }}>
                 <input
                   type="file"
@@ -509,24 +464,14 @@ function Enroll(props) {
         ) : null}
         <div>
           <hr />
-          {isConverting ? (
-            <Button
-              variant="danger"
-              style={{ margin: "20px", width: "10%" }}
-              type="submit"
-              disabled
-            >
-              등록
-            </Button>
-          ) : (
-            <Button
-              variant="primary"
-              style={{ margin: "20px", width: "10%" }}
-              type="submit"
-            >
-              등록
-            </Button>
-          )}
+          <Button
+            variant={isConverting ? "danger" : "primary"}
+            style={{ margin: "20px", width: "10%" }}
+            type="submit"
+            disabled={isConverting ? true : false}
+          >
+            등록
+          </Button>
         </div>
       </form>
     </div>
