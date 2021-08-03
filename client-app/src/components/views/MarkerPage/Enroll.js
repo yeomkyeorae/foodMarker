@@ -48,16 +48,17 @@ function Enroll(props) {
 
   const [jpegImageData, setJpegImageData] = useState([]);
   const [jpegCount, setJpegCount] = useState(0);
+  const [jpegPreImages, setJpegPreImages] = useState([]);
 
   const [heicImageData, setHeicImageData] = useState([]);
   const [heicImageName, setHeicImageName] = useState([]);
   const [heicCount, setHeicCount] = useState(0);
+  const [heicPreImages, setHeicPreImages] = useState([]);
 
   const [isConverting, setIsConverting] = useState(false);
   const [eatingTime, setEatingTime] = useState(1);
   const [newMenuItem, setNewMenuItem] = useState("");
   const [menuItems, setMenuItems] = useState([]);
-  const [preImages, setPreImages] = useState("");
 
   const userId = window.sessionStorage.getItem("userId");
   const username = window.sessionStorage.getItem("username");
@@ -87,8 +88,6 @@ function Enroll(props) {
   const onImageDataHandler = e => {
     e.preventDefault();
 
-    const formData = new FormData();
-
     const inputImageCnt = Object.keys(e.target.files).length;
     if (inputImageCnt > 10) {
       alert("이미지 파일은 10개를 초과할 수 없습니다");
@@ -96,17 +95,25 @@ function Enroll(props) {
     }
 
     let heicTotalCnt = 0;
+    let jpegTotalCnt = 0;
     Object.keys(e.target.files).forEach(key => {
       if (e.target.files[key].type === "image/heic") {
         heicTotalCnt += 1;
+      } else {
+        jpegTotalCnt += 1;
       }
     });
 
     setIsConverting(true);
 
-    const preImages = [];
+    // JPEG vars
+    const formData = new FormData();
+    const jpegPreImages = [];
+
+    // HEIC vars
     const imageData = [];
     const imageNames = [];
+    const heicPreImages = [];
 
     let jpegCnt = 0;
     let heicCnt = 0;
@@ -114,12 +121,10 @@ function Enroll(props) {
       const file = e.target.files[key];
 
       if (file.type === "image/heic") {
-        heicCnt += 1;
         const reader = new FileReader();
 
         reader.onloadend = function() {
           const image = reader.result;
-          setPreImages(preImages.concat([image]));
 
           fetch(image)
             .then(res => res.blob())
@@ -134,30 +139,35 @@ function Enroll(props) {
 
               const fileReader = new FileReader();
               fileReader.onload = function(e) {
-                setPreImages(preImages.concat([e.target.result]));
-
-                setHeicImageData(imageData.concat([e.target.result]));
-                setHeicImageName(imageNames.concat([newImageName]));
+                heicCnt += 1;
+                heicPreImages.push(e.target.result);
+                imageData.push(e.target.result);
+                imageNames.push(newImageName);
 
                 if (heicCnt === heicTotalCnt) {
+                  setHeicImageData(imageData);
+                  setHeicImageName(imageNames);
+                  setHeicPreImages(heicPreImages);
                   setIsConverting(false);
                 }
               };
               fileReader.readAsDataURL(conversionResult);
             })
             .catch(err => {
-              console.log("err: ", err);
+              console.log(err);
             });
         };
         reader.readAsDataURL(file);
       } else {
-        jpegCnt += 1;
         formData.append("restaurant_jpeg_img", file);
         const reader = new FileReader();
         reader.onload = () => {
-          preImages.push(reader.result);
-          setPreImages(preImages.concat([reader.result]));
+          jpegCnt += 1;
+          jpegPreImages.push(reader.result);
 
+          if (jpegCnt === jpegTotalCnt) {
+            setJpegPreImages(jpegPreImages);
+          }
           if (heicTotalCnt === 0) {
             setIsConverting(false);
           }
@@ -165,6 +175,8 @@ function Enroll(props) {
         reader.readAsDataURL(file);
       }
     });
+    // setPreImages(preImages);
+
     setHeicCount(heicCnt);
     setJpegCount(jpegCnt);
     setJpegImageData(formData);
@@ -444,13 +456,29 @@ function Enroll(props) {
                 />
               </div>
               <div style={{ marginTop: "10px" }}>
-                {preImages.length > 0
-                  ? preImages.map(preImage => {
+                {jpegPreImages.length > 0
+                  ? jpegPreImages.map(preImage => {
                       return (
                         <div style={{ display: "inline-block", margin: "5px" }}>
                           <img
                             src={preImage}
-                            alt={"변환중 또는 인식 불가"}
+                            alt={"jpeg"}
+                            width="100px"
+                            height="100px"
+                          />
+                        </div>
+                      );
+                    })
+                  : null}
+              </div>
+              <div style={{ marginTop: "10px" }}>
+                {heicPreImages.length > 0
+                  ? heicPreImages.map(preImage => {
+                      return (
+                        <div style={{ display: "inline-block", margin: "5px" }}>
+                          <img
+                            src={preImage}
+                            alt={"heic"}
                             width="100px"
                             height="100px"
                           />
