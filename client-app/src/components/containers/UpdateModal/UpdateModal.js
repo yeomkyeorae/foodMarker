@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import {
   updateRestaurant,
   registerRestaurant,
-  registerImg
+  registerJpegImg
 } from "../../../_actions/restaurant_action";
 import styled from "styled-components";
 
@@ -130,7 +130,7 @@ function UpdateModal(props) {
           imgName: ImageName
         };
       }
-      dispatch(registerImg(body)).then(response => {
+      dispatch(registerJpegImg(body)).then(response => {
         const imgURL = response.payload.path;
 
         const body = {

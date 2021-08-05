@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import {
@@ -147,6 +147,8 @@ function Enroll(props) {
                 if (heicCnt === heicTotalCnt) {
                   setHeicImageData(imageData);
                   setHeicImageName(imageNames);
+                  setHeicCount(heicCnt);
+
                   setHeicPreImages(heicPreImages);
                   setIsConverting(false);
                 }
@@ -166,6 +168,7 @@ function Enroll(props) {
           jpegPreImages.push(reader.result);
 
           if (jpegCnt === jpegTotalCnt) {
+            setJpegCount(jpegCnt);
             setJpegPreImages(jpegPreImages);
           }
           if (heicTotalCnt === 0) {
@@ -175,10 +178,6 @@ function Enroll(props) {
         reader.readAsDataURL(file);
       }
     });
-    // setPreImages(preImages);
-
-    setHeicCount(heicCnt);
-    setJpegCount(jpegCnt);
     setJpegImageData(formData);
   };
 
@@ -293,6 +292,21 @@ function Enroll(props) {
     setMenuItems(menuItems.filter((menu, menuIx) => menuIx !== index));
   };
 
+  const initAllImages = () => {
+    inputRef.current.value = "";
+
+    setJpegImageData([]);
+    setJpegCount(0);
+    setJpegPreImages([]);
+
+    setHeicImageData([]);
+    setHeicImageName([]);
+    setHeicCount(0);
+    setHeicPreImages([]);
+  };
+
+  const inputRef = useRef();
+  console.log(heicImageName);
   return (
     <div>
       <MapForEnroll Toggle={Toggle} setName={setName} setAddress={setAddress} />
@@ -450,16 +464,28 @@ function Enroll(props) {
               <div style={{ display: "inline-block" }}>
                 <input
                   type="file"
+                  ref={inputRef}
                   onChange={onImageDataHandler}
                   style={{ width: "60%" }}
                   multiple
                 />
               </div>
+              {(jpegPreImages.length > 0 || heicPreImages.length > 0) &&
+              isConverting === false ? (
+                <div style={{ marginTop: "10px" }}>
+                  <Button variant="danger" onClick={() => initAllImages()}>
+                    초기화
+                  </Button>
+                </div>
+              ) : null}
               <div style={{ marginTop: "10px" }}>
                 {jpegPreImages.length > 0
-                  ? jpegPreImages.map(preImage => {
+                  ? jpegPreImages.map((preImage, index) => {
                       return (
-                        <div style={{ display: "inline-block", margin: "5px" }}>
+                        <div
+                          key={index}
+                          style={{ display: "inline-block", margin: "5px" }}
+                        >
                           <img
                             src={preImage}
                             alt={"jpeg"}
@@ -473,9 +499,12 @@ function Enroll(props) {
               </div>
               <div style={{ marginTop: "10px" }}>
                 {heicPreImages.length > 0
-                  ? heicPreImages.map(preImage => {
+                  ? heicPreImages.map((preImage, index) => {
                       return (
-                        <div style={{ display: "inline-block", margin: "5px" }}>
+                        <div
+                          key={index}
+                          style={{ display: "inline-block", margin: "5px" }}
+                        >
                           <img
                             src={preImage}
                             alt={"heic"}
