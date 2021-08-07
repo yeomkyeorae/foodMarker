@@ -42,55 +42,84 @@ const Input = styled.input`
 `;
 
 function Enroll(props) {
+  // Input 관련 state
   const [Name, setName] = useState("");
+  const [SearchName, setSearchName] = useState("을지로3가");
   const [Address, setAddress] = useState("");
+  const [Rating, setRating] = useState(0);
   const [VisitedDate, setVisitedDate] = useState("");
+  const [eatingTime, setEatingTime] = useState(1);
+  const [newMenuItem, setNewMenuItem] = useState("");
+  const [menuItems, setMenuItems] = useState([]);
 
+  // JPEG 이미지
   const [jpegImageData, setJpegImageData] = useState([]);
   const [jpegCount, setJpegCount] = useState(0);
   const [jpegPreImages, setJpegPreImages] = useState([]);
 
+  // HEIC 이미지
   const [heicImageData, setHeicImageData] = useState([]);
   const [heicImageName, setHeicImageName] = useState([]);
   const [heicCount, setHeicCount] = useState(0);
   const [heicPreImages, setHeicPreImages] = useState([]);
 
+  // HEIC 변환 중 여부
   const [isConverting, setIsConverting] = useState(false);
-  const [eatingTime, setEatingTime] = useState(1);
-  const [newMenuItem, setNewMenuItem] = useState("");
-  const [menuItems, setMenuItems] = useState([]);
 
+  // Toggle
+  const [Toggle, setToggle] = useState(true);
+
+  // Props, etc.
   const userId = window.sessionStorage.getItem("userId");
   const username = window.sessionStorage.getItem("username");
-
   const parentCompName = props.parentCompName;
+  const dispatch = useDispatch();
+  const inputRef = useRef();
 
-  const [SearchName, setSearchName] = useState("이태원 맛집");
-  const [Toggle, setToggle] = useState(true);
-  const [Rating, setRating] = useState(0);
-
-  const onRatingHandler = newRating => {
-    setRating(newRating);
-  };
-
+  // Handlers
   const onNameHandler = e => {
     setName(e.currentTarget.value);
+  };
+
+  const onChangeSearchNameHandler = e => {
+    setSearchName(e.currentTarget.value);
   };
 
   const onAddressHandler = e => {
     setAddress(e.currentTarget.value);
   };
 
+  const onRatingHandler = newRating => {
+    setRating(newRating);
+  };
+
   const onVisitedDateHandler = e => {
     setVisitedDate(String(e.currentTarget.value));
+  };
+
+  const onEatingTimeHandler = e => {
+    setEatingTime(parseInt(e.target.value));
+  };
+
+  const onChangeNewMenuItem = e => {
+    setNewMenuItem(e.currentTarget.value);
+  };
+
+  const onMenuAddHandler = () => {
+    setMenuItems(menuItems.concat(newMenuItem));
+    setNewMenuItem("");
+  };
+
+  const onMenuDeleteHandler = index => {
+    setMenuItems(menuItems.filter((menu, menuIx) => menuIx !== index));
   };
 
   const onImageDataHandler = e => {
     e.preventDefault();
 
     const inputImageCnt = Object.keys(e.target.files).length;
-    if (inputImageCnt > 10) {
-      alert("이미지 파일은 10개를 초과할 수 없습니다");
+    if (inputImageCnt > 5) {
+      alert("이미지 파일은 5개를 초과할 수 없습니다");
       return;
     }
 
@@ -106,11 +135,11 @@ function Enroll(props) {
 
     setIsConverting(true);
 
-    // JPEG vars
+    // JPEG 관련 변수
     const formData = new FormData();
     const jpegPreImages = [];
 
-    // HEIC vars
+    // HEIC 관련 변수
     const imageData = [];
     const imageNames = [];
     const heicPreImages = [];
@@ -181,41 +210,19 @@ function Enroll(props) {
     setJpegImageData(formData);
   };
 
-  const onChangeSearchNameHandler = e => {
-    setSearchName(e.currentTarget.value);
-  };
-
-  const onChangeNewMenuItem = e => {
-    setNewMenuItem(e.currentTarget.value);
-  };
-
-  const toggleHandler = () => {
-    setToggle(!Toggle);
-  };
-
-  const onKeyDown = e => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleHandler();
-    }
-  };
-
-  const dispatch = useDispatch();
-
   const onSubmitHandler = async e => {
     e.preventDefault();
 
     // 나의 맛집
     if (parentCompName === "MarkerPage") {
-      // jpeg 저장
+      // JPEG 저장
       let jpegPath = [];
       if (jpegCount) {
         const response = await dispatch(registerJpegImg(jpegImageData));
         jpegPath = response.payload.fileNames;
       }
 
-      // heic 저장
+      // HEIC 저장
       let heicPath = [];
       if (heicCount) {
         const heicBody = {
@@ -283,13 +290,16 @@ function Enroll(props) {
     }
   };
 
-  const onMenuAddHandler = () => {
-    setMenuItems(menuItems.concat(newMenuItem));
-    setNewMenuItem("");
+  const toggleHandler = () => {
+    setToggle(!Toggle);
   };
 
-  const onMenuDeleteHandler = index => {
-    setMenuItems(menuItems.filter((menu, menuIx) => menuIx !== index));
+  const onKeyDown = e => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleHandler();
+    }
   };
 
   const initAllImages = () => {
@@ -305,8 +315,6 @@ function Enroll(props) {
     setHeicPreImages([]);
   };
 
-  const inputRef = useRef();
-  console.log(heicImageName);
   return (
     <div>
       <MapForEnroll Toggle={Toggle} setName={setName} setAddress={setAddress} />
@@ -416,7 +424,7 @@ function Enroll(props) {
                 id="select"
                 value={eatingTime}
                 style={{ marginLeft: "5px" }}
-                onChange={e => setEatingTime(parseInt(e.target.value))}
+                onChange={e => onEatingTimeHandler(e)}
               >
                 <option value="1">아침</option>
                 <option value="2">점심</option>
