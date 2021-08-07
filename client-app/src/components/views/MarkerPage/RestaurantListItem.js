@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { Card, Col, Dropdown } from "react-bootstrap";
+import { Card, Col, Dropdown, Carousel } from "react-bootstrap";
 import UpdateModal from "../../containers/UpdateModal/UpdateModal";
 import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
 import ReactStars from "react-rating-stars-component";
+import "./RestaurantListItem.css";
 
 const eatingObj = {
   "1": "아침",
@@ -52,6 +53,13 @@ function RestaurantListItem(props) {
   const updateHandler = e => {
     setToggle(!Toggle);
   };
+
+  let imgUrls = [];
+  let isMultipleImages = false;
+  if (restaurant.imgURL) {
+    imgUrls = restaurant.imgURL.split(",");
+    isMultipleImages = imgUrls.length > 1 ? true : false;
+  }
 
   return restaurant.address ? (
     <>
@@ -109,14 +117,27 @@ function RestaurantListItem(props) {
                 overflow: "hidden"
               }}
             >
-              <Card.Img
-                variant="top"
-                src={`http://localhost:5000/${restaurant.imgURL}`}
-                style={{
-                  width: "60%",
-                  height: "100%"
-                }}
-              />
+              <Carousel
+                variant="dark"
+                interval={null}
+                controls={isMultipleImages}
+                indicators={isMultipleImages}
+              >
+                {imgUrls.map((url, index) => {
+                  return (
+                    <Carousel.Item key={index}>
+                      <Card.Img
+                        variant="top"
+                        src={`http://localhost:5000/${url}`}
+                        style={{
+                          width: "60%",
+                          height: "100%"
+                        }}
+                      />
+                    </Carousel.Item>
+                  );
+                })}
+              </Carousel>
             </div>
           </Card.Body>
         </Card>
