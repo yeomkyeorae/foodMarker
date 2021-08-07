@@ -70,9 +70,12 @@ function WishListItem(props) {
         <Dropdown>
           <Dropdown.Toggle as={CustomToggle}>...</Dropdown.Toggle>
           <Dropdown.Menu size="sm" title="">
-            <Dropdown.Item onClick={() => popUpMap()}>지도</Dropdown.Item>
-            <Dropdown.Item onClick={() => openPopUp()}>방문</Dropdown.Item>
-            <Dropdown.Item onClick={() => deleteHandler(wishListId)}>
+            <Dropdown.Item onClick={() => popUpMap()}>지도 보기</Dropdown.Item>
+            <Dropdown.Item onClick={() => openPopUp()}>방문 표시</Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => deleteHandler(wishListId)}
+              style={{ color: "red" }}
+            >
               삭제
             </Dropdown.Item>
           </Dropdown.Menu>
