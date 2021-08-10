@@ -29,6 +29,15 @@ const Input = styled.input`
   transition: 0.2s ease all;
 `;
 
+const InputTitle = styled.div`
+  width: 70%;
+  margin: auto;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: left;
+  border-bottom: 1px solid black;
+`;
+
 function UpdateModal(props) {
   const {
     Toggle,
@@ -223,6 +232,7 @@ function UpdateModal(props) {
         <Modal.Title>{restaurantName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <InputTitle>별점</InputTitle>
         <div
           style={{
             margin: "auto",
@@ -238,6 +248,27 @@ function UpdateModal(props) {
             activeColor="#ffd700"
           />
         </div>
+        <InputTitle>방문 일시</InputTitle>
+        <div style={{ margin: "10px" }}>
+          <input
+            type="date"
+            value={VisitedDate}
+            placeholder="방문 일시"
+            onChange={e => onVisitedDateHandler(e)}
+          />
+          <select
+            id="select"
+            value={EatingTime}
+            style={{ marginLeft: "5px" }}
+            onChange={e => setEatingTime(parseInt(e.target.value))}
+          >
+            <option value="1">아침</option>
+            <option value="2">점심</option>
+            <option value="3">저녁</option>
+            <option value="4">기타</option>
+          </select>
+        </div>
+        <InputTitle>메뉴</InputTitle>
         <div>
           <div style={{ margin: "5px" }}>
             <Input
@@ -254,44 +285,28 @@ function UpdateModal(props) {
             >
               +
             </Button>
+            {menuItems.length
+              ? menuItems.map((menu, index) => (
+                  <div
+                    key={index}
+                    style={{ marginTop: "2px", marginBottom: "10px" }}
+                  >
+                    {menu}
+                    <Button
+                      variant="danger"
+                      style={{ marginLeft: "10px" }}
+                      onClick={() => onMenuDeleteHandler(index)}
+                    >
+                      X
+                    </Button>
+                  </div>
+                ))
+              : null}
           </div>
         </div>
-        {menuItems.length
-          ? menuItems.map((menu, index) => (
-              <div
-                key={index}
-                style={{ marginTop: "2px", marginBottom: "10px" }}
-              >
-                {menu}
-                <Button
-                  variant="danger"
-                  style={{ marginLeft: "10px" }}
-                  onClick={() => onMenuDeleteHandler(index)}
-                >
-                  X
-                </Button>
-              </div>
-            ))
-          : null}
-        <input
-          type="date"
-          value={VisitedDate}
-          placeholder="방문 일시"
-          onChange={e => onVisitedDateHandler(e)}
-        />
-        <select
-          id="select"
-          value={EatingTime}
-          style={{ marginLeft: "5px" }}
-          onChange={e => setEatingTime(parseInt(e.target.value))}
-        >
-          <option value="1">아침</option>
-          <option value="2">점심</option>
-          <option value="3">저녁</option>
-          <option value="4">기타</option>
-        </select>
       </Modal.Body>
       <Modal.Footer>
+        <InputTitle>이미지 업로드</InputTitle>
         <div style={{ marginLeft: "100px" }}>
           <input type="file" onChange={onImageDataHandler} />
         </div>
