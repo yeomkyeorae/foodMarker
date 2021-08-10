@@ -334,10 +334,12 @@ app.delete("/api/restaurant", (req, res) => {
         err
       });
 
-    const filePath = "uploads/" + restaurantInfo.imgURL.split("food/")[1];
-    if (filePath) {
-      fs.unlinkSync(filePath);
-    }
+    restaurantInfo.imgURL.split(",").forEach(url => {
+      const filePath = "uploads/" + url.split("food/")[1];
+      if (filePath) {
+        fs.unlinkSync(filePath);
+      }
+    });
 
     return res.status(200).json({
       success: true
