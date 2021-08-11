@@ -149,6 +149,7 @@ function RestaurantListItem(props) {
           restaurantName={restaurant.name}
           restaurantId={restaurant._id}
           restaurantDate={restaurant.date}
+          restaurantImgUrls={imgUrls}
           Rating={Rating}
           eatingTime={restaurant.eatingTime}
           menus={restaurant.menus}

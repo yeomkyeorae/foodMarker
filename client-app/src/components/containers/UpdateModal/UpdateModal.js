@@ -45,6 +45,7 @@ function UpdateModal(props) {
     restaurantName,
     restaurantId,
     restaurantDate,
+    restaurantImgUrls,
     Rating,
     eatingTime,
     userId,
@@ -55,6 +56,8 @@ function UpdateModal(props) {
     menus,
     type
   } = props;
+
+  console.log(restaurantImgUrls, "asdfasdf");
 
   const tmpMenuItems = menus ? JSON.parse(menus) : [];
 
@@ -307,8 +310,27 @@ function UpdateModal(props) {
       </Modal.Body>
       <Modal.Footer>
         <InputTitle>이미지 업로드</InputTitle>
-        <div style={{ marginLeft: "100px" }}>
+        <div style={{ marginLeft: "100px", display: "inline-block" }}>
           <input type="file" onChange={onImageDataHandler} />
+        </div>
+        <div style={{ marginTop: "10px", margin: "auto" }}>
+          {restaurantImgUrls.length > 0
+            ? restaurantImgUrls.map((url, index) => {
+                return (
+                  <div
+                    key={index}
+                    style={{ display: "inline-block", margin: "5px" }}
+                  >
+                    <img
+                      src={`http://localhost:5000/${url}`}
+                      alt={"jpeg"}
+                      width="100px"
+                      height="100px"
+                    />
+                  </div>
+                );
+              })
+            : null}
         </div>
       </Modal.Footer>
       <Modal.Footer
