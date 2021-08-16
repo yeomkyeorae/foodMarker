@@ -39,15 +39,16 @@ const InputTitle = styled.div`
 `;
 
 function UpdateModal(props) {
+  // Props
   const {
     type,
-    Toggle,
+    toggle,
     setToggle,
     restaurantName,
     restaurantId,
     restaurantDate,
     restaurantImgUrls,
-    Rating,
+    rating,
     eatingTime,
     menus,
 
@@ -58,20 +59,33 @@ function UpdateModal(props) {
     deleteHandler
   } = props;
 
-  const tmpMenuItems = menus ? JSON.parse(menus) : [];
+  const [newRating, setNewRating] = useState(rating ? rating : 0);
+  const [visitedDate, setVisitedDate] = useState(restaurantDate);
+  const [newEatingTime, setNewEatingTime] = useState(eatingTime);
+  const [newMenuItem, setNewMenuItem] = useState("");
+  const [menuItems, setMenuItems] = useState(menus ? JSON.parse(menus) : []);
 
   const [ImageData, setImageData] = useState("");
   const [ImageName, setImageName] = useState("");
-  const [VisitedDate, setVisitedDate] = useState(restaurantDate);
-  const [NewRating, setNewRating] = useState(Rating ? Rating : 0);
-  const [isConverting, setIsConverting] = useState(false);
-  const [EatingTime, setEatingTime] = useState(eatingTime);
-  const [newMenuItem, setNewMenuItem] = useState("");
-  const [menuItems, setMenuItems] = useState(menus ? tmpMenuItems : []);
+  // JPEG 이미지
+  // const [jpegImageData, setJpegImageData] = useState([]);
+  // const [jpegCount, setJpegCount] = useState(0);
+  // const [jpegPreImages, setJpegPreImages] = useState([]);
 
+  // HEIC 이미지
+  // const [heicImageData, setHeicImageData] = useState([]);
+  // const [heicImageName, setHeicImageName] = useState([]);
+  // const [heicCount, setHeicCount] = useState(0);
+  // const [heicPreImages, setHeicPreImages] = useState([]);
+
+  // HEIC 변환 중 여부
+  const [isConverting, setIsConverting] = useState(false);
+
+  // etc.
   const dispatch = useDispatch();
   const inputRef = useRef();
 
+  // Handlers
   const onVisitedDateHandler = e => {
     setVisitedDate(String(e.currentTarget.value));
   };
@@ -147,10 +161,10 @@ function UpdateModal(props) {
 
         const body = {
           restaurantId: restaurantId,
-          date: VisitedDate,
+          date: visitedDate,
           imgURL: imgURL,
-          rating: NewRating,
-          eatingTime: EatingTime,
+          rating: newRating,
+          eatingTime: newEatingTime,
           menus: JSON.stringify(menuItems)
         };
 
@@ -158,7 +172,7 @@ function UpdateModal(props) {
           .then(response => {
             if (response.payload.success) {
               alert("수정되었습니다.");
-              setToggle(!Toggle);
+              setToggle(!toggle);
             } else {
               alert("error");
             }
@@ -170,9 +184,9 @@ function UpdateModal(props) {
     } else {
       const body = {
         restaurantId: restaurantId,
-        date: VisitedDate,
-        rating: NewRating,
-        eatingTime: EatingTime,
+        date: visitedDate,
+        rating: newRating,
+        eatingTime: newEatingTime,
         menus: JSON.stringify(menuItems)
       };
 
@@ -180,7 +194,7 @@ function UpdateModal(props) {
         .then(response => {
           if (response.payload.success) {
             alert("수정되었습니다.");
-            setToggle(!Toggle);
+            setToggle(!toggle);
             setImageData("");
             setImageName("");
           } else {
@@ -201,10 +215,10 @@ function UpdateModal(props) {
       visitor: userId,
       name: wishListName,
       address: wishListAddress,
-      date: VisitedDate,
+      date: visitedDate,
       imgURL: ImageData,
-      rating: NewRating,
-      eatingTime: EatingTime,
+      rating: newRating,
+      eatingTime: newEatingTime,
       menus: JSON.stringify(menuItems)
     };
 
@@ -225,12 +239,12 @@ function UpdateModal(props) {
   };
 
   const initAllImages = () => {
-    inputRef.curreunt.value = "";
+    inputRef.current.value = "";
   };
 
   return (
     <Modal
-      show={Toggle}
+      show={toggle}
       onHide={() => setToggle(false)}
       style={{
         textAlign: "center"
@@ -258,7 +272,7 @@ function UpdateModal(props) {
         >
           <ReactStars
             count={5}
-            value={NewRating}
+            value={newRating}
             onChange={setNewRating}
             size={32}
             isHalf={true}
@@ -269,15 +283,15 @@ function UpdateModal(props) {
         <div style={{ margin: "10px" }}>
           <input
             type="date"
-            value={VisitedDate}
+            value={visitedDate}
             placeholder="방문 일시"
             onChange={e => onVisitedDateHandler(e)}
           />
           <select
             id="select"
-            value={EatingTime}
+            value={newEatingTime}
             style={{ marginLeft: "5px" }}
-            onChange={e => setEatingTime(parseInt(e.target.value))}
+            onChange={e => setNewEatingTime(parseInt(e.target.value))}
           >
             <option value="1">아침</option>
             <option value="2">점심</option>
