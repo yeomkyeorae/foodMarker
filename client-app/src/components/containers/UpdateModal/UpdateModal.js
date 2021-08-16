@@ -40,6 +40,7 @@ const InputTitle = styled.div`
 
 function UpdateModal(props) {
   const {
+    type,
     Toggle,
     setToggle,
     restaurantName,
@@ -48,23 +49,21 @@ function UpdateModal(props) {
     restaurantImgUrls,
     Rating,
     eatingTime,
-    userId,
-    setPopUpToggle,
-    wishListAddress,
-    wishListName,
-    wishListId,
     menus,
-    type
-  } = props;
 
-  console.log(restaurantImgUrls, "asdfasdf");
+    wishListId,
+    wishListName,
+    wishListAddress,
+    setPopUpToggle,
+    deleteHandler
+  } = props;
 
   const tmpMenuItems = menus ? JSON.parse(menus) : [];
 
   const [ImageData, setImageData] = useState("");
   const [ImageName, setImageName] = useState("");
   const [VisitedDate, setVisitedDate] = useState(restaurantDate);
-  const [NewRating, setNewRating] = useState(Rating);
+  const [NewRating, setNewRating] = useState(Rating ? Rating : 0);
   const [isConverting, setIsConverting] = useState(false);
   const [EatingTime, setEatingTime] = useState(eatingTime);
   const [newMenuItem, setNewMenuItem] = useState("");
@@ -117,7 +116,7 @@ function UpdateModal(props) {
             };
           })
           .catch(err => {
-            console.log("err: ", err);
+            console.log(err);
           });
       };
       reader.readAsDataURL(file);
@@ -154,15 +153,18 @@ function UpdateModal(props) {
           menus: JSON.stringify(menuItems)
         };
 
-        dispatch(updateRestaurant(body)).then(response => {
-          if (response.payload.success) {
-            alert("수정되었습니다.");
-            setToggle(!Toggle);
-          } else {
-            console.log(response);
-            alert("error");
-          }
-        });
+        dispatch(updateRestaurant(body))
+          .then(response => {
+            if (response.payload.success) {
+              alert("수정되었습니다.");
+              setToggle(!Toggle);
+            } else {
+              alert("error");
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
       });
     } else {
       const body = {
@@ -173,22 +175,26 @@ function UpdateModal(props) {
         menus: JSON.stringify(menuItems)
       };
 
-      dispatch(updateRestaurant(body)).then(response => {
-        if (response.payload.success) {
-          alert("수정되었습니다.");
-          setToggle(!Toggle);
-          setImageData("");
-          setImageName("");
-        } else {
-          console.log(response);
-          alert("error");
-        }
-      });
+      dispatch(updateRestaurant(body))
+        .then(response => {
+          if (response.payload.success) {
+            alert("수정되었습니다.");
+            setToggle(!Toggle);
+            setImageData("");
+            setImageName("");
+          } else {
+            alert("error");
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   };
 
   const moveToMain = e => {
     e.preventDefault();
+    const userId = window.sessionStorage.getItem("userId");
 
     const body = {
       visitor: userId,
@@ -201,17 +207,20 @@ function UpdateModal(props) {
       menus: JSON.stringify(menuItems)
     };
 
-    dispatch(registerRestaurant(body)).then(response => {
-      if (response.payload.success) {
-        alert("방문 표시되었습니다.");
-        props.setToggle(true);
-        setPopUpToggle(false);
-        props.deleteHandler(wishListId);
-      } else {
-        console.log(response);
-        alert("error");
-      }
-    });
+    dispatch(registerRestaurant(body))
+      .then(response => {
+        if (response.payload.success) {
+          alert("방문 표시되었습니다.");
+          setToggle(true);
+          setPopUpToggle(false);
+          deleteHandler(wishListId);
+        } else {
+          alert("error");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   return (
@@ -308,13 +317,18 @@ function UpdateModal(props) {
           </div>
         </div>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer style={{ flexDirection: "column" }}>
         <InputTitle>이미지 업로드</InputTitle>
         <div style={{ marginLeft: "100px", display: "inline-block" }}>
-          <input type="file" onChange={onImageDataHandler} />
+          <input type="file" onChange={onImageDataHandler} multiple />
+        </div>
+        <div style={{ marginTop: "10px" }}>
+          <Button variant="danger" onClick={() => {}}>
+            초기화
+          </Button>
         </div>
         <div style={{ marginTop: "10px", margin: "auto" }}>
-          {restaurantImgUrls.length > 0
+          {restaurantImgUrls && restaurantImgUrls.length > 0
             ? restaurantImgUrls.map((url, index) => {
                 return (
                   <div
