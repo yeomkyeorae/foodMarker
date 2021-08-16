@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import heic2any from "heic2any";
@@ -70,6 +70,7 @@ function UpdateModal(props) {
   const [menuItems, setMenuItems] = useState(menus ? tmpMenuItems : []);
 
   const dispatch = useDispatch();
+  const inputRef = useRef();
 
   const onVisitedDateHandler = e => {
     setVisitedDate(String(e.currentTarget.value));
@@ -223,6 +224,10 @@ function UpdateModal(props) {
       });
   };
 
+  const initAllImages = () => {
+    inputRef.curreunt.value = "";
+  };
+
   return (
     <Modal
       show={Toggle}
@@ -320,10 +325,15 @@ function UpdateModal(props) {
       <Modal.Footer style={{ flexDirection: "column" }}>
         <InputTitle>이미지 업로드</InputTitle>
         <div style={{ marginLeft: "100px", display: "inline-block" }}>
-          <input type="file" onChange={onImageDataHandler} multiple />
+          <input
+            type="file"
+            ref={inputRef}
+            onChange={onImageDataHandler}
+            multiple
+          />
         </div>
         <div style={{ marginTop: "10px" }}>
-          <Button variant="danger" onClick={() => {}}>
+          <Button variant="danger" onClick={() => initAllImages()}>
             초기화
           </Button>
         </div>
