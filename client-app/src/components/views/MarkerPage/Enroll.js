@@ -55,13 +55,14 @@ function Enroll(props) {
   // JPEG 이미지
   const [jpegImageData, setJpegImageData] = useState([]);
   const [jpegCount, setJpegCount] = useState(0);
-  const [jpegPreImages, setJpegPreImages] = useState([]);
 
   // HEIC 이미지
   const [heicImageData, setHeicImageData] = useState([]);
   const [heicImageName, setHeicImageName] = useState([]);
   const [heicCount, setHeicCount] = useState(0);
-  const [heicPreImages, setHeicPreImages] = useState([]);
+
+  // PreImages
+  const [preImages, setPreImages] = useState([]);
 
   // HEIC 변환 중 여부
   const [isConverting, setIsConverting] = useState(false);
@@ -178,7 +179,7 @@ function Enroll(props) {
                   setHeicImageName(imageNames);
                   setHeicCount(heicCnt);
 
-                  setHeicPreImages(heicPreImages);
+                  setPreImages(preImages => preImages.concat(heicPreImages));
                   setIsConverting(false);
                 }
               };
@@ -198,7 +199,7 @@ function Enroll(props) {
 
           if (jpegCnt === jpegTotalCnt) {
             setJpegCount(jpegCnt);
-            setJpegPreImages(jpegPreImages);
+            setPreImages(preImages => preImages.concat(jpegPreImages));
           }
           if (heicTotalCnt === 0) {
             setIsConverting(false);
@@ -307,12 +308,12 @@ function Enroll(props) {
 
     setJpegImageData([]);
     setJpegCount(0);
-    setJpegPreImages([]);
 
     setHeicImageData([]);
     setHeicImageName([]);
     setHeicCount(0);
-    setHeicPreImages([]);
+
+    setPreImages([]);
   };
 
   return (
@@ -478,8 +479,7 @@ function Enroll(props) {
                   multiple
                 />
               </div>
-              {(jpegPreImages.length > 0 || heicPreImages.length > 0) &&
-              isConverting === false ? (
+              {preImages.length > 0 && isConverting === false ? (
                 <div style={{ marginTop: "10px" }}>
                   <Button variant="danger" onClick={() => initAllImages()}>
                     초기화
@@ -487,8 +487,8 @@ function Enroll(props) {
                 </div>
               ) : null}
               <div style={{ marginTop: "10px" }}>
-                {jpegPreImages.length > 0
-                  ? jpegPreImages.map((preImage, index) => {
+                {preImages.length > 0
+                  ? preImages.map((preImage, index) => {
                       return (
                         <div
                           key={index}
@@ -497,25 +497,6 @@ function Enroll(props) {
                           <img
                             src={preImage}
                             alt={"jpeg"}
-                            width="100px"
-                            height="100px"
-                          />
-                        </div>
-                      );
-                    })
-                  : null}
-              </div>
-              <div style={{ marginTop: "10px" }}>
-                {heicPreImages.length > 0
-                  ? heicPreImages.map((preImage, index) => {
-                      return (
-                        <div
-                          key={index}
-                          style={{ display: "inline-block", margin: "5px" }}
-                        >
-                          <img
-                            src={preImage}
-                            alt={"heic"}
                             width="100px"
                             height="100px"
                           />
