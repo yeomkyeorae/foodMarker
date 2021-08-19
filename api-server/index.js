@@ -57,7 +57,7 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage }).single("restaurant_img");
+const upload = multer({ storage }).array("restaurant_jpeg_img", 10);
 
 // 테스트
 app.get("/api/hello", (req, res) => {
@@ -252,27 +252,38 @@ app.get("/api/restaurant/most", (req, res) => {
   });
 });
 
-// post img
-app.post("/api/img", (req, res) => {
-  const imgName = req.body.imgName;
+// post jpeg img
+app.post("/api/img/jpeg", (req, res) => {
+  upload(req, res, err => {
+    if (err) {
+      return res.json({ success: false, err });
+    }
+    const fileNames = res.req.files.map(
+      file => `http://localhost:5000/food/` + file.filename
+    );
+    return res.json({ success: true, fileNames: fileNames });
+  });
+});
 
-  if (imgName) {
-    const img = req.body.img.replace(/^data:image\/jpeg;base64,/, "");
-    const imgFullName = `uploads/${Date.now()}_${imgName}.jpeg`;
-    const imgClientPath = `food/${Date.now()}_${imgName}.jpeg`;
+// post heic img
+app.post("/api/img/heic", (req, res) => {
+  const images = req.body.images;
+  const imageNames = req.body.imgNames;
 
+  const heicImagePaths = [];
+  imageNames.forEach((imageName, ix) => {
+    const img = images[ix].replace(/^data:image\/jpeg;base64,/, "");
+
+    const imgFullName = `uploads/${Date.now()}_${imageName}.jpeg`;
+    const imgClientPath = `http://localhost:5000/food/${Date.now()}_${imageName}.jpeg`;
+
+    heicImagePaths.push(imgClientPath);
     fs.writeFileSync(imgFullName, img, "base64", err => {
       return res.json({ success: false, err });
     });
-    return res.json({ success: true, path: imgClientPath });
-  } else {
-    upload(req, res, err => {
-      if (err) {
-        return res.json({ success: false, err });
-      }
-      return res.json({ success: true, path: `food/` + res.req.file.filename });
-    });
-  }
+  });
+
+  return res.json({ success: true, fileNames: heicImagePaths });
 });
 
 // create my restaurant
@@ -325,10 +336,12 @@ app.delete("/api/restaurant", (req, res) => {
         err
       });
 
-    const filePath = "uploads/" + restaurantInfo.imgURL.split("food/")[1];
-    if (filePath) {
-      fs.unlinkSync(filePath);
-    }
+    restaurantInfo.imgURL.split(",").forEach(url => {
+      const filePath = "uploads/" + url.split("food/")[1];
+      if (filePath) {
+        fs.unlinkSync(filePath);
+      }
+    });
 
     return res.status(200).json({
       success: true

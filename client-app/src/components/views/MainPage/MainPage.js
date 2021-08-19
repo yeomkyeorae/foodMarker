@@ -240,7 +240,7 @@ function MainPage(props) {
               <li style={{ width: "20%" }} key={ix}>
                 <div>
                   <img
-                    src={`http://localhost:5000/${el.imgURL}`}
+                    src={`http://localhost:5000/${el.imgURL.split(",")[0]}`}
                     alt=""
                     width="180px"
                     height="200px"
