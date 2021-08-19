@@ -258,7 +258,9 @@ app.post("/api/img/jpeg", (req, res) => {
     if (err) {
       return res.json({ success: false, err });
     }
-    const fileNames = res.req.files.map(file => `food/` + file.filename);
+    const fileNames = res.req.files.map(
+      file => `http://localhost:5000/food/` + file.filename
+    );
     return res.json({ success: true, fileNames: fileNames });
   });
 });
@@ -273,7 +275,7 @@ app.post("/api/img/heic", (req, res) => {
     const img = images[ix].replace(/^data:image\/jpeg;base64,/, "");
 
     const imgFullName = `uploads/${Date.now()}_${imageName}.jpeg`;
-    const imgClientPath = `food/${Date.now()}_${imageName}.jpeg`;
+    const imgClientPath = `http://localhost:5000/food/${Date.now()}_${imageName}.jpeg`;
 
     heicImagePaths.push(imgClientPath);
     fs.writeFileSync(imgFullName, img, "base64", err => {
