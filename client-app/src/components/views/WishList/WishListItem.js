@@ -44,11 +44,9 @@ function WishListItem(props) {
     wishListName,
     wishListAddress,
     wishListCreated,
-    userId,
     deleteHandler
   } = props;
   const [popUpToggle, setPopUpToggle] = useState(false);
-  const [Rating, setRating] = useState(0);
   const [mapToggle, setMapToggle] = useState(false);
 
   const restaurant = {
@@ -70,9 +68,12 @@ function WishListItem(props) {
         <Dropdown>
           <Dropdown.Toggle as={CustomToggle}>...</Dropdown.Toggle>
           <Dropdown.Menu size="sm" title="">
-            <Dropdown.Item onClick={() => popUpMap()}>지도</Dropdown.Item>
-            <Dropdown.Item onClick={() => openPopUp()}>방문</Dropdown.Item>
-            <Dropdown.Item onClick={() => deleteHandler(wishListId)}>
+            <Dropdown.Item onClick={() => popUpMap()}>지도 보기</Dropdown.Item>
+            <Dropdown.Item onClick={() => openPopUp()}>방문 표시</Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => deleteHandler(wishListId)}
+              style={{ color: "red" }}
+            >
               삭제
             </Dropdown.Item>
           </Dropdown.Menu>
@@ -82,18 +83,15 @@ function WishListItem(props) {
       <span style={{ fontSize: "10px" }}>{wishListCreated}</span> <br />
       <span>{wishListAddress}</span> <br />
       <UpdateModal
-        Toggle={popUpToggle}
+        type="WishListItem"
+        toggle={popUpToggle}
         setToggle={setPopUpToggle}
         restaurantName={wishListName}
-        Rating={Rating}
-        setRating={setRating}
-        setPopUpToggle={setPopUpToggle}
-        userId={userId}
         wishListId={wishListId}
         wishListName={wishListName}
         wishListAddress={wishListAddress}
+        setPopUpToggle={setPopUpToggle}
         deleteHandler={deleteHandler}
-        type="WishListItem"
       />
       <KakaoMapModal
         Toggle={mapToggle}

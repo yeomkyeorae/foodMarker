@@ -3,7 +3,8 @@ import {
   READ_CHOIZAROAD,
   READ_VISITED_CHOIZAROAD,
   REGISTER_CHOIZAROAD,
-  REGISTER_VISITED_CHOIZAROAD
+  REGISTER_VISITED_CHOIZAROAD,
+  DELETE_VISITED_CHOIZAROAD
 } from "./types";
 
 export function readChoizaRoad(season) {
@@ -55,6 +56,17 @@ export function registerVisitedChoizaRoad(dataToSubmit) {
 
   return {
     type: REGISTER_VISITED_CHOIZAROAD,
+    payload: request
+  };
+}
+
+export function deleteVisitedChoizaRoad(visitedChoizaRoadId) {
+  const request = axios
+    .delete(`/api/visitedChoizaRoads?_id=${visitedChoizaRoadId}`)
+    .then(response => response.data);
+
+  return {
+    type: DELETE_VISITED_CHOIZAROAD,
     payload: request
   };
 }

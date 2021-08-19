@@ -3,7 +3,10 @@ import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Card, Col, OverlayTrigger, Popover } from "react-bootstrap";
 import { FaMapMarkedAlt, FaPlus, FaCheck } from "react-icons/fa";
-import { registerVisitedChoizaRoad } from "../../../_actions/choizaRoad_action";
+import {
+  registerVisitedChoizaRoad,
+  deleteVisitedChoizaRoad
+} from "../../../_actions/choizaRoad_action";
 import "./ChoizaListItem.css";
 
 function ChoizaListItem(props) {
@@ -39,22 +42,10 @@ function ChoizaListItem(props) {
   };
 
   const checkVisitedChoizaRoad = (restaurantName, index) => {
-    let toBeEnrolled;
-    const newVisitedList = visitedList.map((visitedItem, ix) => {
-      if (ix === index) {
-        toBeEnrolled = !visitedItem.isVisited;
-        return {
-          ...visitedItem,
-          isVisited: !visitedItem.isVisited
-        };
-      }
-      return visitedItem;
-    });
-
-    setVisitedList(newVisitedList);
+    const toBeEnrolled = visitedList[index]._id;
 
     // 체크돼 있으면 방문 삭제, 안돼 있으면 방문 체크
-    if (toBeEnrolled) {
+    if (!toBeEnrolled) {
       const userId = window.sessionStorage.getItem("userId");
 
       const body = {
@@ -80,6 +71,23 @@ function ChoizaListItem(props) {
           console.log(err);
         });
     } else {
+      const visitedChoizaRoadId = visitedList[index]._id;
+      dispatch(deleteVisitedChoizaRoad(visitedChoizaRoadId))
+        .then(response => {
+          const newVisitedList = visitedList.map((visitedItem, ix) => {
+            if (ix === index) {
+              return {
+                isVisited: false
+              };
+            }
+            return visitedItem;
+          });
+
+          setVisitedList(newVisitedList);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   };
 

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import {
   registerRestaurant,
-  registerImg
+  registerJpegImg,
+  registerHeicImg
 } from "../../../_actions/restaurant_action";
 import { registerWishList } from "../../../_actions/wishList_action";
 import MapForEnroll from "../../containers/KakaoMap/MapForEnroll";
@@ -11,6 +12,16 @@ import { Button } from "react-bootstrap";
 import heic2any from "heic2any";
 import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
+
+const InputTitle = styled.div`
+  width: 30%;
+  margin: auto;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: left;
+  border-bottom: 1px solid black;
+  margin-bottom: 10px;
+`;
 
 const Input = styled.input`
   margin: 3px 0;
@@ -31,141 +42,219 @@ const Input = styled.input`
 `;
 
 function Enroll(props) {
+  // Input 관련 state
   const [Name, setName] = useState("");
+  const [SearchName, setSearchName] = useState("을지로3가");
   const [Address, setAddress] = useState("");
+  const [Rating, setRating] = useState(0);
   const [VisitedDate, setVisitedDate] = useState("");
-  const [ImageData, setImageData] = useState("");
-  const [ImageName, setImageName] = useState("");
-  const [isConverting, setIsConverting] = useState(false);
   const [eatingTime, setEatingTime] = useState(1);
   const [newMenuItem, setNewMenuItem] = useState("");
   const [menuItems, setMenuItems] = useState([]);
 
+  // JPEG 이미지
+  const [jpegImageData, setJpegImageData] = useState([]);
+  const [jpegCount, setJpegCount] = useState(0);
+
+  // HEIC 이미지
+  const [heicImageData, setHeicImageData] = useState([]);
+  const [heicImageName, setHeicImageName] = useState([]);
+  const [heicCount, setHeicCount] = useState(0);
+
+  // PreImages
+  const [preImages, setPreImages] = useState([]);
+
+  // HEIC 변환 중 여부
+  const [isConverting, setIsConverting] = useState(false);
+
+  // Toggle
+  const [Toggle, setToggle] = useState(true);
+
+  // Props, etc.
   const userId = window.sessionStorage.getItem("userId");
   const username = window.sessionStorage.getItem("username");
-
   const parentCompName = props.parentCompName;
+  const dispatch = useDispatch();
+  const inputRef = useRef();
 
-  const [SearchName, setSearchName] = useState("이태원 맛집");
-  const [Toggle, setToggle] = useState(true);
-  const [Rating, setRating] = useState(0);
-
-  const onRatingHandler = newRating => {
-    setRating(newRating);
-  };
-
+  // Handlers
   const onNameHandler = e => {
     setName(e.currentTarget.value);
-  };
-
-  const onAddressHandler = e => {
-    setAddress(e.currentTarget.value);
-  };
-
-  const onVisitedDateHandler = e => {
-    setVisitedDate(String(e.currentTarget.value));
-  };
-
-  const onImageDataHandler = e => {
-    e.preventDefault();
-
-    let file = e.target.files[0];
-    if (file.type === "image/heic") {
-      setIsConverting(true);
-      const reader = new FileReader();
-
-      reader.onloadend = function() {
-        const image = reader.result;
-        fetch(image)
-          .then(res => res.blob())
-          .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.7 }))
-          .then(conversionResult => {
-            // heic type 제거한 imageName
-            const splited = file.name.split(".");
-            const removedType = splited.slice(0, splited.length - 1);
-            const newImageName = removedType.join("");
-
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(conversionResult);
-            fileReader.onload = function(e) {
-              setImageData(e.target.result);
-              setImageName(newImageName);
-              setIsConverting(false);
-            };
-          })
-          .catch(err => {
-            console.log("err: ", err);
-          });
-      };
-      reader.readAsDataURL(file);
-    } else {
-      const formData = new FormData();
-      formData.append("restaurant_img", file);
-      setImageData(formData);
-      setImageName("");
-    }
   };
 
   const onChangeSearchNameHandler = e => {
     setSearchName(e.currentTarget.value);
   };
 
+  const onAddressHandler = e => {
+    setAddress(e.currentTarget.value);
+  };
+
+  const onRatingHandler = newRating => {
+    setRating(newRating);
+  };
+
+  const onVisitedDateHandler = e => {
+    setVisitedDate(String(e.currentTarget.value));
+  };
+
+  const onEatingTimeHandler = e => {
+    setEatingTime(parseInt(e.target.value));
+  };
+
   const onChangeNewMenuItem = e => {
     setNewMenuItem(e.currentTarget.value);
   };
 
-  const toggleHandler = () => {
-    setToggle(!Toggle);
+  const onMenuAddHandler = () => {
+    setMenuItems(menuItems.concat(newMenuItem));
+    setNewMenuItem("");
   };
 
-  const onKeyDown = e => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleHandler();
-    }
+  const onMenuDeleteHandler = index => {
+    setMenuItems(menuItems.filter((menu, menuIx) => menuIx !== index));
   };
 
-  const dispatch = useDispatch();
-  const onSubmitHandler = e => {
+  const onImageDataHandler = e => {
     e.preventDefault();
 
-    if (parentCompName === "MarkerPage") {
-      let body;
-      if (ImageName === "") {
-        body = ImageData;
+    const inputImageCnt = Object.keys(e.target.files).length;
+    if (inputImageCnt > 5) {
+      alert("이미지 파일은 5개를 초과할 수 없습니다");
+      return;
+    }
+
+    let heicTotalCnt = 0;
+    let jpegTotalCnt = 0;
+    Object.keys(e.target.files).forEach(key => {
+      if (e.target.files[key].type === "image/heic") {
+        heicTotalCnt += 1;
       } else {
-        body = {
-          img: ImageData,
-          imgName: ImageName
-        };
+        jpegTotalCnt += 1;
       }
-      dispatch(registerImg(body))
-        .then(response => {
-          const imgURL = response.payload.path;
+    });
 
-          const body = {
-            visitor: userId,
-            username: username,
-            name: Name,
-            address: Address,
-            date: VisitedDate,
-            imgURL: imgURL,
-            rating: Rating,
-            eatingTime: eatingTime,
-            menus: JSON.stringify(menuItems),
-            created: new Date().toLocaleString()
-          };
+    setIsConverting(true);
 
-          return dispatch(registerRestaurant(body));
-        })
+    // JPEG 관련 변수
+    const formData = new FormData();
+    const jpegPreImages = [];
+
+    // HEIC 관련 변수
+    const imageData = [];
+    const imageNames = [];
+    const heicPreImages = [];
+
+    let jpegCnt = 0;
+    let heicCnt = 0;
+    Object.keys(e.target.files).forEach((key, index) => {
+      const file = e.target.files[key];
+
+      if (file.type === "image/heic") {
+        const reader = new FileReader();
+
+        reader.onloadend = function() {
+          const image = reader.result;
+
+          fetch(image)
+            .then(res => res.blob())
+            .then(blob =>
+              heic2any({ blob, toType: "image/jpeg", quality: 0.7 })
+            )
+            .then(conversionResult => {
+              // heic type 제거한 imageName
+              const splited = file.name.split(".");
+              const removedType = splited.slice(0, splited.length - 1);
+              const newImageName = removedType.join("");
+
+              const fileReader = new FileReader();
+              fileReader.onload = function(e) {
+                heicCnt += 1;
+                heicPreImages.push(e.target.result);
+                imageData.push(e.target.result);
+                imageNames.push(newImageName);
+
+                if (heicCnt === heicTotalCnt) {
+                  setHeicImageData(imageData);
+                  setHeicImageName(imageNames);
+                  setHeicCount(heicCnt);
+
+                  setPreImages(preImages => preImages.concat(heicPreImages));
+                  setIsConverting(false);
+                }
+              };
+              fileReader.readAsDataURL(conversionResult);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        };
+        reader.readAsDataURL(file);
+      } else {
+        formData.append("restaurant_jpeg_img", file);
+        const reader = new FileReader();
+        reader.onload = () => {
+          jpegCnt += 1;
+          jpegPreImages.push(reader.result);
+
+          if (jpegCnt === jpegTotalCnt) {
+            setJpegCount(jpegCnt);
+            setPreImages(preImages => preImages.concat(jpegPreImages));
+          }
+          if (heicTotalCnt === 0) {
+            setIsConverting(false);
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+    setJpegImageData(formData);
+  };
+
+  const onSubmitHandler = async e => {
+    e.preventDefault();
+
+    // 나의 맛집
+    if (parentCompName === "MarkerPage") {
+      // JPEG 저장
+      let jpegPath = [];
+      if (jpegCount) {
+        const response = await dispatch(registerJpegImg(jpegImageData));
+        jpegPath = response.payload.fileNames;
+      }
+
+      // HEIC 저장
+      let heicPath = [];
+      if (heicCount) {
+        const heicBody = {
+          images: heicImageData,
+          imgNames: heicImageName
+        };
+        const response = await dispatch(registerHeicImg(heicBody));
+        heicPath = response.payload.fileNames;
+      }
+
+      const imagePath = jpegPath.concat(heicPath).join(",");
+
+      const body = {
+        visitor: userId,
+        username: username,
+        name: Name,
+        address: Address,
+        date: VisitedDate,
+        imgURL: imagePath,
+        rating: Rating,
+        eatingTime: eatingTime,
+        menus: JSON.stringify(menuItems),
+        created: new Date().toLocaleString()
+      };
+
+      dispatch(registerRestaurant(body))
         .then(response => {
           if (response.payload.success) {
             setName("");
             setAddress("");
             setVisitedDate("");
-            setImageData("");
-            setImageName("");
             setRating(0);
             setEatingTime(1);
             setMenuItems([]);
@@ -177,9 +266,10 @@ function Enroll(props) {
           }
         })
         .catch(err => {
-          console.log("registerRestaurant err: ", err);
+          console.log(err);
         });
     } else if (parentCompName === "WishPage") {
+      // 위시 맛집
       const body = {
         user: userId,
         username: username,
@@ -201,13 +291,29 @@ function Enroll(props) {
     }
   };
 
-  const onMenuAddHandler = () => {
-    setMenuItems(menuItems.concat(newMenuItem));
-    setNewMenuItem("");
+  const toggleHandler = () => {
+    setToggle(!Toggle);
   };
 
-  const onMenuDeleteHandler = index => {
-    setMenuItems(menuItems.filter((menu, menuIx) => menuIx !== index));
+  const onKeyDown = e => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleHandler();
+    }
+  };
+
+  const initAllImages = () => {
+    inputRef.current.value = "";
+
+    setJpegImageData([]);
+    setJpegCount(0);
+
+    setHeicImageData([]);
+    setHeicImageName([]);
+    setHeicCount(0);
+
+    setPreImages([]);
   };
 
   return (
@@ -267,19 +373,7 @@ function Enroll(props) {
 
       <form onSubmit={onSubmitHandler} encType="multipart/form-data">
         <div style={{ margin: "5px" }}>
-          <div
-            style={{
-              width: "30%",
-              margin: "auto",
-              fontWeight: "bold",
-              fontSize: "1rem",
-              textAlign: "left",
-              borderBottom: "1px solid black",
-              marginBottom: "5px"
-            }}
-          >
-            맛집 이름 & 주소(위에서 맛집 검색 후 선택)
-          </div>
+          <InputTitle>맛집 이름 & 주소(위에서 맛집 검색 후 선택)</InputTitle>
           <Input
             type="text"
             value={Name}
@@ -306,18 +400,7 @@ function Enroll(props) {
                 margin: "5px"
               }}
             >
-              <div
-                style={{
-                  width: "30%",
-                  margin: "auto",
-                  fontWeight: "bold",
-                  fontSize: "1rem",
-                  textAlign: "left",
-                  borderBottom: "1px solid black"
-                }}
-              >
-                별점
-              </div>
+              <InputTitle>별점</InputTitle>
               <div style={{ display: "inline-block" }}>
                 <ReactStars
                   count={5}
@@ -331,19 +414,7 @@ function Enroll(props) {
             </div>
 
             <div style={{ margin: "5px" }}>
-              <div
-                style={{
-                  width: "30%",
-                  margin: "auto",
-                  fontWeight: "bold",
-                  fontSize: "1rem",
-                  textAlign: "left",
-                  borderBottom: "1px solid black",
-                  marginBottom: "10px"
-                }}
-              >
-                방문 일시
-              </div>
+              <InputTitle>방문 일시</InputTitle>
               <input
                 type="date"
                 value={VisitedDate}
@@ -354,7 +425,7 @@ function Enroll(props) {
                 id="select"
                 value={eatingTime}
                 style={{ marginLeft: "5px" }}
-                onChange={e => setEatingTime(parseInt(e.target.value))}
+                onChange={e => onEatingTimeHandler(e)}
               >
                 <option value="1">아침</option>
                 <option value="2">점심</option>
@@ -365,19 +436,7 @@ function Enroll(props) {
 
             <div>
               <div style={{ margin: "5px" }}>
-                <div
-                  style={{
-                    width: "30%",
-                    margin: "auto",
-                    fontWeight: "bold",
-                    fontSize: "1rem",
-                    textAlign: "left",
-                    borderBottom: "1px solid black",
-                    marginBottom: "10px"
-                  }}
-                >
-                  메뉴
-                </div>
+                <InputTitle>메뉴</InputTitle>
                 <Input
                   type="text"
                   value={newMenuItem}
@@ -409,54 +468,56 @@ function Enroll(props) {
                 ))
               : null}
 
-            <div
-              style={{
-                margin: "5px"
-              }}
-            >
-              <div
-                style={{
-                  width: "30%",
-                  margin: "auto",
-                  fontWeight: "bold",
-                  fontSize: "1rem",
-                  textAlign: "left",
-                  borderBottom: "1px solid black",
-                  marginBottom: "10px"
-                }}
-              >
-                이미지 업로드
-              </div>
+            <div style={{ margin: "5px" }}>
+              <InputTitle>이미지 업로드</InputTitle>
               <div style={{ display: "inline-block" }}>
                 <input
                   type="file"
+                  ref={inputRef}
                   onChange={onImageDataHandler}
                   style={{ width: "60%" }}
+                  multiple
                 />
+              </div>
+              {preImages.length > 0 && isConverting === false ? (
+                <div style={{ marginTop: "10px" }}>
+                  <Button variant="danger" onClick={() => initAllImages()}>
+                    초기화
+                  </Button>
+                </div>
+              ) : null}
+              <div style={{ marginTop: "10px" }}>
+                {preImages.length > 0
+                  ? preImages.map((preImage, index) => {
+                      return (
+                        <div
+                          key={index}
+                          style={{ display: "inline-block", margin: "5px" }}
+                        >
+                          <img
+                            src={preImage}
+                            alt={"jpeg"}
+                            width="100px"
+                            height="100px"
+                          />
+                        </div>
+                      );
+                    })
+                  : null}
               </div>
             </div>
           </>
         ) : null}
         <div>
           <hr />
-          {isConverting ? (
-            <Button
-              variant="danger"
-              style={{ margin: "20px", width: "10%" }}
-              type="submit"
-              disabled
-            >
-              등록
-            </Button>
-          ) : (
-            <Button
-              variant="primary"
-              style={{ margin: "20px", width: "10%" }}
-              type="submit"
-            >
-              등록
-            </Button>
-          )}
+          <Button
+            variant={isConverting ? "danger" : "primary"}
+            style={{ margin: "20px", width: "10%" }}
+            type="submit"
+            disabled={isConverting ? true : false}
+          >
+            등록
+          </Button>
         </div>
       </form>
     </div>

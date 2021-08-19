@@ -8,7 +8,8 @@ import {
   REGISTER_RESTAURANT,
   DELETE_RESTAURANT,
   UPDATE_RESTAURANT,
-  REGISTER_IMG
+  REGISTER_JPEG_IMG,
+  REGISTER_HEIC_IMG
 } from "./types";
 
 export function readRestaurants(dataToSubmit) {
@@ -101,13 +102,24 @@ export function updateRestaurant(dataToSubmit) {
   };
 }
 
-export function registerImg(dataToSubmit) {
+export function registerJpegImg(dataToSubmit) {
   const request = axios
-    .post("/api/img", dataToSubmit)
+    .post("/api/img/jpeg", dataToSubmit)
     .then(response => response.data);
 
   return {
-    type: REGISTER_IMG,
+    type: REGISTER_JPEG_IMG,
+    payload: request
+  };
+}
+
+export function registerHeicImg(dataToSubmit) {
+  const request = axios
+    .post("/api/img/heic", dataToSubmit)
+    .then(response => response.data);
+
+  return {
+    type: REGISTER_HEIC_IMG,
     payload: request
   };
 }

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { Card, Col, Dropdown } from "react-bootstrap";
+import { Card, Col, Dropdown, Carousel } from "react-bootstrap";
 import UpdateModal from "../../containers/UpdateModal/UpdateModal";
 import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
 import ReactStars from "react-rating-stars-component";
+import "./RestaurantListItem.css";
 
 const eatingObj = {
   "1": "아침",
@@ -30,9 +31,9 @@ function RestaurantListItem(props) {
 
   const restaurantDateSplit = String(restaurant.date).split("-");
   const restaurantDate = `${restaurantDateSplit[0]}년 ${restaurantDateSplit[1]}월 ${restaurantDateSplit[2]}일`;
-  const [Toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(false);
   const [mapToggle, setMapToggle] = useState(false);
-  const Rating = restaurant.rating;
+  const rating = restaurant.rating;
 
   let menus = "";
   if (restaurant.menus) {
@@ -50,8 +51,15 @@ function RestaurantListItem(props) {
   };
 
   const updateHandler = e => {
-    setToggle(!Toggle);
+    setToggle(!toggle);
   };
+
+  let imgUrls = [];
+  let isMultipleImages = false;
+  if (restaurant.imgURL) {
+    imgUrls = restaurant.imgURL.split(",");
+    isMultipleImages = imgUrls.length > 1 ? true : false;
+  }
 
   return restaurant.address ? (
     <>
@@ -94,7 +102,7 @@ function RestaurantListItem(props) {
             >
               <ReactStars
                 count={5}
-                value={Rating}
+                value={rating}
                 edit={false}
                 size={35}
                 isHalf={true}
@@ -109,29 +117,43 @@ function RestaurantListItem(props) {
                 overflow: "hidden"
               }}
             >
-              <Card.Img
-                variant="top"
-                src={`http://localhost:5000/${restaurant.imgURL}`}
-                style={{
-                  width: "60%",
-                  height: "100%"
-                }}
-              />
+              <Carousel
+                variant="dark"
+                interval={null}
+                controls={isMultipleImages}
+                indicators={isMultipleImages}
+              >
+                {imgUrls.map((url, index) => {
+                  return (
+                    <Carousel.Item key={index}>
+                      <Card.Img
+                        variant="top"
+                        src={url}
+                        style={{
+                          width: "60%",
+                          height: "100%"
+                        }}
+                      />
+                    </Carousel.Item>
+                  );
+                })}
+              </Carousel>
             </div>
           </Card.Body>
         </Card>
       </Col>
-      {Toggle ? (
+      {toggle ? (
         <UpdateModal
-          Toggle={Toggle}
+          type="RestaurantListItem"
+          toggle={toggle}
           setToggle={setToggle}
           restaurantName={restaurant.name}
           restaurantId={restaurant._id}
           restaurantDate={restaurant.date}
-          Rating={Rating}
+          restaurantImgUrls={imgUrls}
+          rating={rating}
           eatingTime={restaurant.eatingTime}
           menus={restaurant.menus}
-          type="RestaurantListItem"
         />
       ) : null}
       <KakaoMapModal
