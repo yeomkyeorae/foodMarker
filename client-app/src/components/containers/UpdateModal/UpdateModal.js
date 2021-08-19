@@ -418,11 +418,13 @@ function UpdateModal(props) {
             multiple
           />
         </div>
-        <div style={{ marginTop: "10px" }}>
-          <Button variant="danger" onClick={() => initAllImages()}>
-            초기화
-          </Button>
-        </div>
+        {preImages.length > 0 && isConverting === false ? (
+          <div style={{ marginTop: "10px" }}>
+            <Button variant="danger" onClick={() => initAllImages()}>
+              초기화
+            </Button>
+          </div>
+        ) : null}
         <div style={{ marginTop: "10px", margin: "auto" }}>
           {preImages && preImages.length > 0
             ? preImages.map((url, index) => {
