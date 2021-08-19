@@ -7,7 +7,8 @@ import { useDispatch } from "react-redux";
 import {
   updateRestaurant,
   registerRestaurant,
-  registerJpegImg
+  registerJpegImg,
+  registerHeicImg
 } from "../../../_actions/restaurant_action";
 import styled from "styled-components";
 
@@ -65,18 +66,18 @@ function UpdateModal(props) {
   const [newMenuItem, setNewMenuItem] = useState("");
   const [menuItems, setMenuItems] = useState(menus ? JSON.parse(menus) : []);
 
-  const [ImageData, setImageData] = useState("");
-  const [ImageName, setImageName] = useState("");
   // JPEG 이미지
-  // const [jpegImageData, setJpegImageData] = useState([]);
-  // const [jpegCount, setJpegCount] = useState(0);
-  // const [jpegPreImages, setJpegPreImages] = useState([]);
+  const [jpegImageData, setJpegImageData] = useState([]);
+  const [jpegCount, setJpegCount] = useState(0);
 
   // HEIC 이미지
-  // const [heicImageData, setHeicImageData] = useState([]);
-  // const [heicImageName, setHeicImageName] = useState([]);
-  // const [heicCount, setHeicCount] = useState(0);
-  // const [heicPreImages, setHeicPreImages] = useState([]);
+  const [heicImageData, setHeicImageData] = useState([]);
+  const [heicImageName, setHeicImageName] = useState([]);
+  const [heicCount, setHeicCount] = useState(0);
+
+  const [preImages, setPreImages] = useState(
+    restaurantImgUrls ? restaurantImgUrls : []
+  );
 
   // HEIC 변환 중 여부
   const [isConverting, setIsConverting] = useState(false);
@@ -106,109 +107,171 @@ function UpdateModal(props) {
   const onImageDataHandler = e => {
     e.preventDefault();
 
-    let file = e.target.files[0];
-    if (file.type === "image/heic") {
-      setIsConverting(true);
-      const reader = new FileReader();
-
-      reader.onloadend = function() {
-        const image = reader.result;
-        fetch(image)
-          .then(res => res.blob())
-          .then(blob => heic2any({ blob, toType: "image/jpeg", quality: 0.7 }))
-          .then(conversionResult => {
-            // heic type 제거한 imageName
-            const splited = file.name.split(".");
-            const removedType = splited.slice(0, splited.length - 1);
-            const newImageName = removedType.join("");
-
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(conversionResult);
-            fileReader.onload = function(e) {
-              setImageData(e.target.result);
-              setImageName(newImageName);
-              setIsConverting(false);
-            };
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      };
-      reader.readAsDataURL(file);
-    } else {
-      const formData = new FormData();
-      formData.append("restaurant_img", file);
-      setImageData(formData);
-      setImageName("");
+    const inputImageCnt = Object.keys(e.target.files).length;
+    if (inputImageCnt > 5) {
+      alert("이미지 파일은 5개를 초과할 수 없습니다");
+      return;
     }
-  };
 
-  const changeRestaurant = e => {
-    e.preventDefault();
-
-    if (ImageData !== "") {
-      let body;
-      if (ImageName === "") {
-        body = ImageData;
+    let heicTotalCnt = 0;
+    let jpegTotalCnt = 0;
+    Object.keys(e.target.files).forEach(key => {
+      if (e.target.files[key].type === "image/heic") {
+        heicTotalCnt += 1;
       } else {
-        body = {
-          img: ImageData,
-          imgName: ImageName
-        };
+        jpegTotalCnt += 1;
       }
-      dispatch(registerJpegImg(body)).then(response => {
-        const imgURL = response.payload.path;
+    });
 
-        const body = {
-          restaurantId: restaurantId,
-          date: visitedDate,
-          imgURL: imgURL,
-          rating: newRating,
-          eatingTime: newEatingTime,
-          menus: JSON.stringify(menuItems)
+    setIsConverting(true);
+
+    // JPEG 관련 변수
+    const formData = new FormData();
+    const jpegPreImages = [];
+
+    // HEIC 관련 변수
+    const imageData = [];
+    const imageNames = [];
+    const heicPreImages = [];
+
+    let jpegCnt = 0;
+    let heicCnt = 0;
+    Object.keys(e.target.files).forEach((key, index) => {
+      const file = e.target.files[key];
+
+      if (file.type === "image/heic") {
+        const reader = new FileReader();
+
+        reader.onloadend = function() {
+          const image = reader.result;
+
+          fetch(image)
+            .then(res => res.blob())
+            .then(blob =>
+              heic2any({ blob, toType: "image/jpeg", quality: 0.7 })
+            )
+            .then(conversionResult => {
+              // heic type 제거한 imageName
+              const splited = file.name.split(".");
+              const removedType = splited.slice(0, splited.length - 1);
+              const newImageName = removedType.join("");
+
+              const fileReader = new FileReader();
+              fileReader.onload = function(e) {
+                heicCnt += 1;
+                heicPreImages.push(e.target.result);
+                imageData.push(e.target.result);
+                imageNames.push(newImageName);
+
+                if (heicCnt === heicTotalCnt) {
+                  setHeicImageData(imageData);
+                  setHeicImageName(imageNames);
+                  setHeicCount(heicCnt);
+
+                  setPreImages(preImages => preImages.concat(heicPreImages));
+
+                  setIsConverting(false);
+                }
+              };
+              fileReader.readAsDataURL(conversionResult);
+            })
+            .catch(err => {
+              console.log(err);
+            });
         };
+        reader.readAsDataURL(file);
+      } else {
+        formData.append("restaurant_jpeg_img", file);
+        const reader = new FileReader();
+        reader.onload = () => {
+          jpegCnt += 1;
+          jpegPreImages.push(reader.result);
 
-        dispatch(updateRestaurant(body))
-          .then(response => {
-            if (response.payload.success) {
-              alert("수정되었습니다.");
-              setToggle(!toggle);
-            } else {
-              alert("error");
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      });
-    } else {
-      const body = {
-        restaurantId: restaurantId,
-        date: visitedDate,
-        rating: newRating,
-        eatingTime: newEatingTime,
-        menus: JSON.stringify(menuItems)
-      };
-
-      dispatch(updateRestaurant(body))
-        .then(response => {
-          if (response.payload.success) {
-            alert("수정되었습니다.");
-            setToggle(!toggle);
-            setImageData("");
-            setImageName("");
-          } else {
-            alert("error");
+          if (jpegCnt === jpegTotalCnt) {
+            setJpegCount(jpegCnt);
+            setPreImages(preImages => preImages.concat(jpegPreImages));
           }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
+          if (heicTotalCnt === 0) {
+            setIsConverting(false);
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+    setJpegImageData(formData);
   };
 
-  const moveToMain = e => {
+  const changeRestaurant = async e => {
     e.preventDefault();
+
+    // JPEG 저장
+    let jpegPath = [];
+    if (jpegCount) {
+      const response = await dispatch(registerJpegImg(jpegImageData));
+      jpegPath = response.payload.fileNames;
+    }
+
+    // HEIC 저장
+    let heicPath = [];
+    if (heicCount) {
+      const heicBody = {
+        images: heicImageData,
+        imgNames: heicImageName
+      };
+      const response = await dispatch(registerHeicImg(heicBody));
+      heicPath = response.payload.fileNames;
+    }
+
+    const imagePath = jpegPath.concat(heicPath).join(",");
+    const imgURL = imagePath.length > 0 ? imagePath : preImages;
+
+    const body = {
+      restaurantId: restaurantId,
+      date: visitedDate,
+      imgURL: imgURL,
+      rating: newRating,
+      eatingTime: newEatingTime,
+      menus: JSON.stringify(menuItems)
+    };
+
+    dispatch(updateRestaurant(body))
+      .then(response => {
+        if (response.payload.success) {
+          alert("수정되었습니다.");
+          setToggle(!toggle);
+        } else {
+          alert("error");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const delWishEnrollRestaurant = async e => {
+    e.preventDefault();
+
+    // JPEG 저장
+    let jpegPath = [];
+    if (jpegCount) {
+      const response = await dispatch(registerJpegImg(jpegImageData));
+      jpegPath = response.payload.fileNames;
+    }
+
+    // HEIC 저장
+    let heicPath = [];
+    if (heicCount) {
+      const heicBody = {
+        images: heicImageData,
+        imgNames: heicImageName
+      };
+      const response = await dispatch(registerHeicImg(heicBody));
+      heicPath = response.payload.fileNames;
+    }
+
+    const imagePath = jpegPath.concat(heicPath).join(",");
+    const imgURL = imagePath.length > 0 ? imagePath : preImages;
+
     const userId = window.sessionStorage.getItem("userId");
 
     const body = {
@@ -216,7 +279,7 @@ function UpdateModal(props) {
       name: wishListName,
       address: wishListAddress,
       date: visitedDate,
-      imgURL: ImageData,
+      imgURL: imgURL,
       rating: newRating,
       eatingTime: newEatingTime,
       menus: JSON.stringify(menuItems)
@@ -240,6 +303,15 @@ function UpdateModal(props) {
 
   const initAllImages = () => {
     inputRef.current.value = "";
+
+    setJpegImageData([]);
+    setJpegCount(0);
+
+    setHeicImageData([]);
+    setHeicImageName([]);
+    setHeicCount(0);
+
+    setPreImages([]);
   };
 
   return (
@@ -352,19 +424,14 @@ function UpdateModal(props) {
           </Button>
         </div>
         <div style={{ marginTop: "10px", margin: "auto" }}>
-          {restaurantImgUrls && restaurantImgUrls.length > 0
-            ? restaurantImgUrls.map((url, index) => {
+          {preImages && preImages.length > 0
+            ? preImages.map((url, index) => {
                 return (
                   <div
                     key={index}
                     style={{ display: "inline-block", margin: "5px" }}
                   >
-                    <img
-                      src={`http://localhost:5000/${url}`}
-                      alt={"jpeg"}
-                      width="100px"
-                      height="100px"
-                    />
+                    <img src={url} alt={"jpeg"} width="100px" height="100px" />
                   </div>
                 );
               })
@@ -382,7 +449,7 @@ function UpdateModal(props) {
             {type === "WishListItem" ? "방문 표시하기" : "수정하기"}
           </Button>
         ) : type === "WishListItem" ? (
-          <Button variant="success" onClick={moveToMain}>
+          <Button variant="success" onClick={delWishEnrollRestaurant}>
             방문 표시하기
           </Button>
         ) : (
