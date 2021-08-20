@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 const { kakao } = window;
 
 function MapForEnroll(props) {
-  const { Toggle, setName, setAddress } = props;
+  const { toggle, setName, setAddress } = props;
 
   useEffect(() => {
     kakao.maps.load(() => {
@@ -235,7 +235,7 @@ function MapForEnroll(props) {
         }
       }
     });
-  }, [Toggle, setAddress, setName]);
+  }, [toggle, setAddress, setName]);
 
   return (
     <div className="map_wrap" style={{ display: "inline-block", width: "50%" }}>
