@@ -61,7 +61,9 @@ function UpdateModal(props) {
   } = props;
 
   const [newRating, setNewRating] = useState(rating ? rating : 0);
-  const [visitedDate, setVisitedDate] = useState(restaurantDate);
+  const [visitedDate, setVisitedDate] = useState(
+    restaurantDate ? restaurantDate : ""
+  );
   const [newEatingTime, setNewEatingTime] = useState(eatingTime);
   const [newMenuItem, setNewMenuItem] = useState("");
   const [menuItems, setMenuItems] = useState(menus ? JSON.parse(menus) : []);
@@ -250,6 +252,11 @@ function UpdateModal(props) {
 
   const delWishEnrollRestaurant = async e => {
     e.preventDefault();
+
+    if (visitedDate.length === 0) {
+      alert("방문 날짜를 입력해주세요!");
+      return;
+    }
 
     // JPEG 저장
     let jpegPath = [];

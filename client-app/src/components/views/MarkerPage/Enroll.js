@@ -214,8 +214,18 @@ function Enroll(props) {
   const onSubmitHandler = async e => {
     e.preventDefault();
 
+    if (name.length === 0 || address.length === 0) {
+      alert("식당을 검색해서 선택해 주세요!");
+      return;
+    }
+
     // 나의 맛집
     if (parentCompName === "MarkerPage") {
+      if (visitedDate.length === 0) {
+        alert("방문 날짜를 입력해주세요!");
+        return;
+      }
+
       // JPEG 저장
       let jpegPath = [];
       if (jpegCount) {
