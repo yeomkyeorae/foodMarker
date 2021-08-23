@@ -5,7 +5,7 @@ import { logoutUser } from "../../../_actions/user_action";
 import styled from "styled-components";
 
 const H2 = styled.h2`
-  color: ${props => (props.color ? props.color : "black")};
+  color: #c1e8c2;
   &:hover {
     color: #4caf50;
     text-decoration: none;
@@ -64,7 +64,7 @@ function NavbarComp(props) {
           to={{ pathname: "/main", state: userId, menu: 0 }}
           style={{ textDecoration: "none" }}
         >
-          <H2 color={selectedMenu === 0 ? "#4caf50" : "black"}>Food Marker</H2>
+          <H2>Food Marker</H2>
         </Link>
       </div>
       <div style={{ display: "inline-block" }}>
