@@ -64,7 +64,6 @@ const Btn = styled.button`
 
 const Span = styled.span`
   &:hover {
-    color: #4caf50;
     cursor: pointer;
   }
 `;
