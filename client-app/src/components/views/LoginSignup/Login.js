@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../_actions/user_action";
 import { withRouter } from "react-router-dom";
@@ -73,6 +73,11 @@ function Login(props) {
   const [Password, setPassword] = useState("");
   const dispatch = useDispatch();
 
+  const inputRef = useRef();
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   const onEmailHandler = e => {
     setEmail(e.currentTarget.value);
   };
@@ -115,6 +120,7 @@ function Login(props) {
             value={Email}
             placeholder="이메일"
             onChange={onEmailHandler}
+            ref={inputRef}
           />
         </TextBox>
         <TextBox>
