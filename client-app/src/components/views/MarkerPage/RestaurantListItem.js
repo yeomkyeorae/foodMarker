@@ -4,7 +4,25 @@ import { Card, Col, Dropdown, Carousel } from "react-bootstrap";
 import UpdateModal from "../../containers/UpdateModal/UpdateModal";
 import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
 import ReactStars from "react-rating-stars-component";
+import styled from "styled-components";
 import "./RestaurantListItem.css";
+
+const Arrow = styled.div`
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  display: inline-block;
+  ${props =>
+    props.right
+      ? `border-left: 10px solid #46CB18;`
+      : `border-right: 10px solid #46CB18;`}
+  ${props =>
+    props.right ? `margin-left: 10px;` : `margin-right: 10px;`}
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 const eatingObj = {
   "1": "아침",
@@ -113,8 +131,7 @@ function RestaurantListItem(props) {
             <div
               style={{
                 width: "100%",
-                height: "360px",
-                overflow: "hidden"
+                height: "360px"
               }}
             >
               <Carousel
@@ -122,11 +139,17 @@ function RestaurantListItem(props) {
                 interval={null}
                 controls={isMultipleImages}
                 indicators={isMultipleImages}
+                prevLabel={""}
+                prevIcon={<Arrow right={false} />}
+                nextLabel={""}
+                nextIcon={<Arrow right={true} />}
+                className="carousel"
               >
                 {imgUrls.map((url, index) => {
                   return (
                     <Carousel.Item key={index}>
                       <Card.Img
+                        className="responsive-image"
                         variant="top"
                         src={url}
                         style={{

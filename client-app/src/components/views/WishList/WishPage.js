@@ -57,6 +57,7 @@ function WishPage(props) {
             {Menu}
           </Button>
         </div>
+        <hr />
         {MenuComponent}
       </div>
       <Footer />
