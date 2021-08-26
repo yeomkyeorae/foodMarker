@@ -50,7 +50,7 @@ function MarkerPage(props) {
         <hr />
         <div style={{}}>
           <Button
-            variant="info"
+            variant="primary"
             onClick={onClickChangeMenuHandler}
             style={{ margin: "20px" }}
           >
