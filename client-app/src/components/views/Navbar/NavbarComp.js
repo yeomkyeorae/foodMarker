@@ -3,23 +3,33 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../_actions/user_action";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
-const H2 = styled.h2`
+const TopNav = styled.div`
+  height: 50px;
+  display: flex;
+  align-items: center;
+`;
+
+const Home = styled.div`
+  height: 100%;
+  width: 200px;
   color: #c1e8c2;
   &:hover {
     color: #4caf50;
     text-decoration: none;
   }
+  font-size: 2rem;
   font-weight: 500;
 `;
 
-const Div = styled.div`
-  display: inline-block;
-  width: 10rem;
-`;
-
-const Span = styled.span`
-  color: ${props => (props.color ? props.color : "black")};
+const Menu = styled.div`
+  height: 100%;
+  width: 10vw;
+  text-align: center;
+  text-decoration: none;
+  color: ${props => (props.color === "true" ? "#4caf50" : "black")};
   &:hover {
     color: #4caf50;
     text-decoration: none;
@@ -27,9 +37,14 @@ const Span = styled.span`
   font-weight: 200;
 `;
 
+const Icon = styled.div`
+  width: 10vw;
+`;
+
 const LogoutDiv = styled.div`
+  cursor: pointer;
   width: 10rem;
-  float: right;
+  margin-left: auto;
 `;
 
 function NavbarComp(props) {
@@ -50,82 +65,48 @@ function NavbarComp(props) {
   };
 
   return (
-    <div style={{ height: "50px" }}>
-      <div
-        href="/"
-        style={{
-          color: "skyblue",
-          display: "inline-block",
-          float: "left",
-          paddingLeft: "50px"
-        }}
+    <TopNav>
+      <Link
+        to={{ pathname: "/main", state: userId, menu: 0 }}
+        style={{ textDecoration: "none" }}
       >
-        <Link
-          to={{ pathname: "/main", state: userId, menu: 0 }}
-          style={{ textDecoration: "none" }}
-        >
-          <H2>Food Marker</H2>
-        </Link>
-      </div>
-      <div style={{ display: "inline-block" }}>
-        <Div>
-          <Link
-            to={{ pathname: "/current-location", state: userId, menu: 1 }}
-            style={{ textDecoration: "none" }}
-          >
-            <Span color={selectedMenu === 1 ? "#4caf50" : "black"}>
-              현재 주변 맛집
-            </Span>
-          </Link>
-        </Div>
-        <Div>
-          <Link
-            to={{ pathname: "/marker", state: userId, menu: 2 }}
-            style={{ textDecoration: "none" }}
-          >
-            <Span color={selectedMenu === 2 ? "#4caf50" : "black"}>
-              나의 맛집
-            </Span>
-          </Link>
-        </Div>
-        <Div>
-          <Link
-            to={{ pathname: "/wish", state: userId, menu: 3 }}
-            style={{
-              textDecoration: "none",
-              color: "red"
-            }}
-          >
-            <Span color={selectedMenu === 3 ? "#4caf50" : "black"}>
-              위시 맛집
-            </Span>
-          </Link>
-        </Div>
-        <Div>
-          <Link
-            to={{ pathname: "/choizaroad", state: userId, menu: 4 }}
-            style={{
-              textDecoration: "none",
-              color: "red"
-            }}
-          >
-            <Span color={selectedMenu === 4 ? "#4caf50" : "black"}>
-              최자 로드
-            </Span>
-          </Link>
-        </Div>
-      </div>
-      <LogoutDiv
-        onClick={onClickHandler}
-        style={{
-          cursor: "pointer",
-          display: "inline-block",
-          width: "10rem"
-        }}
-      >
+        <Home>Food Marker</Home>
+      </Link>
+      <Link
+        to={{ pathname: "/current-location", state: userId, menu: 1 }}
+        style={{ textDecoration: "none" }}>
+        <Menu color={`${selectedMenu === 1}`}>
+          현재 주변 맛집
+        </Menu>
+      </Link>
+      <Link
+        to={{ pathname: "/marker", state: userId, menu: 2 }}
+        style={{ textDecoration: "none" }}>
+        <Menu color={`${selectedMenu === 2}`}>
+          나의 맛집
+        </Menu>
+      </Link>
+      <Link
+        to={{ pathname: "/wish", state: userId, menu: 3 }}
+        style={{ textDecoration: "none" }}>
+        <Menu color={`${selectedMenu === 3}`}>
+          위시 맛집
+        </Menu>
+      </Link>
+      <Link
+        to={{ pathname: "/choizaroad", state: userId, menu: 4 }}
+        style={{ textDecoration: "none" }}>
+        <Menu color={`${selectedMenu === 4}`}>
+          최자 로드
+        </Menu>
+      </Link>
+        <Icon>
+          <FontAwesomeIcon icon={faBars} />
+        </Icon>
+      <LogoutDiv onClick={onClickHandler}>
         <span style={{ color: "red" }}>로그아웃</span>
       </LogoutDiv>
-    </div>
+    </TopNav>
   );
 }
 
