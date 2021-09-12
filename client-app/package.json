@@ -15,7 +15,7 @@
     "bootstrap": "^5.1.0",
     "heic2any": "0.0.3",
     "http-proxy-middleware": "^1.0.5",
-    "react-bootstrap": "^1.6.1",
+    "react-bootstrap": "^2.0.0-beta.6",
     "react-icons": "^4.2.0",
     "react-rating-stars-component": "^2.2.0",
     "react-redux": "^7.2.1",
