@@ -16,6 +16,25 @@ const H2 = styled.h2`
   font-weight: 100;
 `;
 
+const FoodMarkerTitle = styled.div`
+  display: flex;
+  height: 10vh;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 992px) {
+    height: 20vh;
+  }
+`;
+
+const FoodMarkerExplanation = styled.div`
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  @media screen and (max-width: 992px) {
+    display: none;
+  }
+`;
+
 const P = styled.p`
   width: 50px;
   cursor: pointer;
@@ -105,32 +124,14 @@ function MainPage(props) {
       >
         <NavbarComp userId={userId} history={props.history} />
         <div style={{ backgroundColor: "#FAF7F2" }}>
-          <div
-            style={{
-              display: "flex",
-              height: "10vh",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <div
-              style={{
-                width: "90%",
-                textAlign: "left"
-              }}
-            >
-              <span style={{ fontWeight: "800", fontSize: "2rem" }}>
+          <FoodMarkerTitle>
+            <div>
+              <span style={{ fontWeight: "800", fontSize: "2rem", textAlign: "center" }}>
                 푸드마커로 맛집의 지도를 완성해 보세요
               </span>
             </div>
-          </div>
-          <div
-            style={{
-              height: "30vh",
-              display: "flex",
-              justifyContent: "center"
-            }}
-          >
+          </FoodMarkerTitle>
+          <FoodMarkerExplanation>
             <div style={{ margin: "auto", textAlign: "left" }}>
               <span style={{ fontWeight: "500", fontSize: "1.5rem" }}>
                 나의 맛집
@@ -160,7 +161,7 @@ function MainPage(props) {
               <br />
               <span></span>
             </div>
-          </div>
+          </FoodMarkerExplanation>
         </div>
         <div style={{ padding: "5px" }}>
           <H2>나의 맛집 지도</H2>
