@@ -13,10 +13,14 @@ function CurrentLocation(props) {
   useEffect(() => {
     if (navigator.geolocation) {
       //위치 정보
-      navigator.geolocation.getCurrentPosition(pos => {
-        setLatitude(pos.coords.latitude);
-        setLongtitude(pos.coords.longitude);
-      });
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          setLatitude(pos.coords.latitude);
+          setLongtitude(pos.coords.longitude);
+        },
+        () => {},
+        { enableHighAccuracy: true, maximumAge: 0, timeout: 3000 }
+      );
     } else {
       alert(
         "이 브라우저에서는 사용자 현재 위치 기반 주변 맛집 기능이 지원되지 않습니다."

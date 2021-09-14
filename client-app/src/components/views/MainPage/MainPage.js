@@ -16,6 +16,49 @@ const H2 = styled.h2`
   font-weight: 100;
 `;
 
+const FoodMarkerTitle = styled.div`
+  display: flex;
+  height: 10vh;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 992px) {
+    height: 20vh;
+  }
+`;
+
+const FoodMarkerExplanation = styled.div`
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  @media screen and (max-width: 992px) {
+    display: none;
+  }
+`;
+
+const OrderList = styled.ol`
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 80%;
+  margin: 0;
+  padding: 0;
+`;
+
+const List = styled.li`
+  flex: 20%;
+  @media screen and (max-width: 992px) {
+    flex: 25%;
+  }
+  @media screen and (max-width: 630px) {
+    flex: 50%;
+  }
+  @media screen and (max-width: 384px) {
+    flex: 100%;
+  }
+`;
+
 const P = styled.p`
   width: 50px;
   cursor: pointer;
@@ -105,32 +148,14 @@ function MainPage(props) {
       >
         <NavbarComp userId={userId} history={props.history} />
         <div style={{ backgroundColor: "#FAF7F2" }}>
-          <div
-            style={{
-              display: "flex",
-              height: "10vh",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <div
-              style={{
-                width: "90%",
-                textAlign: "left"
-              }}
-            >
-              <span style={{ fontWeight: "800", fontSize: "2rem" }}>
+          <FoodMarkerTitle>
+            <div>
+              <span style={{ fontWeight: "800", fontSize: "2rem", textAlign: "center" }}>
                 푸드마커로 맛집의 지도를 완성해 보세요
               </span>
             </div>
-          </div>
-          <div
-            style={{
-              height: "30vh",
-              display: "flex",
-              justifyContent: "center"
-            }}
-          >
+          </FoodMarkerTitle>
+          <FoodMarkerExplanation>
             <div style={{ margin: "auto", textAlign: "left" }}>
               <span style={{ fontWeight: "500", fontSize: "1.5rem" }}>
                 나의 맛집
@@ -160,7 +185,7 @@ function MainPage(props) {
               <br />
               <span></span>
             </div>
-          </div>
+          </FoodMarkerExplanation>
         </div>
         <div style={{ padding: "5px" }}>
           <H2>나의 맛집 지도</H2>
@@ -210,6 +235,7 @@ function MainPage(props) {
             mapLevel={mapLevel}
             restaurants={restaurants}
             width={"100%"}
+            height={"480px"}
             inlineBlock={false}
           />
         </div>
@@ -217,30 +243,18 @@ function MainPage(props) {
           style={{
             marginBottom: "10px",
             backgroundColor: "#edfcee",
-            margin: "0",
-            height: "70vh"
+            margin: "0"
           }}
         >
           <div style={{ paddingTop: "20px" }}>
             <H2>최근에 등록된 나의 맛집들</H2>
           </div>
-          <ol
-            style={{
-              listStyle: "none",
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-              alignItems: "center",
-              height: "80%",
-              margin: "0",
-              padding: "0"
-            }}
-          >
+          <OrderList>
             {tenRestaurants.map((el, ix) => (
-              <li style={{ width: "20%" }} key={ix}>
+              <List key={ix}>
                 <div>
                   <img
-                    src={`http://localhost:5000/${el.imgURL.split(",")[0]}`}
+                    src={el.imgURL.split(",")[0]}
                     alt=""
                     width="180px"
                     height="200px"
@@ -265,35 +279,22 @@ function MainPage(props) {
                     </p>
                   </div>
                 </div>
-              </li>
+              </List>
             ))}
-          </ol>
+          </OrderList>
         </div>
         <div
           style={{
             marginBottom: "10px",
             backgroundColor: "#FAFDF3",
-            margin: "0",
-            height: "60vh"
           }}
         >
           <div style={{ paddingTop: "20px" }}>
             <H2>최근에 등록된 위시 맛집들</H2>
           </div>
-          <ol
-            style={{
-              listStyle: "none",
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-              alignItems: "center",
-              height: "80%",
-              margin: "0",
-              padding: "0"
-            }}
-          >
+          <OrderList>
             {tenWishList.map((wishListItem, ix) => (
-              <li style={{ width: "20%" }} key={ix}>
+              <List key={ix}>
                 <div>
                   <div>
                     <p style={{ fontWeight: "500", fontSize: "2rem" }}>
@@ -307,9 +308,9 @@ function MainPage(props) {
                     </p>
                   </div>
                 </div>
-              </li>
+              </List>
             ))}
-          </ol>
+          </OrderList>
         </div>
       </div>
       <Footer />

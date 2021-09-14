@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../../_actions/user_action";
 import { withRouter } from "react-router-dom";
@@ -64,7 +64,6 @@ const Btn = styled.button`
 
 const Span = styled.span`
   &:hover {
-    color: #4caf50;
     cursor: pointer;
   }
 `;
@@ -75,6 +74,11 @@ function Signup(props) {
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const dispatch = useDispatch();
+
+  const inputRef = useRef();
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const onEmailHandler = e => {
     setEmail(e.currentTarget.value);
@@ -129,6 +133,7 @@ function Signup(props) {
             value={Email}
             placeholder="이메일"
             onChange={onEmailHandler}
+            ref={inputRef}
           />
         </TextBox>
         <TextBox>

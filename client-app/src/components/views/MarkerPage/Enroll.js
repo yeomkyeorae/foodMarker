@@ -43,11 +43,11 @@ const Input = styled.input`
 
 function Enroll(props) {
   // Input 관련 state
-  const [Name, setName] = useState("");
-  const [SearchName, setSearchName] = useState("을지로3가");
-  const [Address, setAddress] = useState("");
-  const [Rating, setRating] = useState(0);
-  const [VisitedDate, setVisitedDate] = useState("");
+  const [name, setName] = useState("");
+  const [searchName, setSearchName] = useState("을지로3가");
+  const [address, setAddress] = useState("");
+  const [rating, setRating] = useState(0);
+  const [visitedDate, setVisitedDate] = useState("");
   const [eatingTime, setEatingTime] = useState(1);
   const [newMenuItem, setNewMenuItem] = useState("");
   const [menuItems, setMenuItems] = useState([]);
@@ -68,7 +68,7 @@ function Enroll(props) {
   const [isConverting, setIsConverting] = useState(false);
 
   // Toggle
-  const [Toggle, setToggle] = useState(true);
+  const [toggle, setToggle] = useState(true);
 
   // Props, etc.
   const userId = window.sessionStorage.getItem("userId");
@@ -214,8 +214,18 @@ function Enroll(props) {
   const onSubmitHandler = async e => {
     e.preventDefault();
 
+    if (name.length === 0 || address.length === 0) {
+      alert("식당을 검색해서 선택해 주세요!");
+      return;
+    }
+
     // 나의 맛집
     if (parentCompName === "MarkerPage") {
+      if (visitedDate.length === 0) {
+        alert("방문 날짜를 입력해주세요!");
+        return;
+      }
+
       // JPEG 저장
       let jpegPath = [];
       if (jpegCount) {
@@ -239,11 +249,11 @@ function Enroll(props) {
       const body = {
         visitor: userId,
         username: username,
-        name: Name,
-        address: Address,
-        date: VisitedDate,
+        name: name,
+        address: address,
+        date: visitedDate,
         imgURL: imagePath,
-        rating: Rating,
+        rating: rating,
         eatingTime: eatingTime,
         menus: JSON.stringify(menuItems),
         created: new Date().toLocaleString()
@@ -273,8 +283,8 @@ function Enroll(props) {
       const body = {
         user: userId,
         username: username,
-        name: Name,
-        address: Address,
+        name: name,
+        address: address,
         created: new Date().toLocaleString()
       };
       dispatch(registerWishList(body)).then(response => {
@@ -292,7 +302,7 @@ function Enroll(props) {
   };
 
   const toggleHandler = () => {
-    setToggle(!Toggle);
+    setToggle(!toggle);
   };
 
   const onKeyDown = e => {
@@ -318,7 +328,7 @@ function Enroll(props) {
 
   return (
     <div>
-      <MapForEnroll Toggle={Toggle} setName={setName} setAddress={setAddress} />
+      <MapForEnroll toggle={toggle} setName={setName} setAddress={setAddress} />
       <div
         id={`menu_wrap`}
         className="bg_white"
@@ -340,7 +350,7 @@ function Enroll(props) {
             </div>
             <Input
               type="text"
-              value={SearchName}
+              value={searchName}
               onChange={onChangeSearchNameHandler}
               id={`keyword`}
               size="15"
@@ -376,7 +386,7 @@ function Enroll(props) {
           <InputTitle>맛집 이름 & 주소(위에서 맛집 검색 후 선택)</InputTitle>
           <Input
             type="text"
-            value={Name}
+            value={name}
             placeholder="맛집 이름"
             onChange={onNameHandler}
             readOnly
@@ -386,7 +396,7 @@ function Enroll(props) {
         <div style={{ margin: "5px" }}>
           <Input
             type="text"
-            value={Address}
+            value={address}
             placeholder="맛집 주소"
             onChange={onAddressHandler}
             readOnly
@@ -404,7 +414,7 @@ function Enroll(props) {
               <div style={{ display: "inline-block" }}>
                 <ReactStars
                   count={5}
-                  value={Rating}
+                  value={rating}
                   onChange={onRatingHandler}
                   size={70}
                   isHalf={true}
@@ -417,7 +427,7 @@ function Enroll(props) {
               <InputTitle>방문 일시</InputTitle>
               <input
                 type="date"
-                value={VisitedDate}
+                value={visitedDate}
                 placeholder="방문 일시"
                 onChange={e => onVisitedDateHandler(e)}
               />
