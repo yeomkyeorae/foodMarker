@@ -12,6 +12,7 @@ function KakaoMap(props) {
     mapLevel,
     restaurants,
     width,
+    height,
     inlineBlock
   } = props;
 
@@ -105,7 +106,7 @@ function KakaoMap(props) {
       id={`map`}
       style={{
         width: `${width}`,
-        height: "540px",
+        height: `${height ? height : "540px"}`,
         display: `${inlineBlock ? "inline-block" : "null"}`
       }}
     ></div>

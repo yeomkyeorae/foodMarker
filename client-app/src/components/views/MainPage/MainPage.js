@@ -211,6 +211,7 @@ function MainPage(props) {
             mapLevel={mapLevel}
             restaurants={restaurants}
             width={"100%"}
+            height={"480px"}
             inlineBlock={false}
           />
         </div>
