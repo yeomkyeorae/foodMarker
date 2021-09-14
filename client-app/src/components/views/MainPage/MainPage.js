@@ -35,6 +35,30 @@ const FoodMarkerExplanation = styled.div`
   }
 `;
 
+const OrderList = styled.ol`
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 80%;
+  margin: 0;
+  padding: 0;
+`;
+
+const List = styled.li`
+  flex: 20%;
+  @media screen and (max-width: 992px) {
+    flex: 25%;
+  }
+  @media screen and (max-width: 630px) {
+    flex: 50%;
+  }
+  @media screen and (max-width: 384px) {
+    flex: 100%;
+  }
+`;
+
 const P = styled.p`
   width: 50px;
   cursor: pointer;
@@ -219,27 +243,15 @@ function MainPage(props) {
           style={{
             marginBottom: "10px",
             backgroundColor: "#edfcee",
-            margin: "0",
-            height: "70vh"
+            margin: "0"
           }}
         >
           <div style={{ paddingTop: "20px" }}>
             <H2>최근에 등록된 나의 맛집들</H2>
           </div>
-          <ol
-            style={{
-              listStyle: "none",
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-              alignItems: "center",
-              height: "80%",
-              margin: "0",
-              padding: "0"
-            }}
-          >
+          <OrderList>
             {tenRestaurants.map((el, ix) => (
-              <li style={{ width: "20%" }} key={ix}>
+              <List key={ix}>
                 <div>
                   <img
                     src={el.imgURL.split(",")[0]}
@@ -267,35 +279,22 @@ function MainPage(props) {
                     </p>
                   </div>
                 </div>
-              </li>
+              </List>
             ))}
-          </ol>
+          </OrderList>
         </div>
         <div
           style={{
             marginBottom: "10px",
             backgroundColor: "#FAFDF3",
-            margin: "0",
-            height: "60vh"
           }}
         >
           <div style={{ paddingTop: "20px" }}>
             <H2>최근에 등록된 위시 맛집들</H2>
           </div>
-          <ol
-            style={{
-              listStyle: "none",
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-              alignItems: "center",
-              height: "80%",
-              margin: "0",
-              padding: "0"
-            }}
-          >
+          <OrderList>
             {tenWishList.map((wishListItem, ix) => (
-              <li style={{ width: "20%" }} key={ix}>
+              <List key={ix}>
                 <div>
                   <div>
                     <p style={{ fontWeight: "500", fontSize: "2rem" }}>
@@ -309,9 +308,9 @@ function MainPage(props) {
                     </p>
                   </div>
                 </div>
-              </li>
+              </List>
             ))}
-          </ol>
+          </OrderList>
         </div>
       </div>
       <Footer />
