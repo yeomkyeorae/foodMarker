@@ -31,7 +31,6 @@ function ChoizaPage(props) {
         style={{
           position: "absolute",
           top: "10px",
-          bottom: "50px",
           left: "0px",
           right: "0px",
           overflow: "auto"
@@ -50,8 +49,8 @@ function ChoizaPage(props) {
           {seasonName}
         </h2>
         <ChoizaList season={season} />
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }

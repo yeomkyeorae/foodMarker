@@ -34,7 +34,6 @@ function CurrentLocation(props) {
         style={{
           position: "absolute",
           top: "10px",
-          bottom: "50px",
           left: "0px",
           right: "0px",
           overflow: "auto"
@@ -49,8 +48,8 @@ function CurrentLocation(props) {
             mapLevel={4}
           />
         ) : null}
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }

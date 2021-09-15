@@ -140,7 +140,6 @@ function MainPage(props) {
         style={{
           position: "absolute",
           top: "10px",
-          bottom: "50px",
           left: "0px",
           right: "0px",
           overflow: "auto"
@@ -295,25 +294,23 @@ function MainPage(props) {
           <OrderList>
             {tenWishList.map((wishListItem, ix) => (
               <List key={ix}>
-                <div>
-                  <div>
-                    <p style={{ fontWeight: "500", fontSize: "2rem" }}>
-                      {wishListItem.name}
-                    </p>
-                    <p style={{ fontWeight: "300", margin: "0" }}>
-                      {wishListItem.address}
-                    </p>
-                    <p style={{ fontWeight: "400", margin: "0" }}>
-                      {wishListItem.username}
-                    </p>
-                  </div>
+                <div style={{ marginBottom: "5px"}}>
+                  <p style={{ fontWeight: "500", fontSize: "2rem", margin: "0" }}>
+                    {wishListItem.name}
+                  </p>
+                  <p style={{ fontWeight: "300", margin: "0" }}>
+                    {wishListItem.address}
+                  </p>
+                  <p style={{ fontWeight: "400", margin: "0" }}>
+                    {wishListItem.username}
+                  </p>
                 </div>
               </List>
             ))}
           </OrderList>
         </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }

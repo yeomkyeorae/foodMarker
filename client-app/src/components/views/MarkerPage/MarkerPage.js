@@ -40,7 +40,6 @@ function MarkerPage(props) {
         style={{
           position: "absolute",
           top: "10px",
-          bottom: "50px",
           left: "0px",
           right: "0px",
           overflow: "auto"
@@ -59,8 +58,8 @@ function MarkerPage(props) {
         </div>
         <hr />
         {MenuComponent}
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }
