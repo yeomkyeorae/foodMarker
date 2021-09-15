@@ -3,12 +3,14 @@ import { withRouter } from "react-router-dom";
 import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import KakaoMapCoords from "../../containers/KakaoMap/KakaoMapCoords";
+import SubPage from "./SubPage";
 
 function CurrentLocation(props) {
   const userId = props.location.state;
 
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongtitude] = useState(0);
+  const [isSuccess, setIsSuccess] = useState(true);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -18,8 +20,10 @@ function CurrentLocation(props) {
           setLatitude(pos.coords.latitude);
           setLongtitude(pos.coords.longitude);
         },
-        () => {},
-        { enableHighAccuracy: true, maximumAge: 0, timeout: 3000 }
+        () => {
+          setIsSuccess(false); 
+        },
+        { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
       );
     } else {
       alert(
@@ -35,6 +39,7 @@ function CurrentLocation(props) {
           position: "absolute",
           top: "10px",
           left: "0px",
+          bottom: "50px",
           right: "0px",
           overflow: "auto"
         }}
@@ -48,7 +53,8 @@ function CurrentLocation(props) {
             mapLevel={4}
           />
         ) : null}
-        <Footer />
+        { !isSuccess ? <SubPage /> : null }
+        <Footer position="fixed"/>
       </div>
     </div>
   );

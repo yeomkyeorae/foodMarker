@@ -5,6 +5,7 @@ const FooterDiv = styled.footer`
   width: 100%;
   height: 50px;
   bottom: 0;
+  position: ${props => props.position === "fixed" ? "fixed;" : "relative;"};
   background: gray;
   color: white;
   overflow: hidden;
@@ -15,9 +16,11 @@ const FooterP = styled.p`
   text-align: center;
 `;
 
-function Footer() {
+function Footer(props) {
+  const { position } = props;
+
   return (
-    <FooterDiv>
+    <FooterDiv position={position}>
       <FooterP>Copyright &copy; 2021. All Rights Reserved.</FooterP>
     </FooterDiv>
   );
