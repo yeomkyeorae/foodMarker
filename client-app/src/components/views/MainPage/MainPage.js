@@ -295,7 +295,7 @@ function MainPage(props) {
             {tenWishList.map((wishListItem, ix) => (
               <List key={ix}>
                 <div style={{ marginBottom: "5px"}}>
-                  <p style={{ fontWeight: "500", fontSize: "2rem", margin: "0" }}>
+                  <p style={{ fontWeight: "500", fontSize: "2rem", margin: "0", whiteSpace: "nowrap"}}>
                     {wishListItem.name}
                   </p>
                   <p style={{ fontWeight: "300", margin: "0" }}>
