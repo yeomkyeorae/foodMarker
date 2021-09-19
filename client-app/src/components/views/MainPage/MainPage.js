@@ -14,6 +14,7 @@ import styled from "styled-components";
 
 const H2 = styled.h2`
   font-weight: 100;
+  font-size: 2rem;
 `;
 
 const FoodMarkerTitle = styled.div`
@@ -245,7 +246,7 @@ function MainPage(props) {
             margin: "0"
           }}
         >
-          <div style={{ paddingTop: "20px" }}>
+          <div style={{ paddingTop: "20px", marginBottom: "20px" }}>
             <H2>최근에 등록된 나의 맛집들</H2>
           </div>
           <OrderList>
@@ -288,14 +289,14 @@ function MainPage(props) {
             backgroundColor: "#FAFDF3",
           }}
         >
-          <div style={{ paddingTop: "20px" }}>
+          <div style={{ paddingTop: "20px", marginBottom: "20px" }}>
             <H2>최근에 등록된 위시 맛집들</H2>
           </div>
           <OrderList>
             {tenWishList.map((wishListItem, ix) => (
               <List key={ix}>
                 <div style={{ marginBottom: "5px"}}>
-                  <p style={{ fontWeight: "500", fontSize: "2rem", margin: "0", whiteSpace: "nowrap"}}>
+                  <p style={{ fontWeight: "500", fontSize: "1.5rem", margin: "0", whiteSpace: "nowrap"}}>
                     {wishListItem.name}
                   </p>
                   <p style={{ fontWeight: "300", margin: "0" }}>
