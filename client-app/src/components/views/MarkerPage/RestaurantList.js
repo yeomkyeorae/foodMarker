@@ -56,6 +56,15 @@ const Arrow = styled.div`
   }
 `;
 
+const SortMenu = styled.div`
+  color: ${props => (props.color === "true" ? "#D21404" : "black")};
+  display: inline-block;
+  cursor: pointer;
+  width: 150px;
+  user-select: none;
+  text-align: center;
+`;
+
 function RestaurantList(props) {
   const dispatch = useDispatch();
   const [restaurants, setRestaurants] = useState([{ _id: 0 }]);
@@ -144,40 +153,15 @@ function RestaurantList(props) {
 
   return (
     <Div>
-      <span
-        style={{
-          display: "inline-block",
-          cursor: "pointer",
-          width: "120px",
-          userSelect: "none"
-        }}
-        onClick={() => onSetOrderHandler(order === 1 ? 2 : 1)}
-      >
-        식당 이름 순{order === 1 ? "(↑)" : order === 2 ? "(↓)" : ""}
-      </span>
-      <span
-        style={{
-          display: "inline-block",
-          cursor: "pointer",
-          width: "150px",
-          userSelect: "none"
-        }}
-        onClick={() => onSetOrderHandler(order === 3 ? 4 : 3)}
-      >
-        방문 날짜 순
-        {order === 3 ? "(최신 순)" : order === 4 ? "(오래된 순)" : ""}
-      </span>
-      <span
-        style={{
-          display: "inline-block",
-          cursor: "pointer",
-          width: "120px",
-          userSelect: "none"
-        }}
-        onClick={() => onSetOrderHandler(order === 5 ? 6 : 5)}
-      >
-        별점 순{order === 5 ? "(높은 순)" : order === 6 ? "(낮은 순)" : ""}
-      </span>
+      <SortMenu onClick={() => onSetOrderHandler(order === 1 ? 2 : 1)} color={`${order === 1 || order === 2}`}>
+        {order === 1 ? "식당 이름 오름차순↑" : order === 2 ? "식당 이름 내림차순↓" : "식당 이름 오름차순↑"}
+      </SortMenu>
+      <SortMenu onClick={() => onSetOrderHandler(order === 3 ? 4 : 3)} color={`${order === 3 || order === 4}`}>
+        {order === 3 ? "최신 방문 날짜 순↑" : order === 4 ? "오랜 방문 날짜 순↓" : "최신 방문 날짜 순↑"}
+      </SortMenu>
+      <SortMenu onClick={() => onSetOrderHandler(order === 5 ? 6 : 5)} color={`${order === 5 || order === 6}`}>
+        {order === 5 ? "별점 높은 순↑" : order === 6 ? "별점 낮은 순↓" : "별점 높은 순↑"}
+      </SortMenu>
       <Restaurants>
         <List>
           <Row className="show-grid">
