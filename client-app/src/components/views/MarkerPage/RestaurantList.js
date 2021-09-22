@@ -60,9 +60,11 @@ const SortMenu = styled.div`
   color: ${props => (props.color === "true" ? "#D21404" : "black")};
   display: inline-block;
   cursor: pointer;
-  width: 150px;
+  width: ${props => props.width};
   user-select: none;
   text-align: center;
+  margin: 5px 10px;
+  font-size: 1.4vw;
 `;
 
 function RestaurantList(props) {
@@ -152,37 +154,41 @@ function RestaurantList(props) {
   }
 
   return (
-    <Div>
-      <SortMenu onClick={() => onSetOrderHandler(order === 1 ? 2 : 1)} color={`${order === 1 || order === 2}`}>
-        {order === 1 ? "식당 이름 오름차순↑" : order === 2 ? "식당 이름 내림차순↓" : "식당 이름 오름차순↑"}
-      </SortMenu>
-      <SortMenu onClick={() => onSetOrderHandler(order === 3 ? 4 : 3)} color={`${order === 3 || order === 4}`}>
-        {order === 3 ? "최신 방문 날짜 순↑" : order === 4 ? "오랜 방문 날짜 순↓" : "최신 방문 날짜 순↑"}
-      </SortMenu>
-      <SortMenu onClick={() => onSetOrderHandler(order === 5 ? 6 : 5)} color={`${order === 5 || order === 6}`}>
-        {order === 5 ? "별점 높은 순↑" : order === 6 ? "별점 낮은 순↓" : "별점 높은 순↑"}
-      </SortMenu>
-      <Restaurants>
-        <List>
-          <Row className="show-grid">
-            {restaurants.map(restaurant => (
-              <RestaurantListItem
-                key={restaurant._id}
-                setAddress={props.setAddress}
-                setRestaurantName={props.setRestaurantName}
-                restaurant={restaurant}
-                deleteHandler={deleteHandler}
-              ></RestaurantListItem>
-            ))}
-          </Row>
-        </List>
-      </Restaurants>
-      <div>
-        <Arrow right={false} onClick={() => onSetPageSetNum(0, beforeFirst)} />
-        <div style={{ display: "inline-block" }}>{pages.map(page => page)}</div>
-        <Arrow right={true} onClick={() => onSetPageSetNum(1, afterFirst)} />
+    <div>
+      <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
+        <SortMenu onClick={() => onSetOrderHandler(order === 1 ? 2 : 1)} color={`${order === 1 || order === 2}`}>
+          {order === 1 ? "식당 이름 오름차순↑" : order === 2 ? "식당 이름 내림차순↓" : "식당 이름 오름차순↑"}
+        </SortMenu>
+        <SortMenu onClick={() => onSetOrderHandler(order === 3 ? 4 : 3)} color={`${order === 3 || order === 4}`}>
+          {order === 3 ? "최신 방문 날짜 순↑" : order === 4 ? "오랜 방문 날짜 순↓" : "최신 방문 날짜 순↑"}
+        </SortMenu>
+        <SortMenu onClick={() => onSetOrderHandler(order === 5 ? 6 : 5)} color={`${order === 5 || order === 6}`}>
+          {order === 5 ? "별점 높은 순↑" : order === 6 ? "별점 낮은 순↓" : "별점 높은 순↑"}
+        </SortMenu>
       </div>
-    </Div>
+      <Div>
+        <Restaurants>
+          <List>
+            <Row className="show-grid">
+              {restaurants.map(restaurant => (
+                <RestaurantListItem
+                  key={restaurant._id}
+                  setAddress={props.setAddress}
+                  setRestaurantName={props.setRestaurantName}
+                  restaurant={restaurant}
+                  deleteHandler={deleteHandler}
+                ></RestaurantListItem>
+              ))}
+            </Row>
+          </List>
+        </Restaurants>
+        <div>
+          <Arrow right={false} onClick={() => onSetPageSetNum(0, beforeFirst)} />
+          <div style={{ display: "inline-block" }}>{pages.map(page => page)}</div>
+          <Arrow right={true} onClick={() => onSetPageSetNum(1, afterFirst)} />
+        </div>
+      </Div>
+    </div>
   );
 }
 
