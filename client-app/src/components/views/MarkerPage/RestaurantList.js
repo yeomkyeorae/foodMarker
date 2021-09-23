@@ -11,7 +11,7 @@ import { Row } from "react-bootstrap";
 import styled from "styled-components";
 
 const Div = styled.div`
-  width: 40%;
+  width: 60%;
   display: inline-block;
 `;
 

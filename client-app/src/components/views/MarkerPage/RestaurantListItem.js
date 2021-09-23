@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { Card, Col, Dropdown, Carousel } from "react-bootstrap";
 import UpdateModal from "../../containers/UpdateModal/UpdateModal";
@@ -51,6 +51,7 @@ function RestaurantListItem(props) {
   const restaurantDate = `${restaurantDateSplit[0]}년 ${restaurantDateSplit[1]}월 ${restaurantDateSplit[2]}일`;
   const [toggle, setToggle] = useState(false);
   const [mapToggle, setMapToggle] = useState(false);
+  const [starSize, setStarSize] = useState(window.innerWidth / 30);
   const rating = restaurant.rating;
 
   let menus = "";
@@ -63,6 +64,15 @@ function RestaurantListItem(props) {
       }
     });
   }
+
+  useEffect(() => {
+    function handleSize() {
+      setStarSize(parseInt(window.innerWidth / 30));
+    }
+
+    window.addEventListener('resize', handleSize);
+    return () => window.removeEventListener('resize', handleSize);
+  }, [])
 
   const popUpMap = () => {
     setMapToggle(true);
@@ -112,8 +122,7 @@ function RestaurantListItem(props) {
             </div>
             <div
               style={{
-                width: "40%",
-                margin: "auto",
+                width: "100%",
                 display: "flex",
                 justifyContent: "center"
               }}
@@ -122,7 +131,7 @@ function RestaurantListItem(props) {
                 count={5}
                 value={rating}
                 edit={false}
-                size={35}
+                size={starSize}
                 isHalf={true}
                 activeColor="#ffd700"
               />
@@ -131,7 +140,7 @@ function RestaurantListItem(props) {
             <div
               style={{
                 width: "100%",
-                height: "360px"
+                height: "40vw"
               }}
             >
               <Carousel
