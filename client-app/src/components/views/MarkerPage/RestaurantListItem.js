@@ -136,7 +136,7 @@ function RestaurantListItem(props) {
                 activeColor="#ffd700"
               />
             </div>
-            <span style={{ fontSize: "0.8em" }}>{menus}</span>
+            <span style={{ fontSize: "0.8em" }}>{menus.length > 0 ? menus : '메뉴 등록 x' }</span>
             <div
               style={{
                 width: "100%",
