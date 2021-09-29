@@ -91,7 +91,7 @@ function RestaurantListItem(props) {
 
   return restaurant.address ? (
     <>
-      <Col md={12} style={{ paddingBottom: "10px" }}>
+      <Col sm={12} md={6} lg={4} style={{ paddingBottom: "10px" }}>
         <Card style={{ width: "100%" }}>
           <Card.Body>
             <div style={{ float: "right" }}>

@@ -11,13 +11,12 @@ import { Row } from "react-bootstrap";
 import styled from "styled-components";
 
 const Div = styled.div`
-  width: 60%;
+  width: 90%;
   display: inline-block;
 `;
 
 const Restaurants = styled.div`
   width: 100%;
-  /* height: 100%; */
   display: inline-block;
   overflow-y: scroll;
 `;
