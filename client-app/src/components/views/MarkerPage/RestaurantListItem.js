@@ -91,56 +91,13 @@ function RestaurantListItem(props) {
 
   return restaurant.address ? (
     <>
-      <Col sm={12} md={6} lg={4} style={{ paddingBottom: "10px" }}>
-        <Card style={{ width: "100%" }}>
-          <Card.Body>
-            <div style={{ float: "right" }}>
-              <Dropdown>
-                <Dropdown.Toggle as={CustomToggle}>...</Dropdown.Toggle>
-                <Dropdown.Menu size="sm" title="">
-                  <Dropdown.Item onClick={() => popUpMap()}>지도</Dropdown.Item>
-                  <Dropdown.Item onClick={() => updateHandler()}>
-                    수정
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() => props.deleteHandler(restaurant._id)}
-                  >
-                    삭제
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-            <div>
-              <Card.Title style={{ margin: "0px" }}>
-                {restaurant.name}
-                <span style={{ fontSize: "0.5em", height: "10px" }}>
-                  <br />
-                  {restaurantDate}({eatingObj[restaurant.eatingTime]})
-                </span>
-              </Card.Title>
-              <span style={{ fontSize: "0.8em" }}>{restaurant.address}</span>
-            </div>
+      <Col sm={6} md={4} lg={3} style={{ paddingBottom: "10px" }}>
+        <Card style={{ width: "100%", height: "100%" }}>
+          <Card.Body style={{ padding: "0px" }}>
             <div
               style={{
                 width: "100%",
-                display: "flex",
-                justifyContent: "center"
-              }}
-            >
-              <ReactStars
-                count={5}
-                value={rating}
-                edit={false}
-                size={starSize}
-                isHalf={true}
-                activeColor="#ffd700"
-              />
-            </div>
-            <span style={{ fontSize: "0.8em" }}>{menus.length > 0 ? menus : '메뉴 등록 x' }</span>
-            <div
-              style={{
-                width: "100%",
-                height: "40vw"
+                // height: "70%"
               }}
             >
               <Carousel
@@ -153,6 +110,7 @@ function RestaurantListItem(props) {
                 nextLabel={""}
                 nextIcon={<Arrow right={true} />}
                 className="carousel"
+                style={{height: "100%"}}
               >
                 {imgUrls.map((url, index) => {
                   return (
@@ -162,14 +120,59 @@ function RestaurantListItem(props) {
                         variant="top"
                         src={url}
                         style={{
-                          width: "60%",
-                          height: "100%"
+                          width: "100%",
+                          minHeight: "360px"
                         }}
                       />
                     </Carousel.Item>
                   );
                 })}
               </Carousel>
+            </div>
+            <div style={{height: "30%"}}>
+              <div style={{ float: "right" }}>
+                <Dropdown>
+                  <Dropdown.Toggle as={CustomToggle}>...</Dropdown.Toggle>
+                  <Dropdown.Menu size="sm" title="">
+                    <Dropdown.Item onClick={() => popUpMap()}>지도</Dropdown.Item>
+                    <Dropdown.Item onClick={() => updateHandler()}>
+                      수정
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => props.deleteHandler(restaurant._id)}
+                    >
+                      삭제
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
+              <div>
+                <Card.Title style={{ margin: "0px" }}>
+                  {restaurant.name}
+                  <span style={{ fontSize: "0.5em" }}>
+                    <br />
+                    {restaurantDate}({eatingObj[restaurant.eatingTime]})
+                  </span>
+                </Card.Title>
+                <span style={{ fontSize: "0.8em" }}>{restaurant.address}</span>
+              </div>
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center"
+                }}
+              >
+                <ReactStars
+                  count={5}
+                  value={rating}
+                  edit={false}
+                  size={starSize}
+                  isHalf={true}
+                  activeColor="#ffd700"
+                />
+              </div>
+              <span style={{ fontSize: "0.8em" }}>{menus.length > 0 ? menus : '메뉴 등록 x' }</span>
             </div>
           </Card.Body>
         </Card>
