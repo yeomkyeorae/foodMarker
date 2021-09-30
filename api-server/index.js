@@ -306,7 +306,7 @@ app.put("/api/restaurant", (req, res) => {
   Restaurant.findById(req.body.restaurantId, (err, restaurant) => {
     restaurant.date = req.body.date;
     if (req.body.imgURL) {
-      restaurant.imgURL = req.body.imgURL;
+      restaurant.imgURL = req.body.imgURL.join(',');
     }
     restaurant.rating = req.body.rating;
     restaurant.eatingTime = req.body.eatingTime;
