@@ -47,7 +47,7 @@ function MarkerPage(props) {
       >
         <NavbarComp userId={userId} history={props.history} />
         <hr />
-        <div style={{}}>
+        <div>
           <Button
             variant="primary"
             onClick={onClickChangeMenuHandler}

@@ -12,6 +12,7 @@ const WishLists = styled.div`
   width: 60%;
   height: 100%;
   display: inline-block;
+  height: 80vh;
 `;
 
 const List = styled.ol`

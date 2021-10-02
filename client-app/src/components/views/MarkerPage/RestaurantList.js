@@ -13,6 +13,7 @@ import styled from "styled-components";
 const Div = styled.div`
   width: 90%;
   display: inline-block;
+  height: 80vh;
 `;
 
 const Restaurants = styled.div`

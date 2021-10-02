@@ -10,7 +10,6 @@ const FooterDiv = styled.footer`
   background: gray;
   color: white;
   overflow: hidden;
-  position: fixed;
 `;
 
 const FooterP = styled.p`

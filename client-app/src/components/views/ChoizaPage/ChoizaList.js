@@ -20,6 +20,7 @@ const List = styled.ol`
   list-style: none;
   width: 100%;
   max-width: 100%;
+  padding: 0px;
 `;
 
 function ChoizaList(props) {
