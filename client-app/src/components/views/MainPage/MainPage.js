@@ -14,6 +14,7 @@ import styled from "styled-components";
 
 const H2 = styled.h2`
   font-weight: 100;
+  font-size: 2rem;
 `;
 
 const FoodMarkerTitle = styled.div`
@@ -140,7 +141,6 @@ function MainPage(props) {
         style={{
           position: "absolute",
           top: "10px",
-          bottom: "50px",
           left: "0px",
           right: "0px",
           overflow: "auto"
@@ -246,7 +246,7 @@ function MainPage(props) {
             margin: "0"
           }}
         >
-          <div style={{ paddingTop: "20px" }}>
+          <div style={{ paddingTop: "20px", marginBottom: "20px" }}>
             <H2>최근에 등록된 나의 맛집들</H2>
           </div>
           <OrderList>
@@ -289,31 +289,29 @@ function MainPage(props) {
             backgroundColor: "#FAFDF3",
           }}
         >
-          <div style={{ paddingTop: "20px" }}>
+          <div style={{ paddingTop: "20px", marginBottom: "20px" }}>
             <H2>최근에 등록된 위시 맛집들</H2>
           </div>
           <OrderList>
             {tenWishList.map((wishListItem, ix) => (
               <List key={ix}>
-                <div>
-                  <div>
-                    <p style={{ fontWeight: "500", fontSize: "2rem" }}>
-                      {wishListItem.name}
-                    </p>
-                    <p style={{ fontWeight: "300", margin: "0" }}>
-                      {wishListItem.address}
-                    </p>
-                    <p style={{ fontWeight: "400", margin: "0" }}>
-                      {wishListItem.username}
-                    </p>
-                  </div>
+                <div style={{ marginBottom: "5px"}}>
+                  <p style={{ fontWeight: "500", fontSize: "1.5rem", margin: "0", whiteSpace: "nowrap"}}>
+                    {wishListItem.name}
+                  </p>
+                  <p style={{ fontWeight: "300", margin: "0" }}>
+                    {wishListItem.address}
+                  </p>
+                  <p style={{ fontWeight: "400", margin: "0" }}>
+                    {wishListItem.username}
+                  </p>
                 </div>
               </List>
             ))}
           </OrderList>
         </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }

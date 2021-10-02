@@ -9,9 +9,10 @@ import WishListItem from "./WishListItem";
 import styled from "styled-components";
 
 const WishLists = styled.div`
-  width: 40%;
+  width: 60%;
   height: 100%;
   display: inline-block;
+  height: 80vh;
 `;
 
 const List = styled.ol`
@@ -48,20 +49,27 @@ function WishList(props) {
 
   return (
     <WishLists>
-      <List>
-        {wishLists.map(wishList => (
-          <WishListItem
-            key={wishList._id}
-            wishListId={wishList._id}
-            wishListName={wishList.name}
-            wishListAddress={wishList.address}
-            wishListCreated={wishList.created}
-            userId={userId}
-            deleteHandler={deleteHandler}
-            setToggle={props.setToggle}
-          />
-        ))}
-      </List>
+      {
+        wishLists.length > 0 ?
+          (<List>
+            {wishLists.map(wishList => (
+              <WishListItem
+                key={wishList._id}
+                wishListId={wishList._id}
+                wishListName={wishList.name}
+                wishListAddress={wishList.address}
+                wishListCreated={wishList.created}
+                userId={userId}
+                deleteHandler={deleteHandler}
+                setToggle={props.setToggle}
+              />
+            ))}
+          </List>) : (
+            <div>
+              등록된 위시리스트 맛집이 없습니다!
+            </div>
+          )
+      }
     </WishLists>
   );
 }

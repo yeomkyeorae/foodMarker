@@ -18,7 +18,7 @@ const Div = styled.div`
 function ChoizaPage(props) {
   const userId = props.location.state;
   const [season, setSeason] = useState(6);
-  const [seasonName, setSeasonName] = useState("인더하우스");
+  const [seasonName, setSeasonName] = useState("시즌5");
 
   const onClickHandler = (seansonName, season) => {
     setSeason(season);
@@ -31,10 +31,9 @@ function ChoizaPage(props) {
         style={{
           position: "absolute",
           top: "10px",
-          bottom: "50px",
           left: "0px",
           right: "0px",
-          overflow: "auto"
+          overflow: "hidden"
         }}
       >
         <NavbarComp userId={userId} history={props.history} />
@@ -50,8 +49,8 @@ function ChoizaPage(props) {
           {seasonName}
         </h2>
         <ChoizaList season={season} />
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }

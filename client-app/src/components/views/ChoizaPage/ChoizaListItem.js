@@ -92,7 +92,7 @@ function ChoizaListItem(props) {
   };
 
   return (
-    <Col md={3}>
+    <Col sm={6} md={4} lg={3} style={{ paddingBottom: "10px" }}>
       <Card style={{ width: "100%", height: "100%" }}>
         <Card.Body>
           <div style={{ display: "flex", justifyContent: "center" }}>
