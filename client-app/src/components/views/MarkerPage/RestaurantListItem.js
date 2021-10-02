@@ -94,12 +94,7 @@ function RestaurantListItem(props) {
       <Col sm={6} md={4} lg={3} style={{ paddingBottom: "10px" }}>
         <Card style={{ width: "100%", height: "100%" }}>
           <Card.Body style={{ padding: "0px" }}>
-            <div
-              style={{
-                width: "100%",
-                // height: "70%"
-              }}
-            >
+            <div style={{ width: "100%" }}>
               <Carousel
                 variant="dark"
                 interval={null}

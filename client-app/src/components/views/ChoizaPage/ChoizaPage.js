@@ -18,7 +18,7 @@ const Div = styled.div`
 function ChoizaPage(props) {
   const userId = props.location.state;
   const [season, setSeason] = useState(6);
-  const [seasonName, setSeasonName] = useState("인더하우스");
+  const [seasonName, setSeasonName] = useState("시즌5");
 
   const onClickHandler = (seansonName, season) => {
     setSeason(season);
@@ -33,7 +33,7 @@ function ChoizaPage(props) {
           top: "10px",
           left: "0px",
           right: "0px",
-          overflow: "auto"
+          overflow: "hidden"
         }}
       >
         <NavbarComp userId={userId} history={props.history} />
