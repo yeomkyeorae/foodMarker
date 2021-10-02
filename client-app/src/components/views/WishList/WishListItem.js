@@ -9,7 +9,6 @@ const Item = styled.li`
   display: block;
   clear: both;
   counter-increment: list;
-  padding-bottom: 1rem;
   font-size: 1.1rem;
   line-height: 1.375;
   position: relative;
@@ -21,8 +20,13 @@ const HeadLine = styled.h2`
   padding: 0;
   margin-left: 25px;
   margin-bottom: 0;
-  font: normal 2rem var(--font-head);
-  font-size: 2rem;
+  font-size: 3.5vw;
+`;
+
+const Address = styled.h4`
+  padding: 0;
+  margin-bottom: 0;
+  font-size: 2vw;
 `;
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -81,7 +85,7 @@ function WishListItem(props) {
       </div>
       <HeadLine>{wishListName}</HeadLine>
       <span style={{ fontSize: "10px" }}>{wishListCreated}</span> <br />
-      <span>{wishListAddress}</span> <br />
+      <Address>{wishListAddress}</Address> <br />
       <UpdateModal
         type="WishListItem"
         toggle={popUpToggle}
