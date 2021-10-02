@@ -181,11 +181,20 @@ function RestaurantList(props) {
             </Row>
           </List>
         </Restaurants>
-        <div>
-          <Arrow right={false} onClick={() => onSetPageSetNum(0, beforeFirst)} />
-          <div style={{ display: "inline-block" }}>{pages.map(page => page)}</div>
-          <Arrow right={true} onClick={() => onSetPageSetNum(1, afterFirst)} />
-        </div>
+        {
+          restaurants.length > 0 ? 
+           (
+              <div>
+              <Arrow right={false} onClick={() => onSetPageSetNum(0, beforeFirst)} />
+              <div style={{ display: "inline-block" }}>{pages.map(page => page)}</div>
+              <Arrow right={true} onClick={() => onSetPageSetNum(1, afterFirst)} />
+            </div>
+           ) : (
+             <div>
+               등록된 나의 맛집이 없습니다!
+             </div>
+           )
+        }
       </Div>
     </div>
   );
