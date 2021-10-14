@@ -4,6 +4,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import background from "../../../assets/loginBackground.jpeg";
 
+
 const Section = styled.section`
   width: 100%;
   height: 100%;
@@ -13,6 +14,7 @@ const Section = styled.section`
   display: table;
   background-size: cover;
 `;
+
 
 function LoginSignup() {
   const [toggle, setToggle] = useState(true);

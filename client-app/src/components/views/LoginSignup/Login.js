@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import './Login.css';
 
+
 const LoginBox = styled.div`
   width: 280px;
   position: absolute;
@@ -69,9 +70,10 @@ const Span = styled.span`
   }
 `;
 
+
 function Login(props) {
-  const [Email, setEmail] = useState("");
-  const [Password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
   const inputRef = useRef();
@@ -93,10 +95,9 @@ function Login(props) {
 
   const onSubmitHandler = e => {
     e.preventDefault();
-    let body = {
-      email: Email,
-      password: Password
-    };
+
+    const body = { email, password };
+    
     dispatch(loginUser(body)).then(response => {
       if (response.payload.loginSuccess) {
         window.sessionStorage.setItem("userId", response.payload.userId);
@@ -117,7 +118,7 @@ function Login(props) {
         <TextBox>
           <Input
             type="email"
-            value={Email}
+            value={email}
             placeholder="이메일"
             onChange={onEmailHandler}
             ref={inputRef}
@@ -126,7 +127,7 @@ function Login(props) {
         <TextBox>
           <Input
             type="password"
-            value={Password}
+            value={password}
             placeholder="비밀번호"
             onChange={onPasswordHandler}
           />
