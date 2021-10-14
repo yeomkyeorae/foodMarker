@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import background from "../../../assets/background.jpeg";
 
@@ -48,8 +48,6 @@ const Btn = styled.a`
 `;
 
 function LadingPage() {
-  useEffect(() => {}, []);
-
   return (
     <Section>
       <Div>

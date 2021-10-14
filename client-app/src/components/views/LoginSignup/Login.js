@@ -105,8 +105,7 @@ function Login(props) {
           pathname: "/main"
         });
       } else {
-        console.log(response);
-        alert("error");
+        alert("failed to login");
       }
     });
   };

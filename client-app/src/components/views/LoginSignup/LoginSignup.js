@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Login from "./Login";
 import Signup from "./Signup";
@@ -15,8 +15,6 @@ const Section = styled.section`
 `;
 
 function LoginSignup() {
-  useEffect(() => {}, []);
-
   const [toggle, setToggle] = useState(true);
 
   let loginOrSignup;

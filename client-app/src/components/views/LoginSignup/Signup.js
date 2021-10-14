@@ -142,6 +142,7 @@ function Signup(props) {
             value={Name}
             placeholder="이름"
             onChange={onNameHandler}
+            autoComplete="off"
           />
         </TextBox>
         <TextBox>
@@ -150,6 +151,7 @@ function Signup(props) {
             value={Password}
             placeholder="비밀번호"
             onChange={onPasswordHandler}
+            autoComplete="new-password"
           />
         </TextBox>
         <TextBox>
