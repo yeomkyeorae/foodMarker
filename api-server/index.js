@@ -476,7 +476,7 @@ app.delete("/api/visitedChoizaRoads", (req, res) => {
 app.use(express.static(path.join(__dirname, '../client-app/dist')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client-app/dist/index.html'));
+  res.sendFile(path.join(__dirname, '../client-app/dist/index.html'));
 });
 
 app.listen(port, () => {
