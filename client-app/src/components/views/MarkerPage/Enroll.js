@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import {
@@ -14,23 +14,24 @@ import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
 
 const InputTitle = styled.div`
-  width: 30%;
+  width: 40vw;
   margin: auto;
   font-weight: bold;
   font-size: 1rem;
   text-align: left;
-  border-bottom: 1px solid black;
+  border-bottom: 0.5px solid black;
   margin-bottom: 10px;
 `;
 
 const Input = styled.input`
   margin: 3px 0;
   padding: 15px 10px;
-  width: 30%;
+  width: 40vw;
   outline: none;
   border: 1px solid #bbb;
   border-radius: 20px;
   display: inline-block;
+  text-align: center;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -51,6 +52,16 @@ function Enroll(props) {
   const [eatingTime, setEatingTime] = useState(1);
   const [newMenuItem, setNewMenuItem] = useState("");
   const [menuItems, setMenuItems] = useState([]);
+  const [starSize, setStarSize] = useState(window.innerWidth / 25);
+
+  useEffect(() => {
+    function handleSize() {
+      setStarSize(parseInt(window.innerWidth / 25));
+    }
+
+    window.addEventListener('resize', handleSize);
+    return () => window.removeEventListener('resize', handleSize);
+  }, [])
 
   // JPEG 이미지
   const [jpegImageData, setJpegImageData] = useState([]);
@@ -332,13 +343,13 @@ function Enroll(props) {
       <div
         id={`menu_wrap`}
         className="bg_white"
-        style={{ display: "inline-block", width: "80%" }}
+        style={{ display: "inline-block", width: "90%" }}
       >
         <div className="option">
           <div>
             <div
               style={{
-                width: "50%",
+                width: "90%",
                 margin: "auto",
                 fontWeight: "bold",
                 fontSize: "1.5rem",
@@ -353,7 +364,7 @@ function Enroll(props) {
               value={searchName}
               onChange={onChangeSearchNameHandler}
               id={`keyword`}
-              size="15"
+              // size="20"
               onKeyDown={onKeyDown}
             />
             <Button
@@ -371,7 +382,7 @@ function Enroll(props) {
           style={{
             listStyle: "none",
             height: "300px",
-            width: "50%",
+            width: "60vw",
             display: "inline-block",
             overflowY: "scroll",
             padding: "0px"
@@ -383,14 +394,13 @@ function Enroll(props) {
 
       <form onSubmit={onSubmitHandler} encType="multipart/form-data">
         <div style={{ margin: "5px" }}>
-          <InputTitle>맛집 이름 & 주소(위에서 맛집 검색 후 선택)</InputTitle>
+          <InputTitle>맛집 이름 & 주소</InputTitle>
           <Input
             type="text"
             value={name}
             placeholder="맛집 이름"
             onChange={onNameHandler}
             readOnly
-            style={{ width: "300px" }}
           />
         </div>
         <div style={{ margin: "5px" }}>
@@ -400,7 +410,6 @@ function Enroll(props) {
             placeholder="맛집 주소"
             onChange={onAddressHandler}
             readOnly
-            style={{ width: "300px" }}
           />
         </div>
         {parentCompName === "MarkerPage" ? (
@@ -416,7 +425,7 @@ function Enroll(props) {
                   count={5}
                   value={rating}
                   onChange={onRatingHandler}
-                  size={70}
+                  size={starSize}
                   isHalf={true}
                   activeColor="#ffd700"
                 />
@@ -452,8 +461,9 @@ function Enroll(props) {
                   value={newMenuItem}
                   placeholder="메뉴 입력 버튼 클릭"
                   onChange={e => onChangeNewMenuItem(e)}
-                  style={{ width: "10%" }}
+                  // style={{ width: "50%" }}
                 />
+                <br />
                 <Button
                   variant="success"
                   style={{ margin: "10px", display: "inline-block" }}
@@ -485,7 +495,7 @@ function Enroll(props) {
                   type="file"
                   ref={inputRef}
                   onChange={onImageDataHandler}
-                  style={{ width: "60%" }}
+                  style={{ width: "70%" }}
                   multiple
                 />
               </div>
@@ -522,7 +532,7 @@ function Enroll(props) {
           <hr />
           <Button
             variant={isConverting ? "danger" : "primary"}
-            style={{ margin: "20px", width: "10%" }}
+            style={{ margin: "20px", width: "15%" }}
             type="submit"
             disabled={isConverting ? true : false}
           >

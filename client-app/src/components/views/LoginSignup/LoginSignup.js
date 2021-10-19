@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Login from "./Login";
 import Signup from "./Signup";
 import background from "../../../assets/loginBackground.jpeg";
+
 
 const Section = styled.section`
   width: 100%;
@@ -14,9 +15,8 @@ const Section = styled.section`
   background-size: cover;
 `;
 
-function LoginSignup() {
-  useEffect(() => {}, []);
 
+function LoginSignup() {
   const [toggle, setToggle] = useState(true);
 
   let loginOrSignup;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Card, Col, OverlayTrigger, Popover } from "react-bootstrap";
+import { Card, Col, OverlayTrigger, Popover, PopoverHeader, PopoverBody } from "react-bootstrap";
 import { FaMapMarkedAlt, FaPlus, FaCheck } from "react-icons/fa";
 import {
   registerVisitedChoizaRoad,
@@ -102,10 +102,10 @@ function ChoizaListItem(props) {
               placement="top"
               overlay={
                 <Popover id={`popover-positioned-left`}>
-                  <Popover.Title as="h3">최자로드 식당 검색</Popover.Title>
+                  <PopoverHeader as="h3">최자로드 식당 검색</PopoverHeader>
                   {choizaRestaurants ? (
                     choizaRestaurants.split(",").map(restaurant => (
-                      <Popover.Content key={restaurant}>
+                      <PopoverBody key={restaurant}>
                         <div style={{ textAlign: "center" }}>
                           <a
                             href={`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=${restaurant}`}
@@ -116,10 +116,10 @@ function ChoizaListItem(props) {
                             {restaurant}
                           </a>
                         </div>
-                      </Popover.Content>
+                      </PopoverBody>
                     ))
                   ) : (
-                    <Popover.Content>미등록</Popover.Content>
+                    <PopoverBody>미등록</PopoverBody>
                   )}
                 </Popover>
               }
@@ -140,15 +140,15 @@ function ChoizaListItem(props) {
               placement="top"
               overlay={
                 <Popover id={`popover-positioned-left`}>
-                  <Popover.Title as="h3" className="noselect">
+                  <PopoverHeader as="h3" className="noselect">
                     최자로드 식당 방문 체크
-                  </Popover.Title>
+                  </PopoverHeader>
                   {choizaRestaurants && visitedList.length > 0 ? (
                     choizaRestaurants.split(",").map((restaurant, ix) => {
                       const isVisited = visitedList[ix].isVisited;
 
                       return (
-                        <Popover.Content key={restaurant}>
+                        <PopoverBody key={restaurant}>
                           <div
                             style={{
                               display: "flex",
@@ -172,11 +172,11 @@ function ChoizaListItem(props) {
                               />
                             </div>
                           </div>
-                        </Popover.Content>
+                        </PopoverBody>
                       );
                     })
                   ) : (
-                    <Popover.Content>미등록</Popover.Content>
+                    <PopoverBody>미등록</PopoverBody>
                   )}
                 </Popover>
               }

@@ -4,6 +4,7 @@ import { registerUser } from "../../../_actions/user_action";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
+
 const SignupBox = styled.div`
   width: 280px;
   position: absolute;
@@ -68,11 +69,12 @@ const Span = styled.span`
   }
 `;
 
+
 function Signup(props) {
-  const [Email, setEmail] = useState("");
-  const [Name, setName] = useState("");
-  const [Password, setPassword] = useState("");
-  const [ConfirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const dispatch = useDispatch();
 
   const inputRef = useRef();
@@ -103,15 +105,11 @@ function Signup(props) {
   const onSubmitHandler = e => {
     e.preventDefault();
 
-    if (Password !== ConfirmPassword) {
+    if (password !== confirmPassword) {
       return alert("서로 다른 패스워드입니다");
     }
 
-    let body = {
-      email: Email,
-      name: Name,
-      password: Password
-    };
+    const body = { email, name, password };
 
     dispatch(registerUser(body)).then(response => {
       if (response.payload.success) {
@@ -130,7 +128,7 @@ function Signup(props) {
         <TextBox>
           <Input
             type="email"
-            value={Email}
+            value={email}
             placeholder="이메일"
             onChange={onEmailHandler}
             ref={inputRef}
@@ -139,23 +137,25 @@ function Signup(props) {
         <TextBox>
           <Input
             type="text"
-            value={Name}
+            value={name}
             placeholder="이름"
             onChange={onNameHandler}
+            autoComplete="off"
           />
         </TextBox>
         <TextBox>
           <Input
             type="password"
-            value={Password}
+            value={password}
             placeholder="비밀번호"
             onChange={onPasswordHandler}
+            autoComplete="new-password"
           />
         </TextBox>
         <TextBox>
           <Input
             type="password"
-            value={ConfirmPassword}
+            value={confirmPassword}
             placeholder="비밀번호 확인"
             onChange={onConfirmedPassword}
           />
