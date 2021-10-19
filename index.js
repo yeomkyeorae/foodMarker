@@ -15,7 +15,9 @@ const crypto = require("crypto");
 const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
-const config = require("./config/key");
+const dotenv = require("dotenv");
+
+dotenv.config({ path: './config/.env'});
 
 app.use(bodyParser.json({ limit: "16mb", extended: true })); // Make sure you add these two lines
 app.use(bodyParser.urlencoded({ limit: "16mb", extended: true }));
@@ -26,7 +28,7 @@ app.use("/food", express.static("uploads"));
 let gfs;
 
 mongoose
-  .connect(config.mongoURI, {
+  .connect(process.env.mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
