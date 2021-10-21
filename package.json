@@ -9,7 +9,8 @@
     "dev:server": "nodemon run start",
     "dev:client": "cd client-app && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client-app && npm install && npm run build"
+    "heroku-prebuild": "npm install --dev",
+    "heroku-postbuild": "cd client-app && npm install && npm run build"
   },
   "author": "",
   "license": "ISC",
