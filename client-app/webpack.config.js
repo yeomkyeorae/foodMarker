@@ -34,7 +34,7 @@ module.exports = {
         use: ["style-loader", "css-loader"]
       },
       {
-        test: /\.(jpeg|png)$/, // .png 확장자로 마치는 모든 파일
+        test: /\.(jpeg|png|ico)$/,
         loader: "file-loader",
         options: {
           publicPath: "./dist/", // prefix를 아웃풋 경로로 지정
@@ -49,7 +49,8 @@ module.exports = {
     }),
     new HtmlWebPackPlugin({
       template: "./public/index.html",
-      filename: "index.html"
+      filename: "index.html",
+      favicon: "./public/favicon.ico"
     })
   ]
 };
