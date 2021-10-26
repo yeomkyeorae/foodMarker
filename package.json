@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production PORT=3000 nodemon run server",
+    "start": "NODE_ENV=production PORT=3000 concurrently \"npm run deploy:server\" \"npm run deploy:client\"",
+    "deploy:server": "nodemon run start",
+    "deploy:client": "cd client-app && npm run deploy",
     "dev": "NODE_ENV=dev concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "nodemon run start",
     "dev:client": "cd client-app && npm run dev",

@@ -31,6 +31,7 @@
   "scripts": {
     "start": "serve -s build",
     "dev": "react-scripts start",
+    "deploy": "serve -s build",
     "build": "webpack --mode production",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
