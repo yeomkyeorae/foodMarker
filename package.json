@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
-    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "start": "NODE_ENV=production PORT=3000 nodemon run server\"",
+    "dev": "NODE_ENV=dev concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "nodemon run start",
     "dev:client": "cd client-app && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1",
