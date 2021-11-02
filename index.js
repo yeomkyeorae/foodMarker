@@ -11,7 +11,6 @@ const { auth } = require("./middleware/auth");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
-const crypto = require("crypto");
 const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
@@ -25,7 +24,7 @@ app.use(cookieParser());
 app.set("view engine", "ejs");
 app.use("/food", express.static("uploads"));
 
-let gfs;
+// let gfs;
 
 mongoose
   .connect(process.env.mongoURI, {
@@ -35,31 +34,58 @@ mongoose
     useFindAndModify: false
   })
   .then((db, err) => {
-    gfs = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
-      bucketName: "images"
-    });
+    // gfs = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+    //   bucketName: "images"
+    // });
 
     console.log("mongoDB connected!!!");
   })
   .catch(err => console.log(err));
 
-try {
-  fs.readdirSync("uploads/");
-} catch (error) {
-  console.log("uploads 폴더 생성");
-  fs.mkdirSync("uploads/");
-}
+let upload;
+// when deploy
+if(process.env.NODE_ENV === 'production') {
+  const multerS3 = require('multer-s3');
+  const AWS = require('aws-sdk');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}_${file.originalname}`);
+  AWS.config.update({
+    accessKeyId: process.env.S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+    region: 'ap-northeast-2',
+  });
+
+  upload = multer({
+    storage: multerS3({
+      s3: new AWS.S3(),
+      bucket: 'food-marker',
+      key(req, file, cb) {
+        //uploads 폴더를 만들고 그 곳에 넣는 것
+        cb(null, `uploads/${Date.now()}_${file.originalname}`);
+      },
+    }),
+    limits: { fileSize: 20 * 1024 * 1024 },
+  }).array("restaurant_jpeg_img", 10);
+  
+// when dev
+} else {
+  try {
+    fs.readdirSync("uploads/");
+  } catch (error) {
+    console.log("uploads 폴더 생성");
+    fs.mkdirSync("uploads/");
   }
-});
 
-const upload = multer({ storage }).array("restaurant_jpeg_img", 10);
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "uploads/");
+    },
+    filename: (req, file, cb) => {
+      cb(null, `${Date.now()}_${file.originalname}`);
+    }
+  });
+  
+  upload = multer({ storage }).array("restaurant_jpeg_img", 10);
+}
 
 // 테스트
 app.get("/api/hello", (req, res) => {
@@ -260,9 +286,11 @@ app.post("/api/img/jpeg", (req, res) => {
     if (err) {
       return res.json({ success: false, err });
     }
-    const fileNames = res.req.files.map(
-      file => `http://localhost:5000/food/` + file.filename
-    );
+    const fileNames = process.env.NODE_ENV === 'production' ? res.req.files 
+      : res.req.files.map(file => `http://localhost:5000/food/` + file.filename);
+
+    console.log('fileNames', fileNames);
+
     return res.json({ success: true, fileNames: fileNames });
   });
 });
