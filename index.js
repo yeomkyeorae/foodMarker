@@ -49,8 +49,8 @@ if(process.env.NODE_ENV === 'production') {
   const AWS = require('aws-sdk');
 
   AWS.config.update({
-    accessKeyId: process.env.S3_ACCESS_KEY_ID,
-    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.AWSAccessKeyId,
+    secretAccessKey: process.env.AWSSecretKey,
     region: 'ap-northeast-2',
   });
 
@@ -286,7 +286,7 @@ app.post("/api/img/jpeg", (req, res) => {
     if (err) {
       return res.json({ success: false, err });
     }
-    const fileNames = process.env.NODE_ENV === 'production' ? res.req.files 
+    const fileNames = process.env.NODE_ENV === 'production' ? res.req.files.map(file => file.location)
       : res.req.files.map(file => `http://localhost:5000/food/` + file.filename);
 
     console.log('fileNames', fileNames);
