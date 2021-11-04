@@ -69,22 +69,21 @@ if(process.env.NODE_ENV === 'production') {
     limits: { fileSize: 20 * 1024 * 1024 },
   }).array("restaurant_jpeg_img", 10);
 
-  uploadHeic = (heicFile, fileName, imgPath) => {
+  uploadHeic = async (heicFile, fileName) => {
     const params = {
       Bucket: 'food-marker',
-      key: fileName,
-      Body: heicFile
+      Key: fileName,
+      Body: heicFile,
+      ContentEncoding: 'base64',
+      ContentType: 'image/jpeg'
     }
     
-    s3.upload(params, (err, data) => {
-      if(err) {
-        console.log(err);
-        throw err;
-      }
-      imgPath.push(data.location);
-    });
-
-    return imgPath;
+    try {
+      const result = await s3.upload(params).promise();
+      return result.Location;
+    } catch(err) {
+      console.log(err);
+    }
   }
   
 // when dev
@@ -310,35 +309,47 @@ app.post("/api/img/jpeg", (req, res) => {
     const fileNames = process.env.NODE_ENV === 'production' ? res.req.files.map(file => file.location)
       : res.req.files.map(file => `http://localhost:5000/food/` + file.filename);
 
-    console.log('fileNames', fileNames);
-
     return res.json({ success: true, fileNames: fileNames });
   });
 });
 
 // post heic img
-app.post("/api/img/heic", (req, res) => {
+app.post("/api/img/heic", async (req, res) => {
   const images = req.body.images;
   const imageNames = req.body.imgNames;
 
-  const heicImagePaths = [];
-  imageNames.forEach((imageName, ix) => {
-    const img = images[ix].replace(/^data:image\/jpeg;base64,/, "");
+  if(process.env.NODE_ENV === 'production') {
+      try {
+        const heicImagePaths = [];
 
-    const imgFullName = `uploads/${Date.now()}_${imageName}.jpeg`;
-    if(process.env.NODE_ENV === 'production') {
-      heicImagePaths = uploadHeic(img, heicImagePaths);
-    } else {
-      const imgClientPath = `http://localhost:5000/food/${Date.now()}_${imageName}.jpeg`;
-  
-      heicImagePaths.push(imgClientPath);
-      fs.writeFileSync(imgFullName, img, "base64", err => {
+        await Promise.all(imageNames.map(async (imageName, ix) => {
+          const img = images[ix].replace(/^data:image\/jpeg;base64,/, "");
+          const buf = Buffer.from(img, 'base64');
+          const imgFullName = `uploads/${Date.now()}_${imageName}.jpeg`;
+
+          const imgClientPath = await uploadHeic(buf, imgFullName);
+          heicImagePaths.push(imgClientPath);
+        }))
+        return res.json({ success: true, fileNames: heicImagePaths });
+      } catch(err) {
         return res.json({ success: false, err });
-      });
-    }
-  });
+      }
+  } else {
+    const heicImagePaths = [];
 
-  return res.json({ success: true, fileNames: heicImagePaths });
+    imageNames.forEach((imageName, ix) => {
+      const img = images[ix].replace(/^data:image\/jpeg;base64,/, "");
+      const imgFullName = `uploads/${Date.now()}_${imageName}.jpeg`;
+  
+        const imgClientPath = `http://localhost:5000/food/${Date.now()}_${imageName}.jpeg`;
+    
+        heicImagePaths.push(imgClientPath);
+        fs.writeFileSync(imgFullName, img, "base64", err => {
+          return res.json({ success: false, err });
+        });
+    });
+    return res.json({ success: true, fileNames: heicImagePaths });
+  }
 });
 
 // create my restaurant
