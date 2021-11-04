@@ -43,6 +43,7 @@ mongoose
   .catch(err => console.log(err));
 
 let upload;
+let uploadHeic;
 // when deploy
 if(process.env.NODE_ENV === 'production') {
   const multerS3 = require('multer-s3');
@@ -54,9 +55,11 @@ if(process.env.NODE_ENV === 'production') {
     region: 'ap-northeast-2',
   });
 
+  const s3 = new AWS.S3();
+
   upload = multer({
     storage: multerS3({
-      s3: new AWS.S3(),
+      s3: s3,
       bucket: 'food-marker',
       key(req, file, cb) {
         //uploads 폴더를 만들고 그 곳에 넣는 것
@@ -65,6 +68,24 @@ if(process.env.NODE_ENV === 'production') {
     }),
     limits: { fileSize: 20 * 1024 * 1024 },
   }).array("restaurant_jpeg_img", 10);
+
+  uploadHeic = (heicFile, fileName, imgPath) => {
+    const params = {
+      Bucket: 'food-marker',
+      key: fileName,
+      Body: heicFile
+    }
+    
+    s3.upload(params, (err, data) => {
+      if(err) {
+        console.log(err);
+        throw err;
+      }
+      imgPath.push(data.location);
+    });
+
+    return imgPath;
+  }
   
 // when dev
 } else {
@@ -305,12 +326,16 @@ app.post("/api/img/heic", (req, res) => {
     const img = images[ix].replace(/^data:image\/jpeg;base64,/, "");
 
     const imgFullName = `uploads/${Date.now()}_${imageName}.jpeg`;
-    const imgClientPath = `http://localhost:5000/food/${Date.now()}_${imageName}.jpeg`;
-
-    heicImagePaths.push(imgClientPath);
-    fs.writeFileSync(imgFullName, img, "base64", err => {
-      return res.json({ success: false, err });
-    });
+    if(process.env.NODE_ENV === 'production') {
+      heicImagePaths = uploadHeic(img, heicImagePaths);
+    } else {
+      const imgClientPath = `http://localhost:5000/food/${Date.now()}_${imageName}.jpeg`;
+  
+      heicImagePaths.push(imgClientPath);
+      fs.writeFileSync(imgFullName, img, "base64", err => {
+        return res.json({ success: false, err });
+      });
+    }
   });
 
   return res.json({ success: true, fileNames: heicImagePaths });
