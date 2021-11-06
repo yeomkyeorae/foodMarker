@@ -44,6 +44,7 @@ mongoose
 
 let upload;
 let uploadHeic;
+let deleteImages;
 // when deploy
 if(process.env.NODE_ENV === 'production') {
   const multerS3 = require('multer-s3');
@@ -81,6 +82,23 @@ if(process.env.NODE_ENV === 'production') {
     try {
       const result = await s3.upload(params).promise();
       return result.Location;
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
+  deleteImages = async objectArr => {
+    const params = {
+      Bucket: "food-marker", 
+      Delete: {
+       Objects: objectArr, 
+       Quiet: false
+      }
+     };
+
+    try {
+      const result = await s3.deleteObjects(params).promise();
+      return result;
     } catch(err) {
       console.log(err);
     }
@@ -393,25 +411,43 @@ app.put("/api/restaurant", (req, res) => {
 
 // delete my restaurant
 app.delete("/api/restaurant", (req, res) => {
-  Restaurant.findOneAndRemove({ _id: req.query._id }, (err, restaurantInfo) => {
-    res;
-
+  Restaurant.findOneAndRemove({ _id: req.query._id }, async (err, restaurantInfo) => {
     if (err)
       return res.json({
         success: false,
         err
       });
 
-    restaurantInfo.imgURL.split(",").forEach(url => {
-      const filePath = "uploads/" + url.split("food/")[1];
-      if (filePath) {
-        fs.unlinkSync(filePath);
-      }
-    });
+    const restaurantImgURLs = restaurantInfo.imgURL.split(",");
+    if(process.env.NODE_ENV === 'production') {
+      try {
+        const objectArr = restaurantImgURLs.map(url => {
+          const splited = url.split('uploads');
+          const key = 'uploads' + splited[splited.length - 1];
+          return { Key: key }
+        })
+        const result = await deleteImages(objectArr);
 
-    return res.status(200).json({
-      success: true
-    });
+        return res.json({ success: true });
+      } catch(err) {
+        return res.json({ success: false, err });
+      }
+    } else {
+      try {
+        restaurantImgURLs.forEach(url => {
+          const filePath = "uploads/" + url.split("food/")[1];
+          if (filePath) {
+            fs.unlinkSync(filePath);
+          }
+        });
+    
+        return res.status(200).json({
+          success: true
+        });
+      } catch(err) {
+        return res.json({ success: false, err });
+      }
+    }
   });
 });
 
