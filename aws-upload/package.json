@@ -1,0 +1,12 @@
+{
+    "name": "aws-upload",
+    "version": "1.0.0",
+    "description": "lambda image resizing",
+    "main": "index.js",
+    "author": "yeomkyeorae",
+    "license": "ISC",
+    "dependencies": {
+        "aws-sdk": "^2.663.0",
+        "sharp": "^0.25.2"
+    }
+}
