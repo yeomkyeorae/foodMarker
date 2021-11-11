@@ -9,6 +9,7 @@ import {
 import RestaurantListItem from "./RestaurantListItem";
 import { Row } from "react-bootstrap";
 import styled from "styled-components";
+import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
 
 const Div = styled.div`
   width: 90%;
@@ -39,23 +40,6 @@ const Pagination = styled.div`
   }
 `;
 
-const Arrow = styled.div`
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  display: inline-block;
-  ${props =>
-    props.right
-      ? `border-left: 10px solid #46CB18;`
-      : `border-right: 10px solid #46CB18;`}
-  ${props =>
-    props.right ? `margin-left: 10px;` : `margin-right: 10px;`}
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
 const SortMenu = styled.div`
   color: ${props => (props.color === "true" ? "#D21404" : "black")};
   display: inline-block;
@@ -75,7 +59,7 @@ function RestaurantList(props) {
   const [page, setPage] = useState(1);
   const [order, setOrder] = useState(1);
 
-  const ITEMPERPAGE = 6;
+  const ITEMPERPAGE = 8;
   const DISPLAYPAGENUM = 5;
   const body = {
     id: window.sessionStorage.getItem("userId"),
@@ -186,9 +170,11 @@ function RestaurantList(props) {
           restaurants.length > 0 ? 
            (
               <div>
-              <Arrow right={false} onClick={() => onSetPageSetNum(0, beforeFirst)} />
-              <div style={{ display: "inline-block" }}>{pages.map(page => page)}</div>
-              <Arrow right={true} onClick={() => onSetPageSetNum(1, afterFirst)} />
+                <div style={{ display: "inline-block" }}>
+                  <AiOutlineArrowLeft size={32} onClick={() => onSetPageSetNum(0, beforeFirst)} style={{cursor: "pointer", marginBottom: "5px"}} />
+                  {pages.map(page => page)}
+                  <AiOutlineArrowRight size={32} onClick={() => onSetPageSetNum(1, afterFirst)} style={{cursor: "pointer", marginBottom: "5px"}} />
+                </div>
             </div>
            ) : (
              <div>

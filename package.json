@@ -33,6 +33,7 @@
     "multer-gridfs-storage": "^4.2.0",
     "multer-s3": "^2.10.0",
     "nodemon": "^2.0.6",
+    "react-icons": "^4.3.1",
     "serve": "^12.0.1"
   }
 }
