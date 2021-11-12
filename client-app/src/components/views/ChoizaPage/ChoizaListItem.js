@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Card, Col, OverlayTrigger, Popover, PopoverHeader, PopoverBody } from "react-bootstrap";
-import { FaMapMarkedAlt, FaPlus, FaCheck } from "react-icons/fa";
+import { FaSearch, FaPlus, FaCheck } from "react-icons/fa";
 import {
   registerVisitedChoizaRoad,
   deleteVisitedChoizaRoad
@@ -131,7 +131,7 @@ function ChoizaListItem(props) {
                   marginRight: "5px"
                 }}
               >
-                <FaMapMarkedAlt color="#999DA0" size="28" />
+                <FaSearch color="#999DA0" size="28" />
               </div>
             </OverlayTrigger>
             <OverlayTrigger
