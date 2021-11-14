@@ -87,16 +87,24 @@ function RestaurantList(props) {
     setPage(page);
   };
 
-  const onSetPageSetNum = (type, pageIfMove) => {
-    if (type === 0) {
-      if (pageSetNum > 0) {
-        setPageSetNum(pageSetNum - 1);
-        setPage(pageIfMove);
+  const onSetPageSetNum = (type, pageIfMove, limitPageSetNum) => {
+    if (type === 0) { // 왼쪽 화살표 버튼
+      if(page % DISPLAYPAGENUM === 1) {
+        if (pageSetNum > 0) {
+          setPageSetNum(pageSetNum - 1);
+          setPage(pageIfMove);
+        }
+      } else if(page > 1) {
+        setPage(page - 1);
       }
-    } else if (type === 1) {
-      if (totalItemCount > ITEMPERPAGE * DISPLAYPAGENUM * (pageSetNum + 1)) {
-        setPageSetNum(pageSetNum + 1);
-        setPage(pageIfMove);
+    } else if (type === 1) {  // 오른쪽 화살표 버튼
+      if(page % DISPLAYPAGENUM === 0) {
+        if (totalItemCount > ITEMPERPAGE * DISPLAYPAGENUM * (pageSetNum + 1)) {
+          setPageSetNum(pageSetNum + 1);
+          setPage(pageIfMove);
+        }
+      } else if(page < limitPageSetNum) {
+        setPage(page + 1);
       }
     }
   };
@@ -171,9 +179,9 @@ function RestaurantList(props) {
            (
               <div>
                 <div style={{ display: "inline-block" }}>
-                  <AiOutlineArrowLeft size={32} onClick={() => onSetPageSetNum(0, beforeFirst)} style={{cursor: "pointer", marginBottom: "5px"}} />
+                  <AiOutlineArrowLeft size={24} onClick={() => onSetPageSetNum(0, beforeFirst)} style={{cursor: "pointer", marginBottom: "5px"}} />
                   {pages.map(page => page)}
-                  <AiOutlineArrowRight size={32} onClick={() => onSetPageSetNum(1, afterFirst)} style={{cursor: "pointer", marginBottom: "5px"}} />
+                  <AiOutlineArrowRight size={24} onClick={() => onSetPageSetNum(1, afterFirst, limitPageSetNum)} style={{cursor: "pointer", marginBottom: "5px"}} />
                 </div>
             </div>
            ) : (
