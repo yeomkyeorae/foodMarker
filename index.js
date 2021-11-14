@@ -576,6 +576,13 @@ app.delete("/api/visitedChoizaRoads", (req, res) => {
 });
 
 if(process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.header('x-forwarded-proto') !== 'https')
+      res.redirect(`https://${req.header('host')}${req.url}`)
+    else
+      next()
+  });
+
   app.use(express.static(path.join(__dirname, 'client-app/dist')));
   
   app.get('*', (req, res) => {
