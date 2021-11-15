@@ -106,8 +106,29 @@ function Signup(props) {
   const onSubmitHandler = e => {
     e.preventDefault();
 
-    if (password !== confirmPassword) {
-      return alert("서로 다른 패스워드입니다");
+    if(email.length <= 6 || 
+      !email.includes('@') || 
+      !email.includes('.') || 
+      email.split('@').length !== 2 ||
+      email.split('@')[0].length === 0 ||
+      email.split('@')[1].length === 0 ||
+      email.split('@')[1].split('.').length !== 2 ||
+      email.split('@')[1].split('.')[0].length === 0 ||
+      email.split('@')[1].split('.')[1].length === 0) {
+        return alert("이메일 형식을 입력해주세요");
+    }
+
+    if(name.length === 0) {
+      return alert("이름을 입력해 주세요");
+    }
+
+    if(password.length <= 8) {
+      return alert("8자리 이상의 패스워드를 입력하세요");
+    }
+
+    if(password !== confirmPassword) {
+      alert("서로 다른 패스워드입니다");
+      return;
     }
 
     const body = { email, name, password };
