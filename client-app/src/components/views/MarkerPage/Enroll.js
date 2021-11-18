@@ -237,6 +237,11 @@ function Enroll(props) {
         return;
       }
 
+      if (rating === 0) {
+        alert("별점을 입력해 주세요!");
+        return;
+      }
+
       // JPEG 저장
       let jpegPath = [];
       if (jpegCount) {
