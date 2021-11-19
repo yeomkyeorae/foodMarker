@@ -5,6 +5,7 @@ import UpdateModal from "../../containers/UpdateModal/UpdateModal";
 import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
 import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
+import noImage from "../../../assets/noImage.jpeg";
 import "./RestaurantListItem.css";
 
 const Arrow = styled.div`
@@ -87,6 +88,8 @@ function RestaurantListItem(props) {
   if (restaurant.imgURL) {
     imgUrls = restaurant.imgURL.split(",");
     isMultipleImages = imgUrls.length > 1 ? true : false;
+  } else {
+    imgUrls.push(noImage);
   }
 
   return restaurant.address ? (
