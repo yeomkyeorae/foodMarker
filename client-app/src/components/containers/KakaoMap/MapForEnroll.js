@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 const { kakao } = window;
 
 function MapForEnroll(props) {
-  const { toggle, setName, setAddress } = props;
+  const { toggle, setName, setAddress, width } = props;
 
   useEffect(() => {
     kakao.maps.load(() => {
@@ -241,7 +241,7 @@ function MapForEnroll(props) {
     <div className="map_wrap" style={{ display: "inline-block", width: "100%" }}>
       <div
         id={`map`}
-        style={{ width: "90%", height: "400px", display: "inline-block" }}
+        style={{ width: `${width ? width : "90%"}`, height: "400px", display: "inline-block" }}
       ></div>
     </div>
   );

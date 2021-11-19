@@ -14,19 +14,20 @@ import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
 
 const InputTitle = styled.div`
-  width: 40vw;
+  max-width: 700px;
   margin: auto;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: ${props => props.fontSize ? props.fontSize : "1rem"};
   text-align: left;
-  border-bottom: 0.5px solid black;
+  border-bottom: ${props => props.borderBottom ? props.borderBottom : '0.5px'} solid black;
   margin-bottom: 10px;
 `;
 
 const Input = styled.input`
   margin: 3px 0;
   padding: 15px 10px;
-  width: 40vw;
+  min-width: 300px;
+  max-width: 700px;
   outline: none;
   border: 1px solid #bbb;
   border-radius: 20px;
@@ -344,50 +345,38 @@ function Enroll(props) {
 
   return (
     <div>
-      <MapForEnroll toggle={toggle} setName={setName} setAddress={setAddress} />
       <div
         id={`menu_wrap`}
         className="bg_white"
         style={{ display: "inline-block", width: "90%" }}
       >
-        <div className="option">
-          <div>
-            <div
-              style={{
-                width: "90%",
-                margin: "auto",
-                fontWeight: "bold",
-                fontSize: "1.5rem",
-                textAlign: "left",
-                borderBottom: "2px solid black"
-              }}
-            >
-              맛집 검색
-            </div>
-            <Input
-              type="text"
-              value={searchName}
-              onChange={onChangeSearchNameHandler}
-              id={`keyword`}
-              // size="20"
-              onKeyDown={onKeyDown}
-            />
-            <Button
-              variant="success"
-              style={{ margin: "10px" }}
-              type="submit"
-              onClick={toggleHandler}
-            >
-              검색하기
-            </Button>
-          </div>
+        <div>
+          <InputTitle fontSize={"1.5rem"} borderBottom={"2px"}>맛집 검색</InputTitle>
+          <Input
+            type="text"
+            value={searchName}
+            onChange={onChangeSearchNameHandler}
+            id={`keyword`}
+            // size="20"
+            onKeyDown={onKeyDown}
+          />
+          <Button
+            variant="success"
+            style={{ margin: "10px" }}
+            type="submit"
+            onClick={toggleHandler}
+          >
+            검색
+          </Button>
         </div>
+        <MapForEnroll toggle={toggle} setName={setName} setAddress={setAddress} width={"50%"} />
         <ul
           id={`placesList`}
           style={{
             listStyle: "none",
             height: "300px",
-            width: "60vw",
+            minWidth: "500px",
+            maxWidth: "700px",
             display: "inline-block",
             overflowY: "scroll",
             padding: "0px"
