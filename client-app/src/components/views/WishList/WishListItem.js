@@ -16,17 +16,23 @@ const Item = styled.li`
   margin-bottom: 5px;
 `;
 
-const HeadLine = styled.h2`
+const HeadLine = styled.span`
   padding: 0;
   margin-left: 25px;
   margin-bottom: 0;
-  font-size: 3.5vw;
+  font-size: 2vw;
 `;
 
-const Address = styled.h4`
+const Created = styled.span`
   padding: 0;
   margin-bottom: 0;
-  font-size: 2vw;
+  font-size: 1vw;
+`;
+
+const Address = styled.span`
+  padding: 0;
+  margin-bottom: 0;
+  font-size: 0.8vw;
 `;
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -83,8 +89,8 @@ function WishListItem(props) {
           </Dropdown.Menu>
         </Dropdown>
       </div>
-      <HeadLine>{wishListName}</HeadLine>
-      <span style={{ fontSize: "10px" }}>{wishListCreated}</span> <br />
+      <HeadLine>{wishListName}</HeadLine><br />
+      <Created>{wishListCreated}</Created> <br />
       <Address>{wishListAddress}</Address> <br />
       <UpdateModal
         type="WishListItem"

@@ -9,10 +9,11 @@ import WishListItem from "./WishListItem";
 import styled from "styled-components";
 
 const WishLists = styled.div`
-  width: 60%;
+  width: 40%;
   height: 100%;
   display: inline-block;
   height: 80vh;
+  margin-bottom: 5px;
 `;
 
 const List = styled.ol`
