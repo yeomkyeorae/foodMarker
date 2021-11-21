@@ -100,6 +100,7 @@ function ChoizaListItem(props) {
               trigger="click"
               key="top"
               placement="top"
+              rootClose="true"
               overlay={
                 <Popover id={`popover-positioned-left`}>
                   <PopoverHeader as="h3">최자로드 식당 검색</PopoverHeader>
@@ -138,6 +139,7 @@ function ChoizaListItem(props) {
               trigger="click"
               key="top_wish"
               placement="top"
+              rootClose="true"
               overlay={
                 <Popover id={`popover-positioned-left`}>
                   <PopoverHeader as="h3" className="noselect">
