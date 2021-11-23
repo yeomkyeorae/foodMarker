@@ -324,7 +324,7 @@ app.post("/api/img/jpeg", (req, res) => {
     if (err) {
       return res.json({ success: false, err });
     }
-    const fileNames = process.env.NODE_ENV === 'production' ? res.req.files.map(file => file.location)
+    const fileNames = process.env.NODE_ENV === 'production' ? res.req.files.map(file => file.location.replace("/uploads", "/resized"))
       : res.req.files.map(file => `http://localhost:5000/food/` + file.filename);
 
     return res.json({ success: true, fileNames: fileNames });
@@ -343,7 +343,7 @@ app.post("/api/img/heic", async (req, res) => {
         await Promise.all(imageNames.map(async (imageName, ix) => {
           const img = images[ix].replace(/^data:image\/jpeg;base64,/, "");
           const buf = Buffer.from(img, 'base64');
-          const imgFullName = `uploads/${Date.now()}_${imageName}.jpeg`;
+          const imgFullName = `resized/${Date.now()}_${imageName}.jpeg`;
 
           const imgClientPath = await uploadHeic(buf, imgFullName);
           heicImagePaths.push(imgClientPath);
@@ -422,8 +422,8 @@ app.delete("/api/restaurant", (req, res) => {
     if(process.env.NODE_ENV === 'production') {
       try {
         const objectArr = restaurantImgURLs.map(url => {
-          const splited = url.split('uploads');
-          const key = 'uploads' + splited[splited.length - 1];
+          const splited = url.split('resized');
+          const key = 'resized' + splited[splited.length - 1];
           return { Key: key }
         })
         const result = await deleteImages(objectArr);
