@@ -71,10 +71,14 @@ function RestaurantList(props) {
   const deleteHandler = restaurantId => {
     dispatch(deleteRestaurant(restaurantId)).then(response => {
       if (response.payload.success) {
+        alert('삭제되었습니다');
         setRestaurants(
           restaurants.filter(restaurant => restaurant._id !== restaurantId)
         );
       }
+    }).catch(err => {
+      alert('삭제에 실패했습니다');
+      console.log('err', err);
     });
   };
 
