@@ -388,7 +388,7 @@ function Enroll(props) {
 
       <form onSubmit={onSubmitHandler} encType="multipart/form-data">
         <div style={{ margin: "5px" }}>
-          <InputTitle>맛집 이름 & 주소</InputTitle>
+          <InputTitle>맛집 이름 & 주소(검색해 선택해 주세요)</InputTitle>
           <Input
             type="text"
             value={name}

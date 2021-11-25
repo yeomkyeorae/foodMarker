@@ -71,6 +71,11 @@ function MapForEnroll(props) {
           infowindow.close();
         });
 
+        kakao.maps.event.addListener(marker, "click", function() {
+          setName(title);
+          setAddress(addrress_name);
+        });
+
         itemEl.onmouseover = function() {
           displayInfowindow(marker, title);
         };
