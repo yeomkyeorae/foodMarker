@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { registerUser } from "../../../_actions/user_action";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
+import AlertModal from "../../containers/AlertModal/AlertModal";
 
 
 const SignupBox = styled.div`
@@ -76,6 +77,8 @@ function Signup(props) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [alertToggle, setAlertToggle] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const dispatch = useDispatch();
 
   const inputRef = useRef();
@@ -115,19 +118,26 @@ function Signup(props) {
       email.split('@')[1].split('.').length !== 2 ||
       email.split('@')[1].split('.')[0].length === 0 ||
       email.split('@')[1].split('.')[1].length === 0) {
-        return alert("이메일 형식을 입력해주세요");
+        setAlertToggle(true);
+        setAlertMessage("이메일 형식을 올바르게 입력해 주세요!");
+        return;
     }
 
     if(name.length === 0) {
-      return alert("이름을 입력해 주세요");
+      setAlertToggle(true);
+      setAlertMessage("이름을 입력해 주세요!");
+      return;
     }
 
     if(password.length <= 8) {
-      return alert("8자리 이상의 패스워드를 입력하세요");
+      setAlertToggle(true);
+      setAlertMessage("8자리 이상의 패스워드를 입력하세요!");
+      return;
     }
 
     if(password !== confirmPassword) {
-      alert("서로 다른 패스워드입니다");
+      setAlertToggle(true);
+      setAlertMessage("서로 다른 패스워드입니다!");
       return;
     }
 
@@ -183,6 +193,11 @@ function Signup(props) {
           />
         </TextBox>
         <Btn type="submit">회원가입</Btn>
+        {
+          alertToggle ?
+          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+          null
+        }
       </form>
       <Span onClick={onClickHandler}>로그인</Span>
     </SignupBox>
