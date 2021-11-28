@@ -58,7 +58,7 @@ function WishPage(props) {
         </div>
         <hr />
         {MenuComponent}
-        <Footer />
+        <Footer marginTop={5} />
       </div>
     </div>
   );

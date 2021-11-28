@@ -5,6 +5,7 @@ const FooterDiv = styled.footer`
   width: 100%;
   height: 50px;
   left: 0;
+  margin-top: ${props => props.marginTop ? `${props.marginTop}px` : '0px'};
   bottom: 0;
   position: ${props => props.position === "fixed" ? "fixed;" : "relative;"};
   background: gray;
@@ -18,10 +19,10 @@ const FooterP = styled.p`
 `;
 
 function Footer(props) {
-  const { position } = props;
+  const { position, marginTop } = props;
 
   return (
-    <FooterDiv position={position}>
+    <FooterDiv marginTop={marginTop} position={position}>
       <FooterP>Copyright &copy; 2021. All Rights Reserved.</FooterP>
     </FooterDiv>
   );
