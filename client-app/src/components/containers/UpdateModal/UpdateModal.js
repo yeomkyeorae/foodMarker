@@ -11,6 +11,7 @@ import {
   registerHeicImg
 } from "../../../_actions/restaurant_action";
 import styled from "styled-components";
+import AlertModal from "../../containers/AlertModal/AlertModal";
 
 const Input = styled.input`
   margin: 3px 0;
@@ -84,6 +85,10 @@ function UpdateModal(props) {
   // HEIC 변환 중 여부
   const [isConverting, setIsConverting] = useState(false);
 
+  // alert
+  const [alertToggle, setAlertToggle] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
   // etc.
   const dispatch = useDispatch();
   const inputRef = useRef();
@@ -111,7 +116,8 @@ function UpdateModal(props) {
 
     const inputImageCnt = Object.keys(e.target.files).length;
     if (inputImageCnt > 5) {
-      alert("이미지 파일은 5개를 초과할 수 없습니다");
+      setAlertToggle(true);
+      setAlertMessage("이미지 파일은 5개를 초과할 수 없습니다");
       return;
     }
 
@@ -178,6 +184,8 @@ function UpdateModal(props) {
               fileReader.readAsDataURL(conversionResult);
             })
             .catch(err => {
+              setAlertToggle(true);
+              setAlertMessage("HEIC 이미지 파일 변환에 실패했습니다");
               console.log(err);
             });
         };
@@ -239,10 +247,12 @@ function UpdateModal(props) {
     dispatch(updateRestaurant(body))
       .then(response => {
         if (response.payload.success) {
-          alert("수정되었습니다.");
+          setAlertToggle(true);
+          setAlertMessage("수정이 완료되었습니다");
           setToggle(!toggle);
         } else {
-          alert("error");
+          setAlertToggle(true);
+          setAlertMessage("수정이 실패했습니다");
         }
       })
       .catch(err => {
@@ -254,7 +264,8 @@ function UpdateModal(props) {
     e.preventDefault();
 
     if (visitedDate.length === 0) {
-      alert("방문 날짜를 입력해주세요!");
+      setAlertToggle(true);
+      setAlertMessage("방문 날짜를 입력해주세요!");
       return;
     }
 
@@ -295,12 +306,14 @@ function UpdateModal(props) {
     dispatch(registerRestaurant(body))
       .then(response => {
         if (response.payload.success) {
-          alert("방문 표시되었습니다.");
+          setAlertToggle(true);
+          setAlertMessage("방문 표시되었습니다.");
           setToggle(true);
           setPopUpToggle(false);
           deleteHandler(wishListId);
         } else {
-          alert("error");
+          setAlertToggle(true);
+          setAlertMessage("방문 표시에 실패했습니다");
         }
       })
       .catch(err => {
@@ -471,6 +484,11 @@ function UpdateModal(props) {
           </Button>
         )}
       </Modal.Footer>
+      {
+          alertToggle ?
+          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+          null
+        }
     </Modal>
   );
 }

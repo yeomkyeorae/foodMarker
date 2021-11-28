@@ -12,6 +12,8 @@ import { Button } from "react-bootstrap";
 import heic2any from "heic2any";
 import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
+import AlertModal from "../../containers/AlertModal/AlertModal";
+
 
 const InputTitle = styled.div`
   max-width: 700px;
@@ -82,6 +84,10 @@ function Enroll(props) {
   // Toggle
   const [toggle, setToggle] = useState(true);
 
+  // alert
+  const [alertToggle, setAlertToggle] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
   // Props, etc.
   const userId = window.sessionStorage.getItem("userId");
   const username = window.sessionStorage.getItem("username");
@@ -132,7 +138,8 @@ function Enroll(props) {
 
     const inputImageCnt = Object.keys(e.target.files).length;
     if (inputImageCnt > 5) {
-      alert("이미지 파일은 5개를 초과할 수 없습니다");
+      setAlertToggle(true);
+      setAlertMessage("이미지 파일은 5개를 초과할 수 없습니다");
       return;
     }
 
@@ -227,19 +234,22 @@ function Enroll(props) {
     e.preventDefault();
 
     if (name.length === 0 || address.length === 0) {
-      alert("식당을 검색해서 선택해 주세요!");
+      setAlertToggle(true);
+      setAlertMessage("식당을 검색해서 선택해 주세요!");
       return;
     }
 
     // 나의 맛집
     if (parentCompName === "MarkerPage") {
       if (visitedDate.length === 0) {
-        alert("방문 날짜를 입력해주세요!");
+        setAlertToggle(true);
+        setAlertMessage("방문 날짜를 입력해주세요!");
         return;
       }
 
       if (rating === 0) {
-        alert("별점을 입력해 주세요!");
+        setAlertToggle(true);
+        setAlertMessage("별점을 입력해 주세요!");
         return;
       }
 
@@ -288,11 +298,11 @@ function Enroll(props) {
             props.setToggle(true);
             props.setMenu("식당 등록");
             props.history.push("/marker", userId);
-          } else {
-            alert("error");
           }
         })
         .catch(err => {
+          setAlertToggle(true);
+          setAlertMessage("맛집 등록에 실패했습니다");
           console.log(err);
         });
     } else if (parentCompName === "WishPage") {
@@ -311,9 +321,11 @@ function Enroll(props) {
           props.setToggle(true);
           props.setMenu("위시리스트 등록");
           props.history.push("/wish", userId);
-        } else {
-          alert("error");
         }
+      }).catch(err => {
+        setAlertToggle(true);
+        setAlertMessage("위시 리스트 등록에 실패했습니다");
+        console.log(err);
       });
     }
   };
@@ -534,6 +546,11 @@ function Enroll(props) {
           </Button>
         </div>
       </form>
+      {
+        alertToggle ?
+        <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+        null
+      }
     </div>
   );
 }

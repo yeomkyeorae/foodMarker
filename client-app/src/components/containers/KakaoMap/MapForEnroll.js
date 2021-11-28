@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
+import AlertModal from "../../containers/AlertModal/AlertModal";
 // import "react-datepicker/dist/react-datepicker.css";
 
 const { kakao } = window;
 
 function MapForEnroll(props) {
   const { toggle, setName, setAddress, width } = props;
+  const [alertToggle, setAlertToggle] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   useEffect(() => {
     kakao.maps.load(() => {
@@ -34,7 +37,8 @@ function MapForEnroll(props) {
         var keyword = document.getElementById("keyword").value;
 
         if (!keyword.replace(/^\s+|\s+$/g, "")) {
-          alert("키워드를 입력해주세요!");
+          setAlertToggle(true);
+          setAlertMessage("키워드를 입력해주세요!");
           return false;
         }
 
@@ -54,10 +58,12 @@ function MapForEnroll(props) {
           // 페이지 번호를 표출합니다
           displayPagination(pagination);
         } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-          alert("검색 결과가 존재하지 않습니다.");
+          setAlertToggle(true);
+          setAlertMessage("검색 결과가 존재하지 않습니다.");
           return;
         } else if (status === kakao.maps.services.Status.ERROR) {
-          alert("검색 결과 중 오류가 발생했습니다.");
+          setAlertToggle(true);
+          setAlertMessage("검색 결과 중 오류가 발생했습니다.");
           return;
         }
       }
@@ -248,6 +254,11 @@ function MapForEnroll(props) {
         id={`map`}
         style={{ width: `${width ? width : "90%"}`, height: "400px", display: "inline-block" }}
       ></div>
+      {
+        alertToggle ?
+        <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+        null
+      }
     </div>
   );
 }

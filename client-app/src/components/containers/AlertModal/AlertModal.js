@@ -13,7 +13,6 @@ function AlertModal(props) {
         textAlign: "center"
       }}
       aria-labelledby="contained-modal-title-vcenter"
-      centered
     >
       <Modal.Header closeButton>알림</Modal.Header>
       <Modal.Body closeButton>

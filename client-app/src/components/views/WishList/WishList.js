@@ -7,6 +7,8 @@ import {
 } from "../../../_actions/wishList_action";
 import WishListItem from "./WishListItem";
 import styled from "styled-components";
+import AlertModal from "../../containers/AlertModal/AlertModal";
+
 
 const WishLists = styled.div`
   width: 40%;
@@ -25,6 +27,8 @@ const List = styled.ol`
 function WishList(props) {
   const dispatch = useDispatch();
   const [wishLists, setWishLists] = useState([{ _id: 0 }]);
+  const [alertToggle, setAlertToggle] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const userId = window.sessionStorage.getItem("userId");
   const body = {
     id: userId
@@ -41,10 +45,11 @@ function WishList(props) {
     dispatch(deleteWishList(wishListId)).then(response => {
       if (response.payload.success) {
         setWishLists(wishLists.filter(wishList => wishList._id !== wishListId));
-      } else {
-        console.log(response);
-        alert("error");
       }
+    }).catch(err => {
+      setAlertToggle(true);
+      setAlertMessage("위시리스트 삭제에 실패했습니다");
+      console.log(err);
     });
   };
 
@@ -70,6 +75,11 @@ function WishList(props) {
               등록된 위시리스트 맛집이 없습니다!
             </div>
           )
+      }
+      {
+        alertToggle ?
+        <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+        null
       }
     </WishLists>
   );

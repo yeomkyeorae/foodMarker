@@ -4,6 +4,8 @@ import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import KakaoMapCoords from "../../containers/KakaoMap/KakaoMapCoords";
 import SubPage from "./SubPage";
+import AlertModal from "../../containers/AlertModal/AlertModal";
+
 
 function CurrentLocation(props) {
   const userId = props.location.state;
@@ -11,6 +13,8 @@ function CurrentLocation(props) {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongtitude] = useState(0);
   const [isSuccess, setIsSuccess] = useState(true);
+  const [alertToggle, setAlertToggle] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -26,9 +30,8 @@ function CurrentLocation(props) {
         { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
       );
     } else {
-      alert(
-        "이 브라우저에서는 사용자 현재 위치 기반 주변 맛집 기능이 지원되지 않습니다."
-      );
+      setAlertToggle(true);
+      setAlertMessage("이 브라우저에서는 사용자 현재 위치 기반 주변 맛집 기능이 지원되지 않습니다.");
     }
   }, []);
 
@@ -54,6 +57,11 @@ function CurrentLocation(props) {
           />
         ) : null}
         { !isSuccess ? <SubPage /> : null }
+        {
+          alertToggle ?
+          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+          null
+        }
         <Footer position="fixed"/>
       </div>
     </div>

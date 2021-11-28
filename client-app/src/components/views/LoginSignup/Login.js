@@ -4,6 +4,7 @@ import { loginUser } from "../../../_actions/user_action";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import './Login.css';
+import AlertModal from "../../containers/AlertModal/AlertModal";
 
 
 const LoginBox = styled.div`
@@ -75,6 +76,8 @@ const Span = styled.span`
 function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [alertToggle, setAlertToggle] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const dispatch = useDispatch();
 
   const inputRef = useRef();
@@ -107,7 +110,8 @@ function Login(props) {
           pathname: "/main"
         });
       } else {
-        alert("failed to login");
+        setAlertToggle(true);
+        setAlertMessage("로그인에 실패했습니다");
       }
     });
   };
@@ -136,6 +140,11 @@ function Login(props) {
         <Btn type="submit">로그인</Btn>
       </form>
       <Span onClick={onClickHandler}>회원가입</Span>
+      {
+        alertToggle ?
+        <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+        null
+      }
     </LoginBox>
   );
 }

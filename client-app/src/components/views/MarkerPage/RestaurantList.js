@@ -10,6 +10,8 @@ import RestaurantListItem from "./RestaurantListItem";
 import { Row } from "react-bootstrap";
 import styled from "styled-components";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
+import AlertModal from "../../containers/AlertModal/AlertModal";
+
 
 const Div = styled.div`
   width: 90%;
@@ -58,6 +60,8 @@ function RestaurantList(props) {
   const [pageSetNum, setPageSetNum] = useState(0);
   const [page, setPage] = useState(1);
   const [order, setOrder] = useState(1);
+  const [alertToggle, setAlertToggle] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const ITEMPERPAGE = 8;
   const DISPLAYPAGENUM = 5;
@@ -71,14 +75,16 @@ function RestaurantList(props) {
   const deleteHandler = restaurantId => {
     dispatch(deleteRestaurant(restaurantId)).then(response => {
       if (response.payload.success) {
-        alert('삭제되었습니다');
+        setAlertToggle(true);
+        setAlertMessage("등록 맛집이 삭제되었습니다.");
         setRestaurants(
           restaurants.filter(restaurant => restaurant._id !== restaurantId)
         );
       }
     }).catch(err => {
-      alert('삭제에 실패했습니다');
-      console.log('err', err);
+      setAlertToggle(true);
+      setAlertMessage("등록 맛집 삭제에 실패했습니다.");
+      console.log(err);
     });
   };
 
@@ -195,6 +201,11 @@ function RestaurantList(props) {
            )
         }
       </Div>
+      {
+        alertToggle ?
+        <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+        null
+      }
     </div>
   );
 }

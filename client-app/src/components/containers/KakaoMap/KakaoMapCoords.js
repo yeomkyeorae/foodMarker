@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { registerWishList } from "../../../_actions/wishList_action";
+import AlertModal from "../../containers/AlertModal/AlertModal";
 import { useDispatch } from "react-redux";
 
 const { kakao } = window;
 
 function KakaoMapCoords(props) {
   const { latitude, longitude, mapLevel } = props;
+  const [alertToggle, setAlertToggle] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const [dong, setDong] = useState();
 
   const dispatch = useDispatch();
@@ -103,7 +106,11 @@ function KakaoMapCoords(props) {
                 created: new Date().toLocaleString()
               };
               dispatch(registerWishList(body)).then(response => {
-                alert("위시 맛집에 등록되었습니다");
+                setAlertToggle(true);
+                setAlertMessage("위시 맛집에 등록되었습니다");
+              }).catch(err => {
+                setAlertToggle(true);
+                setAlertMessage("위시 맛집에 등록이 실패했습니다");
               });
             });
           });
@@ -119,7 +126,13 @@ function KakaoMapCoords(props) {
         width: "100%",
         height: "80%"
       }}
-    ></div>
+    >
+    {
+      alertToggle ?
+      <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+      null
+    }
+    </div>
   );
 }
 

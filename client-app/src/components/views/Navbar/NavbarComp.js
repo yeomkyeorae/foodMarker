@@ -5,6 +5,8 @@ import { logoutUser } from "../../../_actions/user_action";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import AlertModal from "../../containers/AlertModal/AlertModal";
+
 
 const TopNav = styled.div`
   height: 50px;
@@ -84,6 +86,8 @@ function NavbarComp(props) {
   const selectedMenu = menu ? menu : 0;
   const userId = window.sessionStorage.getItem("userId");
   const [ openState, setOpenState ] = useState(false);
+  const [alertToggle, setAlertToggle] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const dispatch = useDispatch();
 
   const onClickHandler = () => {
@@ -92,7 +96,8 @@ function NavbarComp(props) {
         window.sessionStorage.clear();
         props.history.push("/loginSignup");
       } else {
-        alert("failed to logout");
+        setAlertToggle(true);
+        setAlertMessage("로그아웃에 실패했습니다");
       }
     });
   };
@@ -177,6 +182,11 @@ function NavbarComp(props) {
           </DownLogoutDiv>
         </>
         ) : null
+      }
+      {
+        alertToggle ?
+        <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+        null
       }
     </>
   );
