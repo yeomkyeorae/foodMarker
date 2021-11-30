@@ -4,6 +4,7 @@ import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import KakaoMapCoords from "../../containers/KakaoMap/KakaoMapCoords";
 import SubPage from "./SubPage";
+import LoadingPage from "./LoadingPage";
 import AlertModal from "../../containers/AlertModal/AlertModal";
 
 
@@ -55,7 +56,7 @@ function CurrentLocation(props) {
             longitude={longitude}
             mapLevel={4}
           />
-        ) : null}
+        ) : <LoadingPage />}
         { !isSuccess ? <SubPage /> : null }
         {
           alertToggle ?
