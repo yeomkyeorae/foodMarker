@@ -542,7 +542,7 @@ function Enroll(props) {
             type="submit"
             disabled={isConverting ? true : false}
           >
-            등록
+            {isConverting ? '이미지 변환 중': '등록'}
           </Button>
         </div>
       </form>
