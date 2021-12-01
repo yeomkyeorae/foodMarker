@@ -17,9 +17,8 @@ const TopNav = styled.div`
 const Home = styled.div`
   height: 100%;
   width: 200px;
-  color: #c1e8c2;
+  color: #ff6700;
   &:hover {
-    color: #4caf50;
     text-decoration: none;
   }
   font-size: 2rem;
@@ -31,10 +30,11 @@ const Menu = styled.div`
   width: 10vw;
   text-align: center;
   text-decoration: none;
-  color: ${props => (props.color === "true" ? "#4caf50" : "black")};
+  color: ${props => (props.color === "true" ? "#ff6700" : "black")};
   &:hover {
-    color: #4caf50;
+    color: #ff6700;
     text-decoration: none;
+    font-weight: bold;
   }
   font-weight: 200;
   @media screen and (max-width: 992px) {
@@ -81,6 +81,13 @@ const DownLogoutDiv = styled.div`
   width: 100%;
 `;
 
+const LogoutSpan = styled.span`
+  color: red;
+  &:hover {
+    font-weight: bold;
+  }
+`;
+
 function NavbarComp(props) {
   const menu = props.history.location.menu;
   const selectedMenu = menu ? menu : 0;
@@ -109,7 +116,7 @@ function NavbarComp(props) {
           to={{ pathname: "/main", state: userId, menu: 0 }}
           style={{ textDecoration: "none" }}
         >
-          <Home>Food Marker</Home>
+          <Home>푸드마커</Home>
         </Link>
         <Link
           to={{ pathname: "/current-location", state: userId, menu: 1 }}
@@ -143,7 +150,7 @@ function NavbarComp(props) {
             <FontAwesomeIcon icon={faBars} onClick={() => setOpenState(!openState)}/>
           </Icon>
         <LogoutDiv onClick={onClickHandler}>
-          <span style={{ color: "red" }}>로그아웃</span>
+          <LogoutSpan>로그아웃</LogoutSpan>
         </LogoutDiv>
       </TopNav>
       {
@@ -178,7 +185,7 @@ function NavbarComp(props) {
             </DownMenu>
           </Link>
           <DownLogoutDiv onClick={onClickHandler}>
-            <span style={{ color: "red" }}>로그아웃</span>
+            <LogoutSpan>로그아웃</LogoutSpan>
           </DownLogoutDiv>
         </>
         ) : null
