@@ -45,7 +45,7 @@ function ChoizaPage(props) {
         <Div onClick={() => onClickHandler("인더하우스", 5)}>인더하우스</Div>
         <Div onClick={() => onClickHandler("시즌5", 6)}>시즌5</Div>
         <hr />
-        <h2 style={{ fontFamily: "Do Hyeon", marginTop: "50px" }}>
+        <h2 style={{ marginTop: "50px" }}>
           {seasonName}
         </h2>
         <ChoizaList season={season} />
