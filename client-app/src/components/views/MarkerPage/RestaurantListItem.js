@@ -6,6 +6,7 @@ import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
 import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
 import noImage from "../../../assets/noImage.jpeg";
+import { BsThreeDots } from "react-icons/bs";
 import "./RestaurantListItem.css";
 
 const Arrow = styled.div`
@@ -128,9 +129,9 @@ function RestaurantListItem(props) {
               </Carousel>
             </div>
             <div style={{height: "30%"}}>
-              <div style={{ float: "right" }}>
+              <div style={{ float: "right", marginRight: "5px" }}>
                 <Dropdown>
-                  <Dropdown.Toggle as={CustomToggle}>...</Dropdown.Toggle>
+                  <Dropdown.Toggle as={CustomToggle}><BsThreeDots /></Dropdown.Toggle>
                   <Dropdown.Menu size="sm" title="">
                     <Dropdown.Item onClick={() => popUpMap()}>지도</Dropdown.Item>
                     <Dropdown.Item onClick={() => updateHandler()}>

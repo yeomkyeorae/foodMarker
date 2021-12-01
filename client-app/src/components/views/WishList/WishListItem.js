@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import UpdateModal from "../../containers/UpdateModal/UpdateModal";
 import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
+import { BsThreeDots } from "react-icons/bs";
 import styled from "styled-components";
 
 const Item = styled.li`
@@ -76,7 +77,7 @@ function WishListItem(props) {
     <Item key={wishListId} style={{ width: "100%" }}>
       <div style={{ float: "right", marginRight: "10px" }}>
         <Dropdown>
-          <Dropdown.Toggle as={CustomToggle}>...</Dropdown.Toggle>
+          <Dropdown.Toggle as={CustomToggle}><BsThreeDots /></Dropdown.Toggle>
           <Dropdown.Menu size="sm" title="">
             <Dropdown.Item onClick={() => popUpMap()}>지도 보기</Dropdown.Item>
             <Dropdown.Item onClick={() => openPopUp()}>방문 표시</Dropdown.Item>
