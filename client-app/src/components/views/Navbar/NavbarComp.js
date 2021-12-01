@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import AlertModal from "../../containers/AlertModal/AlertModal";
+import { GiMagicLamp, GiRoad } from "react-icons/gi";
+import { BiUser, BiMapPin } from "react-icons/bi";
 
 
 const TopNav = styled.div`
@@ -122,28 +124,28 @@ function NavbarComp(props) {
           to={{ pathname: "/current-location", state: userId, menu: 1 }}
           style={{ textDecoration: "none" }}>
           <Menu color={`${selectedMenu === 1}`}>
-            현재 주변 맛집
+            <BiMapPin />현재 주변 맛집
           </Menu>
         </Link>
         <Link
           to={{ pathname: "/marker", state: userId, menu: 2 }}
           style={{ textDecoration: "none" }}>
           <Menu color={`${selectedMenu === 2}`}>
-            나의 맛집
+            <BiUser />나의 맛집
           </Menu>
         </Link>
         <Link
           to={{ pathname: "/wish", state: userId, menu: 3 }}
           style={{ textDecoration: "none" }}>
           <Menu color={`${selectedMenu === 3}`}>
-            위시 맛집
+            <GiMagicLamp />위시 맛집
           </Menu>
         </Link>
         <Link
           to={{ pathname: "/choizaroad", state: userId, menu: 4 }}
           style={{ textDecoration: "none" }}>
           <Menu color={`${selectedMenu === 4}`}>
-            최자 로드
+            <GiRoad />최자 로드
           </Menu>
         </Link>
           <Icon>
@@ -160,28 +162,28 @@ function NavbarComp(props) {
             to={{ pathname: "/current-location", state: userId, menu: 1 }}
             style={{ textDecoration: "none" }}>
             <DownMenu color={`${selectedMenu === 1}`}>
-              현재 주변 맛집
+              <BiMapPin />현재 주변 맛집
             </DownMenu>
           </Link>
           <Link
             to={{ pathname: "/marker", state: userId, menu: 2 }}
             style={{ textDecoration: "none" }}>
             <DownMenu color={`${selectedMenu === 2}`}>
-              나의 맛집
+              <BiUser />나의 맛집
             </DownMenu>
           </Link>
           <Link
             to={{ pathname: "/wish", state: userId, menu: 3 }}
             style={{ textDecoration: "none" }}>
             <DownMenu color={`${selectedMenu === 3}`}>
-              위시 맛집
+              <GiMagicLamp />위시 맛집
             </DownMenu>
           </Link>
           <Link
             to={{ pathname: "/choizaroad", state: userId, menu: 4 }}
             style={{ textDecoration: "none" }}>
             <DownMenu color={`${selectedMenu === 4}`}>
-              최자 로드
+              <GiRoad />최자 로드
             </DownMenu>
           </Link>
           <DownLogoutDiv onClick={onClickHandler}>
