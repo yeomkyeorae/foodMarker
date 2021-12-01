@@ -5,8 +5,8 @@ function LoadingPage() {
   const [count, setCount] = useState(0);
   
   let timer;
-  // eslint-disable-next-line
   useEffect(() => {
+    // eslint-disable-next-line
     timer = setInterval(() => {
       setCount(count => count + 1);      
     }, 500);
