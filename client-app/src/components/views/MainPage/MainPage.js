@@ -13,7 +13,6 @@ import "@brainhubeu/react-carousel/lib/style.css";
 import styled from "styled-components";
 
 const H2 = styled.h2`
-  font-weight: 100;
   font-size: 2rem;
 `;
 
@@ -150,14 +149,14 @@ function MainPage(props) {
         <div style={{ backgroundColor: "#FAF7F2" }}>
           <FoodMarkerTitle>
             <div>
-              <span style={{ fontWeight: "800", fontSize: "2rem", textAlign: "center" }}>
+              <span style={{ fontWeight: "300", fontSize: "2rem", textAlign: "center" }}>
                 푸드마커로 맛집의 지도를 완성해 보세요
               </span>
             </div>
           </FoodMarkerTitle>
           <FoodMarkerExplanation>
             <div style={{ margin: "auto", textAlign: "left" }}>
-              <span style={{ fontWeight: "500", fontSize: "1.5rem" }}>
+              <span style={{ fontWeight: "200", fontSize: "1.5rem" }}>
                 나의 맛집
               </span>
               <br />
@@ -166,7 +165,7 @@ function MainPage(props) {
               <span>인상 깊은 식당을 등록해 보세요.</span>
             </div>
             <div style={{ margin: "auto", textAlign: "left" }}>
-              <span style={{ fontWeight: "500", fontSize: "1.5rem" }}>
+              <span style={{ fontWeight: "200", fontSize: "1.5rem" }}>
                 위시 맛집
               </span>
               <br />
@@ -175,7 +174,7 @@ function MainPage(props) {
               <span>방문하고자 하는 식당을 기록해 보세요.</span>
             </div>
             <div style={{ margin: "auto", textAlign: "left" }}>
-              <span style={{ fontWeight: "500", fontSize: "1.5rem" }}>
+              <span style={{ fontWeight: "200", fontSize: "1.5rem" }}>
                 최자로드
               </span>
               <br />
