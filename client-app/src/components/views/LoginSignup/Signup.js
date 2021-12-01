@@ -50,6 +50,7 @@ const Input = styled.input`
 `;
 
 const Btn = styled.button`
+  border-radius: 9px;
   width: 100%;
   background: #e56717;
   border: 3px solid #e56717;
@@ -67,7 +68,6 @@ const Btn = styled.button`
 const Span = styled.span`
   &:hover {
     cursor: pointer;
-    color: #4caf50;
   }
 `;
 
