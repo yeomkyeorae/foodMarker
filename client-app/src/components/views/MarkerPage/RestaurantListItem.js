@@ -118,6 +118,7 @@ function RestaurantListItem(props) {
                         className="responsive-image"
                         variant="top"
                         src={url}
+                        onError={(e)=>{e.target.onerror = null; e.target.src=noImage}}
                         style={{
                           width: "100%",
                           minHeight: "360px"
