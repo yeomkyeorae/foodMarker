@@ -13,6 +13,7 @@ const Section = styled.section`
   top: 0;
   display: table;
   background-size: cover;
+  font-family: "Century Gothic", sans-serif;
 `;
 
 
