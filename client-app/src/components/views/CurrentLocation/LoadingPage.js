@@ -12,8 +12,8 @@ function LoadingPage() {
     }, 500);
   }, [], () => clearInterval(timer));
 
-  let dot = '.';
-  for(let i = 0; i < count % 3; i++) {
+  let dot = '';
+  for(let i = 0; i < (count % 4); i++) {
     dot += '.';
   }
 
