@@ -49,9 +49,9 @@ const DownMenu = styled.div`
   width: 100%;
   text-align: center;
   text-decoration: none;
-  color: ${props => (props.color === "true" ? "#4caf50" : "black")};
+  color: ${props => (props.color === "true" ? "#ff6700" : "black")};
   &:hover {
-    color: #4caf50;
+    color: #ff6700;
     text-decoration: none;
   }
   font-weight: 200;
@@ -113,7 +113,7 @@ function NavbarComp(props) {
 
   return (
     <>
-      <TopNav openState={`${openState}`}>
+      <TopNav>
         <Link
           to={{ pathname: "/main", state: userId, menu: 0 }}
           style={{ textDecoration: "none" }}
@@ -148,9 +148,9 @@ function NavbarComp(props) {
             <GiRoad />최자 로드
           </Menu>
         </Link>
-          <Icon>
-            <FontAwesomeIcon icon={faBars} onClick={() => setOpenState(!openState)}/>
-          </Icon>
+        <Icon>
+          <FontAwesomeIcon icon={faBars} onClick={() => setOpenState(!openState)}/>
+        </Icon>
         <LogoutDiv onClick={onClickHandler}>
           <LogoutSpan>로그아웃</LogoutSpan>
         </LogoutDiv>
@@ -159,37 +159,37 @@ function NavbarComp(props) {
         openState ? (
           <>
             <Link
-            to={{ pathname: "/current-location", state: userId, menu: 1 }}
-            style={{ textDecoration: "none" }}>
-            <DownMenu color={`${selectedMenu === 1}`}>
-              <BiMapPin />현재 주변 맛집
-            </DownMenu>
-          </Link>
-          <Link
-            to={{ pathname: "/marker", state: userId, menu: 2 }}
-            style={{ textDecoration: "none" }}>
-            <DownMenu color={`${selectedMenu === 2}`}>
-              <BiUser />나의 맛집
-            </DownMenu>
-          </Link>
-          <Link
-            to={{ pathname: "/wish", state: userId, menu: 3 }}
-            style={{ textDecoration: "none" }}>
-            <DownMenu color={`${selectedMenu === 3}`}>
-              <GiMagicLamp />위시 맛집
-            </DownMenu>
-          </Link>
-          <Link
-            to={{ pathname: "/choizaroad", state: userId, menu: 4 }}
-            style={{ textDecoration: "none" }}>
-            <DownMenu color={`${selectedMenu === 4}`}>
-              <GiRoad />최자 로드
-            </DownMenu>
-          </Link>
-          <DownLogoutDiv onClick={onClickHandler}>
-            <LogoutSpan>로그아웃</LogoutSpan>
-          </DownLogoutDiv>
-        </>
+              to={{ pathname: "/current-location", state: userId, menu: 1 }}
+              style={{ textDecoration: "none" }}>
+              <DownMenu color={`${selectedMenu === 1}`}>
+                <BiMapPin />현재 주변 맛집
+              </DownMenu>
+            </Link>
+            <Link
+              to={{ pathname: "/marker", state: userId, menu: 2 }}
+              style={{ textDecoration: "none" }}>
+              <DownMenu color={`${selectedMenu === 2}`}>
+                <BiUser />나의 맛집
+              </DownMenu>
+            </Link>
+            <Link
+              to={{ pathname: "/wish", state: userId, menu: 3 }}
+              style={{ textDecoration: "none" }}>
+              <DownMenu color={`${selectedMenu === 3}`}>
+                <GiMagicLamp />위시 맛집
+              </DownMenu>
+            </Link>
+            <Link
+              to={{ pathname: "/choizaroad", state: userId, menu: 4 }}
+              style={{ textDecoration: "none" }}>
+              <DownMenu color={`${selectedMenu === 4}`}>
+                <GiRoad />최자 로드
+              </DownMenu>
+            </Link>
+            <DownLogoutDiv onClick={onClickHandler}>
+              <LogoutSpan>로그아웃</LogoutSpan>
+            </DownLogoutDiv>
+          </>
         ) : null
       }
       {
