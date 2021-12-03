@@ -5,7 +5,7 @@
 <a href="https://food-marker.herokuapp.com/" target="_blank">😄푸드마커 방문하기</a>
 
 ## 1. 사용 기술 스택
-![사용 기술 스택](./skill_stack.png)
+![사용 기술 스택](./readme-images/skill_stack.png)
 
 ## 2. 구현된 기능
 
