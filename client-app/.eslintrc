@@ -1,0 +1,7 @@
+{
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 2020
+    },
+    "plugins": ["react", "react-hooks"]
+}

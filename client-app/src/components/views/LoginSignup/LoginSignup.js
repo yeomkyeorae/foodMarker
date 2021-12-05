@@ -26,7 +26,7 @@ function LoginSignup() {
   } else {
     loginOrSignup = <Signup toggle={toggle} setToggle={setToggle} />;
   }
-
+  
   return (
     <Section>
       <div>{loginOrSignup}</div>
