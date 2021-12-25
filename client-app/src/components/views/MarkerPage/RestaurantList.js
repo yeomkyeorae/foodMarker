@@ -11,6 +11,7 @@ import { Row } from "react-bootstrap";
 import styled from "styled-components";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
 import AlertModal from "../../containers/AlertModal/AlertModal";
+import "./RestaurantList.css";
 
 
 const Div = styled.div`
@@ -189,9 +190,9 @@ function RestaurantList(props) {
            (
               <div>
                 <div style={{ display: "inline-block" }}>
-                  <AiOutlineArrowLeft size={24} onClick={() => onSetPageSetNum(0, beforeFirst)} style={{cursor: "pointer", marginBottom: "5px"}} />
+                  <AiOutlineArrowLeft className="arrow" size={24} onClick={() => onSetPageSetNum(0, beforeFirst)} style={{cursor: "pointer", marginBottom: "5px"}} />
                   {pages.map(page => page)}
-                  <AiOutlineArrowRight size={24} onClick={() => onSetPageSetNum(1, afterFirst, limitPageSetNum)} style={{cursor: "pointer", marginBottom: "5px"}} />
+                  <AiOutlineArrowRight className="arrow" size={24} onClick={() => onSetPageSetNum(1, afterFirst, limitPageSetNum)} style={{cursor: "pointer", marginBottom: "5px"}} />
                 </div>
             </div>
            ) : (
