@@ -40,6 +40,7 @@ const Pagination = styled.div`
   &:hover {
     text-decoration: none;
     cursor: pointer;
+    color: #46CB18;
   }
 `;
 
