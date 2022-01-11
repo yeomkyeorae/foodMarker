@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import AlertModal from "../../containers/AlertModal/AlertModal";
 import { GiMagicLamp, GiRoad } from "react-icons/gi";
-import { BiUser, BiMapPin } from "react-icons/bi";
+import { BiUser, BiMapPin, BiMale } from "react-icons/bi";
 
 
 const TopNav = styled.div`
@@ -68,7 +68,7 @@ const Icon = styled.div`
   }
 `;
 
-const LogoutDiv = styled.div`
+const RightMenuDiv = styled.div`
   cursor: pointer;
   width: 10rem;
   margin-left: auto;
@@ -77,14 +77,15 @@ const LogoutDiv = styled.div`
   }
 `;
 
-const DownLogoutDiv = styled.div`
+const DownRightMenuDiv = styled.div`
   cursor: pointer;
   text-align: center;
   width: 100%;
 `;
 
-const LogoutSpan = styled.span`
-  color: red;
+const RightMenuSpan = styled.span`
+  color: ${props => props.color ?? 'black'};
+  margin-right: ${props => props.marginRight ?? '0px'};
   &:hover {
     font-weight: bold;
   }
@@ -151,9 +152,16 @@ function NavbarComp(props) {
         <Icon>
           <FontAwesomeIcon icon={faBars} onClick={() => setOpenState(!openState)}/>
         </Icon>
-        <LogoutDiv onClick={onClickHandler}>
-          <LogoutSpan>로그아웃</LogoutSpan>
-        </LogoutDiv>
+        <RightMenuDiv>
+          <Link
+            to={{ pathname: "/my-info", state: userId, menu: 5 }}
+            style={{ textDecoration: "none" }}>
+            <RightMenuSpan marginRight={'20px'}>
+              <BiMale />내 정보
+            </RightMenuSpan>
+          </Link>
+          <RightMenuSpan color={'red'} onClick={onClickHandler}>로그아웃</RightMenuSpan>
+        </RightMenuDiv>
       </TopNav>
       {
         openState ? (
@@ -186,9 +194,16 @@ function NavbarComp(props) {
                 <GiRoad />최자 로드
               </DownMenu>
             </Link>
-            <DownLogoutDiv onClick={onClickHandler}>
-              <LogoutSpan>로그아웃</LogoutSpan>
-            </DownLogoutDiv>
+            <Link
+              to={{ pathname: "/my-info", state: userId, menu: 5 }}
+              style={{ textDecoration: "none" }}>
+              <DownMenu color={`${selectedMenu === 5}`}>
+                <BiMale />내 정보
+              </DownMenu>
+            </Link>
+            <DownRightMenuDiv>
+              <RightMenuSpan color={'red'} onClick={onClickHandler}>로그아웃</RightMenuSpan>
+            </DownRightMenuDiv>
           </>
         ) : null
       }
