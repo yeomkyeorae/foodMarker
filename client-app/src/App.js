@@ -10,6 +10,7 @@ import CurrentLocation from "./components/views/CurrentLocation/CurrentLocation"
 import MarkerPage from "./components/views/MarkerPage/MarkerPage";
 import WishPage from "./components/views/WishList/WishPage";
 import ChoizaPage from "./components/views/ChoizaPage/ChoizaPage";
+import MyInfoPage from "./components/views/MyInfo/MyInfoPage";
 import Auth from "./hoc/auth";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route exact path="/marker" component={Auth(MarkerPage, true)} />
         <Route exact path="/wish" component={Auth(WishPage, true)} />
         <Route exact path="/choizaroad" component={Auth(ChoizaPage, true)} />
+        <Route exact path="/my-info" component={Auth(MyInfoPage, true)} />
       </Switch>
     </Router>
   );
