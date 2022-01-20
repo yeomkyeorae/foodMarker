@@ -504,6 +504,18 @@ app.delete("/api/wishList", (req, res) => {
   });
 });
 
+// get my wishList count
+app.get("/api/wishList/count", (req, res) => {
+  const id = req.query.id;
+
+  const wishList = WishList.countDocuments({ user: id });
+
+  wishList.exec((err, wishList) => {
+    if (err) return res.json({ success: false, err });
+    return res.json(wishList);
+  });
+});
+
 // get choizaRoads
 app.get("/api/choizaRoads", (req, res) => {
   const season = req.query.season;
@@ -576,7 +588,6 @@ app.delete("/api/visitedChoizaRoads", (req, res) => {
   });
 });
 
-// get enrolled 
 
 if(process.env.NODE_ENV === 'production') {
   app.use((req, res, next) => {

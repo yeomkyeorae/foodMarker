@@ -16,6 +16,7 @@ export const READ_WISHLIST = "read_wishList";
 export const READ_TEN_WISHLIST = "read_ten_wishList";
 export const REGISTER_WISHLIST = "register_wishList";
 export const DELETE_WISHLIST = "delete_wishList";
+export const READ_WISHLIST_COUNT = "read_wishList_count";
 
 export const READ_CHOIZAROAD = "read_choizaRoad";
 export const READ_VISITED_CHOIZAROAD = "read_visited_choizaRoad";
