@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { readRestaurantsCount } from '../../../_actions/restaurant_action';
 import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import styled from "styled-components";
@@ -15,7 +17,18 @@ import styled from "styled-components";
 // `;
 
 function MyInfoPage(props) {
+  const [myRestaurantsCount, setMyRestaurantsCount] = useState(0);
+
   const userId = props.location.state;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(readRestaurantsCount(userId)).then(response => {
+      setMyRestaurantsCount(response.payload);
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
@@ -38,7 +51,7 @@ function MyInfoPage(props) {
                 <div style={{ width: "40%"}}>
                     <h3>등록한 나의 방문 맛집 개수</h3>
                     <div style={{height: "100px"}}>
-                        12개
+                        {myRestaurantsCount}개
                     </div>
                 </div>
                 <div style={{ width: "40%"}}>
