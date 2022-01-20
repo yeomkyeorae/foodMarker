@@ -233,8 +233,9 @@ app.post("/api/restaurants", (req, res) => {
 });
 
 // get my restaurants count
-app.post("/api/restaurants/count", (req, res) => {
-  const restaurants = Restaurant.countDocuments({ visitor: req.body.id });
+app.get("/api/restaurants/count", (req, res) => {
+  const id = req.query.id;
+  const restaurants = Restaurant.countDocuments({ visitor: id });
 
   restaurants.exec((err, restaurants) => {
     if (err) return res.json({ success: false, err });
@@ -574,6 +575,8 @@ app.delete("/api/visitedChoizaRoads", (req, res) => {
     });
   });
 });
+
+// get enrolled 
 
 if(process.env.NODE_ENV === 'production') {
   app.use((req, res, next) => {
