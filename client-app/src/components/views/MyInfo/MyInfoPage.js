@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { readRestaurants ,readRestaurantsCount } from '../../../_actions/restaurant_action';
-import { readWishListCount } from '../../../_actions/wishList_action';
+import { readWishList, readWishListCount } from '../../../_actions/wishList_action';
 import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import styled from "styled-components";
@@ -22,6 +22,7 @@ function MyInfoPage(props) {
   const [myRestaurantsCount, setMyRestaurantsCount] = useState(0);
   const [myWishListCount, setMyWishListCount] = useState(0);
   const [myRestaurants, setMyRestaurants] = useState([]);
+  const [myWishlists, setWishlists] = useState([]);
 
   const userId = props.location.state;
 
@@ -46,6 +47,10 @@ function MyInfoPage(props) {
     dispatch(readRestaurants(body)).then(response => {
       setMyRestaurants(response.payload);
     });
+
+    dispatch(readWishList(userId)).then(response => {
+      setWishlists(response.payload);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -53,6 +58,12 @@ function MyInfoPage(props) {
   myRestaurants.forEach(restaurant => {
     const area = restaurant.address.split(' ')[0];
     myRestaurantsCntObj[area] = myRestaurantsCntObj[area] + 1 || 1;
+  });
+
+  const myWishlistsCntObj = {};
+  myWishlists.forEach(wishlist => {
+    const area = wishlist.address.split(' ')[0];
+    myWishlistsCntObj[area] = myWishlistsCntObj[area] + 1 || 1;
   });
 
   return (
@@ -99,8 +110,12 @@ function MyInfoPage(props) {
                 </div>
                 <div style={{ width: "40%"}}>
                     <h3>지역별 나의 위시 맛집</h3>
-                    <div style={{height: "100px"}}>
-                      <span style={{ fontSize: "2rem" }}>{myWishListCount}개</span>
+                    <div style={{height: "100px", display: "flex", flexDirection: "column"}}>
+                    {
+                      Object.keys(myWishlistsCntObj).map(area => 
+                        <div key={area} style={{ fontSize: "2rem" }}>{area} {myWishlistsCntObj[area]}개</div>
+                      )
+                    }
                     </div>
                 </div>
             </div>
