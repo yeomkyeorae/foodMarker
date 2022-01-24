@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { readRestaurantsCount } from '../../../_actions/restaurant_action';
+import { readRestaurants ,readRestaurantsCount } from '../../../_actions/restaurant_action';
 import { readWishListCount } from '../../../_actions/wishList_action';
 import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import styled from "styled-components";
+import { GiConsoleController } from "react-icons/gi";
 
 // const Div = styled.div`
 //   display: inline-block;
@@ -20,6 +21,7 @@ import styled from "styled-components";
 function MyInfoPage(props) {
   const [myRestaurantsCount, setMyRestaurantsCount] = useState(0);
   const [myWishListCount, setMyWishListCount] = useState(0);
+  const [myRestaurants, setMyRestaurants] = useState([]);
 
   const userId = props.location.state;
 
@@ -33,8 +35,25 @@ function MyInfoPage(props) {
     dispatch(readWishListCount(userId)).then(response => {
       setMyWishListCount(response.payload);
     });
+
+    const body = {
+      id: userId,
+      page: 1,
+      itemPerPage: 1000,
+      order: 1
+    };
+
+    dispatch(readRestaurants(body)).then(response => {
+      setMyRestaurants(response.payload);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const myRestaurantsCntObj = {};
+  myRestaurants.forEach(restaurant => {
+    const area = restaurant.address.split(' ')[0];
+    myRestaurantsCntObj[area] = myRestaurantsCntObj[area] + 1 || 1;
+  });
 
   return (
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
@@ -57,31 +76,36 @@ function MyInfoPage(props) {
                 <div style={{ width: "40%"}}>
                     <h3>등록한 나의 방문 맛집 개수</h3>
                     <div style={{height: "100px"}}>
-                        {myRestaurantsCount}개
+                        <span style={{ fontSize: "2rem" }}>{myRestaurantsCount}개</span>
                     </div>
                 </div>
                 <div style={{ width: "40%"}}>
                     <h3>등록한 나의 위시 맛집 개수</h3>
                     <div style={{height: "100px"}}>
-                        {myWishListCount}개
+                      <span style={{ fontSize: "2rem" }}>{myWishListCount}개</span>
                     </div>
                 </div>
             </div>
             <div style={{display: "flex", justifyContent: "center"}}>
-                <div style={{ width: "30%"}}>
-                    <h3>지역별 나의 방문/위시 맛집 리스트</h3>
-                    <div style={{height: "100px"}}>
-                        <ul>
-                            <li>서울 10개</li>
-                            <li>대전 10개</li>
-                            <li>충청 10개</li>
-                            <li>세종 10개</li>
-                        </ul>
+                <div style={{ width: "40%"}}>
+                    <h3>지역별 나의 방문 맛집</h3>
+                    <div style={{height: "100px", display: "flex", flexDirection: "column"}}>
+                    {
+                      Object.keys(myRestaurantsCntObj).map(area => 
+                        <div key={area} style={{ fontSize: "2rem" }}>{area} {myRestaurantsCntObj[area]}개</div>
+                      )
+                    }
                     </div>
                 </div>
-                <div style={{ width: "50%"}}>
-                    <h3>나의 방문 맛집 달력</h3>
+                <div style={{ width: "40%"}}>
+                    <h3>지역별 나의 위시 맛집</h3>
+                    <div style={{height: "100px"}}>
+                      <span style={{ fontSize: "2rem" }}>{myWishListCount}개</span>
+                    </div>
                 </div>
+            </div>
+            <div style={{ width: "50%", margin: "auto"}}>
+                <h3>나의 방문 맛집 달력</h3>
             </div>
         </div>
         <hr />
