@@ -30,12 +30,9 @@ function WishList(props) {
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const userId = window.sessionStorage.getItem("userId");
-  const body = {
-    id: userId
-  };
 
   useEffect(() => {
-    dispatch(readWishList(body)).then(response => {
+    dispatch(readWishList(userId)).then(response => {
       setWishLists(response.payload);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

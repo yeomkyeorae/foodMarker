@@ -453,8 +453,10 @@ app.delete("/api/restaurant", (req, res) => {
 });
 
 // get my wishLists
-app.post("/api/wishLists", (req, res) => {
-  const wishLists = WishList.find({ user: req.body.id }, (err, wishLists) => {
+app.get("/api/wishLists", (req, res) => {
+  const id = req.query.id;
+
+  const wishLists = WishList.find({ user: id }, (err, wishLists) => {
     if (err) return res.json({ success: false, err });
     return res.json(wishLists);
   });
