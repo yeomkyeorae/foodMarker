@@ -463,7 +463,7 @@ app.get("/api/wishLists", (req, res) => {
 });
 
 // get 10 wishLists
-app.get("/api/wishLists", (req, res) => {
+app.get("/api/ten-wishLists", (req, res) => {
   const body = {};
 
   const wishLists = WishList.find(body)

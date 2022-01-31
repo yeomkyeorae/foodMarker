@@ -19,7 +19,7 @@ export function readWishList(id) {
 }
 
 export function readTenWishList() {
-  const request = axios.get("/api/wishLists").then(response => response.data);
+  const request = axios.get("/api/ten-wishLists").then(response => response.data);
 
   return {
     type: READ_TEN_WISHLIST,
