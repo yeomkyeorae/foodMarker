@@ -5,6 +5,7 @@ import { readRestaurants ,readRestaurantsCount } from '../../../_actions/restaur
 import { readWishList, readWishListCount } from '../../../_actions/wishList_action';
 import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
+import MyCalendar from "./MyCalendar";
 import styled from "styled-components";
 import { GiConsoleController } from "react-icons/gi";
 
@@ -121,6 +122,7 @@ function MyInfoPage(props) {
             </div>
             <div style={{ width: "50%", margin: "auto"}}>
                 <h3>나의 방문 맛집 달력</h3>
+                <MyCalendar restaurants={myRestaurants} />
             </div>
         </div>
         <hr />
