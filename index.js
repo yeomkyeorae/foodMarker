@@ -233,8 +233,9 @@ app.post("/api/restaurants", (req, res) => {
 });
 
 // get my restaurants count
-app.post("/api/restaurants/count", (req, res) => {
-  const restaurants = Restaurant.countDocuments({ visitor: req.body.id });
+app.get("/api/restaurants/count", (req, res) => {
+  const id = req.query.id;
+  const restaurants = Restaurant.countDocuments({ visitor: id });
 
   restaurants.exec((err, restaurants) => {
     if (err) return res.json({ success: false, err });
@@ -452,15 +453,17 @@ app.delete("/api/restaurant", (req, res) => {
 });
 
 // get my wishLists
-app.post("/api/wishLists", (req, res) => {
-  const wishLists = WishList.find({ user: req.body.id }, (err, wishLists) => {
+app.get("/api/wishLists", (req, res) => {
+  const id = req.query.id;
+
+  const wishLists = WishList.find({ user: id }, (err, wishLists) => {
     if (err) return res.json({ success: false, err });
     return res.json(wishLists);
   });
 });
 
 // get 10 wishLists
-app.get("/api/wishLists", (req, res) => {
+app.get("/api/ten-wishLists", (req, res) => {
   const body = {};
 
   const wishLists = WishList.find(body)
@@ -500,6 +503,18 @@ app.delete("/api/wishList", (req, res) => {
     return res.status(200).json({
       success: true
     });
+  });
+});
+
+// get my wishList count
+app.get("/api/wishList/count", (req, res) => {
+  const id = req.query.id;
+
+  const wishList = WishList.countDocuments({ user: id });
+
+  wishList.exec((err, wishList) => {
+    if (err) return res.json({ success: false, err });
+    return res.json(wishList);
   });
 });
 
@@ -574,6 +589,7 @@ app.delete("/api/visitedChoizaRoads", (req, res) => {
     });
   });
 });
+
 
 if(process.env.NODE_ENV === 'production') {
   app.use((req, res, next) => {

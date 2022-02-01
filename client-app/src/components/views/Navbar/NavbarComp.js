@@ -87,6 +87,7 @@ const RightMenuSpan = styled.span`
   color: ${props => props.color ?? 'black'};
   margin-right: ${props => props.marginRight ?? '0px'};
   &:hover {
+    color: ${props => props.hoverColor ?? null};
     font-weight: bold;
   }
 `;
@@ -156,7 +157,7 @@ function NavbarComp(props) {
           <Link
             to={{ pathname: "/my-info", state: userId, menu: 5 }}
             style={{ textDecoration: "none" }}>
-            <RightMenuSpan marginRight={'20px'}>
+            <RightMenuSpan marginRight={'20px'} hoverColor={'#ff6700'}>
               <BiMale />내 정보
             </RightMenuSpan>
           </Link>

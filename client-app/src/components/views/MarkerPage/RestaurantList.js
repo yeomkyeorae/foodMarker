@@ -122,7 +122,7 @@ function RestaurantList(props) {
   };
 
   useEffect(() => {
-    dispatch(readRestaurantsCount(body)).then(response => {
+    dispatch(readRestaurantsCount(body.id)).then(response => {
       setTotalItemCount(response.payload);
 
       dispatch(readRestaurants(body)).then(response => {

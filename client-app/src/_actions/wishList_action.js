@@ -3,12 +3,13 @@ import {
   READ_WISHLIST,
   READ_TEN_WISHLIST,
   REGISTER_WISHLIST,
-  DELETE_WISHLIST
+  DELETE_WISHLIST,
+  READ_WISHLIST_COUNT
 } from "./types";
 
-export function readWishList(dataToSubmit) {
+export function readWishList(id) {
   const request = axios
-    .post("/api/wishLists", dataToSubmit)
+    .get(`/api/wishLists?id=${id}`)
     .then(response => response.data);
 
   return {
@@ -18,7 +19,7 @@ export function readWishList(dataToSubmit) {
 }
 
 export function readTenWishList() {
-  const request = axios.get("/api/wishLists").then(response => response.data);
+  const request = axios.get("/api/ten-wishLists").then(response => response.data);
 
   return {
     type: READ_TEN_WISHLIST,
@@ -44,6 +45,17 @@ export function deleteWishList(wishListId) {
 
   return {
     type: DELETE_WISHLIST,
+    payload: request
+  };
+}
+
+export function readWishListCount(id) {
+  const request = axios
+    .get(`/api/wishList/count?id=${id}`)
+    .then(response => response.data);
+
+  return {
+    type: READ_WISHLIST_COUNT,
     payload: request
   };
 }

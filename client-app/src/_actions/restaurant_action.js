@@ -23,9 +23,9 @@ export function readRestaurants(dataToSubmit) {
   };
 }
 
-export function readRestaurantsCount(dataToSubmit) {
+export function readRestaurantsCount(id) {
   const request = axios
-    .post("/api/restaurants/count", dataToSubmit)
+    .get(`/api/restaurants/count?id=${id}`)
     .then(response => response.data);
 
   return {
