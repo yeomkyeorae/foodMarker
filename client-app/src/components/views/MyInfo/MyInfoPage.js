@@ -9,15 +9,21 @@ import MyCalendar from "./MyCalendar";
 import styled from "styled-components";
 import { GiConsoleController } from "react-icons/gi";
 
-// const Div = styled.div`
-//   display: inline-block;
-//   width: 100%;
-//   &:hover {
-//     text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
-//     color: #ff6700;
-//   }
-//   cursor: pointer;
-// `;
+const InfoBlock = styled.div`
+  width: 25%;
+  border-radius: 30px;
+  background-color: ${props => props.backgroundColor};
+  color: white;
+  margin: 10px;
+`;
+
+const InfoTitle = styled.h3`
+  margin-top: 10px;
+`;
+
+const InfoContent = styled.span`
+  font-size: 1.5rem;
+`;
 
 function MyInfoPage(props) {
   const [myRestaurantsCount, setMyRestaurantsCount] = useState(0);
@@ -85,40 +91,40 @@ function MyInfoPage(props) {
                 <h1>내 정보 페이지</h1>
             </div>
             <div style={{display: "flex", justifyContent: "center"}}>
-                <div style={{ width: "40%"}}>
-                    <h3>등록한 나의 방문 맛집 개수</h3>
+                <InfoBlock backgroundColor={"#5B6DCD"}>
+                    <InfoTitle>등록한 나의 방문 맛집 개수</InfoTitle>
                     <div style={{height: "100px"}}>
-                        <span style={{ fontSize: "2rem" }}>{myRestaurantsCount}개</span>
+                        <InfoContent>{myRestaurantsCount}개</InfoContent>
                     </div>
-                </div>
-                <div style={{ width: "40%"}}>
-                    <h3>등록한 나의 위시 맛집 개수</h3>
+                </InfoBlock>
+                <InfoBlock backgroundColor={"#FFD703"}>
+                    <InfoTitle>등록한 나의 위시 맛집 개수</InfoTitle>
                     <div style={{height: "100px"}}>
-                      <span style={{ fontSize: "2rem" }}>{myWishListCount}개</span>
+                      <InfoContent>{myWishListCount}개</InfoContent>
                     </div>
-                </div>
+                </InfoBlock>
             </div>
             <div style={{display: "flex", justifyContent: "center"}}>
-                <div style={{ width: "40%"}}>
-                    <h3>지역별 나의 방문 맛집</h3>
+                <InfoBlock backgroundColor={"#60F5D0"}>
+                    <InfoTitle>지역별 나의 방문 맛집</InfoTitle>
                     <div style={{height: "100px", display: "flex", flexDirection: "column"}}>
                     {
                       Object.keys(myRestaurantsCntObj).map(area => 
-                        <div key={area} style={{ fontSize: "2rem" }}>{area} {myRestaurantsCntObj[area]}개</div>
+                        <InfoContent key={area}>{area} {myRestaurantsCntObj[area]}개</InfoContent>
                       )
                     }
                     </div>
-                </div>
-                <div style={{ width: "40%"}}>
-                    <h3>지역별 나의 위시 맛집</h3>
+                </InfoBlock>
+                <InfoBlock backgroundColor={"#FF91A4"}>
+                    <InfoTitle>지역별 나의 위시 맛집</InfoTitle>
                     <div style={{height: "100px", display: "flex", flexDirection: "column"}}>
                     {
                       Object.keys(myWishlistsCntObj).map(area => 
-                        <div key={area} style={{ fontSize: "2rem" }}>{area} {myWishlistsCntObj[area]}개</div>
+                        <InfoContent key={area}>{area} {myWishlistsCntObj[area]}개</InfoContent>
                       )
                     }
                     </div>
-                </div>
+                </InfoBlock>
             </div>
             <div style={{ width: "50%", margin: "auto"}}>
                 <h3>나의 방문 맛집 달력</h3>
