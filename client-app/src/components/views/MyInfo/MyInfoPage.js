@@ -7,7 +7,7 @@ import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import MyCalendar from "./MyCalendar";
 import styled from "styled-components";
-import { GiConsoleController } from "react-icons/gi";
+
 
 const InfoBlock = styled.div`
   width: 25%;
@@ -24,6 +24,21 @@ const InfoTitle = styled.h3`
 const InfoContent = styled.span`
   font-size: 1.5rem;
 `;
+
+const ColorBar = styled.div`
+  margin-right: 2px;
+  background-color: ${props => props.backgroundColor};
+  color: white;
+  width: 20%;
+`;
+
+const colorBar = [
+  {color: "gold", text: "평점 5점"}, 
+  {color: "#8bc34a", text: "평점 4점대"}, 
+  {color: "#35baf6", text: "평점 3점대"},
+  {color: "#ed4b82", text: "평점 2점대"},
+  {color: "gray", text: "평점 1점대"}
+];
 
 function MyInfoPage(props) {
   const [myRestaurantsCount, setMyRestaurantsCount] = useState(0);
@@ -128,6 +143,11 @@ function MyInfoPage(props) {
             </div>
             <div style={{ width: "50%", margin: "auto"}}>
                 <h3>나의 방문 맛집 달력</h3>
+                <div style={{ display: "flex"}}>
+                  {
+                    colorBar.map((el, index) => <ColorBar key={`colorBar` + index} backgroundColor={el.color}>{el.text}</ColorBar>)
+                  }
+                </div>
                 <MyCalendar restaurants={myRestaurants} />
             </div>
         </div>
