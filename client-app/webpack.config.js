@@ -42,7 +42,12 @@ module.exports = {
           // name: "[name].[ext]?[hash]" // 파일명 형식
           name: "[name].[ext]"
         }
-      }
+      },
+      {
+        test: /\.ts$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
     ]
   },
   plugins: [
