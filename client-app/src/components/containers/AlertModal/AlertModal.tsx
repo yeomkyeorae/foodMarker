@@ -15,7 +15,7 @@ function AlertModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
     >
       <Modal.Header closeButton>알림</Modal.Header>
-      <Modal.Body closeButton>
+      <Modal.Body>
         <div
           style={{
             margin: "auto",
