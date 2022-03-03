@@ -9,7 +9,7 @@ import AlertModal from "../../containers/AlertModal/AlertModal";
 
 
 function CurrentLocation(props) {
-  const userId = props.location.state;
+  const { userId } = props.location.state;
 
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongtitude] = useState(0);

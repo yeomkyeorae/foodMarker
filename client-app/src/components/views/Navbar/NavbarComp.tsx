@@ -93,7 +93,8 @@ const RightMenuSpan = styled.span`
 `;
 
 function NavbarComp(props) {
-  const menu = props.history.location.menu;
+  const menu = props.history.location.state.menu;
+
   const selectedMenu = menu ? menu : 0;
   const userId = window.sessionStorage.getItem("userId");
   const [ openState, setOpenState ] = useState(false);
@@ -117,34 +118,34 @@ function NavbarComp(props) {
     <>
       <TopNav>
         <Link
-          to={{ pathname: "/main", state: userId, menu: 0 }}
+          to={{ pathname: "/main", state: { userId, menu: 0 }}}
           style={{ textDecoration: "none" }}
         >
           <Home>푸드마커</Home>
         </Link>
         <Link
-          to={{ pathname: "/current-location", state: userId, menu: 1 }}
+          to={{ pathname: "/current-location", state: { userId, menu: 1 }}}
           style={{ textDecoration: "none" }}>
           <Menu color={`${selectedMenu === 1}`}>
             <BiMapPin />현재 주변 맛집
           </Menu>
         </Link>
         <Link
-          to={{ pathname: "/marker", state: userId, menu: 2 }}
+          to={{ pathname: "/marker", state: { userId, menu: 2 }}}
           style={{ textDecoration: "none" }}>
           <Menu color={`${selectedMenu === 2}`}>
             <BiUser />나의 맛집
           </Menu>
         </Link>
         <Link
-          to={{ pathname: "/wish", state: userId, menu: 3 }}
+          to={{ pathname: "/wish", state: { userId, menu: 3 }}}
           style={{ textDecoration: "none" }}>
           <Menu color={`${selectedMenu === 3}`}>
             <GiMagicLamp />위시 맛집
           </Menu>
         </Link>
         <Link
-          to={{ pathname: "/choizaroad", state: userId, menu: 4 }}
+          to={{ pathname: "/choizaroad", state: { userId, menu: 4 }}}
           style={{ textDecoration: "none" }}>
           <Menu color={`${selectedMenu === 4}`}>
             <GiRoad />최자 로드
@@ -155,7 +156,7 @@ function NavbarComp(props) {
         </Icon>
         <RightMenuDiv>
           <Link
-            to={{ pathname: "/my-info", state: userId, menu: 5 }}
+            to={{ pathname: "/my-info", state: { userId, menu: 5 }}}
             style={{ textDecoration: "none" }}>
             <RightMenuSpan marginRight={'20px'} hoverColor={'#ff6700'}>
               <BiMale />내 정보
@@ -168,35 +169,35 @@ function NavbarComp(props) {
         openState ? (
           <>
             <Link
-              to={{ pathname: "/current-location", state: userId, menu: 1 }}
+              to={{ pathname: "/current-location", state: { userId, menu: 1 }}}
               style={{ textDecoration: "none" }}>
               <DownMenu color={`${selectedMenu === 1}`}>
                 <BiMapPin />현재 주변 맛집
               </DownMenu>
             </Link>
             <Link
-              to={{ pathname: "/marker", state: userId, menu: 2 }}
+              to={{ pathname: "/marker", state: { userId, menu: 2 }}}
               style={{ textDecoration: "none" }}>
               <DownMenu color={`${selectedMenu === 2}`}>
                 <BiUser />나의 맛집
               </DownMenu>
             </Link>
             <Link
-              to={{ pathname: "/wish", state: userId, menu: 3 }}
+              to={{ pathname: "/wish", state: { userId, menu: 3 }}}
               style={{ textDecoration: "none" }}>
               <DownMenu color={`${selectedMenu === 3}`}>
                 <GiMagicLamp />위시 맛집
               </DownMenu>
             </Link>
             <Link
-              to={{ pathname: "/choizaroad", state: userId, menu: 4 }}
+              to={{ pathname: "/choizaroad", state: { userId, menu: 4 }}}
               style={{ textDecoration: "none" }}>
               <DownMenu color={`${selectedMenu === 4}`}>
                 <GiRoad />최자 로드
               </DownMenu>
             </Link>
             <Link
-              to={{ pathname: "/my-info", state: userId, menu: 5 }}
+              to={{ pathname: "/my-info", state: { userId, menu: 5 }}}
               style={{ textDecoration: "none" }}>
               <DownMenu color={`${selectedMenu === 5}`}>
                 <BiMale />내 정보

@@ -7,7 +7,7 @@ import Footer from "../Footer/Footer";
 import { Button } from "react-bootstrap";
 
 function WishPage(props) {
-  const userId = props.location.state;
+  const { userId } = props.location.state;
   const [Toggle, setToggle] = useState(true);
   const [Menu, setMenu] = useState("위시 맛집 등록하기");
 

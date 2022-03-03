@@ -16,7 +16,7 @@ const Div = styled.div`
 `;
 
 function ChoizaPage(props) {
-  const userId = props.location.state;
+  const { userId } = props.location.state;
   const [season, setSeason] = useState(6);
   const [seasonName, setSeasonName] = useState("시즌5");
 

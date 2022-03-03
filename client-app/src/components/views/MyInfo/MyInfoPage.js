@@ -46,7 +46,7 @@ function MyInfoPage(props) {
   const [myRestaurants, setMyRestaurants] = useState([]);
   const [myWishlists, setWishlists] = useState([]);
 
-  const userId = props.location.state;
+  const { userId } = props.location.state;
 
   const dispatch = useDispatch();
 
