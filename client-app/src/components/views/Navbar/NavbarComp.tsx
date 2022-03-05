@@ -93,7 +93,7 @@ const RightMenuSpan = styled.span`
 `;
 
 function NavbarComp(props) {
-  const menu = props.history.location.state.menu;
+  const menu = props.history.location.state?.menu ?? 0;
 
   const selectedMenu = menu ? menu : 0;
   const userId = window.sessionStorage.getItem("userId");
