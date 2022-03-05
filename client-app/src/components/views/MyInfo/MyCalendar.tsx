@@ -32,7 +32,8 @@ function MyCalendar(props) {
 				events={events}
 				eventPropGetter={(event) => {
 					  let newStyle = {
-						color: 'white'
+						color: 'white',
+						backgroundColor: 'gray'
 					  };
 				
 					  if(event.rating === 5){
@@ -43,8 +44,6 @@ function MyCalendar(props) {
 						newStyle.backgroundColor = "#35baf6"
 					  } else if(event.rating >= 2) {
 						newStyle.backgroundColor = "#ed4b82"
-					  } else {
-						newStyle.backgroundColor = "gray"
 					  }
 				
 					  return {
