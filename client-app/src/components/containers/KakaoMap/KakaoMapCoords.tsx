@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { registerWishList } from "../../../_actions/wishList_action";
-import AlertModal from "../../containers/AlertModal/AlertModal";
+import AlertModal from "../AlertModal/AlertModal";
 import { useDispatch } from "react-redux";
 
 const { kakao } = window;
@@ -55,27 +55,7 @@ function KakaoMapCoords(props) {
       if (dong) {
         const ps = new kakao.maps.services.Places();
 
-        // 키워드로 장소를 검색합니다
-        ps.keywordSearch(`${dong} 맛집`, placesSearchCB);
-
-        // 키워드 검색 완료 시 호출되는 콜백함수 입니다
-        function placesSearchCB(data, status, pagination) {
-          if (status === kakao.maps.services.Status.OK) {
-            // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-            // LatLngBounds 객체에 좌표를 추가합니다
-            // var bounds = new kakao.maps.LatLngBounds();
-
-            for (let i = 0; i < data.length; i++) {
-              displayMarker(data[i]);
-              // bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-            }
-
-            // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-            // map.setBounds(bounds);
-          }
-        }
-
-        function displayMarker(place) {
+        const displayMarker = (place) => {
           // 마커를 생성하고 지도에 표시합니다
           const marker = new kakao.maps.Marker({
             map: map,
@@ -115,6 +95,26 @@ function KakaoMapCoords(props) {
             });
           });
         }
+
+        // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+        const placesSearchCB = (data, status, pagination) => {
+          if (status === kakao.maps.services.Status.OK) {
+            // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+            // LatLngBounds 객체에 좌표를 추가합니다
+            // var bounds = new kakao.maps.LatLngBounds();
+
+            for (let i = 0; i < data.length; i++) {
+              displayMarker(data[i]);
+              // bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+            }
+
+            // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+            // map.setBounds(bounds);
+          }
+        }
+
+        // 키워드로 장소를 검색합니다
+        ps.keywordSearch(`${dong} 맛집`, placesSearchCB);
       }
     });
   }, [latitude, longitude, mapLevel, dong, dispatch, userId, username]);
