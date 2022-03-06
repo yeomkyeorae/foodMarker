@@ -31,24 +31,24 @@ function MyCalendar(props) {
 				defaultView={Views.MONTH}
 				events={events}
 				eventPropGetter={(event) => {
-					  let newStyle = {
+					const newStyle = {
 						color: 'white',
 						backgroundColor: 'gray'
-					  };
+					};
 				
-					  if(event.rating === 5){
+					if(event.rating === 5){
 						newStyle.backgroundColor = "gold"
-					  } else if(event.rating >= 4) {
+					} else if(event.rating >= 4) {
 						newStyle.backgroundColor = "#8bc34a"
-					  } else if(event.rating >= 3) {
+					} else if(event.rating >= 3) {
 						newStyle.backgroundColor = "#35baf6"
-					  } else if(event.rating >= 2) {
+					} else if(event.rating >= 2) {
 						newStyle.backgroundColor = "#ed4b82"
-					  }
+					}
 				
-					  return {
-						style: newStyle
-					  };
+					return {
+					style: newStyle
+					};
 					}
 				}
 			/>

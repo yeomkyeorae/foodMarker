@@ -73,7 +73,7 @@ function ChoizaListItem(props) {
     } else {
       const visitedChoizaRoadId = visitedList[index]._id;
       dispatch(deleteVisitedChoizaRoad(visitedChoizaRoadId))
-        .then(response => {
+        .then(() => {
           const newVisitedList = visitedList.map((visitedItem, ix) => {
             if (ix === index) {
               return {

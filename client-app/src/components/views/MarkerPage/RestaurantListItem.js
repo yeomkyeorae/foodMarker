@@ -80,7 +80,7 @@ function RestaurantListItem(props) {
     setMapToggle(true);
   };
 
-  const updateHandler = e => {
+  const updateHandler = () => {
     setToggle(!toggle);
   };
 

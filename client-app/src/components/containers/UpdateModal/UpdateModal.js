@@ -144,7 +144,7 @@ function UpdateModal(props) {
 
     let jpegCnt = 0;
     let heicCnt = 0;
-    Object.keys(e.target.files).forEach((key, index) => {
+    Object.keys(e.target.files).forEach((key) => {
       const file = e.target.files[key];
 
       if (file.type === "image/heic") {

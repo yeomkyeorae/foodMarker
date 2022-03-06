@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import RestaurantList from "./RestaurantList";
 
-function Restaurants(props) {
+function Restaurants() {
   const userId = window.sessionStorage.getItem("userId");
 
   return (

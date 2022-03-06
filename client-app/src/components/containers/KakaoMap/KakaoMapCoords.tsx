@@ -19,8 +19,8 @@ function KakaoMapCoords(props) {
 
   useEffect(() => {
     kakao.maps.load(async () => {
-      let container = document.getElementById("map");
-      let map = new kakao.maps.Map(container, {
+      const container = document.getElementById("map");
+      const map = new kakao.maps.Map(container, {
         center: new kakao.maps.LatLng(latitude, longitude),
         level: mapLevel
       });
@@ -28,11 +28,11 @@ function KakaoMapCoords(props) {
       const zoomControl = new kakao.maps.ZoomControl();
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-      let infowindow = new kakao.maps.InfoWindow({
+      const infowindow = new kakao.maps.InfoWindow({
         zIndex: 1,
         removable: true
       });
-      let geocoder = new kakao.maps.services.Geocoder();
+      const geocoder = new kakao.maps.services.Geocoder();
 
       searchDetailAddrFromCoords(longitude, latitude, displayCenterInfo);
 
@@ -85,10 +85,10 @@ function KakaoMapCoords(props) {
                 address: place.address_name,
                 created: new Date().toLocaleString()
               };
-              dispatch(registerWishList(body)).then(response => {
+              dispatch(registerWishList(body)).then(()=> {
                 setAlertToggle(true);
                 setAlertMessage("위시 맛집에 등록되었습니다");
-              }).catch(err => {
+              }).catch(() => {
                 setAlertToggle(true);
                 setAlertMessage("위시 맛집에 등록이 실패했습니다");
               });
@@ -97,7 +97,7 @@ function KakaoMapCoords(props) {
         }
 
         // 키워드 검색 완료 시 호출되는 콜백함수 입니다
-        const placesSearchCB = (data, status, pagination) => {
+        const placesSearchCB = (data, status) => {
           if (status === kakao.maps.services.Status.OK) {
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
             // LatLngBounds 객체에 좌표를 추가합니다
