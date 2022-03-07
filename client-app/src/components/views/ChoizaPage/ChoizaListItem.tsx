@@ -9,13 +9,21 @@ import {
 } from "../../../_actions/choizaRoad_action";
 import "./ChoizaListItem.css";
 
+interface Visited {
+    isVisited: boolean;
+    _id?: string;
+    userId?: string;
+    restaurantName?: string;
+    season?: number;
+}
+
 function ChoizaListItem(props) {
   const dispatch = useDispatch();
   const { choizaRoad, season, visitedChoizaRoads } = props;
   const choizaRestaurants = choizaRoad.restaurants;
 
-  const [visitedList, setVisitedList] = useState([]);
-
+  const [visitedList, setVisitedList] = useState<Visited[]>([]);
+console.log('visitedList', visitedList)
   useEffect(() => {
     const firstVisitedList = choizaRestaurants.split(",").map(restaurant => {
       const visitedItem = visitedChoizaRoads.find(
@@ -100,7 +108,7 @@ function ChoizaListItem(props) {
               trigger="click"
               key="top"
               placement="top"
-              rootClose="true"
+              rootClose={true}
               overlay={
                 <Popover id={`popover-positioned-left`}>
                   <PopoverHeader as="h3">최자로드 식당 검색</PopoverHeader>
@@ -139,7 +147,7 @@ function ChoizaListItem(props) {
               trigger="click"
               key="top_wish"
               placement="top"
-              rootClose="true"
+              rootClose={true}
               overlay={
                 <Popover id={`popover-positioned-left`}>
                   <PopoverHeader as="h3" className="noselect">
