@@ -23,7 +23,7 @@ function ChoizaListItem(props) {
   const choizaRestaurants = choizaRoad.restaurants;
 
   const [visitedList, setVisitedList] = useState<Visited[]>([]);
-console.log('visitedList', visitedList)
+
   useEffect(() => {
     const firstVisitedList = choizaRestaurants.split(",").map(restaurant => {
       const visitedItem = visitedChoizaRoads.find(
