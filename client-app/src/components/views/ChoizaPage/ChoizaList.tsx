@@ -8,6 +8,7 @@ import {
   readChoizaRoad,
   readVisitedChoizaRoad
 } from "../../../_actions/choizaRoad_action";
+import { ChoizaRoad, VisitedChoizaRoads } from '../../interfaces/ChoizaRoad'
 
 const ChoizaRoads = styled.div`
   width: 95%;
@@ -25,8 +26,8 @@ const List = styled.ol`
 
 function ChoizaList(props) {
   const dispatch = useDispatch();
-  const [choizaRoads, setChoizaRoads] = useState([]);
-  const [visitedChoizaRoads, setVisitedChoizaRoads] = useState([]);
+  const [choizaRoads, setChoizaRoads] = useState<ChoizaRoad[]>([]);
+  const [visitedChoizaRoads, setVisitedChoizaRoads] = useState<VisitedChoizaRoads[]>([]);
 
   const userId = window.sessionStorage.getItem("userId");
   const season = props.season;
