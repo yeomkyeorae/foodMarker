@@ -10,7 +10,11 @@ function LoadingPage() {
     timer = setInterval(() => {
       setCount(count => count + 1);      
     }, 500);
-  }, [], () => clearInterval(timer));
+
+    return () => {
+      clearInterval(timer)
+    }
+  }, []);
 
   let dot = '';
   for(let i = 0; i < (count % 4); i++) {
