@@ -80,9 +80,9 @@ function Login(props) {
   const [alertMessage, setAlertMessage] = useState("");
   const dispatch = useDispatch();
 
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
-    inputRef.current.focus();
+    inputRef.current?.focus();
   }, []);
 
   const onEmailHandler = e => {
