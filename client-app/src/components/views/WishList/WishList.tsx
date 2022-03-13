@@ -8,6 +8,7 @@ import {
 import WishListItem from "./WishListItem";
 import styled from "styled-components";
 import AlertModal from "../../containers/AlertModal/AlertModal";
+import { WishListType } from "../../interfaces/WishList";
 
 
 const WishLists = styled.div`
@@ -26,7 +27,7 @@ const List = styled.ol`
 
 function WishList(props) {
   const dispatch = useDispatch();
-  const [wishLists, setWishLists] = useState([{ _id: 0 }]);
+  const [wishLists, setWishLists] = useState<WishListType[]>([]);
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const userId = window.sessionStorage.getItem("userId");
