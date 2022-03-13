@@ -10,9 +10,11 @@
     ],
     "plugins": ["react", "react-hooks", "@typescript-eslint"],
     "rules": {
-        "@typescript-eslint/no-explicit-any": "off"
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-var-requires": 0
     },
     "env": {
-        "browser": true
+        "browser": true,
+        "node": true
     }
 }
