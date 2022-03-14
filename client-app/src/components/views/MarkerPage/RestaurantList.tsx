@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactElement } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
@@ -132,7 +132,7 @@ function RestaurantList(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, order]);
 
-  const pages = [];
+  const pages: ReactElement[] = [];
   const passingNum = DISPLAYPAGENUM * pageSetNum;
   const limitPage = Math.ceil(totalItemCount / ITEMPERPAGE);
   const limitPageSetNum =
@@ -191,7 +191,7 @@ function RestaurantList(props) {
            (
               <div>
                 <div style={{ display: "inline-block" }}>
-                  <AiOutlineArrowLeft className="arrow" size={24} onClick={() => onSetPageSetNum(0, beforeFirst)} style={{cursor: "pointer", marginBottom: "5px"}} />
+                  <AiOutlineArrowLeft className="arrow" size={24} onClick={() => onSetPageSetNum(0, beforeFirst, null)} style={{cursor: "pointer", marginBottom: "5px"}} />
                   {pages.map(page => page)}
                   <AiOutlineArrowRight className="arrow" size={24} onClick={() => onSetPageSetNum(1, afterFirst, limitPageSetNum)} style={{cursor: "pointer", marginBottom: "5px"}} />
                 </div>
