@@ -22,7 +22,7 @@ function MarkerPage(props) {
 
   let MenuComponent;
   if (Toggle) {
-    MenuComponent = <Restaurants userId={userId} setToggle={setToggle} />;
+    MenuComponent = <Restaurants />;
   } else {
     MenuComponent = (
       <Enroll
