@@ -11,6 +11,9 @@ import KakaoMap from "../../containers/KakaoMap/KakaoMap";
 import Footer from "../Footer/Footer";
 import "@brainhubeu/react-carousel/lib/style.css";
 import styled from "styled-components";
+import { RestaurantType } from '../../interfaces/Restaurant';
+import { WishListType } from '../../interfaces/WishList';
+
 
 const H2 = styled.h2`
   font-size: 2rem;
@@ -72,8 +75,8 @@ const P = styled.p`
 
 function MainPage(props) {
   const [restaurants, setRestaurants] = useState([]);
-  const [tenRestaurants, setTenRestaurants] = useState([]);
-  const [tenWishList, setTenWishList] = useState([]);
+  const [tenRestaurants, setTenRestaurants] = useState<RestaurantType[]>([]);
+  const [tenWishList, setTenWishList] = useState<WishListType[]>([]);
 
   const dispatch = useDispatch();
   const userId = window.sessionStorage.getItem("userId");
