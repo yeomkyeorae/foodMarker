@@ -45,13 +45,9 @@ export function readRestaurantsNoImage(dataToSubmit) {
   };
 }
 
-export function readTenRestaurants(userId) {
+export function readTenRestaurants() {
   const request = axios
-    .get("/api/ten-restaurants", {
-      params: {
-        _id: userId
-      }
-    })
+    .get("/api/ten-restaurants")
     .then(response => response);
 
   return {
