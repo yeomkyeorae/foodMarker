@@ -19,7 +19,7 @@ ReactDOM.render(
   <Provider
     store={createStoreWithMiddleware(
       Reducer,
-      window._REDUX_DEVTOOLS_EXTENSION__ && window._REDUX_DEVTOOLS_EXTENSION__()
+      (window as any)._REDUX_DEVTOOLS_EXTENSION__ && (window as any)._REDUX_DEVTOOLS_EXTENSION__()
     )}
   >
     <App />
