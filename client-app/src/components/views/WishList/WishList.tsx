@@ -26,7 +26,7 @@ const List = styled.ol`
 `;
 
 function WishList(props) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const [wishLists, setWishLists] = useState<WishListType[]>([]);
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");

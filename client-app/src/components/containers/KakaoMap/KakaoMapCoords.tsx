@@ -12,7 +12,7 @@ function KakaoMapCoords(props) {
   const [alertMessage, setAlertMessage] = useState("");
   const [dong, setDong] = useState();
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   const userId = window.sessionStorage.getItem("userId");
   const username = window.sessionStorage.getItem("username");

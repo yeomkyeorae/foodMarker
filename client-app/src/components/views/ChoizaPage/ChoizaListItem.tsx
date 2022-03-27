@@ -18,7 +18,7 @@ interface Visited {
 }
 
 function ChoizaListItem(props) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const { choizaRoad, season, visitedChoizaRoads } = props;
   const choizaRestaurants = choizaRoad.restaurants;
 

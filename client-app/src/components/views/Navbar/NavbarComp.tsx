@@ -100,7 +100,7 @@ function NavbarComp(props) {
   const [ openState, setOpenState ] = useState(false);
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   const onClickHandler = () => {
     dispatch(logoutUser()).then(response => {

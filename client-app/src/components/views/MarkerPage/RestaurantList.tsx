@@ -56,7 +56,7 @@ const SortMenu = styled.div`
 `;
 
 function RestaurantList(props) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const [restaurants, setRestaurants] = useState([{ _id: 0 }]);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [pageSetNum, setPageSetNum] = useState(0);

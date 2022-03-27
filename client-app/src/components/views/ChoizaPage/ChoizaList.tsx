@@ -25,7 +25,7 @@ const List = styled.ol`
 `;
 
 function ChoizaList(props) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const [choizaRoads, setChoizaRoads] = useState<ChoizaRoad[]>([]);
   const [visitedChoizaRoads, setVisitedChoizaRoads] = useState<VisitedChoizaRoads[]>([]);
 

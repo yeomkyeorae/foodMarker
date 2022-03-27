@@ -78,7 +78,7 @@ function MainPage(props) {
   const [tenRestaurants, setTenRestaurants] = useState<RestaurantType[]>([]);
   const [tenWishList, setTenWishList] = useState<WishListType[]>([]);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const userId = window.sessionStorage.getItem("userId");
   const body = {
     id: userId,

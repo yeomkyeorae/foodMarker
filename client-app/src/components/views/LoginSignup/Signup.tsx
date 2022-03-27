@@ -79,7 +79,7 @@ function Signup(props) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   const inputRef = useRef<HTMLHeadingElement>();
   useEffect(() => {

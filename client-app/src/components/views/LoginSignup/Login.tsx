@@ -78,7 +78,7 @@ function Login(props) {
   const [password, setPassword] = useState("");
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   const inputRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => {

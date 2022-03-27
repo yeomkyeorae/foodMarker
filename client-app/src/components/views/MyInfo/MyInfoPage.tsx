@@ -49,7 +49,7 @@ function MyInfoPage(props) {
 
   const { userId } = props.location.state;
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   useEffect(() => {
     dispatch(readRestaurantsCount(userId)).then(response => {
