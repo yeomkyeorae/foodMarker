@@ -36,7 +36,7 @@ const Address = styled.span`
   font-size: 0.8vw;
 `;
 
-const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+const CustomToggle = React.forwardRef(({ children, onClick }: { children: React.ReactNode, onClick: React.MouseEventHandler<any> }, ref: any) => (
   <span
     ref={ref}
     onClick={e => {
@@ -78,7 +78,7 @@ function WishListItem(props) {
       <div style={{ float: "right", marginRight: "10px" }}>
         <Dropdown>
           <Dropdown.Toggle as={CustomToggle}><BsThreeDots /></Dropdown.Toggle>
-          <Dropdown.Menu size="sm" title="">
+          <Dropdown.Menu title="">
             <Dropdown.Item onClick={() => popUpMap()}>지도 보기</Dropdown.Item>
             <Dropdown.Item onClick={() => openPopUp()}>방문 표시</Dropdown.Item>
             <Dropdown.Item
