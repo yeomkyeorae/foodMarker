@@ -9,7 +9,7 @@ export default function(SpecificComponent, option, adminRoute = null) {
   //  true - 로그인한 유저만
   //  false - 로그인한 유저는 불가능
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   function AuthenticationCheck(props) {
     useEffect(() => {
