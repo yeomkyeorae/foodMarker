@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { auth } from "../_actions/user_action";
 import { withRouter } from "react-router-dom";
 
-export default function(SpecificComponent, option, adminRoute = null) {
+export default function(SpecificComponent, option) {
   // option:
   //  null - 아무나 접근 가능
   //  true - 로그인한 유저만
