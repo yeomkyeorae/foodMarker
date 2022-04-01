@@ -33,7 +33,7 @@ const eatingObj = {
   "4": "기타"
 };
 
-const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+const CustomToggle = React.forwardRef(({ children, onClick }: { children: React.ReactNode, onClick: React.MouseEventHandler<any> }, ref: any) => (
   <span
     ref={ref}
     onClick={e => {
@@ -69,7 +69,7 @@ function RestaurantListItem(props) {
 
   useEffect(() => {
     function handleSize() {
-      setStarSize(parseInt(window.innerWidth / 30));
+      setStarSize(Math.round(window.innerWidth / 30));
     }
 
     window.addEventListener('resize', handleSize);
@@ -84,7 +84,7 @@ function RestaurantListItem(props) {
     setToggle(!toggle);
   };
 
-  let imgUrls = [];
+  let imgUrls: string[] = [];
   let isMultipleImages = false;
   if (restaurant.imgURL) {
     imgUrls = restaurant.imgURL.split(",");
@@ -118,7 +118,7 @@ function RestaurantListItem(props) {
                         className="responsive-image"
                         variant="top"
                         src={url}
-                        onError={(e)=>{e.target.onerror = null; e.target.src=noImage}}
+                        onError={(e: any) => {e.target.onerror = null; e.target.src=noImage}}
                         style={{
                           width: "100%",
                           minHeight: "360px"
@@ -133,7 +133,7 @@ function RestaurantListItem(props) {
               <div style={{ float: "right", marginRight: "5px" }}>
                 <Dropdown>
                   <Dropdown.Toggle as={CustomToggle}><BsThreeDots /></Dropdown.Toggle>
-                  <Dropdown.Menu size="sm" title="">
+                  <Dropdown.Menu title="">
                     <Dropdown.Item onClick={() => popUpMap()}>지도</Dropdown.Item>
                     <Dropdown.Item onClick={() => updateHandler()}>
                       수정
