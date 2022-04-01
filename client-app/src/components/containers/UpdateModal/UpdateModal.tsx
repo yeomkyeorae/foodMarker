@@ -11,7 +11,7 @@ import {
   registerHeicImg
 } from "../../../_actions/restaurant_action";
 import styled from "styled-components";
-import AlertModal from "../../containers/AlertModal/AlertModal";
+import AlertModal from "../AlertModal/AlertModal";
 
 const Input = styled.input`
   margin: 3px 0;
@@ -70,12 +70,12 @@ function UpdateModal(props) {
   const [menuItems, setMenuItems] = useState(menus ? JSON.parse(menus) : []);
 
   // JPEG 이미지
-  const [jpegImageData, setJpegImageData] = useState([]);
+  const [jpegImageData, setJpegImageData] = useState<any[]>([]);
   const [jpegCount, setJpegCount] = useState(0);
 
   // HEIC 이미지
-  const [heicImageData, setHeicImageData] = useState([]);
-  const [heicImageName, setHeicImageName] = useState([]);
+  const [heicImageData, setHeicImageData] = useState<any[]>([]);
+  const [heicImageName, setHeicImageName] = useState<any[]>([]);
   const [heicCount, setHeicCount] = useState(0);
 
   const [preImages, setPreImages] = useState(
@@ -90,8 +90,8 @@ function UpdateModal(props) {
   const [alertMessage, setAlertMessage] = useState("");
 
   // etc.
-  const dispatch = useDispatch();
-  const inputRef = useRef();
+  const dispatch = useDispatch<any>();
+  const inputRef: React.RefObject<any> = useRef();
 
   // Handlers
   const onVisitedDateHandler = e => {
@@ -135,12 +135,12 @@ function UpdateModal(props) {
 
     // JPEG 관련 변수
     const formData = new FormData();
-    const jpegPreImages = [];
+    const jpegPreImages: any[] = [];
 
     // HEIC 관련 변수
-    const imageData = [];
-    const imageNames = [];
-    const heicPreImages = [];
+    const imageData: any[] = [];
+    const imageNames: any[] = [];
+    const heicPreImages: any[] = [];
 
     let jpegCnt = 0;
     let heicCnt = 0;
@@ -151,7 +151,7 @@ function UpdateModal(props) {
         const reader = new FileReader();
 
         reader.onloadend = function() {
-          const image = reader.result;
+          const image = reader.result as string;
 
           fetch(image)
             .then(res => res.blob())
@@ -165,7 +165,7 @@ function UpdateModal(props) {
               const newImageName = removedType.join("");
 
               const fileReader = new FileReader();
-              fileReader.onload = function(e) {
+              fileReader.onload = (e: any) => {
                 heicCnt += 1;
                 heicPreImages.push(e.target.result);
                 imageData.push(e.target.result);
@@ -181,7 +181,7 @@ function UpdateModal(props) {
                   setIsConverting(false);
                 }
               };
-              fileReader.readAsDataURL(conversionResult);
+              fileReader.readAsDataURL(conversionResult as Blob);
             })
             .catch(err => {
               setAlertToggle(true);
@@ -208,7 +208,7 @@ function UpdateModal(props) {
         reader.readAsDataURL(file);
       }
     });
-    setJpegImageData(formData);
+    setJpegImageData(Array.from(formData));
   };
 
   const changeRestaurant = async e => {
