@@ -19,7 +19,7 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
+    "noEmit": false,
     "strict": true
   },
   "include": [
