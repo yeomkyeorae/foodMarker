@@ -67,7 +67,7 @@ function UpdateModal(props) {
   );
   const [newEatingTime, setNewEatingTime] = useState(eatingTime);
   const [newMenuItem, setNewMenuItem] = useState("");
-  const [menuItems, setMenuItems] = useState(menus ? JSON.parse(menus) : []);
+  const [menuItems, setMenuItems] = useState<string[]>(menus ? JSON.parse(menus) : []);
 
   // JPEG 이미지
   const [jpegImageData, setJpegImageData] = useState<any[]>([]);
@@ -103,7 +103,7 @@ function UpdateModal(props) {
   };
 
   const onMenuAddHandler = () => {
-    setMenuItems(menuItems.concat(newMenuItem));
+    setMenuItems(menuItems.concat([newMenuItem]));
     setNewMenuItem("");
   };
 

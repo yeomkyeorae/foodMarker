@@ -15,7 +15,7 @@ import styled from "styled-components";
 import AlertModal from "../../containers/AlertModal/AlertModal";
 
 
-const InputTitle = styled.div`
+const InputTitle = styled.div<{fontSize?: string; borderBottom?: string;}>`
   max-width: 700px;
   margin: auto;
   font-weight: bold;
@@ -54,12 +54,12 @@ function Enroll(props) {
   const [visitedDate, setVisitedDate] = useState("");
   const [eatingTime, setEatingTime] = useState(1);
   const [newMenuItem, setNewMenuItem] = useState("");
-  const [menuItems, setMenuItems] = useState([]);
+  const [menuItems, setMenuItems] = useState<string[]>([]);
   const [starSize, setStarSize] = useState(window.innerWidth / 25);
 
   useEffect(() => {
     function handleSize() {
-      setStarSize(parseInt(window.innerWidth / 25));
+      setStarSize(Math.round(window.innerWidth / 25));
     }
 
     window.addEventListener('resize', handleSize);
@@ -67,16 +67,16 @@ function Enroll(props) {
   }, [])
 
   // JPEG 이미지
-  const [jpegImageData, setJpegImageData] = useState([]);
+  const [jpegImageData, setJpegImageData] = useState<any[]>([]);
   const [jpegCount, setJpegCount] = useState(0);
 
   // HEIC 이미지
-  const [heicImageData, setHeicImageData] = useState([]);
-  const [heicImageName, setHeicImageName] = useState([]);
+  const [heicImageData, setHeicImageData] = useState<any[]>([]);
+  const [heicImageName, setHeicImageName] = useState<any[]>([]);
   const [heicCount, setHeicCount] = useState(0);
 
   // PreImages
-  const [preImages, setPreImages] = useState([]);
+  const [preImages, setPreImages] = useState<any[]>([]);
 
   // HEIC 변환 중 여부
   const [isConverting, setIsConverting] = useState(false);
@@ -92,8 +92,8 @@ function Enroll(props) {
   const userId = window.sessionStorage.getItem("userId");
   const username = window.sessionStorage.getItem("username");
   const parentCompName = props.parentCompName;
-  const dispatch = useDispatch();
-  const inputRef = useRef();
+  const dispatch = useDispatch<any>();
+  const inputRef: React.RefObject<any> = useRef();
 
   // Handlers
   const onNameHandler = e => {
@@ -125,7 +125,7 @@ function Enroll(props) {
   };
 
   const onMenuAddHandler = () => {
-    setMenuItems(menuItems.concat(newMenuItem));
+    setMenuItems(menuItems.concat([newMenuItem]));
     setNewMenuItem("");
   };
 
@@ -157,12 +157,12 @@ function Enroll(props) {
 
     // JPEG 관련 변수
     const formData = new FormData();
-    const jpegPreImages = [];
+    const jpegPreImages: any[] = [];
 
     // HEIC 관련 변수
-    const imageData = [];
-    const imageNames = [];
-    const heicPreImages = [];
+    const imageData: any[] = [];
+    const imageNames: any[] = [];
+    const heicPreImages: any[] = [];
 
     let jpegCnt = 0;
     let heicCnt = 0;
@@ -173,7 +173,7 @@ function Enroll(props) {
         const reader = new FileReader();
 
         reader.onloadend = function() {
-          const image = reader.result;
+          const image = reader.result as string;
 
           fetch(image)
             .then(res => res.blob())
@@ -187,7 +187,7 @@ function Enroll(props) {
               const newImageName = removedType.join("");
 
               const fileReader = new FileReader();
-              fileReader.onload = function(e) {
+              fileReader.onload = (e: any) => {
                 heicCnt += 1;
                 heicPreImages.push(e.target.result);
                 imageData.push(e.target.result);
@@ -202,7 +202,7 @@ function Enroll(props) {
                   setIsConverting(false);
                 }
               };
-              fileReader.readAsDataURL(conversionResult);
+              fileReader.readAsDataURL(conversionResult as Blob);
             })
             .catch(err => {
               console.log(err);
@@ -227,7 +227,7 @@ function Enroll(props) {
         reader.readAsDataURL(file);
       }
     });
-    setJpegImageData(formData);
+    setJpegImageData(Array.from(formData));
   };
 
   const onSubmitHandler = async e => {
