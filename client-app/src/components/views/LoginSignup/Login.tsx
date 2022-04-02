@@ -80,7 +80,7 @@ function Login(props) {
   const [alertMessage, setAlertMessage] = useState("");
   const dispatch = useDispatch<any>();
 
-  const inputRef = useRef<HTMLHeadingElement>(null);
+  const inputRef: React.RefObject<any> = useRef(null);
   useEffect(() => {
     inputRef.current?.focus();
   }, []);

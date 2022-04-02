@@ -10,7 +10,7 @@ import styled from "styled-components";
 import { MyRestaurant, MyWish } from "../../interfaces/MyInfoPage";
 
 
-const InfoBlock = styled.div`
+const InfoBlock = styled.div<{backgroundColor?: string;}>`
   width: 25%;
   border-radius: 30px;
   background-color: ${props => props.backgroundColor};
@@ -26,7 +26,7 @@ const InfoContent = styled.span`
   font-size: 1.5rem;
 `;
 
-const ColorBar = styled.div`
+const ColorBar = styled.div<{backgroundColor?: string;}>`
   margin-right: 2px;
   background-color: ${props => props.backgroundColor};
   color: white;

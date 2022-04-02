@@ -32,7 +32,7 @@ const List = styled.ol`
   max-width: 100%;
 `;
 
-const Pagination = styled.div`
+const Pagination = styled.div<{selected: boolean}>`
   display: inline-block;
   margin: 3px;
   font-size: 1.5rem;
@@ -44,11 +44,10 @@ const Pagination = styled.div`
   }
 `;
 
-const SortMenu = styled.div`
+const SortMenu = styled.div<{color?: string;}>`
   color: ${props => (props.color === "true" ? "#D21404" : "black")};
   display: inline-block;
   cursor: pointer;
-  width: ${props => props.width};
   user-select: none;
   text-align: center;
   margin: 5px 10px;

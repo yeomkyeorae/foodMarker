@@ -9,7 +9,7 @@ import noImage from "../../../assets/noImage.jpeg";
 import { BsThreeDots } from "react-icons/bs";
 import "./RestaurantListItem.css";
 
-const Arrow = styled.div`
+const Arrow = styled.div<{right: boolean}>`
   width: 0;
   height: 0;
   border-top: 10px solid transparent;

@@ -81,7 +81,7 @@ function Signup(props) {
   const [alertMessage, setAlertMessage] = useState("");
   const dispatch = useDispatch<any>();
 
-  const inputRef = useRef<HTMLHeadingElement>();
+  const inputRef: React.RefObject<any> = useRef();
   useEffect(() => {
     inputRef.current?.focus();
   }, []);

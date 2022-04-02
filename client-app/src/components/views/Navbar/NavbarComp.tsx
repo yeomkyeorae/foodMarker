@@ -83,7 +83,7 @@ const DownRightMenuDiv = styled.div`
   width: 100%;
 `;
 
-const RightMenuSpan = styled.span`
+const RightMenuSpan = styled.span<{color?: string; marginRight?: string; hoverColor?: string;}>`
   color: ${props => props.color ?? 'black'};
   margin-right: ${props => props.marginRight ?? '0px'};
   &:hover {

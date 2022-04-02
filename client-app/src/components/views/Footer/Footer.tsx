@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const FooterDiv = styled.footer`
+
+const FooterDiv = styled.footer<{marginTop?: number; position?: string}>`
   width: 100%;
   height: 50px;
   left: 0;
