@@ -53,6 +53,7 @@ function RestaurantListItem(props) {
   const restaurantDate = `${restaurantDateSplit[0]}년 ${restaurantDateSplit[1]}월 ${restaurantDateSplit[2]}일`;
   const [toggle, setToggle] = useState(false);
   const [mapToggle, setMapToggle] = useState(false);
+  const [hasHover, setHasHover] = useState(false);
   const [starSize, setStarSize] = useState(window.innerWidth / 30);
   const rating = restaurant.rating;
 
@@ -87,7 +88,7 @@ function RestaurantListItem(props) {
   let imgUrls: string[] = [];
   let isMultipleImages = false;
   if (restaurant.imgURL) {
-    imgUrls = restaurant.imgURL.split(",");
+    imgUrls = [restaurant.imgURL.split(",")[0]];
     isMultipleImages = imgUrls.length > 1 ? true : false;
   } else {
     imgUrls.push(noImage);
@@ -99,7 +100,7 @@ function RestaurantListItem(props) {
         <Card style={{ width: "100%", height: "100%" }}>
           <Card.Body style={{ padding: "0px" }}>
             <div style={{ width: "100%" }}>
-              <Carousel
+              {/* <Carousel
                 variant="dark"
                 interval={null}
                 controls={isMultipleImages}
@@ -110,26 +111,51 @@ function RestaurantListItem(props) {
                 nextIcon={<Arrow right={true} />}
                 className="carousel"
                 style={{height: "100%"}}
-              >
-                {imgUrls.map((url, index) => {
-                  return (
-                    <Carousel.Item key={index}>
-                      <Card.Img
-                        className="responsive-image"
-                        variant="top"
-                        src={url}
-                        onError={(e: any) => {e.target.onerror = null; e.target.src=noImage}}
-                        style={{
-                          width: "100%",
-                          minHeight: "360px"
-                        }}
-                      />
-                    </Carousel.Item>
-                  );
-                })}
-              </Carousel>
+              > */}
+              {/* <Carousel.Item> */}
+                <Card.Img
+                  className="responsive-image"
+                  variant="top"
+                  src={imgUrls[0]}
+                  onError={(e: any) => {e.target.onerror = null; e.target.src=noImage}}
+                  onMouseEnter={() => setHasHover(true)}
+                  style={{
+                    width: "100%",
+                    minHeight: "360px"
+                  }}
+                />
+                {
+                  hasHover ?
+                    <div onMouseLeave={() => setHasHover(false)} onClick={() => console.log('click!')} style={{ cursor: 'pointer'}}>
+                      <Card.ImgOverlay style={{opacity: 0.6, backgroundColor: 'gray'}}>
+                        <Card.Title>{restaurant.name}</Card.Title>
+                        <Card.Text>{restaurant.address}</Card.Text>
+                        <Card.Text>
+                          {restaurantDate}({eatingObj[restaurant.eatingTime]})
+                        </Card.Text>
+                        <div
+                          style={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "center"
+                          }}
+                        >
+                          <ReactStars
+                            count={5}
+                            value={rating}
+                            edit={false}
+                            size={starSize}
+                            isHalf={true}
+                            activeColor="#ffd700"
+                          />
+                        </div>
+                        <span style={{ fontSize: "0.8em" }}>{menus.length > 0 ? menus : '메뉴 등록 x' }</span>
+                      </Card.ImgOverlay>
+                    </div>
+                    : null
+                }
             </div>
-            <div style={{height: "30%"}}>
+            {/* <div style={{height: "30%"}}>
               <div style={{ float: "right", marginRight: "5px" }}>
                 <Dropdown>
                   <Dropdown.Toggle as={CustomToggle}><BsThreeDots /></Dropdown.Toggle>
@@ -156,24 +182,7 @@ function RestaurantListItem(props) {
                 </Card.Title>
                 <span style={{ fontSize: "0.8em" }}>{restaurant.address}</span>
               </div>
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center"
-                }}
-              >
-                <ReactStars
-                  count={5}
-                  value={rating}
-                  edit={false}
-                  size={starSize}
-                  isHalf={true}
-                  activeColor="#ffd700"
-                />
-              </div>
-              <span style={{ fontSize: "0.8em" }}>{menus.length > 0 ? menus : '메뉴 등록 x' }</span>
-            </div>
+            </div> */}
           </Card.Body>
         </Card>
       </Col>
