@@ -1,30 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import { Card, Col, Dropdown, Carousel } from "react-bootstrap";
-import UpdateModal from "../../containers/UpdateModal/UpdateModal";
+import { Card, Col } from "react-bootstrap";
+import ResturantItemModal from "./ReataurantItemModal";
 import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
 import ReactStars from "react-rating-stars-component";
-import styled from "styled-components";
 import noImage from "../../../assets/noImage.jpeg";
-import { BsThreeDots } from "react-icons/bs";
 import "./RestaurantListItem.css";
 
-const Arrow = styled.div<{right: boolean}>`
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  display: inline-block;
-  ${props =>
-    props.right
-      ? `border-left: 10px solid #46CB18;`
-      : `border-right: 10px solid #46CB18;`}
-  ${props =>
-    props.right ? `margin-left: 10px;` : `margin-right: 10px;`}
-  &:hover {
-    cursor: pointer;
-  }
-`;
 
 const eatingObj = {
   "1": "아침",
@@ -33,18 +15,6 @@ const eatingObj = {
   "4": "기타"
 };
 
-const CustomToggle = React.forwardRef(({ children, onClick }: { children: React.ReactNode, onClick: React.MouseEventHandler<any> }, ref: any) => (
-  <span
-    ref={ref}
-    onClick={e => {
-      e.preventDefault();
-      onClick(e);
-    }}
-    style={{ cursor: "pointer" }}
-  >
-    {children}
-  </span>
-));
 
 function RestaurantListItem(props) {
   const restaurant = props.restaurant;
@@ -52,7 +22,6 @@ function RestaurantListItem(props) {
   const restaurantDateSplit = String(restaurant.date).split("-");
   const restaurantDate = `${restaurantDateSplit[0]}년 ${restaurantDateSplit[1]}월 ${restaurantDateSplit[2]}일`;
   const [toggle, setToggle] = useState(false);
-  const [mapToggle, setMapToggle] = useState(false);
   const [hasHover, setHasHover] = useState(false);
   const [starSize, setStarSize] = useState(window.innerWidth / 30);
   const rating = restaurant.rating;
@@ -77,14 +46,6 @@ function RestaurantListItem(props) {
     return () => window.removeEventListener('resize', handleSize);
   }, [])
 
-  const popUpMap = () => {
-    setMapToggle(true);
-  };
-
-  const updateHandler = () => {
-    setToggle(!toggle);
-  };
-
   let imgUrls: string[] = [];
   let isMultipleImages = false;
   if (restaurant.imgURL) {
@@ -99,20 +60,7 @@ function RestaurantListItem(props) {
       <Col sm={6} md={4} lg={3} style={{ paddingBottom: "10px" }}>
         <Card style={{ width: "100%", height: "100%" }}>
           <Card.Body style={{ padding: "0px" }}>
-            <div style={{ width: "100%" }}>
-              {/* <Carousel
-                variant="dark"
-                interval={null}
-                controls={isMultipleImages}
-                indicators={isMultipleImages}
-                prevLabel={""}
-                prevIcon={<Arrow right={false} />}
-                nextLabel={""}
-                nextIcon={<Arrow right={true} />}
-                className="carousel"
-                style={{height: "100%"}}
-              > */}
-              {/* <Carousel.Item> */}
+            <div style={{ width: "100%", display: 'flex' }}>
                 <Card.Img
                   className="responsive-image"
                   variant="top"
@@ -126,8 +74,8 @@ function RestaurantListItem(props) {
                 />
                 {
                   hasHover ?
-                    <div onMouseLeave={() => setHasHover(false)} onClick={() => console.log('click!')} style={{ cursor: 'pointer'}}>
-                      <Card.ImgOverlay style={{opacity: 0.6, backgroundColor: 'gray'}}>
+                    <div onMouseLeave={() => setHasHover(false)} onClick={() => setToggle(true)} style={{ cursor: 'pointer' }}>
+                      <Card.ImgOverlay style={{opacity: 0.6, backgroundColor: 'gray', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                         <Card.Title>{restaurant.name}</Card.Title>
                         <Card.Text>{restaurant.address}</Card.Text>
                         <Card.Text>
@@ -155,56 +103,24 @@ function RestaurantListItem(props) {
                     : null
                 }
             </div>
-            {/* <div style={{height: "30%"}}>
-              <div style={{ float: "right", marginRight: "5px" }}>
-                <Dropdown>
-                  <Dropdown.Toggle as={CustomToggle}><BsThreeDots /></Dropdown.Toggle>
-                  <Dropdown.Menu title="">
-                    <Dropdown.Item onClick={() => popUpMap()}>지도</Dropdown.Item>
-                    <Dropdown.Item onClick={() => updateHandler()}>
-                      수정
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={() => props.deleteHandler(restaurant._id)}
-                    >
-                      삭제
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-              <div>
-                <Card.Title style={{ margin: "0px" }}>
-                  {restaurant.name}
-                  <span style={{ fontSize: "0.5em" }}>
-                    <br />
-                    {restaurantDate}({eatingObj[restaurant.eatingTime]})
-                  </span>
-                </Card.Title>
-                <span style={{ fontSize: "0.8em" }}>{restaurant.address}</span>
-              </div>
-            </div> */}
           </Card.Body>
         </Card>
       </Col>
-      {toggle ? (
-        <UpdateModal
-          type="RestaurantListItem"
-          toggle={toggle}
-          setToggle={setToggle}
-          restaurantName={restaurant.name}
-          restaurantId={restaurant._id}
-          restaurantDate={restaurant.date}
-          restaurantImgUrls={imgUrls}
-          rating={rating}
-          eatingTime={restaurant.eatingTime}
-          menus={restaurant.menus}
-        />
-      ) : null}
-      <KakaoMapModal
-        Toggle={mapToggle}
-        setToggle={setMapToggle}
-        restaurant={restaurant}
-      />
+      {
+        toggle ? (
+          <ResturantItemModal
+            type="RestaurantListItem"
+            toggle={toggle}
+            setToggle={setToggle}
+            restaurantName={restaurant.name}
+            restaurantId={restaurant._id}
+            restaurantDate={restaurant.date}
+            restaurantImgUrls={imgUrls}
+            rating={rating}
+            eatingTime={restaurant.eatingTime}
+            menus={restaurant.menus}
+          />
+        ) : null}
     </>
   ) : null;
 }
