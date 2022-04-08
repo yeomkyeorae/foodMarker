@@ -3,9 +3,8 @@ import { useDispatch } from "react-redux";
 import {
     readRestaurants,
 } from "../../../_actions/restaurant_action";
+import { itemPerPage } from '../../../library/def';
 
-
-const ITEMPERPAGE = 4;
 
 function useFetch(page, order, totalItemCount) {
     const dispatch = useDispatch<any>();
@@ -15,7 +14,7 @@ function useFetch(page, order, totalItemCount) {
 
     const sendQuery = useCallback(async (totalItemCount) => {
         try {
-            const maxPage = totalItemCount % ITEMPERPAGE === 0 ? Math.floor(totalItemCount / ITEMPERPAGE) : Math.floor(totalItemCount / ITEMPERPAGE) + 1;
+            const maxPage = totalItemCount % itemPerPage === 0 ? Math.floor(totalItemCount / itemPerPage) : Math.floor(totalItemCount / itemPerPage) + 1;
 
             if(maxPage !== 0 && maxPage < page) {
                 setLoading(false);
@@ -27,19 +26,20 @@ function useFetch(page, order, totalItemCount) {
                 const body = {
                     id: window.sessionStorage.getItem("userId"),
                     page: page,
-                    itemPerPage: ITEMPERPAGE,
+                    itemPerPage: itemPerPage,
                     order: order
                 };
-                
-                const newRestaurantList = (await dispatch(readRestaurants(body))).payload;
 
-                if(!newRestaurantList.length) {
-                    setLoading(false);
-                    setError(true);
-                } else {
-                    setRestaurantList(restaurantList => restaurantList.concat(newRestaurantList));
+                if(Math.ceil(restaurantList.length / totalItemCount) < page) {
+                    const newRestaurantList = (await dispatch(readRestaurants(body))).payload;
+    
+                    if(!newRestaurantList.length) {
+                        setLoading(false);
+                        setError(true);
+                    } else {
+                        setRestaurantList(restaurantList => restaurantList.concat(newRestaurantList));
+                    }
                 }
-                
             }
         } catch(err) {
             setError(false);

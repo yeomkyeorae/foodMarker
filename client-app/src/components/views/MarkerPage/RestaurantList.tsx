@@ -1,17 +1,17 @@
-import React, { useState, useEffect, ReactElement } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
-  readRestaurants,
   readRestaurantsCount,
   deleteRestaurant
 } from "../../../_actions/restaurant_action";
 import RestaurantListItem from "./RestaurantListItem";
 import { Row } from "react-bootstrap";
 import styled from "styled-components";
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
 import AlertModal from "../../containers/AlertModal/AlertModal";
 import "./RestaurantList.css";
+import useFetch from "./useFetch";
+import { itemPerPage } from '../../../library/def';
 
 
 const Div = styled.div`
@@ -32,18 +32,6 @@ const List = styled.ol`
   max-width: 100%;
 `;
 
-const Pagination = styled.div<{selected: boolean}>`
-  display: inline-block;
-  margin: 3px;
-  font-size: 1.5rem;
-  color: ${props => (props.selected ? "#1D800E" : "black")};
-  &:hover {
-    text-decoration: none;
-    cursor: pointer;
-    color: #46CB18;
-  }
-`;
-
 const SortMenu = styled.div<{color?: string;}>`
   color: ${props => (props.color === "true" ? "#D21404" : "black")};
   display: inline-block;
@@ -56,31 +44,35 @@ const SortMenu = styled.div<{color?: string;}>`
 
 function RestaurantList(props) {
   const dispatch = useDispatch<any>();
-  const [restaurants, setRestaurants] = useState([{ _id: 0 }]);
   const [totalItemCount, setTotalItemCount] = useState(0);
-  const [pageSetNum, setPageSetNum] = useState(0);
   const [page, setPage] = useState(1);
   const [order, setOrder] = useState(1);
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
-  const ITEMPERPAGE = 8;
-  const DISPLAYPAGENUM = 5;
+  const { loading, error, restaurantList} = useFetch(page, order, totalItemCount);
+  const loader = useRef(null);
+
   const body = {
     id: window.sessionStorage.getItem("userId"),
     page: page,
-    itemPerPage: ITEMPERPAGE,
+    itemPerPage: itemPerPage,
     order: order
   };
+
+  const handleObserver = useCallback((entries) => {
+    const target = entries[0];
+    
+    if(target.isIntersecting) {
+      setPage(page => page + 1);
+    }
+  }, [totalItemCount, setTotalItemCount]);
 
   const deleteHandler = restaurantId => {
     dispatch(deleteRestaurant(restaurantId)).then(response => {
       if (response.payload.success) {
         setAlertToggle(true);
         setAlertMessage("등록 맛집이 삭제되었습니다.");
-        setRestaurants(
-          restaurants.filter(restaurant => restaurant._id !== restaurantId)
-        );
       }
     }).catch(err => {
       setAlertToggle(true);
@@ -94,67 +86,24 @@ function RestaurantList(props) {
     setPage(1);
   };
 
-  const onSetPageHandler = page => {
-    setPage(page);
-  };
-
-  const onSetPageSetNum = (type, pageIfMove, limitPageSetNum) => {
-    if (type === 0) { // 왼쪽 화살표 버튼
-      if(page % DISPLAYPAGENUM === 1) {
-        if (pageSetNum > 0) {
-          setPageSetNum(pageSetNum - 1);
-          setPage(pageIfMove);
-        }
-      } else if(page > 1) {
-        setPage(page - 1);
-      }
-    } else if (type === 1) {  // 오른쪽 화살표 버튼
-      if(page % DISPLAYPAGENUM === 0) {
-        if (totalItemCount > ITEMPERPAGE * DISPLAYPAGENUM * (pageSetNum + 1)) {
-          setPageSetNum(pageSetNum + 1);
-          setPage(pageIfMove);
-        }
-      } else if(page < limitPageSetNum) {
-        setPage(page + 1);
-      }
-    }
-  };
-
   useEffect(() => {
     dispatch(readRestaurantsCount(body.id)).then(response => {
       setTotalItemCount(response.payload);
-
-      dispatch(readRestaurants(body)).then(response => {
-        setRestaurants(response.payload);
-      });
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, order]);
 
-  const pages: ReactElement[] = [];
-  const passingNum = DISPLAYPAGENUM * pageSetNum;
-  const limitPage = Math.ceil(totalItemCount / ITEMPERPAGE);
-  const limitPageSetNum =
-    limitPage >= DISPLAYPAGENUM * (pageSetNum + 1)
-      ? DISPLAYPAGENUM * (pageSetNum + 1)
-      : (limitPage % DISPLAYPAGENUM) + DISPLAYPAGENUM * pageSetNum;
+    const option = {
+      root: null,
+      rootMargin: "20px",
+      threshold: 1
+    };
 
-  let beforeFirst, afterFirst;
-  for (let i = passingNum; i < limitPageSetNum; i++) {
-    if (i === passingNum) {
-      beforeFirst = passingNum - DISPLAYPAGENUM + 1;
-      afterFirst = passingNum + DISPLAYPAGENUM + 1;
+    if(totalItemCount > 0) {
+      const observer = new IntersectionObserver(handleObserver, option);
+      if(loader.current) observer.observe(loader.current);
     }
-    pages.push(
-      <Pagination
-        key={"restaurantPage" + i}
-        onClick={() => onSetPageHandler(i + 1)}
-        selected={page === i + 1}
-      >
-        {i + 1}
-      </Pagination>
-    );
-  }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [order, totalItemCount]);
 
   return (
     <div>
@@ -173,9 +122,9 @@ function RestaurantList(props) {
         <Restaurants>
           <List>
             <Row className="show-grid">
-              {restaurants.map(restaurant => (
+              {restaurantList.map((restaurant, index) => (
                 <RestaurantListItem
-                  key={restaurant._id}
+                  key={'restaurantListItem' + index}
                   setAddress={props.setAddress}
                   setRestaurantName={props.setRestaurantName}
                   restaurant={restaurant}
@@ -185,22 +134,9 @@ function RestaurantList(props) {
             </Row>
           </List>
         </Restaurants>
-        {
-          restaurants.length > 0 ? 
-           (
-              <div>
-                <div style={{ display: "inline-block" }}>
-                  <AiOutlineArrowLeft className="arrow" size={24} onClick={() => onSetPageSetNum(0, beforeFirst, null)} style={{cursor: "pointer", marginBottom: "5px"}} />
-                  {pages.map(page => page)}
-                  <AiOutlineArrowRight className="arrow" size={24} onClick={() => onSetPageSetNum(1, afterFirst, limitPageSetNum)} style={{cursor: "pointer", marginBottom: "5px"}} />
-                </div>
-            </div>
-           ) : (
-             <div>
-               등록된 나의 맛집이 없습니다!
-             </div>
-           )
-        }
+        {loading && <p>Loading...</p>}
+        {error && <p>페이지 끝입니다!</p>}
+        <div ref={loader} />
       </Div>
       {
         alertToggle ?
