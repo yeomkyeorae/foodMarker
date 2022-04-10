@@ -1,19 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { withRouter } from "react-router-dom";
 import { Card, Col } from "react-bootstrap";
 import ResturantItemModal from "./ReataurantItemModal";
-import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
 import ReactStars from "react-rating-stars-component";
+import { eatingTimeType } from "../../../library/def";
 import noImage from "../../../assets/noImage.jpeg";
 import "./RestaurantListItem.css";
-
-
-const eatingObj = {
-  "1": "아침",
-  "2": "점심",
-  "3": "저녁",
-  "4": "기타"
-};
 
 
 function RestaurantListItem(props) {
@@ -26,16 +18,30 @@ function RestaurantListItem(props) {
   const [starSize, setStarSize] = useState(window.innerWidth / 30);
   const rating = restaurant.rating;
 
-  let menus = "";
-  if (restaurant.menus) {
-    const menusArr = JSON.parse(restaurant.menus);
-    menusArr.forEach((menu, index) => {
-      menus += menu;
-      if (menusArr.length - 1 !== index) {
-        menus += ", ";
-      }
-    });
-  }
+  const getMenus = useCallback((restaurant) => {
+    let menus = "";
+    if (restaurant.menus) {
+      const menusArr = JSON.parse(restaurant.menus);
+      menusArr.forEach((menu, index) => {
+        menus += menu;
+        if (menusArr.length - 1 !== index) {
+          menus += ", ";
+        }
+      });
+    }
+    return menus;
+  }, []);
+
+  const getRepresentativeImage = useCallback((restaurant) => {
+    // TODO: 설정한 대표 이미지 가져오기
+    let imgUrls: string[] = [];
+    if (restaurant.imgURL) {
+      imgUrls = [restaurant.imgURL.split(",")[0]];
+    } else {
+      imgUrls.push(noImage);
+    }
+    return imgUrls;
+  }, []);
 
   useEffect(() => {
     function handleSize() {
@@ -46,14 +52,8 @@ function RestaurantListItem(props) {
     return () => window.removeEventListener('resize', handleSize);
   }, [])
 
-  let imgUrls: string[] = [];
-  let isMultipleImages = false;
-  if (restaurant.imgURL) {
-    imgUrls = [restaurant.imgURL.split(",")[0]];
-    isMultipleImages = imgUrls.length > 1 ? true : false;
-  } else {
-    imgUrls.push(noImage);
-  }
+  const menus: string = getMenus(restaurant);
+  const imgUrls: string[] = getRepresentativeImage(restaurant);
 
   return restaurant.address ? (
     <>
@@ -75,11 +75,11 @@ function RestaurantListItem(props) {
                 {
                   hasHover ?
                     <div onMouseLeave={() => setHasHover(false)} onClick={() => setToggle(true)} style={{ cursor: 'pointer' }}>
-                      <Card.ImgOverlay style={{opacity: 0.6, backgroundColor: 'gray', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                      <Card.ImgOverlay style={{opacity: 0.8, backgroundColor: 'gray', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                         <Card.Title>{restaurant.name}</Card.Title>
                         <Card.Text>{restaurant.address}</Card.Text>
                         <Card.Text>
-                          {restaurantDate}({eatingObj[restaurant.eatingTime]})
+                          {restaurantDate}({eatingTimeType[restaurant.eatingTime]})
                         </Card.Text>
                         <div
                           style={{
