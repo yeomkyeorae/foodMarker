@@ -7,7 +7,8 @@ import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import MyCalendar from "./MyCalendar";
 import styled from "styled-components";
-import { MyRestaurant, MyWish } from "../../interfaces/MyInfoPage";
+import { RestaurantType } from "../../interfaces/Restaurant";
+import { WishListType } from "../../interfaces/WishList"; 
 
 
 const InfoBlock = styled.div<{backgroundColor?: string;}>`
@@ -44,8 +45,8 @@ const colorBar = [
 function MyInfoPage(props) {
   const [myRestaurantsCount, setMyRestaurantsCount] = useState(0);
   const [myWishListCount, setMyWishListCount] = useState(0);
-  const [myRestaurants, setMyRestaurants] = useState<MyRestaurant[]>([]);
-  const [myWishlists, setWishlists] = useState<MyWish[]>([]);
+  const [myRestaurants, setMyRestaurants] = useState<RestaurantType[]>([]);
+  const [myWishlists, setWishlists] = useState<WishListType[]>([]);
 
   const { userId } = props.location.state;
 

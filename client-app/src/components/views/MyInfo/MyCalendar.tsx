@@ -1,13 +1,15 @@
-import React from "react";
+import React from 'react';
 import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import moment from "moment";
 import "moment/locale/ko";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import { RestaurantType } from '../../interfaces/Restaurant';
 
+type MyCalendarProps = {
+	restaurants: RestaurantType[]
+};
 
-function MyCalendar(props) {
-	const { restaurants } = props;
-
+function MyCalendar({ restaurants }: MyCalendarProps): React.ReactElement {
 	const events = restaurants.map((el, index) => {
 		return {
 			id: index,
