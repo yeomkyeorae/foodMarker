@@ -14,8 +14,8 @@ function KakaoMapCoords(props) {
 
   const dispatch = useDispatch<any>();
 
-  const userId = window.sessionStorage.getItem("userId");
-  const username = window.sessionStorage.getItem("username");
+  const userId = window.sessionStorage.getItem("userId") as string;
+  const username = window.sessionStorage.getItem("username") as string;
 
   useEffect(() => {
     kakao.maps.load(async () => {

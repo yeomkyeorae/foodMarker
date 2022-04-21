@@ -6,8 +6,10 @@ import {
   DELETE_WISHLIST,
   READ_WISHLIST_COUNT
 } from "./types";
+import { WishListType } from "../components/interfaces/WishList";
 
-export function readWishList(id) {
+
+export function readWishList(id: string): { type: string, payload: Promise<WishListType[]> } {
   const request = axios
     .get(`/api/wishLists?id=${id}`)
     .then(response => response.data);
@@ -18,7 +20,7 @@ export function readWishList(id) {
   };
 }
 
-export function readTenWishList() {
+export function readTenWishList(): { type: string, payload: Promise<WishListType[]> } {
   const request = axios.get("/api/ten-wishLists").then(response => response.data);
 
   return {
@@ -27,7 +29,7 @@ export function readTenWishList() {
   };
 }
 
-export function registerWishList(dataToSubmit) {
+export function registerWishList(dataToSubmit: { user: string, username: string, name: string, address: string, created: string}): { type: string, payload: Promise<{ success: boolean }>} {
   const request = axios
     .post("/api/wishList", dataToSubmit)
     .then(response => response.data);
@@ -38,7 +40,7 @@ export function registerWishList(dataToSubmit) {
   };
 }
 
-export function deleteWishList(wishListId) {
+export function deleteWishList(wishListId: string): { type: string, payload: Promise<{ success: boolean }>} {
   const request = axios
     .delete(`/api/wishList?_id=${wishListId}`)
     .then(response => response.data);
@@ -49,7 +51,7 @@ export function deleteWishList(wishListId) {
   };
 }
 
-export function readWishListCount(id) {
+export function readWishListCount(id: string): { type: string, payload: Promise<number>} {
   const request = axios
     .get(`/api/wishList/count?id=${id}`)
     .then(response => response.data);

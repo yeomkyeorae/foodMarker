@@ -89,8 +89,8 @@ function Enroll(props) {
   const [alertMessage, setAlertMessage] = useState("");
 
   // Props, etc.
-  const userId = window.sessionStorage.getItem("userId");
-  const username = window.sessionStorage.getItem("username");
+  const userId = window.sessionStorage.getItem("userId") as string;
+  const username = window.sessionStorage.getItem("username") as string;
   const parentCompName = props.parentCompName;
   const dispatch = useDispatch<any>();
   const inputRef: React.RefObject<any> = useRef();

@@ -30,7 +30,7 @@ function WishList(props) {
   const [wishLists, setWishLists] = useState<WishListType[]>([]);
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const userId = window.sessionStorage.getItem("userId");
+  const userId = window.sessionStorage.getItem("userId") as string;
 
   useEffect(() => {
     dispatch(readWishList(userId)).then(response => {
