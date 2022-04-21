@@ -45,7 +45,7 @@ function WishPage(props) {
           overflow: "auto"
         }}
       >
-        <NavbarComp userId={userId} history={props.history} />
+        <NavbarComp history={props.history} />
         <hr />
         <div style={{}}>
           <Button

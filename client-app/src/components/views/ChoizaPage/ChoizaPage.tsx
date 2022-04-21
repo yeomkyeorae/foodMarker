@@ -16,7 +16,6 @@ const Div = styled.div`
 `;
 
 function ChoizaPage(props) {
-  const { userId } = props.location.state;
   const [season, setSeason] = useState(6);
   const [seasonName, setSeasonName] = useState("시즌5");
 
@@ -36,7 +35,7 @@ function ChoizaPage(props) {
           overflow: "hidden"
         }}
       >
-        <NavbarComp userId={userId} history={props.history} />
+        <NavbarComp history={props.history} />
         <hr />
         <Div onClick={() => onClickHandler("시즌1", 1)}>시즌1</Div>
         <Div onClick={() => onClickHandler("시즌2", 2)}>시즌2</Div>

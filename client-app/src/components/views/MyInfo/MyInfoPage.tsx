@@ -101,7 +101,7 @@ function MyInfoPage(props) {
           overflow: "hidden"
         }}
       >
-        <NavbarComp userId={userId} history={props.history} />
+        <NavbarComp history={props.history} />
         <hr />
         <div>
             <div style={{ height: "150px"}}>

@@ -148,7 +148,7 @@ function MainPage(props) {
           overflow: "auto"
         }}
       >
-        <NavbarComp userId={userId} history={props.history} />
+        <NavbarComp history={props.history} />
         <div style={{ backgroundColor: "#FAF7F2" }}>
           <FoodMarkerTitle>
             <div>

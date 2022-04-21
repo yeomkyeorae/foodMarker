@@ -9,8 +9,6 @@ import AlertModal from "../../containers/AlertModal/AlertModal";
 
 
 function CurrentLocation(props) {
-  const { userId } = props.location.state;
-
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongtitude] = useState(0);
   const [isSuccess, setIsSuccess] = useState(true);
@@ -48,7 +46,7 @@ function CurrentLocation(props) {
           overflow: "auto"
         }}
       >
-        <NavbarComp userId={userId} history={props.history} />
+        <NavbarComp history={props.history} />
         <hr />
         {latitude > 0 && longitude > 0 ? (
           <KakaoMapCoords
