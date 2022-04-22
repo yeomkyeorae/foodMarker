@@ -17,7 +17,7 @@ const Section = styled.section`
 `;
 
 
-function LoginSignup() {
+function LoginSignup(): React.ReactElement {
   const [toggle, setToggle] = useState(true);
 
   let loginOrSignup;

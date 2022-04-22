@@ -54,7 +54,7 @@ const Btn = styled.a`
   }
 `;
 
-function LadingPage() {
+function LadingPage(): React.ReactElement {
   return (
     <Section>
       <Div>
