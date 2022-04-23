@@ -19,9 +19,12 @@ const FooterP = styled.p`
   text-align: center;
 `;
 
-function Footer(props) {
-  const { position, marginTop } = props;
+type FooterProps = {
+  marginTop?: number;
+  position?: string;
+};
 
+function Footer({ position, marginTop}: FooterProps): React.ReactElement {
   return (
     <FooterDiv marginTop={marginTop} position={position}>
       <FooterP>Copyright &copy; 2021. All Rights Reserved.</FooterP>
