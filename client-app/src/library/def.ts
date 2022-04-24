@@ -1,3 +1,12 @@
+export const NavMenuType = {
+    Main: 0,
+    CurrentLocation: 1,
+    Marker: 2,
+    Wish: 3,
+    Choizaroad: 4,
+    Myinfo: 5
+};
+
 export const itemPerPage = 4;
 
 export const eatingTimeType = {

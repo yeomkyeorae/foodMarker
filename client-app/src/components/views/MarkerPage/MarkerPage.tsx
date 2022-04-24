@@ -5,6 +5,8 @@ import Enroll from "./Enroll";
 import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import { Button } from "react-bootstrap";
+import { NavMenuType } from '../../../library/def';
+
 
 function MarkerPage(props) {
   const { userId } = props.location.state;
@@ -45,7 +47,7 @@ function MarkerPage(props) {
           overflow: "auto"
         }}
       >
-        <NavbarComp history={props.history} />
+        <NavbarComp history={props.history} menu={NavMenuType.Marker} />
         <hr />
         <div>
           <Button

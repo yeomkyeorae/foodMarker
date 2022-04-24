@@ -6,6 +6,7 @@ import KakaoMapCoords from "../../containers/KakaoMap/KakaoMapCoords";
 import SubPage from "./SubPage";
 import LoadingPage from "./LoadingPage";
 import AlertModal from "../../containers/AlertModal/AlertModal";
+import { NavMenuType } from '../../../library/def';
 
 
 function CurrentLocation(props) {
@@ -46,7 +47,7 @@ function CurrentLocation(props) {
           overflow: "auto"
         }}
       >
-        <NavbarComp history={props.history} />
+        <NavbarComp history={props.history} menu={NavMenuType.CurrentLocation} />
         <hr />
         {latitude > 0 && longitude > 0 ? (
           <KakaoMapCoords

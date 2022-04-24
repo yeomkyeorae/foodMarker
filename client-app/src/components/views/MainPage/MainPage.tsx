@@ -13,6 +13,7 @@ import "@brainhubeu/react-carousel/lib/style.css";
 import styled from "styled-components";
 import { RestaurantType } from '../../interfaces/Restaurant';
 import { WishListType } from '../../interfaces/WishList';
+import { NavMenuType } from '../../../library/def';
 
 
 const H2 = styled.h2`
@@ -148,7 +149,7 @@ function MainPage(props) {
           overflow: "auto"
         }}
       >
-        <NavbarComp history={props.history} />
+        <NavbarComp history={props.history} menu={NavMenuType.Main} />
         <div style={{ backgroundColor: "#FAF7F2" }}>
           <FoodMarkerTitle>
             <div>

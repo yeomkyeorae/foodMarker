@@ -4,6 +4,8 @@ import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import ChoizaList from "./ChoizaList";
 import styled from "styled-components";
+import { NavMenuType } from '../../../library/def';
+
 
 const Div = styled.div`
   display: inline-block;
@@ -35,7 +37,7 @@ function ChoizaPage(props) {
           overflow: "hidden"
         }}
       >
-        <NavbarComp history={props.history} />
+        <NavbarComp history={props.history} menu={NavMenuType.Choizaroad} />
         <hr />
         <Div onClick={() => onClickHandler("시즌1", 1)}>시즌1</Div>
         <Div onClick={() => onClickHandler("시즌2", 2)}>시즌2</Div>

@@ -9,6 +9,7 @@ import MyCalendar from "./MyCalendar";
 import styled from "styled-components";
 import { RestaurantType } from "../../interfaces/Restaurant";
 import { WishListType } from "../../interfaces/WishList"; 
+import { NavMenuType } from "../../../library/def";
 
 
 const InfoBlock = styled.div<{backgroundColor?: string;}>`
@@ -101,7 +102,7 @@ function MyInfoPage(props) {
           overflow: "hidden"
         }}
       >
-        <NavbarComp history={props.history} />
+        <NavbarComp history={props.history} menu={NavMenuType.Myinfo} />
         <hr />
         <div>
             <div style={{ height: "150px"}}>

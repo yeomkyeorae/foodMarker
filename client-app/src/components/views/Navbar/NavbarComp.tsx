@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../_actions/user_action";
 import styled from "styled-components";
@@ -92,12 +92,12 @@ const RightMenuSpan = styled.span<{color?: string; marginRight?: string; hoverCo
   }
 `;
 
-function NavbarComp(props) {
-  const menu = props.history.location.state?.menu ?? 0;
 
-  const selectedMenu = menu ? menu : 0;
+function NavbarComp(props): React.ReactElement {
+  const selectedMenu = props.menu ?? 0;
+
   const userId = window.sessionStorage.getItem("userId");
-  const [ openState, setOpenState ] = useState(false);
+  const [openState, setOpenState] = useState(false);
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const dispatch = useDispatch<any>();

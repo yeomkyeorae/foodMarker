@@ -5,6 +5,8 @@ import WishList from "./WishList";
 import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import { Button } from "react-bootstrap";
+import { NavMenuType } from '../../../library/def';
+
 
 function WishPage(props) {
   const { userId } = props.location.state;
@@ -45,7 +47,7 @@ function WishPage(props) {
           overflow: "auto"
         }}
       >
-        <NavbarComp history={props.history} />
+        <NavbarComp history={props.history} menu={NavMenuType.Wish} />
         <hr />
         <div style={{}}>
           <Button
