@@ -129,7 +129,7 @@ function Signup(props) {
       return;
     }
 
-    if(password.length <= 8) {
+    if(password.length < 8) {
       setAlertToggle(true);
       setAlertMessage("8자리 이상의 패스워드를 입력하세요!");
       return;
