@@ -1,10 +1,14 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { Modal } from "react-bootstrap";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 
-function AlertModal(props) {
-  const { setAlertToggle, alertMessage } = props;
 
+interface Props extends RouteComponentProps {
+  setAlertToggle: Dispatch<SetStateAction<boolean>>;
+  alertMessage: string;
+}
+
+function AlertModal({ setAlertToggle, alertMessage }: Props): React.ReactElement {
   return (
     <Modal
       show={true}
@@ -22,7 +26,7 @@ function AlertModal(props) {
             width: "100%"
           }}
         >
-            {alertMessage}
+          {alertMessage}
         </div>
       </Modal.Body>
     </Modal>
