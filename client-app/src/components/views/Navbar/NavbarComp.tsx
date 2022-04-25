@@ -92,9 +92,13 @@ const RightMenuSpan = styled.span<{color?: string; marginRight?: string; hoverCo
   }
 `;
 
+type Props = {
+  menu: number;
+  history: RouteComponentProps["history"];
+};
 
-function NavbarComp(props): React.ReactElement {
-  const selectedMenu = props.menu ?? 0;
+function NavbarComp({ menu, history }: Props): React.ReactElement {
+  const selectedMenu = menu ?? 0;
 
   const userId = window.sessionStorage.getItem("userId");
   const [openState, setOpenState] = useState(false);
@@ -106,7 +110,7 @@ function NavbarComp(props): React.ReactElement {
     dispatch(logoutUser()).then(response => {
       if (response.payload.success) {
         window.sessionStorage.clear();
-        props.history.push("/loginSignup");
+        history.push("/loginSignup");
       } else {
         setAlertToggle(true);
         setAlertMessage("로그아웃에 실패했습니다");
