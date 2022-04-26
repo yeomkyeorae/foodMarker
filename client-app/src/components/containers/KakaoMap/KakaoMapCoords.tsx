@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import { registerWishList } from "../../../_actions/wishList_action";
 import AlertModal from "../AlertModal/AlertModal";
 import { useDispatch } from "react-redux";
 
 const { kakao } = window;
 
-function KakaoMapCoords(props) {
+interface Props extends RouteComponentProps {
+  latitude: number;
+  longitude: number;
+  mapLevel: number;
+}
+
+function KakaoMapCoords(props: Props) {
   const { latitude, longitude, mapLevel } = props;
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
