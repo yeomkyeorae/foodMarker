@@ -1,15 +1,18 @@
-interface RestaurantType {
+interface Restaurant {
     _id: string;
     visitor: string;
-    username: string;
     name: string;
     address: string;
+    rating: number;
+}
+
+interface RestaurantDetail extends Restaurant {
+    username: string;
     date: string;
     imgURL: string;
-    rating: number;
     eatingTime: number;
     menus: string;
     created: string;
 }
 
-export type { RestaurantType };
+export type { Restaurant, RestaurantDetail };

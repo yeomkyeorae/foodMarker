@@ -3,10 +3,10 @@ import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import moment from "moment";
 import "moment/locale/ko";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { RestaurantType } from '../../interfaces/Restaurant';
+import { RestaurantDetail } from '../../interfaces/Restaurant';
 
 type MyCalendarProps = {
-	restaurants: RestaurantType[]
+	restaurants: RestaurantDetail[]
 };
 
 function MyCalendar({ restaurants }: MyCalendarProps): React.ReactElement {

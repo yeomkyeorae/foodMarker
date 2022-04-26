@@ -7,7 +7,7 @@ import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import MyCalendar from "./MyCalendar";
 import styled from "styled-components";
-import { RestaurantType } from "../../interfaces/Restaurant";
+import { RestaurantDetail } from "../../interfaces/Restaurant";
 import { WishListType } from "../../interfaces/WishList"; 
 import { NavMenuType } from "../../../library/def";
 
@@ -46,7 +46,7 @@ const colorBar = [
 function MyInfoPage(props) {
   const [myRestaurantsCount, setMyRestaurantsCount] = useState(0);
   const [myWishListCount, setMyWishListCount] = useState(0);
-  const [myRestaurants, setMyRestaurants] = useState<RestaurantType[]>([]);
+  const [myRestaurants, setMyRestaurants] = useState<RestaurantDetail[]>([]);
   const [myWishlists, setWishlists] = useState<WishListType[]>([]);
 
   const { userId } = props.location.state;

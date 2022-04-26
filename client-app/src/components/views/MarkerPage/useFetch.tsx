@@ -4,10 +4,10 @@ import {
     readRestaurants,
 } from "../../../_actions/restaurant_action";
 import { itemPerPage } from '../../../library/def';
-import { RestaurantType } from '../../interfaces/Restaurant';
+import { RestaurantDetail } from '../../interfaces/Restaurant';
 
 
-function useFetch(page: number, order: number, totalItemCount: number): { loading: boolean, error: boolean, restaurantList: RestaurantType[] } {
+function useFetch(page: number, order: number, totalItemCount: number): { loading: boolean, error: boolean, restaurantList: RestaurantDetail[] } {
     const dispatch = useDispatch<any>();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);

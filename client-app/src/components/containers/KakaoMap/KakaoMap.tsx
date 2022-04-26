@@ -1,9 +1,22 @@
 import React, { useEffect } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
+import { Restaurant } from "../../interfaces/Restaurant";
 
 const { kakao } = window;
 
-function KakaoMap(props) {
+interface Props extends RouteComponentProps{
+  address?: string;
+  restaurantName?: string;
+  latitude?: number;
+  longitude?: number;
+  mapLevel?: number;
+  restaurants?: Restaurant[];
+  width: string;
+  height?: string;
+  inlineBlock?: boolean;
+}
+
+function KakaoMap(props: Props) {
   const {
     address,
     restaurantName,
