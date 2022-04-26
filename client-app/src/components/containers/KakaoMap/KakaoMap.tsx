@@ -16,7 +16,7 @@ interface Props extends RouteComponentProps{
   inlineBlock?: boolean;
 }
 
-function KakaoMap(props: Props) {
+function KakaoMap(props: Props): React.ReactElement {
   const {
     address,
     restaurantName,

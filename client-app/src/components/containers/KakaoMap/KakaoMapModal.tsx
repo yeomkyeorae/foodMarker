@@ -1,9 +1,18 @@
-import React from "react";
+import React, { Dispatch, SetStateAction} from "react";
 import { Modal } from "react-bootstrap";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import KakaoMap from "./KakaoMap";
 
-function KakaoMapModal(props) {
+interface Props extends RouteComponentProps {
+  Toggle: boolean;
+  setToggle: Dispatch<SetStateAction<boolean>>;
+  restaurant: {
+    name: string;
+    address: string;
+  }
+}
+
+function KakaoMapModal(props: Props): React.ReactElement {
   const { Toggle, setToggle, restaurant } = props;
   const { name, address } = restaurant;
 

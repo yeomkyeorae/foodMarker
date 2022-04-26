@@ -12,7 +12,7 @@ interface Props extends RouteComponentProps {
   mapLevel: number;
 }
 
-function KakaoMapCoords(props: Props) {
+function KakaoMapCoords(props: Props): React.ReactElement {
   const { latitude, longitude, mapLevel } = props;
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
