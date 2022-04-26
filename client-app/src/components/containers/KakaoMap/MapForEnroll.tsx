@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { withRouter } from "react-router-dom";
+import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import AlertModal from "../AlertModal/AlertModal";
 // import "react-datepicker/dist/react-datepicker.css";
 
 const { kakao } = window;
 
-function MapForEnroll(props) {
+interface Props extends RouteComponentProps {
+  toggle: boolean;
+  setName: Dispatch<SetStateAction<string>>;
+  setAddress: Dispatch<SetStateAction<string>>;
+  width: string;
+}
+
+function MapForEnroll(props: Props): React.ReactElement {
   const { toggle, setName, setAddress, width } = props;
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
