@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import { Row } from "react-bootstrap";
 import styled from "styled-components";
 import ChoizaListItem from "./ChoizaListItem";
@@ -24,7 +24,11 @@ const List = styled.ol`
   padding: 0px;
 `;
 
-function ChoizaList(props) {
+interface Props extends RouteComponentProps {
+  season: number;
+}
+
+function ChoizaList(props: Props): React.ReactElement {
   const dispatch = useDispatch<any>();
   const [choizaRoads, setChoizaRoads] = useState<ChoizaRoad[]>([]);
   const [visitedChoizaRoads, setVisitedChoizaRoads] = useState<VisitedChoizaRoads[]>([]);
