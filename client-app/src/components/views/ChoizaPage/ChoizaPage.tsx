@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import ChoizaList from "./ChoizaList";
@@ -17,11 +17,17 @@ const Div = styled.div`
   cursor: pointer;
 `;
 
-function ChoizaPage(props) {
+
+interface Props {
+  history: RouteComponentProps["history"];
+}
+
+
+function ChoizaPage({ history }: Props): React.ReactElement {
   const [season, setSeason] = useState(6);
   const [seasonName, setSeasonName] = useState("시즌5");
 
-  const onClickHandler = (seansonName, season) => {
+  const onClickHandler = (seansonName: string, season: number) => {
     setSeason(season);
     setSeasonName(seansonName);
   };
@@ -37,7 +43,7 @@ function ChoizaPage(props) {
           overflow: "hidden"
         }}
       >
-        <NavbarComp history={props.history} menu={NavMenuType.Choizaroad} />
+        <NavbarComp history={history} menu={NavMenuType.Choizaroad} />
         <hr />
         <Div onClick={() => onClickHandler("시즌1", 1)}>시즌1</Div>
         <Div onClick={() => onClickHandler("시즌2", 2)}>시즌2</Div>

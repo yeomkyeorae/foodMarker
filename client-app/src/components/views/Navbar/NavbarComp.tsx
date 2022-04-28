@@ -92,10 +92,10 @@ const RightMenuSpan = styled.span<{color?: string; marginRight?: string; hoverCo
   }
 `;
 
-type Props = {
+interface Props {
   menu: number;
   history: RouteComponentProps["history"];
-};
+}
 
 function NavbarComp({ menu, history }: Props): React.ReactElement {
   const selectedMenu = menu ?? 0;

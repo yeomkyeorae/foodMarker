@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Card, Col, OverlayTrigger, Popover, PopoverHeader, PopoverBody } from "react-bootstrap";
 import { FaSearch, FaPlus, FaCheck } from "react-icons/fa";
@@ -7,6 +7,7 @@ import {
   registerVisitedChoizaRoad,
   deleteVisitedChoizaRoad
 } from "../../../_actions/choizaRoad_action";
+import { ChoizaRoad, VisitedChoizaRoads } from '../../interfaces/ChoizaRoad';
 import "./ChoizaListItem.css";
 
 interface Visited {
@@ -17,9 +18,16 @@ interface Visited {
     season?: number;
 }
 
-function ChoizaListItem(props) {
+interface Props extends RouteComponentProps {
+  choizaRoad: ChoizaRoad;
+  season: number;
+  visitedChoizaRoads: VisitedChoizaRoads[];
+}
+
+function ChoizaListItem(props: Props): React.ReactElement {
   const dispatch = useDispatch<any>();
   const { choizaRoad, season, visitedChoizaRoads } = props;
+
   const choizaRestaurants = choizaRoad.restaurants;
 
   const [visitedList, setVisitedList] = useState<Visited[]>([]);
