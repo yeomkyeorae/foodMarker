@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 
-const FooterDiv = styled.footer<{marginTop?: number; position?: string}>`
+const FooterDiv = styled.footer<{ marginTop?: number; position?: string }>`
   width: 100%;
   height: 50px;
   left: 0;
@@ -24,7 +24,7 @@ type FooterProps = {
   position?: string;
 };
 
-function Footer({ position, marginTop}: FooterProps): React.ReactElement {
+function Footer({ position, marginTop }: FooterProps): React.ReactElement {
   return (
     <FooterDiv marginTop={marginTop} position={position}>
       <FooterP>Copyright &copy; 2021. All Rights Reserved.</FooterP>

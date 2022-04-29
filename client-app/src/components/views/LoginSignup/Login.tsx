@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../_actions/user_action";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import './Login.css';
 import AlertModal from "../../containers/AlertModal/AlertModal";
@@ -72,8 +72,14 @@ const Span = styled.span`
   }
 `;
 
+interface Props extends RouteComponentProps {
+  setToggle: Dispatch<SetStateAction<boolean>>;
+  toggle: boolean;
+  history: RouteComponentProps["history"];
+}
 
-function Login(props) {
+
+function Login({ setToggle, toggle, history }: Props): React.ReactElement {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [alertToggle, setAlertToggle] = useState(false);
@@ -94,19 +100,19 @@ function Login(props) {
   };
 
   const onClickHandler = () => {
-    props.setToggle(!props.toggle);
+    setToggle(!toggle);
   };
 
   const onSubmitHandler = e => {
     e.preventDefault();
 
     const body = { email, password };
-    
+
     dispatch(loginUser(body)).then(response => {
       if (response.payload.loginSuccess) {
         window.sessionStorage.setItem("userId", response.payload.userId);
         window.sessionStorage.setItem("username", response.payload.name);
-        props.history.push({
+        history.push({
           pathname: "/main"
         });
       } else {
@@ -142,8 +148,8 @@ function Login(props) {
       <Span onClick={onClickHandler}>회원가입</Span>
       {
         alertToggle ?
-        <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
-        null
+          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+          null
       }
     </LoginBox>
   );

@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../../_actions/user_action";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import AlertModal from "../../containers/AlertModal/AlertModal";
 
@@ -71,8 +71,13 @@ const Span = styled.span`
   }
 `;
 
+interface Props extends RouteComponentProps {
+  toggle: boolean;
+  setToggle: Dispatch<SetStateAction<boolean>>;
+}
 
-function Signup(props) {
+
+function Signup({ toggle, setToggle }: Props): React.ReactElement {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -103,39 +108,39 @@ function Signup(props) {
   };
 
   const onClickHandler = () => {
-    props.setToggle(!props.toggle);
+    setToggle(!toggle);
   };
 
   const onSubmitHandler = e => {
     e.preventDefault();
 
-    if(email.length <= 6 || 
-      !email.includes('@') || 
-      !email.includes('.') || 
+    if (email.length <= 6 ||
+      !email.includes('@') ||
+      !email.includes('.') ||
       email.split('@').length !== 2 ||
       email.split('@')[0].length === 0 ||
       email.split('@')[1].length === 0 ||
       email.split('@')[1].split('.').length !== 2 ||
       email.split('@')[1].split('.')[0].length === 0 ||
       email.split('@')[1].split('.')[1].length === 0) {
-        setAlertToggle(true);
-        setAlertMessage("이메일 형식을 올바르게 입력해 주세요!");
-        return;
+      setAlertToggle(true);
+      setAlertMessage("이메일 형식을 올바르게 입력해 주세요!");
+      return;
     }
 
-    if(name.length === 0) {
+    if (name.length === 0) {
       setAlertToggle(true);
       setAlertMessage("이름을 입력해 주세요!");
       return;
     }
 
-    if(password.length < 8) {
+    if (password.length < 8) {
       setAlertToggle(true);
       setAlertMessage("8자리 이상의 패스워드를 입력하세요!");
       return;
     }
 
-    if(password !== confirmPassword) {
+    if (password !== confirmPassword) {
       setAlertToggle(true);
       setAlertMessage("서로 다른 패스워드입니다!");
       return;
@@ -146,7 +151,7 @@ function Signup(props) {
     dispatch(registerUser(body)).then(response => {
       if (response.payload.success) {
         alert("회원가입이 완료되었습니다");
-        props.setToggle(true);
+        setToggle(true);
       } else {
         alert("회원가입이 실패했습니다");
       }
@@ -195,8 +200,8 @@ function Signup(props) {
         <Btn type="submit">회원가입</Btn>
         {
           alertToggle ?
-          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
-          null
+            <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+            null
         }
       </form>
       <Span onClick={onClickHandler}>로그인</Span>
