@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import KakaoMapCoords from "../../containers/KakaoMap/KakaoMapCoords";
@@ -8,8 +8,11 @@ import LoadingPage from "./LoadingPage";
 import AlertModal from "../../containers/AlertModal/AlertModal";
 import { NavMenuType } from '../../../library/def';
 
+interface Props {
+  history: RouteComponentProps["history"]
+}
 
-function CurrentLocation(props) {
+function CurrentLocation({ history }: Props): React.ReactElement {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongtitude] = useState(0);
   const [isSuccess, setIsSuccess] = useState(true);
@@ -47,7 +50,7 @@ function CurrentLocation(props) {
           overflow: "auto"
         }}
       >
-        <NavbarComp history={props.history} menu={NavMenuType.CurrentLocation} />
+        <NavbarComp history={history} menu={NavMenuType.CurrentLocation} />
         <hr />
         {latitude > 0 && longitude > 0 ? (
           <KakaoMapCoords

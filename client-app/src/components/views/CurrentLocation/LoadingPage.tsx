@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 
-function LoadingPage() {
+function LoadingPage(): React.ReactElement {
   const [count, setCount] = useState(0);
   
-  let timer;
   useEffect(() => {
     // eslint-disable-next-line
-    timer = setInterval(() => {
+    let timer = setInterval(() => {
       setCount(count => count + 1);      
     }, 500);
 
