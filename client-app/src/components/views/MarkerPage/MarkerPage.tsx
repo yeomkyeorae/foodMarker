@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import Restaurants from "./Restaurants";
 import Enroll from "./Enroll";
 import NavbarComp from "../Navbar/NavbarComp";
@@ -7,9 +7,11 @@ import Footer from "../Footer/Footer";
 import { Button } from "react-bootstrap";
 import { NavMenuType } from '../../../library/def';
 
+interface Props {
+  history: RouteComponentProps["history"];
+}
 
-function MarkerPage(props) {
-  const { userId } = props.location.state;
+function MarkerPage({ history }: Props): React.ReactElement {
   const [Toggle, setToggle] = useState(true);
   const [Menu, setMenu] = useState("나의 맛집 등록하기");
 
@@ -28,9 +30,8 @@ function MarkerPage(props) {
   } else {
     MenuComponent = (
       <Enroll
-        userId={userId}
-        setToggle={setToggle}
         parentCompName={"MarkerPage"}
+        setToggle={setToggle}
         setMenu={setMenu}
       />
     );
@@ -47,7 +48,7 @@ function MarkerPage(props) {
           overflow: "auto"
         }}
       >
-        <NavbarComp history={props.history} menu={NavMenuType.Marker} />
+        <NavbarComp history={history} menu={NavMenuType.Marker} />
         <hr />
         <div>
           <Button

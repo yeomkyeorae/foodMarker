@@ -28,7 +28,6 @@ function WishPage(props) {
   } else {
     MenuComponent = (
       <Enroll
-        userId={userId}
         parentCompName={"WishPage"}
         setToggle={setToggle}
         setMenu={setMenu}

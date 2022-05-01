@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, Dispatch, SetStateAction } from "react";
 import { useDispatch } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import {
   registerRestaurant,
   registerJpegImg,
@@ -15,7 +15,7 @@ import styled from "styled-components";
 import AlertModal from "../../containers/AlertModal/AlertModal";
 
 
-const InputTitle = styled.div<{fontSize?: string; borderBottom?: string;}>`
+const InputTitle = styled.div<{ fontSize?: string; borderBottom?: string; }>`
   max-width: 700px;
   margin: auto;
   font-weight: bold;
@@ -45,7 +45,14 @@ const Input = styled.input`
   transition: 0.2s ease all;
 `;
 
-function Enroll(props) {
+interface Props extends RouteComponentProps {
+  parentCompName: string;
+  setToggle: Dispatch<SetStateAction<boolean>>;
+  setMenu: Dispatch<SetStateAction<string>>;
+  history: RouteComponentProps["history"]
+}
+
+function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.ReactElement {
   // Input 관련 state
   const [name, setName] = useState("");
   const [searchName, setSearchName] = useState("을지로3가");
@@ -82,7 +89,7 @@ function Enroll(props) {
   const [isConverting, setIsConverting] = useState(false);
 
   // Toggle
-  const [toggle, setToggle] = useState(true);
+  const [enrollToggle, setEnrollToggle] = useState(true);
 
   // alert
   const [alertToggle, setAlertToggle] = useState(false);
@@ -91,7 +98,7 @@ function Enroll(props) {
   // Props, etc.
   const userId = window.sessionStorage.getItem("userId") as string;
   const username = window.sessionStorage.getItem("username") as string;
-  const parentCompName = props.parentCompName;
+
   const dispatch = useDispatch<any>();
   const inputRef: React.RefObject<any> = useRef();
 
@@ -172,7 +179,7 @@ function Enroll(props) {
       if (file.type === "image/heic") {
         const reader = new FileReader();
 
-        reader.onloadend = function() {
+        reader.onloadend = function () {
           const image = reader.result as string;
 
           fetch(image)
@@ -295,9 +302,9 @@ function Enroll(props) {
             setRating(0);
             setEatingTime(1);
             setMenuItems([]);
-            props.setToggle(true);
-            props.setMenu("식당 등록");
-            props.history.push("/marker", userId);
+            setToggle(true);
+            setMenu("식당 등록");
+            history.push("/marker", userId);
           }
         })
         .catch(err => {
@@ -318,9 +325,9 @@ function Enroll(props) {
         if (response.payload.success) {
           setName("");
           setAddress("");
-          props.setToggle(true);
-          props.setMenu("위시리스트 등록");
-          props.history.push("/wish", userId);
+          setToggle(true);
+          setMenu("위시리스트 등록");
+          history.push("/wish", userId);
         }
       }).catch(err => {
         setAlertToggle(true);
@@ -331,7 +338,7 @@ function Enroll(props) {
   };
 
   const toggleHandler = () => {
-    setToggle(!toggle);
+    setEnrollToggle(!enrollToggle);
   };
 
   const onKeyDown = e => {
@@ -381,7 +388,7 @@ function Enroll(props) {
             검색
           </Button>
         </div>
-        <MapForEnroll toggle={toggle} setName={setName} setAddress={setAddress} width={"50%"} />
+        <MapForEnroll toggle={enrollToggle} setName={setName} setAddress={setAddress} width={"50%"} />
         <ul
           id={`placesList`}
           style={{
@@ -467,7 +474,7 @@ function Enroll(props) {
                   value={newMenuItem}
                   placeholder="메뉴 입력 버튼 클릭"
                   onChange={e => onChangeNewMenuItem(e)}
-                  // style={{ width: "50%" }}
+                // style={{ width: "50%" }}
                 />
                 <br />
                 <Button
@@ -481,17 +488,17 @@ function Enroll(props) {
             </div>
             {menuItems.length
               ? menuItems.map((menu, index) => (
-                  <div key={index} style={{ marginTop: "2px" }}>
-                    {menu}
-                    <Button
-                      variant="danger"
-                      style={{ marginLeft: "10px" }}
-                      onClick={() => onMenuDeleteHandler(index)}
-                    >
-                      X
-                    </Button>
-                  </div>
-                ))
+                <div key={index} style={{ marginTop: "2px" }}>
+                  {menu}
+                  <Button
+                    variant="danger"
+                    style={{ marginLeft: "10px" }}
+                    onClick={() => onMenuDeleteHandler(index)}
+                  >
+                    X
+                  </Button>
+                </div>
+              ))
               : null}
 
             <div style={{ margin: "5px" }}>
@@ -515,20 +522,20 @@ function Enroll(props) {
               <div style={{ marginTop: "10px" }}>
                 {preImages.length > 0
                   ? preImages.map((preImage, index) => {
-                      return (
-                        <div
-                          key={index}
-                          style={{ display: "inline-block", margin: "5px" }}
-                        >
-                          <img
-                            src={preImage}
-                            alt={"jpeg"}
-                            width="100px"
-                            height="100px"
-                          />
-                        </div>
-                      );
-                    })
+                    return (
+                      <div
+                        key={index}
+                        style={{ display: "inline-block", margin: "5px" }}
+                      >
+                        <img
+                          src={preImage}
+                          alt={"jpeg"}
+                          width="100px"
+                          height="100px"
+                        />
+                      </div>
+                    );
+                  })
                   : null}
               </div>
             </div>
@@ -542,14 +549,14 @@ function Enroll(props) {
             type="submit"
             disabled={isConverting ? true : false}
           >
-            {isConverting ? '이미지 변환 중': '등록'}
+            {isConverting ? '이미지 변환 중' : '등록'}
           </Button>
         </div>
       </form>
       {
         alertToggle ?
-        <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
-        null
+          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+          null
       }
     </div>
   );
