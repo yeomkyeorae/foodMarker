@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import {
   readRestaurantsNoImage,
   readTenRestaurants
@@ -74,7 +74,11 @@ const P = styled.p`
   }
 `;
 
-function MainPage(props) {
+interface Props {
+  history: RouteComponentProps["history"];
+}
+
+function MainPage({ history }: Props): React.ReactElement {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [tenRestaurants, setTenRestaurants] = useState<RestaurantDetail[]>([]);
   const [tenWishList, setTenWishList] = useState<WishListType[]>([]);
@@ -149,7 +153,7 @@ function MainPage(props) {
           overflow: "auto"
         }}
       >
-        <NavbarComp history={props.history} menu={NavMenuType.Main} />
+        <NavbarComp history={history} menu={NavMenuType.Main} />
         <div style={{ backgroundColor: "#FAF7F2" }}>
           <FoodMarkerTitle>
             <div>
@@ -298,8 +302,8 @@ function MainPage(props) {
           <OrderList>
             {tenWishList.map((wishListItem, ix) => (
               <List key={ix}>
-                <div style={{ marginBottom: "5px"}}>
-                  <p style={{ fontWeight: "500", fontSize: "1.5rem", margin: "0", whiteSpace: "nowrap"}}>
+                <div style={{ marginBottom: "5px" }}>
+                  <p style={{ fontWeight: "500", fontSize: "1.5rem", margin: "0", whiteSpace: "nowrap" }}>
                     {wishListItem.name}
                   </p>
                   <p style={{ fontWeight: "300", margin: "0" }}>
