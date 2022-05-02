@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import UpdateModal from "../../containers/UpdateModal/UpdateModal";
 import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
@@ -49,14 +49,16 @@ const CustomToggle = React.forwardRef(({ children, onClick }: { children: React.
   </span>
 ));
 
-function WishListItem(props) {
-  const {
-    wishListId,
-    wishListName,
-    wishListAddress,
-    wishListCreated,
-    deleteHandler
-  } = props;
+interface Props extends RouteComponentProps {
+  wishListId: string;
+  wishListName: string;
+  wishListAddress: string;
+  wishListCreated: string;
+  deleteHandler: (wishListId: string) => void;
+}
+
+
+function WishListItem({ wishListId, wishListName, wishListAddress, wishListCreated, deleteHandler }: Props): React.ReactElement {
   const [popUpToggle, setPopUpToggle] = useState(false);
   const [mapToggle, setMapToggle] = useState(false);
 

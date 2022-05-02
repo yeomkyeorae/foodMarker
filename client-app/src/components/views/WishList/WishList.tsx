@@ -25,7 +25,8 @@ const List = styled.ol`
   padding-left: 0px;
 `;
 
-function WishList(props) {
+
+function WishList(): React.ReactElement {
   const dispatch = useDispatch<any>();
   const [wishLists, setWishLists] = useState<WishListType[]>([]);
   const [alertToggle, setAlertToggle] = useState(false);
@@ -39,7 +40,7 @@ function WishList(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const deleteHandler = wishListId => {
+  const deleteHandler = (wishListId: string) => {
     dispatch(deleteWishList(wishListId)).then(response => {
       if (response.payload.success) {
         setWishLists(wishLists.filter(wishList => wishList._id !== wishListId));
@@ -63,9 +64,7 @@ function WishList(props) {
                 wishListName={wishList.name}
                 wishListAddress={wishList.address}
                 wishListCreated={wishList.created}
-                userId={userId}
                 deleteHandler={deleteHandler}
-                setToggle={props.setToggle}
               />
             ))}
           </List>) : (
@@ -76,8 +75,8 @@ function WishList(props) {
       }
       {
         alertToggle ?
-        <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
-        null
+          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+          null
       }
     </WishLists>
   );

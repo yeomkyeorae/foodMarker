@@ -9,7 +9,6 @@ import { NavMenuType } from '../../../library/def';
 
 
 function WishPage(props) {
-  const { userId } = props.location.state;
   const [Toggle, setToggle] = useState(true);
   const [Menu, setMenu] = useState("위시 맛집 등록하기");
 
@@ -24,7 +23,7 @@ function WishPage(props) {
 
   let MenuComponent;
   if (Toggle) {
-    MenuComponent = <WishList userId={userId} setToggle={setToggle} />;
+    MenuComponent = <WishList />;
   } else {
     MenuComponent = (
       <Enroll
