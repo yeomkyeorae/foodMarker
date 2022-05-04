@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import Enroll from "../MarkerPage/Enroll";
 import WishList from "./WishList";
 import NavbarComp from "../Navbar/NavbarComp";
@@ -7,8 +7,12 @@ import Footer from "../Footer/Footer";
 import { Button } from "react-bootstrap";
 import { NavMenuType } from '../../../library/def';
 
+interface Props {
+  history: RouteComponentProps["history"];
+}
 
-function WishPage(props) {
+
+function WishPage({ history }: Props): React.ReactElement {
   const [Toggle, setToggle] = useState(true);
   const [Menu, setMenu] = useState("위시 맛집 등록하기");
 
@@ -45,7 +49,7 @@ function WishPage(props) {
           overflow: "auto"
         }}
       >
-        <NavbarComp history={props.history} menu={NavMenuType.Wish} />
+        <NavbarComp history={history} menu={NavMenuType.Wish} />
         <hr />
         <div style={{}}>
           <Button
