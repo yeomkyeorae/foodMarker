@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
-import Restaurants from "./Restaurants";
+import RestaurantList from "./RestaurantList";
 import Enroll from "./Enroll";
 import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
@@ -26,7 +26,7 @@ function MarkerPage({ history }: Props): React.ReactElement {
 
   let MenuComponent;
   if (Toggle) {
-    MenuComponent = <Restaurants />;
+    MenuComponent = <RestaurantList />;
   } else {
     MenuComponent = (
       <Enroll

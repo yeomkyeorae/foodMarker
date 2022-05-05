@@ -32,7 +32,7 @@ const List = styled.ol`
   max-width: 100%;
 `;
 
-const SortMenu = styled.div<{color?: string;}>`
+const SortMenu = styled.div<{ color?: string; }>`
   color: ${props => (props.color === "true" ? "#D21404" : "black")};
   display: inline-block;
   cursor: pointer;
@@ -42,7 +42,7 @@ const SortMenu = styled.div<{color?: string;}>`
   font-size: 1.4vw;
 `;
 
-function RestaurantList(props) {
+function RestaurantList(): React.ReactElement {
   const dispatch = useDispatch<any>();
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [page, setPage] = useState(1);
@@ -50,7 +50,7 @@ function RestaurantList(props) {
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
-  const { loading, error, restaurantList} = useFetch(page, order, totalItemCount);
+  const { loading, error, restaurantList } = useFetch(page, order, totalItemCount);
   const loader = useRef(null);
 
   const body = {
@@ -62,8 +62,8 @@ function RestaurantList(props) {
 
   const handleObserver = useCallback((entries) => {
     const target = entries[0];
-    
-    if(target.isIntersecting) {
+
+    if (target.isIntersecting) {
       setPage(page => page + 1);
     }
   }, [totalItemCount, setTotalItemCount]);
@@ -97,17 +97,17 @@ function RestaurantList(props) {
       threshold: 1
     };
 
-    if(totalItemCount > 0) {
+    if (totalItemCount > 0) {
       const observer = new IntersectionObserver(handleObserver, option);
-      if(loader.current) observer.observe(loader.current);
+      if (loader.current) observer.observe(loader.current);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order, totalItemCount]);
 
   return (
-    <div>
-      <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
+    <div style={{ display: "inline-block", width: "100%" }}>
+      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
         <SortMenu onClick={() => onSetOrderHandler(order === 1 ? 2 : 1)} color={`${order === 1 || order === 2}`}>
           {order === 1 ? "식당 이름 오름차순↑" : order === 2 ? "식당 이름 내림차순↓" : "식당 이름 오름차순↑"}
         </SortMenu>
@@ -125,8 +125,6 @@ function RestaurantList(props) {
               {restaurantList.map((restaurant, index) => (
                 <RestaurantListItem
                   key={'restaurantListItem' + index}
-                  setAddress={props.setAddress}
-                  setRestaurantName={props.setRestaurantName}
                   restaurant={restaurant}
                   deleteHandler={deleteHandler}
                 ></RestaurantListItem>
@@ -140,8 +138,8 @@ function RestaurantList(props) {
       </Div>
       {
         alertToggle ?
-        <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
-        null
+          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+          null
       }
     </div>
   );
