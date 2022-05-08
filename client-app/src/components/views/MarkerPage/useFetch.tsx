@@ -17,7 +17,7 @@ function useFetch(page: number, order: number, totalItemCount: number): { loadin
         try {
             const maxPage = totalItemCount % itemPerPage === 0 ? Math.floor(totalItemCount / itemPerPage) : Math.floor(totalItemCount / itemPerPage) + 1;
 
-            if(maxPage !== 0 && maxPage < page) {
+            if (maxPage !== 0 && maxPage < page) {
                 setLoading(false);
                 setError(true);
             } else {
@@ -31,10 +31,10 @@ function useFetch(page: number, order: number, totalItemCount: number): { loadin
                     order: order
                 };
 
-                if(Math.ceil(restaurantList.length / totalItemCount) < page) {
+                if (Math.ceil(restaurantList.length / totalItemCount) < page) {
                     const newRestaurantList = (await dispatch(readRestaurants(body))).payload;
-    
-                    if(!newRestaurantList.length) {
+
+                    if (!newRestaurantList.length) {
                         setLoading(false);
                         setError(true);
                     } else {
@@ -42,7 +42,7 @@ function useFetch(page: number, order: number, totalItemCount: number): { loadin
                     }
                 }
             }
-        } catch(err) {
+        } catch (err) {
             setError(false);
         }
     }, [page, order]);

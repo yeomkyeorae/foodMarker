@@ -12,6 +12,10 @@ import {
 } from "../../../_actions/restaurant_action";
 import styled from "styled-components";
 import AlertModal from "../../containers/AlertModal/AlertModal";
+import KakaoMap from "../../containers/KakaoMap/KakaoMap";
+import { Card, Row, Col } from "react-bootstrap";
+import noImage from "../../../assets/noImage.jpeg";
+
 
 const Input = styled.input`
   margin: 3px 0;
@@ -48,6 +52,7 @@ function RestaurntItemModal(props) {
     toggle,
     setToggle,
     restaurantName,
+    restaurantAddress,
     restaurantId,
     restaurantDate,
     restaurantImgUrls,
@@ -61,7 +66,7 @@ function RestaurntItemModal(props) {
     setPopUpToggle,
     deleteHandler
   } = props;
-
+  console.log('props', props);
   const [newRating, setNewRating] = useState(rating ? rating : 0);
   const [visitedDate, setVisitedDate] = useState(
     restaurantDate ? restaurantDate : ""
@@ -345,6 +350,35 @@ function RestaurntItemModal(props) {
   const getModalBody = () => {
     if (modalMenu === 0) {
       return (
+        <ol style={{ listStyle: "none", width: "100%", padding: "0px" }}>
+          <Row>
+            {restaurantImgUrls.map(url => {
+              return (
+                <Col sm={12} md={12} lg={12} style={{ paddingBottom: "10px" }}>
+                  <Card style={{ width: "100%", height: "100%" }}>
+                    <Card.Body style={{ padding: "0px" }}>
+                      <div style={{ width: "100%", display: 'flex' }}>
+                        <Card.Img
+                          className="responsive-image"
+                          variant="top"
+                          src={url}
+                          onError={(e: any) => { e.target.onerror = null; e.target.src = noImage }}
+                          style={{
+                            width: "100%",
+                            minHeight: "360px"
+                          }}
+                        />
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              )
+            })}
+          </Row>
+        </ol>
+      )
+    } else if (modalMenu === 1) {
+      return (
         <>
           <Modal.Body>
             <InputTitle>별점</InputTitle>
@@ -477,6 +511,17 @@ function RestaurntItemModal(props) {
             )}
           </Modal.Footer>
         </>)
+    } else if (modalMenu === 2) {
+      return (
+        <div
+          style={{
+            margin: "auto",
+            width: "100%"
+          }}
+        >
+          <KakaoMap address={restaurantAddress} restaurantName={restaurantName} width={"100%"} />
+        </div>
+      )
     }
   }
 
