@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import {
     readRestaurants,
 } from "../../../_actions/restaurant_action";
-import { itemPerPage } from '../../../library/def';
+import { ItemPerPage } from '../../../library/def';
 import { RestaurantDetail } from '../../interfaces/Restaurant';
 
 
@@ -15,7 +15,7 @@ function useFetch(page: number, order: number, totalItemCount: number): { loadin
 
     const sendQuery = useCallback(async (totalItemCount) => {
         try {
-            const maxPage = totalItemCount % itemPerPage === 0 ? Math.floor(totalItemCount / itemPerPage) : Math.floor(totalItemCount / itemPerPage) + 1;
+            const maxPage = totalItemCount % ItemPerPage === 0 ? Math.floor(totalItemCount / ItemPerPage) : Math.floor(totalItemCount / ItemPerPage) + 1;
 
             if (maxPage !== 0 && maxPage < page) {
                 setLoading(false);
@@ -27,7 +27,7 @@ function useFetch(page: number, order: number, totalItemCount: number): { loadin
                 const body = {
                     id: window.sessionStorage.getItem("userId"),
                     page: page,
-                    itemPerPage: itemPerPage,
+                    itemPerPage: ItemPerPage,
                     order: order
                 };
 

@@ -6,7 +6,6 @@ import ReactStars from "react-rating-stars-component";
 import { useDispatch } from "react-redux";
 import {
   updateRestaurant,
-  registerRestaurant,
   registerJpegImg,
   registerHeicImg
 } from "../../../_actions/restaurant_action";
@@ -15,6 +14,7 @@ import AlertModal from "../../containers/AlertModal/AlertModal";
 import KakaoMap from "../../containers/KakaoMap/KakaoMap";
 import { Card, Row, Col } from "react-bootstrap";
 import noImage from "../../../assets/noImage.jpeg";
+import { RestaurantItemModalMenu } from "../../../library/def";
 
 
 const Input = styled.input`
@@ -48,7 +48,6 @@ const InputTitle = styled.div`
 function RestaurntItemModal(props) {
   // Props
   const {
-    type,
     toggle,
     setToggle,
     restaurantName,
@@ -58,15 +57,9 @@ function RestaurntItemModal(props) {
     restaurantImgUrls,
     rating,
     eatingTime,
-    menus,
-
-    wishListId,
-    wishListName,
-    wishListAddress,
-    setPopUpToggle,
-    deleteHandler
+    menus
   } = props;
-  console.log('props', props);
+
   const [newRating, setNewRating] = useState(rating ? rating : 0);
   const [visitedDate, setVisitedDate] = useState(
     restaurantDate ? restaurantDate : ""
@@ -96,7 +89,7 @@ function RestaurntItemModal(props) {
   const [alertMessage, setAlertMessage] = useState("");
 
   // modal menu
-  const [modalMenu, setModalMenu] = useState(0);
+  const [modalMenu, setModalMenu] = useState(RestaurantItemModalMenu.Image);
 
   // etc.
   const dispatch = useDispatch<any>();
@@ -269,67 +262,6 @@ function RestaurntItemModal(props) {
       });
   };
 
-  const delWishEnrollRestaurant = async e => {
-    e.preventDefault();
-
-    if (visitedDate.length === 0) {
-      setAlertToggle(true);
-      setAlertMessage("방문 날짜를 입력해주세요!");
-      return;
-    }
-
-    // JPEG 저장
-    let jpegPath = [];
-    if (jpegCount) {
-      const response = await dispatch(registerJpegImg(jpegImageData));
-      jpegPath = response.payload.fileNames;
-    }
-
-    // HEIC 저장
-    let heicPath = [];
-    if (heicCount) {
-      const heicBody = {
-        images: heicImageData,
-        imgNames: heicImageName
-      };
-      const response = await dispatch(registerHeicImg(heicBody));
-      heicPath = response.payload.fileNames;
-    }
-
-    const imagePath = jpegPath.concat(heicPath).join(",");
-    const imgURL = imagePath.length > 0 ? imagePath : preImages;
-
-    const userId = window.sessionStorage.getItem("userId");
-
-    const body = {
-      visitor: userId,
-      name: wishListName,
-      address: wishListAddress,
-      date: visitedDate,
-      imgURL: imgURL,
-      rating: newRating,
-      eatingTime: newEatingTime,
-      menus: JSON.stringify(menuItems)
-    };
-
-    dispatch(registerRestaurant(body))
-      .then(response => {
-        if (response.payload.success) {
-          setAlertToggle(true);
-          setAlertMessage("방문 표시되었습니다.");
-          setToggle(true);
-          setPopUpToggle(false);
-          deleteHandler(wishListId);
-        } else {
-          setAlertToggle(true);
-          setAlertMessage("방문 표시에 실패했습니다");
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
   const initAllImages = () => {
     inputRef.current.value = "";
 
@@ -348,7 +280,7 @@ function RestaurntItemModal(props) {
   }
 
   const getModalBody = () => {
-    if (modalMenu === 0) {
+    if (modalMenu === RestaurantItemModalMenu.Image) {
       return (
         <ol style={{ listStyle: "none", width: "100%", padding: "0px" }}>
           <Row>
@@ -377,7 +309,7 @@ function RestaurntItemModal(props) {
           </Row>
         </ol>
       )
-    } else if (modalMenu === 1) {
+    } else if (modalMenu === RestaurantItemModalMenu.Modify) {
       return (
         <>
           <Modal.Body>
@@ -494,11 +426,7 @@ function RestaurntItemModal(props) {
           >
             {isConverting ? (
               <Button variant="danger" disabled>
-                {type === "WishListItem" ? "방문 표시하기" : "수정하기"}
-              </Button>
-            ) : type === "WishListItem" ? (
-              <Button variant="success" onClick={delWishEnrollRestaurant}>
-                방문 표시하기
+                수정하기
               </Button>
             ) : (
               <Button
@@ -511,7 +439,7 @@ function RestaurntItemModal(props) {
             )}
           </Modal.Footer>
         </>)
-    } else if (modalMenu === 2) {
+    } else if (modalMenu === RestaurantItemModalMenu.Map) {
       return (
         <div
           style={{

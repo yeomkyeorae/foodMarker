@@ -7,11 +7,17 @@ export const NavMenuType = {
     Myinfo: 5
 };
 
-export const itemPerPage = 4;
+export const ItemPerPage = 4;
 
-export const eatingTimeType = {
+export const EatingTimeType = {
     1: "아침",
     2: "점심",
     3: "저녁",
     4: "기타"
+};
+
+export const RestaurantItemModalMenu = {
+    Image: 0,
+    Modify: 1,
+    Map: 2
 };

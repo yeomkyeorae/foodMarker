@@ -11,7 +11,7 @@ import styled from "styled-components";
 import AlertModal from "../../containers/AlertModal/AlertModal";
 import "./RestaurantList.css";
 import useFetch from "./useFetch";
-import { itemPerPage } from '../../../library/def';
+import { ItemPerPage } from '../../../library/def';
 
 
 const Div = styled.div`
@@ -56,7 +56,7 @@ function RestaurantList(): React.ReactElement {
   const body = {
     id: window.sessionStorage.getItem("userId"),
     page: page,
-    itemPerPage: itemPerPage,
+    itemPerPage: ItemPerPage,
     order: order
   };
 

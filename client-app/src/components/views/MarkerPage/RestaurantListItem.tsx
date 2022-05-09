@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { withRouter } from "react-router-dom";
 import { Card, Col } from "react-bootstrap";
-import ResturantItemModal from "./ReataurantItemModal";
+import RestaurantItemModal from "./RestaurantItemModal";
 import ReactStars from "react-rating-stars-component";
-import { eatingTimeType } from "../../../library/def";
+import { EatingTimeType } from "../../../library/def";
 import noImage from "../../../assets/noImage.jpeg";
 import "./RestaurantListItem.css";
 
@@ -79,7 +79,7 @@ function RestaurantListItem(props) {
                       <Card.Title>{restaurant.name}</Card.Title>
                       <Card.Text>{restaurant.address}</Card.Text>
                       <Card.Text>
-                        {restaurantDate}({eatingTimeType[restaurant.eatingTime]})
+                        {restaurantDate}({EatingTimeType[restaurant.eatingTime]})
                       </Card.Text>
                       <div
                         style={{
@@ -108,8 +108,7 @@ function RestaurantListItem(props) {
       </Col>
       {
         toggle ? (
-          <ResturantItemModal
-            type="RestaurantListItem"
+          <RestaurantItemModal
             toggle={toggle}
             setToggle={setToggle}
             restaurantName={restaurant.name}
