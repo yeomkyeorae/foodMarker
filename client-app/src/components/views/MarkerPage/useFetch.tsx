@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, Dispatch, SetStateAction } from 'react';
 import { useDispatch } from "react-redux";
 import {
     readRestaurants,
@@ -7,7 +7,7 @@ import { ItemPerPage } from '../../../library/def';
 import { RestaurantDetail } from '../../interfaces/Restaurant';
 
 
-function useFetch(page: number, order: number, totalItemCount: number): { loading: boolean, error: boolean, restaurantList: RestaurantDetail[] } {
+function useFetch(page: number, order: number, totalItemCount: number): { loading: boolean, error: boolean, restaurantList: RestaurantDetail[], setRestaurantList: Dispatch<SetStateAction<any>> } {
     const dispatch = useDispatch<any>();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -51,7 +51,7 @@ function useFetch(page: number, order: number, totalItemCount: number): { loadin
         sendQuery(totalItemCount);
     }, [sendQuery, page, totalItemCount]);
 
-    return { loading, error, restaurantList }
+    return { loading, error, restaurantList, setRestaurantList }
 }
 
 export default useFetch;

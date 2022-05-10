@@ -57,7 +57,9 @@ function RestaurntItemModal(props) {
     restaurantImgUrls,
     rating,
     eatingTime,
-    menus
+    menus,
+    restaurantList,
+    setRestaurantList
   } = props;
 
   const [newRating, setNewRating] = useState(rating ? rating : 0);
@@ -252,6 +254,24 @@ function RestaurntItemModal(props) {
           setAlertToggle(true);
           setAlertMessage("수정이 완료되었습니다");
           setToggle(!toggle);
+
+          const newRestaurantList = restaurantList.map(el => {
+            console.log(el, el._id, restaurantId)
+            if (el._id === restaurantId) {
+              return {
+                ...el,
+                date: visitedDate,
+                imgURL: imgURL.join(','),
+                rating: newRating,
+                eatingTime: newEatingTime,
+                menus: JSON.stringify(menuItems)
+              }
+            } else {
+              return el;
+            }
+          });
+
+          setRestaurantList(newRestaurantList);
         } else {
           setAlertToggle(true);
           setAlertMessage("수정이 실패했습니다");

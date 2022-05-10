@@ -119,6 +119,8 @@ function RestaurantListItem(props) {
             rating={rating}
             eatingTime={restaurant.eatingTime}
             menus={restaurant.menus}
+            restaurantList={props.restaurantList}
+            setRestaurantList={props.setRestaurantList}
           />
         ) : null}
     </>

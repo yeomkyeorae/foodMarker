@@ -50,7 +50,7 @@ function RestaurantList(): React.ReactElement {
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
-  const { loading, error, restaurantList } = useFetch(page, order, totalItemCount);
+  const { loading, error, restaurantList, setRestaurantList } = useFetch(page, order, totalItemCount);
   const loader = useRef(null);
 
   const body = {
@@ -127,6 +127,8 @@ function RestaurantList(): React.ReactElement {
                   key={'restaurantListItem' + index}
                   restaurant={restaurant}
                   deleteHandler={deleteHandler}
+                  restaurantList={restaurantList}
+                  setRestaurantList={setRestaurantList}
                 ></RestaurantListItem>
               ))}
             </Row>
