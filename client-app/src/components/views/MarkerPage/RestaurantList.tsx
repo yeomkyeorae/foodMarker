@@ -68,19 +68,6 @@ function RestaurantList(): React.ReactElement {
     }
   }, [totalItemCount, setTotalItemCount]);
 
-  const deleteHandler = restaurantId => {
-    dispatch(deleteRestaurant(restaurantId)).then(response => {
-      if (response.payload.success) {
-        setAlertToggle(true);
-        setAlertMessage("등록 맛집이 삭제되었습니다.");
-      }
-    }).catch(err => {
-      setAlertToggle(true);
-      setAlertMessage("등록 맛집 삭제에 실패했습니다.");
-      console.log(err);
-    });
-  };
-
   const onSetOrderHandler = value => {
     setOrder(value);
     setPage(1);
@@ -126,7 +113,6 @@ function RestaurantList(): React.ReactElement {
                 <RestaurantListItem
                   key={'restaurantListItem' + index}
                   restaurant={restaurant}
-                  deleteHandler={deleteHandler}
                   restaurantList={restaurantList}
                   setRestaurantList={setRestaurantList}
                 ></RestaurantListItem>

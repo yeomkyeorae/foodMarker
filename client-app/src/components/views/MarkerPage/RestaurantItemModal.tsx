@@ -15,6 +15,7 @@ import KakaoMap from "../../containers/KakaoMap/KakaoMap";
 import { Card, Row, Col } from "react-bootstrap";
 import noImage from "../../../assets/noImage.jpeg";
 import { RestaurantItemModalMenu } from "../../../library/def";
+import { deleteRestaurant } from "../../../_actions/restaurant_action";
 
 
 const Input = styled.input`
@@ -298,6 +299,19 @@ function RestaurntItemModal(props) {
   const menuChange = (value: number) => {
     setModalMenu(value);
   }
+
+  const deleteHandler = restaurantId => {
+    dispatch(deleteRestaurant(restaurantId)).then(response => {
+      if (response.payload.success) {
+        setAlertToggle(true);
+        setAlertMessage("등록 맛집이 삭제되었습니다.");
+      }
+    }).catch(err => {
+      setAlertToggle(true);
+      setAlertMessage("등록 맛집 삭제에 실패했습니다.");
+      console.log(err);
+    });
+  };
 
   const getModalBody = () => {
     if (modalMenu === RestaurantItemModalMenu.Image) {
