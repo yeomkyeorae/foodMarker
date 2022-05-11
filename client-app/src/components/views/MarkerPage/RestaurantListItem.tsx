@@ -1,16 +1,22 @@
-import { useState, useEffect, useCallback } from "react";
-import { withRouter } from "react-router-dom";
+import { useState, useEffect, useCallback, Dispatch, SetStateAction } from "react";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import { Card, Col } from "react-bootstrap";
 import RestaurantItemModal from "./RestaurantItemModal";
 import ReactStars from "react-rating-stars-component";
 import { EatingTimeType } from "../../../library/def";
 import noImage from "../../../assets/noImage.jpeg";
 import "./RestaurantListItem.css";
+import { RestaurantDetail } from '../../interfaces/Restaurant';
 
 
-function RestaurantListItem(props) {
-  const restaurant = props.restaurant;
+interface Props extends RouteComponentProps {
+  restaurant: RestaurantDetail;
+  restaurantList: RestaurantDetail[];
+  setRestaurantList: Dispatch<SetStateAction<RestaurantDetail[]>>;
+}
 
+
+function RestaurantListItem({ restaurant, restaurantList, setRestaurantList }: Props): React.ReactElement | null {
   const restaurantDateSplit = String(restaurant.date).split("-");
   const restaurantDate = `${restaurantDateSplit[0]}년 ${restaurantDateSplit[1]}월 ${restaurantDateSplit[2]}일`;
   const [toggle, setToggle] = useState(false);
@@ -119,8 +125,8 @@ function RestaurantListItem(props) {
             rating={rating}
             eatingTime={restaurant.eatingTime}
             menus={restaurant.menus}
-            restaurantList={props.restaurantList}
-            setRestaurantList={props.setRestaurantList}
+            restaurantList={restaurantList}
+            setRestaurantList={setRestaurantList}
           />
         ) : null}
     </>
