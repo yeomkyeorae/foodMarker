@@ -19,5 +19,6 @@ export const EatingTimeType = {
 export const RestaurantItemModalMenu = {
     Image: 0,
     Modify: 1,
-    Map: 2
+    Map: 2,
+    Delete: 3
 };

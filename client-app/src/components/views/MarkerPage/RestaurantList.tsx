@@ -1,14 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {
-  readRestaurantsCount,
-  deleteRestaurant
-} from "../../../_actions/restaurant_action";
+import { readRestaurantsCount } from "../../../_actions/restaurant_action";
 import RestaurantListItem from "./RestaurantListItem";
 import { Row } from "react-bootstrap";
 import styled from "styled-components";
-import AlertModal from "../../containers/AlertModal/AlertModal";
 import "./RestaurantList.css";
 import useFetch from "./useFetch";
 import { ItemPerPage } from '../../../library/def';
@@ -47,8 +43,6 @@ function RestaurantList(): React.ReactElement {
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [page, setPage] = useState(1);
   const [order, setOrder] = useState(1);
-  const [alertToggle, setAlertToggle] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
 
   const { loading, error, restaurantList, setRestaurantList } = useFetch(page, order, totalItemCount);
   const loader = useRef(null);
@@ -124,11 +118,6 @@ function RestaurantList(): React.ReactElement {
         {error && <p>페이지 끝입니다!</p>}
         <div ref={loader} />
       </Div>
-      {
-        alertToggle ?
-          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
-          null
-      }
     </div>
   );
 }

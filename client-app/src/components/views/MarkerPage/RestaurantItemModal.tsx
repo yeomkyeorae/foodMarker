@@ -10,7 +10,6 @@ import {
   registerHeicImg
 } from "../../../_actions/restaurant_action";
 import styled from "styled-components";
-import AlertModal from "../../containers/AlertModal/AlertModal";
 import KakaoMap from "../../containers/KakaoMap/KakaoMap";
 import { Card, Row, Col } from "react-bootstrap";
 import noImage from "../../../assets/noImage.jpeg";
@@ -60,7 +59,9 @@ function RestaurntItemModal(props) {
     eatingTime,
     menus,
     restaurantList,
-    setRestaurantList
+    setRestaurantList,
+    setAlertToggle,
+    setAlertMessage
   } = props;
 
   const [newRating, setNewRating] = useState(rating ? rating : 0);
@@ -86,10 +87,6 @@ function RestaurntItemModal(props) {
 
   // HEIC 변환 중 여부
   const [isConverting, setIsConverting] = useState(false);
-
-  // alert
-  const [alertToggle, setAlertToggle] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
 
   // modal menu
   const [modalMenu, setModalMenu] = useState(RestaurantItemModalMenu.Image);
@@ -257,7 +254,6 @@ function RestaurntItemModal(props) {
           setToggle(!toggle);
 
           const newRestaurantList = restaurantList.map(el => {
-            console.log(el, el._id, restaurantId)
             if (el._id === restaurantId) {
               return {
                 ...el,
@@ -300,11 +296,22 @@ function RestaurntItemModal(props) {
     setModalMenu(value);
   }
 
-  const deleteHandler = restaurantId => {
+  const deleteHandler = async () => {
     dispatch(deleteRestaurant(restaurantId)).then(response => {
       if (response.payload.success) {
         setAlertToggle(true);
         setAlertMessage("등록 맛집이 삭제되었습니다.");
+        setToggle(!toggle);
+
+        const newRestaurantList = restaurantList.filter(el => {
+          if (el._id === restaurantId) {
+            return false;
+          } else {
+            return true;
+          }
+        });
+
+        setRestaurantList(newRestaurantList);
       }
     }).catch(err => {
       setAlertToggle(true);
@@ -318,9 +325,9 @@ function RestaurntItemModal(props) {
       return (
         <ol style={{ listStyle: "none", width: "100%", padding: "0px" }}>
           <Row>
-            {restaurantImgUrls.map(url => {
+            {restaurantImgUrls.map((url: string, index: number) => {
               return (
-                <Col sm={12} md={12} lg={12} style={{ paddingBottom: "10px" }}>
+                <Col key={'modalImage' + index} sm={12} md={12} lg={12} style={{ paddingBottom: "10px" }}>
                   <Card style={{ width: "100%", height: "100%" }}>
                     <Card.Body style={{ padding: "0px" }}>
                       <div style={{ width: "100%", display: 'flex' }}>
@@ -484,6 +491,20 @@ function RestaurntItemModal(props) {
           <KakaoMap address={restaurantAddress} restaurantName={restaurantName} width={"100%"} />
         </div>
       )
+    } else if (modalMenu === RestaurantItemModalMenu.Delete) {
+      return (
+        <div
+          style={{
+            margin: "auto",
+            width: "100%"
+          }}
+        >
+          <div style={{ margin: "10px 0px" }}>
+            <span>삭제하시겠습니까?</span><br />
+            <Button size="sm" variant="danger" onClick={deleteHandler}>확인</Button>
+          </div>
+        </div>
+      )
     }
   }
 
@@ -525,13 +546,11 @@ function RestaurntItemModal(props) {
         <Button variant="secondary" style={{ margin: '5px' }} onClick={() => menuChange(2)}>
           지도
         </Button>
+        <Button variant="danger" style={{ margin: '5px' }} onClick={() => menuChange(3)}>
+          삭제
+        </Button>
       </Modal.Header>
       {modalBody}
-      {
-        alertToggle ?
-          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
-          null
-      }
     </Modal>
   );
 }

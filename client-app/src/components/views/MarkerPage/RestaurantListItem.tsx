@@ -7,6 +7,7 @@ import { EatingTimeType } from "../../../library/def";
 import noImage from "../../../assets/noImage.jpeg";
 import "./RestaurantListItem.css";
 import { RestaurantDetail } from '../../interfaces/Restaurant';
+import AlertModal from '../../containers/AlertModal/AlertModal';
 
 
 interface Props extends RouteComponentProps {
@@ -22,6 +23,8 @@ function RestaurantListItem({ restaurant, restaurantList, setRestaurantList }: P
   const [toggle, setToggle] = useState(false);
   const [hasHover, setHasHover] = useState(false);
   const [starSize, setStarSize] = useState(window.innerWidth / 30);
+  const [alertToggle, setAlertToggle] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const rating = restaurant.rating;
 
   const getMenus = useCallback((restaurant) => {
@@ -127,8 +130,15 @@ function RestaurantListItem({ restaurant, restaurantList, setRestaurantList }: P
             menus={restaurant.menus}
             restaurantList={restaurantList}
             setRestaurantList={setRestaurantList}
+            setAlertToggle={setAlertToggle}
+            setAlertMessage={setAlertMessage}
           />
         ) : null}
+      {
+        alertToggle ?
+          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+          null
+      }
     </>
   ) : null;
 }
