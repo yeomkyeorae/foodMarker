@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, Dispatch, SetStateAction } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import heic2any from "heic2any";
 import ReactStars from "react-rating-stars-component";
 import { useDispatch } from "react-redux";
@@ -11,10 +11,10 @@ import {
 } from "../../../_actions/restaurant_action";
 import styled from "styled-components";
 import KakaoMap from "../../containers/KakaoMap/KakaoMap";
-import { Card, Row, Col } from "react-bootstrap";
-import noImage from "../../../assets/noImage.jpeg";
 import { RestaurantItemModalMenu } from "../../../library/def";
 import { deleteRestaurant } from "../../../_actions/restaurant_action";
+import ImageList from "../../containers/RestaurantItemModal/ImageList";
+import { RestaurantDetail } from "../../interfaces/Restaurant";
 
 
 const Input = styled.input`
@@ -45,24 +45,26 @@ const InputTitle = styled.div`
 `;
 
 
-function RestaurntItemModal(props) {
-  // Props
-  const {
-    toggle,
-    setToggle,
-    restaurantName,
-    restaurantAddress,
-    restaurantId,
-    restaurantDate,
-    restaurantImgUrls,
-    rating,
-    eatingTime,
-    menus,
-    restaurantList,
-    setRestaurantList,
-    setAlertToggle,
-    setAlertMessage
-  } = props;
+interface Props extends RouteComponentProps {
+  toggle: boolean;
+  setToggle: Dispatch<SetStateAction<boolean>>;
+  restaurantName: string;
+  restaurantAddress: string;
+  restaurantId: string;
+  restaurantDate: string;
+  restaurantImgUrls: string[];
+  rating: number;
+  eatingTime: number;
+  menus: string;
+  restaurantList: RestaurantDetail[];
+  setRestaurantList: Dispatch<SetStateAction<RestaurantDetail[]>>;
+  setAlertToggle: Dispatch<SetStateAction<boolean>>;
+  setAlertMessage: Dispatch<SetStateAction<string>>;
+}
+
+
+function RestaurntItemModal({ toggle, setToggle, restaurantName, restaurantAddress, restaurantId, restaurantDate, restaurantImgUrls,
+  rating, eatingTime, menus, restaurantList, setRestaurantList, setAlertToggle, setAlertMessage }: Props): React.ReactElement {
 
   const [newRating, setNewRating] = useState(rating ? rating : 0);
   const [visitedDate, setVisitedDate] = useState(
@@ -235,7 +237,7 @@ function RestaurntItemModal(props) {
     }
 
     const imagePath = jpegPath.concat(heicPath).join(",");
-    const imgURL = imagePath.length > 0 ? imagePath : preImages;
+    const imgURL = imagePath.length > 0 ? imagePath : preImages.join(',');
 
     const body = {
       restaurantId: restaurantId,
@@ -258,7 +260,7 @@ function RestaurntItemModal(props) {
               return {
                 ...el,
                 date: visitedDate,
-                imgURL: imgURL.join(','),
+                imgURL: imgURL,
                 rating: newRating,
                 eatingTime: newEatingTime,
                 menus: JSON.stringify(menuItems)
@@ -323,32 +325,7 @@ function RestaurntItemModal(props) {
   const getModalBody = () => {
     if (modalMenu === RestaurantItemModalMenu.Image) {
       return (
-        <ol style={{ listStyle: "none", width: "100%", padding: "0px" }}>
-          <Row>
-            {restaurantImgUrls.map((url: string, index: number) => {
-              return (
-                <Col key={'modalImage' + index} sm={12} md={12} lg={12} style={{ paddingBottom: "10px" }}>
-                  <Card style={{ width: "100%", height: "100%" }}>
-                    <Card.Body style={{ padding: "0px" }}>
-                      <div style={{ width: "100%", display: 'flex' }}>
-                        <Card.Img
-                          className="responsive-image"
-                          variant="top"
-                          src={url}
-                          onError={(e: any) => { e.target.onerror = null; e.target.src = noImage }}
-                          style={{
-                            width: "100%",
-                            minHeight: "360px"
-                          }}
-                        />
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              )
-            })}
-          </Row>
-        </ol>
+        <ImageList restaurantImgUrls={restaurantImgUrls} />
       )
     } else if (modalMenu === RestaurantItemModalMenu.Modify) {
       return (
