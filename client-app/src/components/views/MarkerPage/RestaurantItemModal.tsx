@@ -48,14 +48,8 @@ const InputTitle = styled.div`
 interface Props extends RouteComponentProps {
   toggle: boolean;
   setToggle: Dispatch<SetStateAction<boolean>>;
-  restaurantName: string;
-  restaurantAddress: string;
-  restaurantId: string;
-  restaurantDate: string;
   restaurantImgUrls: string[];
-  rating: number;
-  eatingTime: number;
-  menus: string;
+  restaurant: RestaurantDetail;
   restaurantList: RestaurantDetail[];
   setRestaurantList: Dispatch<SetStateAction<RestaurantDetail[]>>;
   setAlertToggle: Dispatch<SetStateAction<boolean>>;
@@ -63,13 +57,13 @@ interface Props extends RouteComponentProps {
 }
 
 
-function RestaurntItemModal({ toggle, setToggle, restaurantName, restaurantAddress, restaurantId, restaurantDate, restaurantImgUrls,
-  rating, eatingTime, menus, restaurantList, setRestaurantList, setAlertToggle, setAlertMessage }: Props): React.ReactElement {
+function RestaurntItemModal({ toggle, setToggle, restaurant, restaurantImgUrls, restaurantList, setRestaurantList, setAlertToggle, setAlertMessage }: Props): React.ReactElement {
+  const restaurantName = restaurant.name;
+  const restaurantId = restaurant._id;
+  const { date, address, menus, rating, eatingTime } = restaurant;
 
   const [newRating, setNewRating] = useState(rating ? rating : 0);
-  const [visitedDate, setVisitedDate] = useState(
-    restaurantDate ? restaurantDate : ""
-  );
+  const [visitedDate, setVisitedDate] = useState(date ?? "");
   const [newEatingTime, setNewEatingTime] = useState(eatingTime);
   const [newMenuItem, setNewMenuItem] = useState("");
   const [menuItems, setMenuItems] = useState<string[]>(menus ? JSON.parse(menus) : []);
@@ -465,7 +459,7 @@ function RestaurntItemModal({ toggle, setToggle, restaurantName, restaurantAddre
             width: "100%"
           }}
         >
-          <KakaoMap address={restaurantAddress} restaurantName={restaurantName} width={"100%"} />
+          <KakaoMap address={address} restaurantName={restaurantName} width={"100%"} />
         </div>
       )
     } else if (modalMenu === RestaurantItemModalMenu.Delete) {

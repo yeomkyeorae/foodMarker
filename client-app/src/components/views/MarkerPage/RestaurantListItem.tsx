@@ -25,7 +25,6 @@ function RestaurantListItem({ restaurant, restaurantList, setRestaurantList }: P
   const [starSize, setStarSize] = useState(window.innerWidth / 30);
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const rating = restaurant.rating;
 
   const getMenus = useCallback((restaurant) => {
     let menus = "";
@@ -99,7 +98,7 @@ function RestaurantListItem({ restaurant, restaurantList, setRestaurantList }: P
                       >
                         <ReactStars
                           count={5}
-                          value={rating}
+                          value={restaurant.rating}
                           edit={false}
                           size={starSize}
                           isHalf={true}
@@ -120,14 +119,8 @@ function RestaurantListItem({ restaurant, restaurantList, setRestaurantList }: P
           <RestaurantItemModal
             toggle={toggle}
             setToggle={setToggle}
-            restaurantName={restaurant.name}
-            restaurantAddress={restaurant.address}
-            restaurantId={restaurant._id}
-            restaurantDate={restaurant.date}
+            restaurant={restaurant}
             restaurantImgUrls={imgUrls}
-            rating={rating}
-            eatingTime={restaurant.eatingTime}
-            menus={restaurant.menus}
             restaurantList={restaurantList}
             setRestaurantList={setRestaurantList}
             setAlertToggle={setAlertToggle}
