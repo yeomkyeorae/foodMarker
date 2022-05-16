@@ -7,7 +7,7 @@ interface Props {
   restaurantImgUrls: string[];
 }
 
-const ImageList = ({ restaurantImgUrls }: Props): React.ReactElement => {
+const ImageListBody = ({ restaurantImgUrls }: Props): React.ReactElement => {
   return (
     <ol style={{ listStyle: "none", width: "100%", padding: "0px" }}>
       <Row>
@@ -38,4 +38,4 @@ const ImageList = ({ restaurantImgUrls }: Props): React.ReactElement => {
   )
 }
 
-export default ImageList
+export default ImageListBody;

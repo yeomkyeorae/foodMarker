@@ -13,7 +13,7 @@ import styled from "styled-components";
 import KakaoMap from "../../containers/KakaoMap/KakaoMap";
 import { RestaurantItemModalMenu } from "../../../library/def";
 import { deleteRestaurant } from "../../../_actions/restaurant_action";
-import ImageList from "../../containers/RestaurantItemModal/ImageList";
+import ImageListBody from "../../containers/RestaurantItemModal/ImageListBody";
 import { RestaurantDetail } from "../../interfaces/Restaurant";
 
 
@@ -319,7 +319,7 @@ function RestaurntItemModal({ toggle, setToggle, restaurant, restaurantImgUrls, 
   const getModalBody = () => {
     if (modalMenu === RestaurantItemModalMenu.Image) {
       return (
-        <ImageList restaurantImgUrls={restaurantImgUrls} />
+        <ImageListBody restaurantImgUrls={restaurantImgUrls} />
       )
     } else if (modalMenu === RestaurantItemModalMenu.Modify) {
       return (
