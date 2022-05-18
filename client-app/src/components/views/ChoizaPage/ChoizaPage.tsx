@@ -24,8 +24,8 @@ interface Props {
 
 
 function ChoizaPage({ history }: Props): React.ReactElement {
-  const [season, setSeason] = useState(6);
-  const [seasonName, setSeasonName] = useState("시즌5");
+  const [season, setSeason] = useState(7);
+  const [seasonName, setSeasonName] = useState("시즌6");
 
   const onClickHandler = (seansonName: string, season: number) => {
     setSeason(season);
@@ -51,6 +51,7 @@ function ChoizaPage({ history }: Props): React.ReactElement {
         <Div onClick={() => onClickHandler("시즌4", 4)}>시즌4</Div>
         <Div onClick={() => onClickHandler("인더하우스", 5)}>인더하우스</Div>
         <Div onClick={() => onClickHandler("시즌5", 6)}>시즌5</Div>
+        <Div onClick={() => onClickHandler("시즌6", 7)}>시즌6</Div>
         <hr />
         <h2 style={{ marginTop: "50px" }}>
           {seasonName}
