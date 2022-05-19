@@ -25,12 +25,24 @@ const List = styled.ol`
   padding-left: 0px;
 `;
 
+const SortMenu = styled.div<{ color?: string; }>`
+  color: ${props => (props.color === "true" ? "#D21404" : "black")};
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  margin: 5px 10px;
+  font-size: 1.4vw;
+`;
+
 
 function WishList(): React.ReactElement {
   const dispatch = useDispatch<any>();
   const [wishLists, setWishLists] = useState<WishListType[]>([]);
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [order, setOrder] = useState(1);
+
   const userId = window.sessionStorage.getItem("userId") as string;
 
   useEffect(() => {
@@ -52,33 +64,47 @@ function WishList(): React.ReactElement {
     });
   };
 
+  const onSetOrderHandler = value => {
+    setOrder(value);
+  };
+
   return (
-    <WishLists>
-      {
-        wishLists.length > 0 ?
-          (<List>
-            {wishLists.map(wishList => (
-              <WishListItem
-                key={wishList._id}
-                wishListId={wishList._id}
-                wishListName={wishList.name}
-                wishListAddress={wishList.address}
-                wishListCreated={wishList.created}
-                deleteHandler={deleteHandler}
-              />
-            ))}
-          </List>) : (
-            <div>
-              등록된 위시리스트 맛집이 없습니다!
-            </div>
-          )
-      }
-      {
-        alertToggle ?
-          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
-          null
-      }
-    </WishLists>
+    <div style={{ display: "inline-block", width: "100%" }}>
+      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+        <SortMenu onClick={() => onSetOrderHandler(order === 1 ? 2 : 1)} color={`${order === 1 || order === 2}`}>
+          {order === 1 ? "식당 이름 오름차순↑" : order === 2 ? "식당 이름 내림차순↓" : "식당 이름 오름차순↑"}
+        </SortMenu>
+        <SortMenu onClick={() => onSetOrderHandler(order === 3 ? 4 : 3)} color={`${order === 3 || order === 4}`}>
+          {order === 3 ? "등록 날짜 순↑" : order === 4 ? "등록 날짜 순↓" : "등록 날짜 순↑"}
+        </SortMenu>
+      </div>
+      <WishLists>
+        {
+          wishLists.length > 0 ?
+            (<List>
+              {wishLists.map(wishList => (
+                <WishListItem
+                  key={wishList._id}
+                  wishListId={wishList._id}
+                  wishListName={wishList.name}
+                  wishListAddress={wishList.address}
+                  wishListCreated={wishList.created}
+                  deleteHandler={deleteHandler}
+                />
+              ))}
+            </List>) : (
+              <div>
+                등록된 위시리스트 맛집이 없습니다!
+              </div>
+            )
+        }
+        {
+          alertToggle ?
+            <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+            null
+        }
+      </WishLists>
+    </div>
   );
 }
 
