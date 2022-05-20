@@ -46,11 +46,11 @@ function WishList(): React.ReactElement {
   const userId = window.sessionStorage.getItem("userId") as string;
 
   useEffect(() => {
-    dispatch(readWishList(userId)).then(response => {
+    dispatch(readWishList(userId, order)).then(response => {
       setWishLists(response.payload);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [order]);
 
   const deleteHandler = (wishListId: string) => {
     dispatch(deleteWishList(wishListId)).then(response => {

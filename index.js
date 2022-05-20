@@ -15,6 +15,7 @@ const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
 const dotenv = require("dotenv");
+const { type } = require("os");
 
 dotenv.config({ path: './.env'});
 
@@ -455,8 +456,22 @@ app.delete("/api/restaurant", (req, res) => {
 // get my wishLists
 app.get("/api/wishLists", (req, res) => {
   const id = req.query.id;
+  const order = Number(req.query.order);
 
-  const wishLists = WishList.find({ user: id }, (err, wishLists) => {
+  let sortMethod;
+  if (order === 1) {
+    sortMethod = { name: 1 }; // 가
+  } else if (order === 2) {
+    sortMethod = { name: -1 }; // 하
+  } else if (order === 3) {
+    sortMethod = { created: -1 }; // 최신
+  } else if (order === 4) {
+    sortMethod = { created: 1 }; // 옛날
+  }
+
+  const wishLists = WishList.find({ user: id }).sort(sortMethod);
+
+  wishLists.exec((err, wishLists) => {
     if (err) return res.json({ success: false, err });
     return res.json(wishLists);
   });
