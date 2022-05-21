@@ -7,7 +7,6 @@ import { Row } from "react-bootstrap";
 import styled from "styled-components";
 import "./RestaurantList.css";
 import useFetch from "./useFetch";
-import { ItemPerPage } from '../../../library/def';
 
 
 const Div = styled.div`
@@ -47,12 +46,7 @@ function RestaurantList(): React.ReactElement {
   const { loading, error, restaurantList, setRestaurantList } = useFetch(page, order, totalItemCount);
   const loader = useRef(null);
 
-  const body = {
-    id: window.sessionStorage.getItem("userId"),
-    page: page,
-    itemPerPage: ItemPerPage,
-    order: order
-  };
+  const userId = window.sessionStorage.getItem("userId") as string;
 
   const handleObserver = useCallback((entries) => {
     const target = entries[0];
@@ -62,13 +56,13 @@ function RestaurantList(): React.ReactElement {
     }
   }, [totalItemCount, setTotalItemCount]);
 
-  const onSetOrderHandler = value => {
-    setOrder(value);
+  const onSetOrderHandler = (order: number) => {
+    setOrder(order);
     setPage(1);
   };
 
   useEffect(() => {
-    dispatch(readRestaurantsCount(body.id)).then(response => {
+    dispatch(readRestaurantsCount(userId)).then(response => {
       setTotalItemCount(response.payload);
     });
 
