@@ -205,8 +205,12 @@ app.get("/api/users/logout", auth, (req, res) => {
 });
 
 // get my restaurants
-app.post("/api/restaurants", (req, res) => {
-  const order = req.body.order;
+app.get("/api/restaurants", (req, res) => {
+  const userId = req.query.userId;
+  const page = Number(req.query.page);
+  const itemPerPage = Number(req.query.itemPerPage);
+  const order = Number(req.query.order);
+
   let sortMethod;
   if (order === 1) {
     sortMethod = { name: 1 }; // 가
@@ -222,10 +226,10 @@ app.post("/api/restaurants", (req, res) => {
     sortMethod = { rating: 1 }; // 별점 낮은 순
   }
 
-  const restaurants = Restaurant.find({ visitor: req.body.id })
+  const restaurants = Restaurant.find({ visitor: userId })
     .sort(sortMethod)
-    .skip((req.body.page - 1) * req.body.itemPerPage)
-    .limit(req.body.itemPerPage);
+    .skip((page - 1) * itemPerPage)
+    .limit(itemPerPage);
 
   restaurants.exec((err, restaurants) => {
     if (err) return res.json({ success: false, err });

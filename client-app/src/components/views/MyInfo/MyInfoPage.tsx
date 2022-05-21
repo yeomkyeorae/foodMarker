@@ -69,14 +69,7 @@ function MyInfoPage({ history }: Props): React.ReactElement {
 
     const defaultOrder = 1;
 
-    const body = {
-      id: userId,
-      page: 1,
-      itemPerPage: 1000,
-      order: defaultOrder
-    };
-
-    dispatch(readRestaurants(body)).then(response => {
+    dispatch(readRestaurants(userId, 1, 1000, defaultOrder)).then(response => {
       setMyRestaurants(response.payload);
     });
 

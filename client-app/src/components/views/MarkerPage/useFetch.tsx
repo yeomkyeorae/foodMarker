@@ -24,15 +24,10 @@ function useFetch(page: number, order: number, totalItemCount: number): { loadin
                 setLoading(true);
                 setError(false);
 
-                const body = {
-                    id: window.sessionStorage.getItem("userId"),
-                    page: page,
-                    itemPerPage: ItemPerPage,
-                    order: order
-                };
+                const userId = window.sessionStorage.getItem("userId") as string;
 
                 if (Math.ceil(restaurantList.length / totalItemCount) < page) {
-                    const newRestaurantList = (await dispatch(readRestaurants(body))).payload;
+                    const newRestaurantList = (await dispatch(readRestaurants(userId, page, ItemPerPage, order))).payload;
 
                     if (!newRestaurantList.length) {
                         setLoading(false);

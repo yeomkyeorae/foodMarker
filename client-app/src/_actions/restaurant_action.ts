@@ -12,9 +12,10 @@ import {
   REGISTER_HEIC_IMG
 } from "./types";
 
-export function readRestaurants(dataToSubmit) {
+
+export function readRestaurants(userId: string, page: number, itemPerPage: number, order: number) {
   const request = axios
-    .post("/api/restaurants", dataToSubmit)
+    .get(`/api/restaurants?userId=${userId}&page=${page}&itemPerPage=${itemPerPage}&order=${order}`)
     .then(response => response.data);
 
   return {
@@ -34,9 +35,9 @@ export function readRestaurantsCount(id) {
   };
 }
 
-export function readRestaurantsNoImage(dataToSubmit) {
+export function readRestaurantsNoImage(body) {
   const request = axios
-    .post("/api/restaurants-no-image", dataToSubmit)
+    .post("/api/restaurants-no-image", body)
     .then(response => response.data);
 
   return {
@@ -65,9 +66,9 @@ export function readRestaurantMost() {
   };
 }
 
-export function registerRestaurant(dataToSubmit) {
+export function registerRestaurant(body) {
   const request = axios
-    .post("/api/restaurant", dataToSubmit)
+    .post("/api/restaurant", body)
     .then(response => response.data);
 
   return {
@@ -87,9 +88,9 @@ export function deleteRestaurant(restaurantId) {
   };
 }
 
-export function updateRestaurant(dataToSubmit) {
+export function updateRestaurant(body) {
   const request = axios
-    .put("/api/restaurant", dataToSubmit)
+    .put("/api/restaurant", body)
     .then(response => response.data);
 
   return {
@@ -98,9 +99,9 @@ export function updateRestaurant(dataToSubmit) {
   };
 }
 
-export function registerJpegImg(dataToSubmit) {
+export function registerJpegImg(body) {
   const request = axios
-    .post("/api/img/jpeg", dataToSubmit)
+    .post("/api/img/jpeg", body)
     .then(response => response.data);
 
   return {
@@ -109,9 +110,9 @@ export function registerJpegImg(dataToSubmit) {
   };
 }
 
-export function registerHeicImg(dataToSubmit) {
+export function registerHeicImg(body) {
   const request = axios
-    .post("/api/img/heic", dataToSubmit)
+    .post("/api/img/heic", body)
     .then(response => response.data);
 
   return {
