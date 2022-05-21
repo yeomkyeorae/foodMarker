@@ -33,7 +33,7 @@ function ChoizaList(props: Props): React.ReactElement {
   const [choizaRoads, setChoizaRoads] = useState<ChoizaRoad[]>([]);
   const [visitedChoizaRoads, setVisitedChoizaRoads] = useState<VisitedChoizaRoads[]>([]);
 
-  const userId = window.sessionStorage.getItem("userId");
+  const userId = window.sessionStorage.getItem("userId") as string;
   const season = props.season;
 
   useEffect(() => {

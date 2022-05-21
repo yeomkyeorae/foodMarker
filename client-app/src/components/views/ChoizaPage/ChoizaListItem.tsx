@@ -11,11 +11,11 @@ import { ChoizaRoad, VisitedChoizaRoads } from '../../interfaces/ChoizaRoad';
 import "./ChoizaListItem.css";
 
 interface Visited {
-    isVisited: boolean;
-    _id?: string;
-    userId?: string;
-    restaurantName?: string;
-    season?: number;
+  isVisited: boolean;
+  _id?: string;
+  userId?: string;
+  restaurantName?: string;
+  season?: number;
 }
 
 interface Props extends RouteComponentProps {
@@ -57,12 +57,12 @@ function ChoizaListItem(props: Props): React.ReactElement {
     window.open(URL, "_blank");
   };
 
-  const checkVisitedChoizaRoad = (restaurantName, index) => {
+  const checkVisitedChoizaRoad = (restaurantName: string, index: number) => {
     const toBeEnrolled = visitedList[index]._id;
 
     // 체크돼 있으면 방문 삭제, 안돼 있으면 방문 체크
     if (!toBeEnrolled) {
-      const userId = window.sessionStorage.getItem("userId");
+      const userId = window.sessionStorage.getItem("userId") as string;
 
       const body = {
         userId,
@@ -87,7 +87,7 @@ function ChoizaListItem(props: Props): React.ReactElement {
           console.log(err);
         });
     } else {
-      const visitedChoizaRoadId = visitedList[index]._id;
+      const visitedChoizaRoadId = visitedList[index]._id as string;
       dispatch(deleteVisitedChoizaRoad(visitedChoizaRoadId))
         .then(() => {
           const newVisitedList = visitedList.map((visitedItem, ix) => {
