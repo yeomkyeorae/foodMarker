@@ -24,7 +24,7 @@ export function readRestaurants(userId: string, page: number, itemPerPage: numbe
   };
 }
 
-export function readRestaurantsCount(id) {
+export function readRestaurantsCount(id: string) {
   const request = axios
     .get(`/api/restaurants/count?id=${id}`)
     .then(response => response.data);
@@ -35,9 +35,9 @@ export function readRestaurantsCount(id) {
   };
 }
 
-export function readRestaurantsNoImage(body) {
+export function readRestaurantsNoImage(userId: string, optionLocation: string) {
   const request = axios
-    .post("/api/restaurants-no-image", body)
+    .get(`/api/restaurants-no-image?userId=${userId}&optionLocation=${optionLocation}`)
     .then(response => response.data);
 
   return {
@@ -77,7 +77,7 @@ export function registerRestaurant(body) {
   };
 }
 
-export function deleteRestaurant(restaurantId) {
+export function deleteRestaurant(restaurantId: string) {
   const request = axios
     .delete(`/api/restaurant?_id=${restaurantId}`)
     .then(response => response.data);

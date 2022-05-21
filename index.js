@@ -249,9 +249,11 @@ app.get("/api/restaurants/count", (req, res) => {
 });
 
 // get restaurants without image
-app.post("/api/restaurants-no-image", (req, res) => {
+app.get("/api/restaurants-no-image", (req, res) => {
+  const { userId, optionLocation } = req.query;
+
   const restaurants = Restaurant.find(
-    { visitor: req.body.id },
+    { visitor: userId },
     {
       _id: 1,
       visitor: 1,
@@ -261,7 +263,6 @@ app.post("/api/restaurants-no-image", (req, res) => {
     }
   );
 
-  const optionLocation = req.body.optionLocation;
   restaurants.exec((err, restaurants) => {
     if (err) return res.json({ success: false, err });
 

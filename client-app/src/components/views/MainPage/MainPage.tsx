@@ -84,14 +84,12 @@ function MainPage({ history }: Props): React.ReactElement {
   const [tenWishList, setTenWishList] = useState<WishListType[]>([]);
 
   const dispatch = useDispatch<any>();
-  const userId = window.sessionStorage.getItem("userId");
-  const body = {
-    id: userId,
-    option: "서울"
-  };
+  const userId = window.sessionStorage.getItem("userId") as string;
 
   useEffect(() => {
-    dispatch(readRestaurantsNoImage(body)).then(response => {
+    const optionLocation = "서울";
+
+    dispatch(readRestaurantsNoImage(userId, optionLocation)).then(response => {
       setRestaurants(response.payload);
     });
     dispatch(readTenRestaurants()).then(response => {
@@ -108,7 +106,7 @@ function MainPage({ history }: Props): React.ReactElement {
   const [mapLevel, setMapLevel] = useState(8);
 
   const onClickHandler = option => {
-    let optionLocation;
+    let optionLocation = '';
     if (option === 1) {
       // 영동군
       setLatitude(36.1746815);
@@ -133,11 +131,8 @@ function MainPage({ history }: Props): React.ReactElement {
       setMapLevel(8);
       optionLocation = "세종";
     }
-    const body = {
-      id: userId,
-      optionLocation: optionLocation ? optionLocation : undefined
-    };
-    dispatch(readRestaurantsNoImage(body)).then(response => {
+
+    dispatch(readRestaurantsNoImage(userId, optionLocation)).then(response => {
       setRestaurants(response.payload);
     });
   };
