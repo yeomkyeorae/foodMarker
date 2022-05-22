@@ -41,6 +41,7 @@ JavaScript -> `TypeScript` 변환 작업
 
 ### 나의 방문 맛집 페이지
 - 대표 이미지 설정 기능 및 게시글에서의 표시
+- infinite scrolling에서의 정렬 기능 고려
 - <del>나의 맛집 아이템 클릭시 모달 기능 구현</del>
     - <del>모달 창에는 해당 맛집의 등록한 모든 이미지를 carousel 형태로 볼 수 있는 기능</del>
     - <del>해당 맛집의 지도 위치를 볼 수 있는 기능</del>
