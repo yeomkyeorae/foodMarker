@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
-import UpdateModal from "../../containers/UpdateModal/UpdateModal";
+import UpdateModal from "../../containers/WishUpdateModal/UpdateModal";
 import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
 import { BsThreeDots } from "react-icons/bs";
 import styled from "styled-components";
@@ -96,7 +96,6 @@ function WishListItem({ wishListId, wishListName, wishListAddress, wishListCreat
       <Created>{wishListCreated}</Created> <br />
       <Address>{wishListAddress}</Address> <br />
       <UpdateModal
-        type="WishListItem"
         toggle={popUpToggle}
         setToggle={setPopUpToggle}
         restaurantName={wishListName}

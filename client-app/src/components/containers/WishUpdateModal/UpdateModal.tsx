@@ -1,11 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, Dispatch, SetStateAction } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import heic2any from "heic2any";
 import ReactStars from "react-rating-stars-component";
 import { useDispatch } from "react-redux";
 import {
-  updateRestaurant,
   registerRestaurant,
   registerJpegImg,
   registerHeicImg
@@ -40,33 +39,23 @@ const InputTitle = styled.div`
   border-bottom: 1px solid black;
 `;
 
-function UpdateModal(props) {
-  // Props
-  const {
-    type,
-    toggle,
-    setToggle,
-    restaurantName,
-    restaurantId,
-    restaurantDate,
-    restaurantImgUrls,
-    rating,
-    eatingTime,
-    menus,
-    wishListId,
-    wishListName,
-    wishListAddress,
-    setPopUpToggle,
-    deleteHandler
-  } = props;
+interface Props extends RouteComponentProps {
+  toggle: boolean;
+  setToggle: Dispatch<SetStateAction<boolean>>;
+  restaurantName: string;
+  wishListId: string;
+  wishListName: string;
+  wishListAddress: string;
+  setPopUpToggle: Dispatch<SetStateAction<boolean>>;
+  deleteHandler: (wishListId: string) => void;
+}
 
-  const [newRating, setNewRating] = useState(rating ? rating : 0);
-  const [visitedDate, setVisitedDate] = useState(
-    restaurantDate ? restaurantDate : ""
-  );
-  const [newEatingTime, setNewEatingTime] = useState(eatingTime);
+function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListName, wishListAddress, setPopUpToggle, deleteHandler }: Props): React.ReactElement {
+  const [newRating, setNewRating] = useState(0);
+  const [visitedDate, setVisitedDate] = useState("");
+  const [newEatingTime, setNewEatingTime] = useState(1);
   const [newMenuItem, setNewMenuItem] = useState("");
-  const [menuItems, setMenuItems] = useState<string[]>(menus ? JSON.parse(menus) : []);
+  const [menuItems, setMenuItems] = useState<string[]>([]);
 
   // JPEG 이미지
   const [jpegImageData, setJpegImageData] = useState<any[]>([]);
@@ -77,9 +66,7 @@ function UpdateModal(props) {
   const [heicImageName, setHeicImageName] = useState<any[]>([]);
   const [heicCount, setHeicCount] = useState(0);
 
-  const [preImages, setPreImages] = useState(
-    restaurantImgUrls ? restaurantImgUrls : []
-  );
+  const [preImages, setPreImages] = useState<any[]>([]);
 
   // HEIC 변환 중 여부
   const [isConverting, setIsConverting] = useState(false);
@@ -210,55 +197,6 @@ function UpdateModal(props) {
     setJpegImageData(Array.from(formData));
   };
 
-  const changeRestaurant = async e => {
-    e.preventDefault();
-
-    // JPEG 저장
-    let jpegPath = [];
-    if (jpegCount) {
-      const response = await dispatch(registerJpegImg(jpegImageData));
-      jpegPath = response.payload.fileNames;
-    }
-
-    // HEIC 저장
-    let heicPath = [];
-    if (heicCount) {
-      const heicBody = {
-        images: heicImageData,
-        imgNames: heicImageName
-      };
-      const response = await dispatch(registerHeicImg(heicBody));
-      heicPath = response.payload.fileNames;
-    }
-
-    const imagePath = jpegPath.concat(heicPath).join(",");
-    const imgURL = imagePath.length > 0 ? imagePath : preImages;
-
-    const body = {
-      restaurantId: restaurantId,
-      date: visitedDate,
-      imgURL: imgURL,
-      rating: newRating,
-      eatingTime: newEatingTime,
-      menus: JSON.stringify(menuItems)
-    };
-
-    dispatch(updateRestaurant(body))
-      .then(response => {
-        if (response.payload.success) {
-          setAlertToggle(true);
-          setAlertMessage("수정이 완료되었습니다");
-          setToggle(!toggle);
-        } else {
-          setAlertToggle(true);
-          setAlertMessage("수정이 실패했습니다");
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
   const delWishEnrollRestaurant = async e => {
     e.preventDefault();
 
@@ -287,7 +225,6 @@ function UpdateModal(props) {
     }
 
     const imagePath = jpegPath.concat(heicPath).join(",");
-    const imgURL = imagePath.length > 0 ? imagePath : preImages;
 
     const userId = window.sessionStorage.getItem("userId") as string;
     const username = window.sessionStorage.getItem("username") as string;
@@ -298,7 +235,7 @@ function UpdateModal(props) {
       name: wishListName,
       address: wishListAddress,
       date: visitedDate,
-      imgURL: imgURL,
+      imgURL: imagePath,
       rating: newRating,
       eatingTime: newEatingTime,
       menus: JSON.stringify(menuItems),
@@ -468,23 +405,17 @@ function UpdateModal(props) {
           justifyContent: "center"
         }}
       >
-        {isConverting ? (
-          <Button variant="danger" disabled>
-            {type === "WishListItem" ? "방문 표시하기" : "수정하기"}
-          </Button>
-        ) : type === "WishListItem" ? (
-          <Button variant="success" onClick={delWishEnrollRestaurant}>
-            방문 표시하기
-          </Button>
-        ) : (
-          <Button
-            variant="warning"
-            onClick={changeRestaurant}
-            style={{ color: "white" }}
-          >
-            수정하기
-          </Button>
-        )}
+        {
+          isConverting ? (
+            <Button variant="danger" disabled>
+              방문 표시하기
+            </Button>
+          ) : (
+            <Button variant="success" onClick={delWishEnrollRestaurant}>
+              방문 표시하기
+            </Button>
+          )
+        }
       </Modal.Footer>
       {
         alertToggle ?
