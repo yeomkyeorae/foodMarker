@@ -53,7 +53,6 @@ function UpdateModal(props) {
     rating,
     eatingTime,
     menus,
-
     wishListId,
     wishListName,
     wishListAddress,
@@ -150,7 +149,7 @@ function UpdateModal(props) {
       if (file.type === "image/heic") {
         const reader = new FileReader();
 
-        reader.onloadend = function() {
+        reader.onloadend = function () {
           const image = reader.result as string;
 
           fetch(image)
@@ -290,17 +289,20 @@ function UpdateModal(props) {
     const imagePath = jpegPath.concat(heicPath).join(",");
     const imgURL = imagePath.length > 0 ? imagePath : preImages;
 
-    const userId = window.sessionStorage.getItem("userId");
+    const userId = window.sessionStorage.getItem("userId") as string;
+    const username = window.sessionStorage.getItem("username") as string;
 
     const body = {
       visitor: userId,
+      username: username,
       name: wishListName,
       address: wishListAddress,
       date: visitedDate,
       imgURL: imgURL,
       rating: newRating,
       eatingTime: newEatingTime,
-      menus: JSON.stringify(menuItems)
+      menus: JSON.stringify(menuItems),
+      created: new Date().toLocaleDateString()
     };
 
     dispatch(registerRestaurant(body))
@@ -410,20 +412,20 @@ function UpdateModal(props) {
             </Button>
             {menuItems.length
               ? menuItems.map((menu, index) => (
-                  <div
-                    key={index}
-                    style={{ marginTop: "2px", marginBottom: "10px" }}
+                <div
+                  key={index}
+                  style={{ marginTop: "2px", marginBottom: "10px" }}
+                >
+                  {menu}
+                  <Button
+                    variant="danger"
+                    style={{ marginLeft: "10px" }}
+                    onClick={() => onMenuDeleteHandler(index)}
                   >
-                    {menu}
-                    <Button
-                      variant="danger"
-                      style={{ marginLeft: "10px" }}
-                      onClick={() => onMenuDeleteHandler(index)}
-                    >
-                      X
-                    </Button>
-                  </div>
-                ))
+                    X
+                  </Button>
+                </div>
+              ))
               : null}
           </div>
         </div>
@@ -448,15 +450,15 @@ function UpdateModal(props) {
         <div style={{ marginTop: "10px", margin: "auto" }}>
           {preImages && preImages.length > 0
             ? preImages.map((url, index) => {
-                return (
-                  <div
-                    key={index}
-                    style={{ display: "inline-block", margin: "5px" }}
-                  >
-                    <img src={url} alt={"jpeg"} width="100px" height="100px" />
-                  </div>
-                );
-              })
+              return (
+                <div
+                  key={index}
+                  style={{ display: "inline-block", margin: "5px" }}
+                >
+                  <img src={url} alt={"jpeg"} width="100px" height="100px" />
+                </div>
+              );
+            })
             : null}
         </div>
       </Modal.Footer>
@@ -485,10 +487,10 @@ function UpdateModal(props) {
         )}
       </Modal.Footer>
       {
-          alertToggle ?
+        alertToggle ?
           <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
           null
-        }
+      }
     </Modal>
   );
 }

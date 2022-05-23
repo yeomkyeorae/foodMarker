@@ -66,7 +66,7 @@ export function readRestaurantMost() {
   };
 }
 
-export function registerRestaurant(body) {
+export function registerRestaurant(body: { visitor: string, username: string, name: string, address: string, date: string, imgURL: string, rating: number, eatingTime: number, menus: string, created: string }) {
   const request = axios
     .post("/api/restaurant", body)
     .then(response => response.data);
@@ -88,7 +88,7 @@ export function deleteRestaurant(restaurantId: string) {
   };
 }
 
-export function updateRestaurant(body) {
+export function updateRestaurant(body: { restaurantId: string, date: string, imgURL: string, rating: number, eatingTime: number, menus: string }) {
   const request = axios
     .put("/api/restaurant", body)
     .then(response => response.data);
@@ -99,7 +99,7 @@ export function updateRestaurant(body) {
   };
 }
 
-export function registerJpegImg(body) {
+export function registerJpegImg(body: any[]) {
   const request = axios
     .post("/api/img/jpeg", body)
     .then(response => response.data);
@@ -110,7 +110,7 @@ export function registerJpegImg(body) {
   };
 }
 
-export function registerHeicImg(body) {
+export function registerHeicImg(body: { images: any[], imgNames: string[] }) {
   const request = axios
     .post("/api/img/heic", body)
     .then(response => response.data);
