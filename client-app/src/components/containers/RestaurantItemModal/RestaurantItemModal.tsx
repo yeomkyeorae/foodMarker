@@ -2,12 +2,12 @@ import React, { useState, Dispatch, SetStateAction } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import KakaoMap from "../../containers/KakaoMap/KakaoMap";
+import KakaoMap from "../KakaoMap/KakaoMap";
 import { RestaurantItemModalMenu } from "../../../library/def";
 import { deleteRestaurant } from "../../../_actions/restaurant_action";
-import ImageListBody from "../../containers/RestaurantItemModal/ImageListBody";
+import ImageListBody from "./ImageListBody";
 import { RestaurantDetail } from "../../interfaces/Restaurant";
-import UpdateBody from "../../containers/RestaurantItemModal/UpdateBody";
+import UpdateBody from "./UpdateBody";
 
 
 interface Props extends RouteComponentProps {
