@@ -125,8 +125,10 @@ function RestaurantListItem({ restaurant, restaurantList, setRestaurantList }: P
             setRestaurantList={setRestaurantList}
             setAlertToggle={setAlertToggle}
             setAlertMessage={setAlertMessage}
+            readOnly={false}
           />
-        ) : null}
+        ) : null
+      }
       {
         alertToggle ?
           <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :

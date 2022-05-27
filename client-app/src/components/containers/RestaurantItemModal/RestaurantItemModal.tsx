@@ -16,13 +16,14 @@ interface Props extends RouteComponentProps {
   restaurantImgUrls: string[];
   restaurant: RestaurantDetail;
   restaurantList: RestaurantDetail[];
-  setRestaurantList: Dispatch<SetStateAction<RestaurantDetail[]>>;
-  setAlertToggle: Dispatch<SetStateAction<boolean>>;
-  setAlertMessage: Dispatch<SetStateAction<string>>;
+  setRestaurantList?: Dispatch<SetStateAction<RestaurantDetail[]>>;
+  setAlertToggle?: Dispatch<SetStateAction<boolean>>;
+  setAlertMessage?: Dispatch<SetStateAction<string>>;
+  readOnly: boolean;
 }
 
 
-function RestaurntItemModal({ toggle, setToggle, restaurant, restaurantImgUrls, restaurantList, setRestaurantList, setAlertToggle, setAlertMessage }: Props): React.ReactElement {
+function RestaurantItemModal({ toggle, setToggle, restaurant, restaurantImgUrls, restaurantList, setRestaurantList, setAlertToggle, setAlertMessage, readOnly }: Props): React.ReactElement {
   const restaurantName = restaurant.name;
   const restaurantId = restaurant._id;
   const { address } = restaurant;
@@ -40,23 +41,33 @@ function RestaurntItemModal({ toggle, setToggle, restaurant, restaurantImgUrls, 
   const deleteHandler = async () => {
     dispatch(deleteRestaurant(restaurantId)).then(response => {
       if (response.payload.success) {
-        setAlertToggle(true);
-        setAlertMessage("등록 맛집이 삭제되었습니다.");
+        if (setAlertToggle) {
+          setAlertToggle(true);
+        }
+        if (setAlertMessage) {
+          setAlertMessage("등록 맛집이 삭제되었습니다.");
+        }
         setToggle(!toggle);
 
-        const newRestaurantList = restaurantList.filter(el => {
-          if (el._id === restaurantId) {
-            return false;
-          } else {
-            return true;
-          }
-        });
+        if (restaurantList && setRestaurantList) {
+          const newRestaurantList = restaurantList.filter(el => {
+            if (el._id === restaurantId) {
+              return false;
+            } else {
+              return true;
+            }
+          });
 
-        setRestaurantList(newRestaurantList);
+          setRestaurantList(newRestaurantList);
+        }
       }
     }).catch(err => {
-      setAlertToggle(true);
-      setAlertMessage("등록 맛집 삭제에 실패했습니다.");
+      if (setAlertToggle) {
+        setAlertToggle(true);
+      }
+      if (setAlertMessage) {
+        setAlertMessage("등록 맛집 삭제에 실패했습니다.");
+      }
       console.log(err);
     });
   };
@@ -139,19 +150,27 @@ function RestaurntItemModal({ toggle, setToggle, restaurant, restaurantImgUrls, 
         <Button variant="success" style={{ margin: '5px' }} onClick={() => menuChange(0)}>
           이미지
         </Button>
-        <Button variant="primary" style={{ margin: '5px' }} onClick={() => menuChange(1)}>
-          수정
-        </Button>
+        {
+          !readOnly ? (
+            <Button variant="primary" style={{ margin: '5px' }} onClick={() => menuChange(1)}>
+              수정
+            </Button>
+          ) : null
+        }
         <Button variant="secondary" style={{ margin: '5px' }} onClick={() => menuChange(2)}>
           지도
         </Button>
-        <Button variant="danger" style={{ margin: '5px' }} onClick={() => menuChange(3)}>
-          삭제
-        </Button>
+        {
+          !readOnly ? (
+            <Button variant="danger" style={{ margin: '5px' }} onClick={() => menuChange(3)}>
+              삭제
+            </Button>
+          ) : null
+        }
       </Modal.Header>
       {modalBody}
     </Modal>
   );
 }
 
-export default withRouter(RestaurntItemModal);
+export default withRouter(RestaurantItemModal);
