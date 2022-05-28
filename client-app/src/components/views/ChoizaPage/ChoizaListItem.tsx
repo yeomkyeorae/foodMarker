@@ -9,6 +9,9 @@ import {
 } from "../../../_actions/choizaRoad_action";
 import { ChoizaRoad, VisitedChoizaRoads } from '../../interfaces/ChoizaRoad';
 import "./ChoizaListItem.css";
+import AlertModal from '../../containers/AlertModal/AlertModal';
+import deleteImage from "../../../assets/deleteImage.png";
+
 
 interface Visited {
   isVisited: boolean;
@@ -28,9 +31,12 @@ function ChoizaListItem(props: Props): React.ReactElement {
   const dispatch = useDispatch<any>();
   const { choizaRoad, season, visitedChoizaRoads } = props;
 
+  const deleted = choizaRoad.delete;
   const choizaRestaurants = choizaRoad.restaurants;
 
   const [visitedList, setVisitedList] = useState<Visited[]>([]);
+  const [alertToggle, setAlertToggle] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   useEffect(() => {
     const firstVisitedList = choizaRestaurants.split(",").map(restaurant => {
@@ -53,8 +59,13 @@ function ChoizaListItem(props: Props): React.ReactElement {
     setVisitedList(firstVisitedList);
   }, [choizaRestaurants, visitedChoizaRoads]);
 
-  const clickChoizaRoad = URL => {
-    window.open(URL, "_blank");
+  const clickChoizaRoad = (URL: string, deleted: boolean | undefined) => {
+    if (deleted === true) {
+      setAlertMessage('삭제된 회차입니다!');
+      setAlertToggle(true);
+    } else {
+      window.open(URL, "_blank");
+    }
   };
 
   const checkVisitedChoizaRoad = (restaurantName: string, index: number) => {
@@ -211,7 +222,7 @@ function ChoizaListItem(props: Props): React.ReactElement {
             </OverlayTrigger>
           </div>
           <div
-            onClick={() => clickChoizaRoad(choizaRoad.youtubeURL)}
+            onClick={() => clickChoizaRoad(choizaRoad.youtubeURL, deleted)}
             style={{ cursor: "pointer" }}
           >
             <div
@@ -223,7 +234,7 @@ function ChoizaListItem(props: Props): React.ReactElement {
             >
               <Card.Img
                 variant="top"
-                src={choizaRoad.thumbnailURL}
+                src={deleted === true ? deleteImage : choizaRoad.thumbnailURL}
                 style={{
                   width: "100%",
                   height: "100%"
@@ -236,6 +247,11 @@ function ChoizaListItem(props: Props): React.ReactElement {
           </div>
         </Card.Body>
       </Card>
+      {
+        alertToggle ?
+          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+          null
+      }
     </Col>
   );
 }

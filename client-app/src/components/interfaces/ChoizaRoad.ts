@@ -6,6 +6,7 @@ interface ChoizaRoad {
     title: string;
     youtubeURL: string;
     _id: string;
+    delete?: boolean;
 }
 
 interface VisitedChoizaRoads {
