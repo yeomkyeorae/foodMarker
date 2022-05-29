@@ -402,6 +402,7 @@ app.put("/api/restaurant", (req, res) => {
     restaurant.rating = req.body.rating;
     restaurant.eatingTime = req.body.eatingTime;
     restaurant.menus = req.body.menus;
+    restaurant.representIx = req.body.representIx;
 
     restaurant.save((err, restaurantInfo) => {
       if (err)

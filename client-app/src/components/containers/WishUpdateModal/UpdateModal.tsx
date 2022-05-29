@@ -67,6 +67,7 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
   const [heicCount, setHeicCount] = useState(0);
 
   const [preImages, setPreImages] = useState<any[]>([]);
+  const [representImageIx, setRepresentImageIx] = useState<number>(0);
 
   // HEIC 변환 중 여부
   const [isConverting, setIsConverting] = useState(false);
@@ -239,7 +240,8 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
       rating: newRating,
       eatingTime: newEatingTime,
       menus: JSON.stringify(menuItems),
-      created: new Date().toLocaleDateString()
+      created: new Date().toLocaleDateString(),
+      representIx: representImageIx
     };
 
     dispatch(registerRestaurant(body))
@@ -271,6 +273,7 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
     setHeicCount(0);
 
     setPreImages([]);
+    setRepresentImageIx(0);
   };
 
   return (
@@ -390,7 +393,8 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
               return (
                 <div
                   key={index}
-                  style={{ display: "inline-block", margin: "5px" }}
+                  style={{ display: "inline-block", margin: "5px", cursor: "pointer", border: `${index === representImageIx ? "5px solid red" : "0px"}` }}
+                  onClick={() => setRepresentImageIx(index)}
                 >
                   <img src={url} alt={"jpeg"} width="100px" height="100px" />
                 </div>

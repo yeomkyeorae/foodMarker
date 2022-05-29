@@ -40,8 +40,7 @@ function RestaurantListItem({ restaurant, restaurantList, setRestaurantList }: P
     return menus;
   }, []);
 
-  const getRepresentativeImage = useCallback((restaurant) => {
-    // TODO: 설정한 대표 이미지 가져오기
+  const getImageUrls = useCallback((restaurant) => {
     let imgUrls: string[] = [];
     if (restaurant.imgURL) {
       imgUrls = restaurant.imgURL.split(",");
@@ -49,6 +48,14 @@ function RestaurantListItem({ restaurant, restaurantList, setRestaurantList }: P
       imgUrls.push(noImage);
     }
     return imgUrls;
+  }, []);
+
+  const getRepresentativeImage = useCallback((restaurant) => {
+    if (restaurant.imgURL) {
+      return restaurant.imgURL.split(",")[restaurant?.representIx ?? 0];
+    } else {
+      return noImage;
+    }
   }, []);
 
   useEffect(() => {
@@ -61,7 +68,7 @@ function RestaurantListItem({ restaurant, restaurantList, setRestaurantList }: P
   }, [])
 
   const menus: string = getMenus(restaurant);
-  const imgUrls: string[] = getRepresentativeImage(restaurant);
+  const imgUrls: string[] = getImageUrls(restaurant);
 
   return restaurant.address ? (
     <>
@@ -72,7 +79,7 @@ function RestaurantListItem({ restaurant, restaurantList, setRestaurantList }: P
               <Card.Img
                 className="responsive-image"
                 variant="top"
-                src={imgUrls[0]}
+                src={getRepresentativeImage(restaurant)}
                 onError={(e: any) => { e.target.onerror = null; e.target.src = noImage }}
                 onMouseEnter={() => setHasHover(true)}
                 style={{

@@ -40,6 +40,10 @@ const restaurantSchema = new Schema({
   created: {
     type: String,
     maxlength: 300
+  },
+  representIx: {
+    type: Number,
+    default: 0
   }
 });
 

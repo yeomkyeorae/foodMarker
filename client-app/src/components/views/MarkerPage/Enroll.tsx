@@ -84,6 +84,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
 
   // PreImages
   const [preImages, setPreImages] = useState<any[]>([]);
+  const [representImageIx, setRepresentImageIx] = useState<number>(0);
 
   // HEIC 변환 중 여부
   const [isConverting, setIsConverting] = useState(false);
@@ -290,7 +291,8 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
         rating: rating,
         eatingTime: eatingTime,
         menus: JSON.stringify(menuItems),
-        created: new Date().toLocaleString()
+        created: new Date().toLocaleString(),
+        representIx: representImageIx
       };
 
       dispatch(registerRestaurant(body))
@@ -360,6 +362,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
     setHeicCount(0);
 
     setPreImages([]);
+    setRepresentImageIx(0);
   };
 
   return (
@@ -525,7 +528,8 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
                     return (
                       <div
                         key={index}
-                        style={{ display: "inline-block", margin: "5px" }}
+                        style={{ display: "inline-block", margin: "5px", cursor: "pointer", border: `${index === representImageIx ? "5px solid red" : "0px"}` }}
+                        onClick={() => setRepresentImageIx(index)}
                       >
                         <img
                           src={preImage}

@@ -41,7 +41,7 @@ const InputTitle = styled.div`
 
 const UpdateBody = ({ toggle, setToggle, restaurant, restaurantImgUrls, restaurantList, setRestaurantList, setAlertToggle, setAlertMessage }): React.ReactElement => {
   const restaurantId = restaurant._id;
-  const { date, menus, rating, eatingTime } = restaurant;
+  const { date, menus, rating, eatingTime, representIx } = restaurant;
 
   const [newRating, setNewRating] = useState(rating);
   const [visitedDate, setVisitedDate] = useState(date);
@@ -61,6 +61,7 @@ const UpdateBody = ({ toggle, setToggle, restaurant, restaurantImgUrls, restaura
   const [preImages, setPreImages] = useState(
     restaurantImgUrls ? restaurantImgUrls : []
   );
+  const [representImageIx, setRepresentImageIx] = useState<number>(representIx ?? 0);
 
   // HEIC 변환 중 여부
   const [isConverting, setIsConverting] = useState(false);
@@ -216,7 +217,8 @@ const UpdateBody = ({ toggle, setToggle, restaurant, restaurantImgUrls, restaura
       imgURL: imgURL,
       rating: newRating,
       eatingTime: newEatingTime,
-      menus: JSON.stringify(menuItems)
+      menus: JSON.stringify(menuItems),
+      representIx: representImageIx
     };
 
     dispatch(updateRestaurant(body))
@@ -234,7 +236,8 @@ const UpdateBody = ({ toggle, setToggle, restaurant, restaurantImgUrls, restaura
                 imgURL: imgURL,
                 rating: newRating,
                 eatingTime: newEatingTime,
-                menus: JSON.stringify(menuItems)
+                menus: JSON.stringify(menuItems),
+                representIx: representImageIx
               }
             } else {
               return el;
@@ -364,7 +367,8 @@ const UpdateBody = ({ toggle, setToggle, restaurant, restaurantImgUrls, restaura
               return (
                 <div
                   key={index}
-                  style={{ display: "inline-block", margin: "5px" }}
+                  style={{ display: "inline-block", margin: "5px", cursor: "pointer", border: `${representImageIx === index ? "5px solid red" : "0px"}` }}
+                  onClick={() => setRepresentImageIx(index)}
                 >
                   <img src={url} alt={"jpeg"} width="100px" height="100px" />
                 </div>
