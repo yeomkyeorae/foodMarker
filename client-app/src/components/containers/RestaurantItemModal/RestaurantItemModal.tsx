@@ -26,7 +26,7 @@ interface Props extends RouteComponentProps {
 function RestaurantItemModal({ toggle, setToggle, restaurant, restaurantImgUrls, restaurantList, setRestaurantList, setAlertToggle, setAlertMessage, readOnly }: Props): React.ReactElement {
   const restaurantName = restaurant.name;
   const restaurantId = restaurant._id;
-  const { address } = restaurant;
+  const { address, representIx } = restaurant;
 
   // modal menu
   const [modalMenu, setModalMenu] = useState(RestaurantItemModalMenu.Image);
@@ -75,7 +75,7 @@ function RestaurantItemModal({ toggle, setToggle, restaurant, restaurantImgUrls,
   const getModalBody = () => {
     if (modalMenu === RestaurantItemModalMenu.Image) {
       return (
-        <ImageListBody restaurantImgUrls={restaurantImgUrls} />
+        <ImageListBody restaurantImgUrls={restaurantImgUrls} representIx={representIx} />
       )
     } else if (modalMenu === RestaurantItemModalMenu.Modify) {
       return (

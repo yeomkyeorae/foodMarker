@@ -13,6 +13,7 @@ interface RestaurantDetail extends Restaurant {
     eatingTime: number;
     menus: string;
     created: string;
+    representIx: number;
 }
 
 export type { Restaurant, RestaurantDetail };
