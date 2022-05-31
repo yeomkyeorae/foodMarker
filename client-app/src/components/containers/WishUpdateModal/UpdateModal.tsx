@@ -10,7 +10,7 @@ import {
   registerHeicImg
 } from "../../../_actions/restaurant_action";
 import styled from "styled-components";
-import AlertModal from "../AlertModal/AlertModal";
+
 
 const Input = styled.input`
   margin: 3px 0;
@@ -46,11 +46,12 @@ interface Props extends RouteComponentProps {
   wishListId: string;
   wishListName: string;
   wishListAddress: string;
-  setPopUpToggle: Dispatch<SetStateAction<boolean>>;
+  setAlertToggle: Dispatch<SetStateAction<boolean>>;
+  setAlertMessage: Dispatch<SetStateAction<string>>;
   deleteHandler: (wishListId: string) => void;
 }
 
-function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListName, wishListAddress, setPopUpToggle, deleteHandler }: Props): React.ReactElement {
+function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListName, wishListAddress, setAlertToggle, setAlertMessage, deleteHandler }: Props): React.ReactElement {
   const [newRating, setNewRating] = useState(0);
   const [visitedDate, setVisitedDate] = useState("");
   const [newEatingTime, setNewEatingTime] = useState(1);
@@ -71,10 +72,6 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
 
   // HEIC 변환 중 여부
   const [isConverting, setIsConverting] = useState(false);
-
-  // alert
-  const [alertToggle, setAlertToggle] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
 
   // etc.
   const dispatch = useDispatch<any>();
@@ -249,8 +246,7 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
         if (response.payload.success) {
           setAlertToggle(true);
           setAlertMessage("방문 표시되었습니다.");
-          setToggle(true);
-          setPopUpToggle(false);
+          setToggle(false);
           deleteHandler(wishListId);
         } else {
           setAlertToggle(true);
@@ -421,11 +417,6 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
           )
         }
       </Modal.Footer>
-      {
-        alertToggle ?
-          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
-          null
-      }
     </Modal>
   );
 }

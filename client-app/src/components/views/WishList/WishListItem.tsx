@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import UpdateModal from "../../containers/WishUpdateModal/UpdateModal";
@@ -54,11 +54,13 @@ interface Props extends RouteComponentProps {
   wishListName: string;
   wishListAddress: string;
   wishListCreated: string;
+  setAlertToggle: Dispatch<SetStateAction<boolean>>;
+  setAlertMessage: Dispatch<SetStateAction<string>>;
   deleteHandler: (wishListId: string) => void;
 }
 
 
-function WishListItem({ wishListId, wishListName, wishListAddress, wishListCreated, deleteHandler }: Props): React.ReactElement {
+function WishListItem({ wishListId, wishListName, wishListAddress, wishListCreated, setAlertToggle, setAlertMessage, deleteHandler }: Props): React.ReactElement {
   const [popUpToggle, setPopUpToggle] = useState(false);
   const [mapToggle, setMapToggle] = useState(false);
 
@@ -102,7 +104,8 @@ function WishListItem({ wishListId, wishListName, wishListAddress, wishListCreat
         wishListId={wishListId}
         wishListName={wishListName}
         wishListAddress={wishListAddress}
-        setPopUpToggle={setPopUpToggle}
+        setAlertToggle={setAlertToggle}
+        setAlertMessage={setAlertMessage}
         deleteHandler={deleteHandler}
       />
       <KakaoMapModal

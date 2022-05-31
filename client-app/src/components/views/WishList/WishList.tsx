@@ -89,6 +89,8 @@ function WishList(): React.ReactElement {
                   wishListName={wishList.name}
                   wishListAddress={wishList.address}
                   wishListCreated={wishList.created}
+                  setAlertToggle={setAlertToggle}
+                  setAlertMessage={setAlertMessage}
                   deleteHandler={deleteHandler}
                 />
               ))}
