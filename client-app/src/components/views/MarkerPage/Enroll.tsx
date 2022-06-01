@@ -74,7 +74,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
   }, [])
 
   // JPEG 이미지
-  const [jpegImageData, setJpegImageData] = useState<any[]>([]);
+  const [jpegImageData, setJpegImageData] = useState<any>([]);
   const [jpegCount, setJpegCount] = useState(0);
 
   // HEIC 이미지
@@ -235,7 +235,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
         reader.readAsDataURL(file);
       }
     });
-    setJpegImageData(Array.from(formData));
+    setJpegImageData(formData);
   };
 
   const onSubmitHandler = async e => {
