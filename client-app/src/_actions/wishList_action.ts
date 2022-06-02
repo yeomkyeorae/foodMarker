@@ -29,9 +29,9 @@ export function readTenWishList(): { type: string, payload: Promise<WishListType
   };
 }
 
-export function registerWishList(dataToSubmit: { user: string, username: string, name: string, address: string, created: string }): { type: string, payload: Promise<{ success: boolean }> } {
+export function registerWishList(body: { user: string, username: string, name: string, address: string, created: string }): { type: string, payload: Promise<{ success: boolean }> } {
   const request = axios
-    .post("/api/wishList", dataToSubmit)
+    .post("/api/wishList", body)
     .then(response => response.data);
 
   return {

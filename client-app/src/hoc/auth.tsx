@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { auth } from "../_actions/user_action";
 import { withRouter } from "react-router-dom";
 
-export default function(SpecificComponent, option) {
+export default function (SpecificComponent, option: boolean | null) {
   // option:
   //  null - 아무나 접근 가능
   //  true - 로그인한 유저만
@@ -11,7 +11,7 @@ export default function(SpecificComponent, option) {
 
   const dispatch = useDispatch<any>();
 
-  function AuthenticationCheck(props) {
+  function AuthenticationCheck(props): React.ReactElement {
     useEffect(() => {
       dispatch(auth()).then(response => {
         // 로그인하지 않은 상태
