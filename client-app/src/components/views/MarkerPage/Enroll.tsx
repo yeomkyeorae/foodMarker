@@ -13,6 +13,7 @@ import heic2any from "heic2any";
 import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
 import AlertModal from "../../containers/AlertModal/AlertModal";
+import { InputImageLimit } from '../../../library/def';
 
 
 const InputTitle = styled.div<{ fontSize?: string; borderBottom?: string; }>`
@@ -144,8 +145,10 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
   const onImageDataHandler = e => {
     e.preventDefault();
 
-    const inputImageCnt = Object.keys(e.target.files).length;
-    if (inputImageCnt > 5) {
+    const files = e.target as HTMLInputElement;
+
+    const inputImageCnt = Object.keys(files).length;
+    if (inputImageCnt > InputImageLimit) {
       setAlertToggle(true);
       setAlertMessage("이미지 파일은 5개를 초과할 수 없습니다");
       return;
@@ -153,8 +156,9 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
 
     let heicTotalCnt = 0;
     let jpegTotalCnt = 0;
-    Object.keys(e.target.files).forEach(key => {
-      if (e.target.files[key].type === "image/heic") {
+
+    Object.keys(files).forEach(key => {
+      if (files[key].type === "image/heic") {
         heicTotalCnt += 1;
       } else {
         jpegTotalCnt += 1;
@@ -174,8 +178,8 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
 
     let jpegCnt = 0;
     let heicCnt = 0;
-    Object.keys(e.target.files).forEach((key) => {
-      const file = e.target.files[key];
+    Object.keys(files).forEach((key) => {
+      const file = files[key];
 
       if (file.type === "image/heic") {
         const reader = new FileReader();

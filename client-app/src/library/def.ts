@@ -22,3 +22,5 @@ export const RestaurantItemModalMenu = {
     Map: 2,
     Delete: 3
 };
+
+export const InputImageLimit = 5;
