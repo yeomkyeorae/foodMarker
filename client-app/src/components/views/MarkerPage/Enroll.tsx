@@ -145,7 +145,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
   const onImageDataHandler = e => {
     e.preventDefault();
 
-    const files = e.target as HTMLInputElement;
+    const files = e.target.files;
 
     const inputImageCnt = Object.keys(files).length;
     if (inputImageCnt > InputImageLimit) {
