@@ -9,7 +9,8 @@ module.exports = {
   },
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname + "/dist")
+    path: path.resolve(__dirname + "/dist"),
+    publicPath: '/'
   },
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"]
@@ -60,5 +61,17 @@ module.exports = {
       favicon: "./public/favicon.ico"
     }),
     new CleanWebpackPlugin()
-  ]
+  ],
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true
+      }
+    },
+    historyApiFallback: true,
+    port: 3000,
+    open: true,
+    hot: true
+  }
 };
