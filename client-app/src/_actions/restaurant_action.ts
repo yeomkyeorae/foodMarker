@@ -13,9 +13,9 @@ import {
 } from "./types";
 
 
-export function readRestaurants(userId: string, page: number, itemPerPage: number, order: number) {
+export function readRestaurants(userId: string, page: number, itemPerPage: number) {
   const request = axios
-    .get(`/api/restaurants?userId=${userId}&page=${page}&itemPerPage=${itemPerPage}&order=${order}`)
+    .get(`/api/restaurants?userId=${userId}&page=${page}&itemPerPage=${itemPerPage}`)
     .then(response => response.data);
 
   return {

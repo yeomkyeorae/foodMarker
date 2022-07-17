@@ -67,13 +67,13 @@ function MyInfoPage({ history }: Props): React.ReactElement {
       setMyWishListCount(response.payload);
     });
 
-    const defaultOrder = 1;
 
-    dispatch(readRestaurants(userId, 1, 1000, defaultOrder)).then(response => {
+    dispatch(readRestaurants(userId, 1, 1000)).then(response => {
       setMyRestaurants(response.payload);
     });
 
-    dispatch(readWishList(userId, defaultOrder)).then(response => {
+    const DEFAULT_ORDER = 1;
+    dispatch(readWishList(userId, DEFAULT_ORDER)).then(response => {
       setWishlists(response.payload);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

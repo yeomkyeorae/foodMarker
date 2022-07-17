@@ -209,25 +209,9 @@ app.get("/api/restaurants", (req, res) => {
   const userId = req.query.userId;
   const page = Number(req.query.page);
   const itemPerPage = Number(req.query.itemPerPage);
-  const order = Number(req.query.order);
-
-  let sortMethod;
-  if (order === 1) {
-    sortMethod = { name: 1 }; // 가
-  } else if (order === 2) {
-    sortMethod = { name: -1 }; // 하
-  } else if (order === 3) {
-    sortMethod = { date: -1 }; // 최신
-  } else if (order === 4) {
-    sortMethod = { date: 1 }; // 옛날
-  } else if (order === 5) {
-    sortMethod = { rating: -1 }; // 별점 높은 순
-  } else if (order === 6) {
-    sortMethod = { rating: 1 }; // 별점 낮은 순
-  }
 
   const restaurants = Restaurant.find({ visitor: userId })
-    .sort(sortMethod)
+    .sort({ date: -1 }) // 최신 순
     .skip((page - 1) * itemPerPage)
     .limit(itemPerPage);
 
