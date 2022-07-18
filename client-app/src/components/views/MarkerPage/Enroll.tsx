@@ -102,7 +102,10 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
   const username = window.sessionStorage.getItem("username") as string;
 
   const dispatch = useDispatch<any>();
-  const inputRef: React.RefObject<any> = useRef();
+  const searchInputRef: React.RefObject<any> = useRef();
+  const fileInputRef: React.RefObject<any> = useRef();
+  const menuInputRef: React.RefObject<any> = useRef();
+  const menuAddBtnRef: React.RefObject<any> = useRef();
 
   // Handlers
   const onNameHandler = e => {
@@ -134,8 +137,10 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
   };
 
   const onMenuAddHandler = () => {
-    setMenuItems(menuItems.concat([newMenuItem]));
-    setNewMenuItem("");
+    if (newMenuItem !== "") {
+      setMenuItems(menuItems.concat([newMenuItem]));
+      setNewMenuItem("");
+    }
   };
 
   const onMenuDeleteHandler = index => {
@@ -347,16 +352,29 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
     setEnrollToggle(!enrollToggle);
   };
 
-  const onKeyDown = e => {
+  const onSearchKeyPress = e => {
     if (e.key === "Enter") {
       e.preventDefault();
       e.stopPropagation();
+      searchInputRef.current.focus();
       toggleHandler();
     }
   };
 
+  const onMenuAddKeyPress = e => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (newMenuItem !== "") {
+        menuAddBtnRef.current.focus();
+        onMenuAddHandler();
+      }
+    }
+  };
+
   const initAllImages = () => {
-    inputRef.current.value = "";
+    fileInputRef.current.value = "";
 
     setJpegImageData([]);
     setJpegCount(0);
@@ -383,14 +401,14 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
             value={searchName}
             onChange={onChangeSearchNameHandler}
             id={`keyword`}
-            // size="20"
-            onKeyDown={onKeyDown}
+            onKeyPress={onSearchKeyPress}
           />
           <Button
             variant="success"
             style={{ margin: "10px" }}
             type="submit"
             onClick={toggleHandler}
+            ref={searchInputRef}
           >
             검색
           </Button>
@@ -412,7 +430,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
       </div>
       <hr />
 
-      <form onSubmit={onSubmitHandler} encType="multipart/form-data">
+      <form onSubmit={onSubmitHandler} onKeyPress={e => { e.key === 'Enter' && e.preventDefault() }} encType="multipart/form-data">
         <div style={{ margin: "5px" }}>
           <InputTitle>맛집 이름 & 주소(검색해 선택해 주세요)</InputTitle>
           <Input
@@ -481,13 +499,16 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
                   value={newMenuItem}
                   placeholder="메뉴 입력 버튼 클릭"
                   onChange={e => onChangeNewMenuItem(e)}
-                // style={{ width: "50%" }}
+                  onKeyPress={onMenuAddKeyPress}
+                  ref={menuInputRef}
                 />
                 <br />
                 <Button
                   variant="success"
                   style={{ margin: "10px", display: "inline-block" }}
                   onClick={() => onMenuAddHandler()}
+                  onKeyPress={() => menuInputRef.current.focus()}
+                  ref={menuAddBtnRef}
                 >
                   메뉴 추가
                 </Button>
@@ -513,7 +534,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
               <div style={{ display: "inline-block" }}>
                 <input
                   type="file"
-                  ref={inputRef}
+                  ref={fileInputRef}
                   onChange={onImageDataHandler}
                   style={{ width: "70%" }}
                   multiple
