@@ -313,7 +313,10 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
             setRating(0);
             setEatingTime(1);
             setMenuItems([]);
-            setToggle(true);
+
+            setAlertToggle(true);
+            setAlertMessage("맛집 등록에 성공했습니다");
+
             setMenu("식당 등록");
             history.push("/marker", userId);
           }
@@ -336,7 +339,10 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
         if (response.payload.success) {
           setName("");
           setAddress("");
-          setToggle(true);
+
+          setAlertToggle(true);
+          setAlertMessage("위시 리스트 등록에 성공했습니다");
+
           setMenu("위시리스트 등록");
           history.push("/wish", userId);
         }
@@ -584,7 +590,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
       </form>
       {
         alertToggle ?
-          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} setToggle={setToggle} /> :
           null
       }
     </div>

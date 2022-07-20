@@ -6,13 +6,19 @@ import { withRouter, RouteComponentProps } from "react-router-dom";
 interface Props extends RouteComponentProps {
   setAlertToggle: Dispatch<SetStateAction<boolean>>;
   alertMessage: string;
+  setToggle?: Dispatch<SetStateAction<boolean>>;
 }
 
-function AlertModal({ setAlertToggle, alertMessage }: Props): React.ReactElement {
+function AlertModal({ setAlertToggle, alertMessage, setToggle }: Props): React.ReactElement {
   return (
     <Modal
       show={true}
-      onHide={() => setAlertToggle(false)}
+      onHide={() => {
+        setAlertToggle(false);
+        if (setToggle) {
+          setToggle(true);
+        }
+      }}
       style={{
         textAlign: "center"
       }}
