@@ -49,9 +49,10 @@ interface Props extends RouteComponentProps {
   setAlertToggle: Dispatch<SetStateAction<boolean>>;
   setAlertMessage: Dispatch<SetStateAction<string>>;
   deleteHandler: (wishListId: string) => void;
+  setShowLoadingOverlay: Dispatch<SetStateAction<boolean>>;
 }
 
-function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListName, wishListAddress, setAlertToggle, setAlertMessage, deleteHandler }: Props): React.ReactElement {
+function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListName, wishListAddress, setAlertToggle, setAlertMessage, deleteHandler, setShowLoadingOverlay }: Props): React.ReactElement {
   const [newRating, setNewRating] = useState(0);
   const [visitedDate, setVisitedDate] = useState("");
   const [newEatingTime, setNewEatingTime] = useState(1);
@@ -241,12 +242,14 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
       representIx: representImageIx
     };
 
+    setShowLoadingOverlay(true);
     dispatch(registerRestaurant(body))
       .then(response => {
         if (response.payload.success) {
+          setShowLoadingOverlay(false);
           setAlertToggle(true);
           setAlertMessage("방문 표시되었습니다.");
-          setToggle(false);
+
           deleteHandler(wishListId);
         } else {
           setAlertToggle(true);

@@ -80,8 +80,6 @@ function RestaurantItemModal({ toggle, setToggle, restaurant, restaurantImgUrls,
     } else if (modalMenu === RestaurantItemModalMenu.Modify) {
       return (
         <UpdateBody
-          toggle={toggle}
-          setToggle={setToggle}
           restaurant={restaurant}
           restaurantImgUrls={restaurantImgUrls}
           restaurantList={restaurantList}

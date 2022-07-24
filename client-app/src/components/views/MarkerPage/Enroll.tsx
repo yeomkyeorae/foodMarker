@@ -14,6 +14,7 @@ import ReactStars from "react-rating-stars-component";
 import styled from "styled-components";
 import AlertModal from "../../containers/AlertModal/AlertModal";
 import { InputImageLimit } from '../../../library/def';
+import LoadingOverlayDiv from "../../containers/LoadingOverlay/LoadingOverlay";
 
 
 const InputTitle = styled.div<{ fontSize?: string; borderBottom?: string; }>`
@@ -96,6 +97,9 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
   // alert
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+
+  // 맛집 등록 오버레이
+  const [showLoadingOverlay, setShowLoadingOverlay] = useState<boolean>(false);
 
   // Props, etc.
   const userId = window.sessionStorage.getItem("userId") as string;
@@ -304,6 +308,8 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
         representIx: representImageIx
       };
 
+      setShowLoadingOverlay(true);
+
       dispatch(registerRestaurant(body))
         .then(response => {
           if (response.payload.success) {
@@ -314,6 +320,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
             setEatingTime(1);
             setMenuItems([]);
 
+            setShowLoadingOverlay(false);
             setAlertToggle(true);
             setAlertMessage("맛집 등록에 성공했습니다");
 
@@ -322,6 +329,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
           }
         })
         .catch(err => {
+          setShowLoadingOverlay(false);
           setAlertToggle(true);
           setAlertMessage("맛집 등록에 실패했습니다");
           console.log(err);
@@ -593,6 +601,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
           <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} setToggle={setToggle} /> :
           null
       }
+      <LoadingOverlayDiv showOverlay={showLoadingOverlay} />
     </div>
   );
 }

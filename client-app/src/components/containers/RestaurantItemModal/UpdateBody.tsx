@@ -9,6 +9,7 @@ import {
   registerJpegImg,
   registerHeicImg
 } from "../../../_actions/restaurant_action";
+import LoadingOverlayDiv from '../LoadingOverlay/LoadingOverlay';
 
 
 const Input = styled.input`
@@ -39,7 +40,7 @@ const InputTitle = styled.div`
 `;
 
 
-const UpdateBody = ({ toggle, setToggle, restaurant, restaurantImgUrls, restaurantList, setRestaurantList, setAlertToggle, setAlertMessage }): React.ReactElement => {
+const UpdateBody = ({ restaurant, restaurantImgUrls, restaurantList, setRestaurantList, setAlertToggle, setAlertMessage }): React.ReactElement => {
   const restaurantId = restaurant._id;
   const { date, menus, rating, eatingTime, representIx } = restaurant;
 
@@ -65,6 +66,9 @@ const UpdateBody = ({ toggle, setToggle, restaurant, restaurantImgUrls, restaura
 
   // HEIC 변환 중 여부
   const [isConverting, setIsConverting] = useState(false);
+
+  // 맛집 등록 오버레이
+  const [showLoadingOverlay, setShowLoadingOverlay] = useState<boolean>(false);
 
   const dispatch = useDispatch<any>();
   const inputRef: React.RefObject<any> = useRef();
@@ -221,12 +225,13 @@ const UpdateBody = ({ toggle, setToggle, restaurant, restaurantImgUrls, restaura
       representIx: representImageIx
     };
 
+    setShowLoadingOverlay(true);
     dispatch(updateRestaurant(body))
       .then(response => {
         if (response.payload.success) {
           setAlertToggle(true);
           setAlertMessage("수정이 완료되었습니다");
-          setToggle(!toggle);
+          setShowLoadingOverlay(false);
 
           const newRestaurantList = restaurantList.map(el => {
             if (el._id === restaurantId) {
@@ -397,6 +402,7 @@ const UpdateBody = ({ toggle, setToggle, restaurant, restaurantImgUrls, restaura
           </Button>
         )}
       </Modal.Footer>
+      <LoadingOverlayDiv showOverlay={showLoadingOverlay} />
     </>
   )
 }

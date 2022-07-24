@@ -138,7 +138,7 @@ function RestaurantListItem({ restaurant, restaurantList, setRestaurantList }: P
       }
       {
         alertToggle ?
-          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} setToggle={setToggle} /> :
           null
       }
     </>

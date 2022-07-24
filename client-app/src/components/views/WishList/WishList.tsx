@@ -3,12 +3,11 @@ import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   readWishList,
-  deleteWishList
 } from "../../../_actions/wishList_action";
 import WishListItem from "./WishListItem";
 import styled from "styled-components";
-import AlertModal from "../../containers/AlertModal/AlertModal";
 import { WishListType } from "../../interfaces/WishList";
+import LoadingOverlayDiv from "../../containers/LoadingOverlay/LoadingOverlay";
 
 
 const WishLists = styled.div`
@@ -39,9 +38,8 @@ const SortMenu = styled.div<{ color?: string; }>`
 function WishList(): React.ReactElement {
   const dispatch = useDispatch<any>();
   const [wishLists, setWishLists] = useState<WishListType[]>([]);
-  const [alertToggle, setAlertToggle] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
   const [order, setOrder] = useState(1);
+  const [showLoadingOverlay, setShowLoadingOverlay] = useState<boolean>(false);
 
   const userId = window.sessionStorage.getItem("userId") as string;
 
@@ -51,18 +49,6 @@ function WishList(): React.ReactElement {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order]);
-
-  const deleteHandler = (wishListId: string) => {
-    dispatch(deleteWishList(wishListId)).then(response => {
-      if (response.payload.success) {
-        setWishLists(wishLists.filter(wishList => wishList._id !== wishListId));
-      }
-    }).catch(err => {
-      setAlertToggle(true);
-      setAlertMessage("위시리스트 삭제에 실패했습니다");
-      console.log(err);
-    });
-  };
 
   const onSetOrderHandler = value => {
     setOrder(value);
@@ -89,9 +75,9 @@ function WishList(): React.ReactElement {
                   wishListName={wishList.name}
                   wishListAddress={wishList.address}
                   wishListCreated={wishList.created}
-                  setAlertToggle={setAlertToggle}
-                  setAlertMessage={setAlertMessage}
-                  deleteHandler={deleteHandler}
+                  wishLists={wishLists}
+                  setWishLists={setWishLists}
+                  setShowLoadingOverlay={setShowLoadingOverlay}
                 />
               ))}
             </List>) : (
@@ -100,12 +86,8 @@ function WishList(): React.ReactElement {
               </div>
             )
         }
-        {
-          alertToggle ?
-            <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
-            null
-        }
       </WishLists>
+      <LoadingOverlayDiv showOverlay={showLoadingOverlay} />
     </div>
   );
 }

@@ -1,10 +1,17 @@
 import React, { useState, Dispatch, SetStateAction } from "react";
+import { useDispatch } from "react-redux";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
+import {
+  deleteWishList
+} from "../../../_actions/wishList_action";
 import UpdateModal from "../../containers/WishUpdateModal/UpdateModal";
 import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
 import { BsThreeDots } from "react-icons/bs";
 import styled from "styled-components";
+import AlertModal from "../../containers/AlertModal/AlertModal";
+import { WishListType } from "../../interfaces/WishList";
+
 
 const Item = styled.li`
   display: block;
@@ -54,15 +61,19 @@ interface Props extends RouteComponentProps {
   wishListName: string;
   wishListAddress: string;
   wishListCreated: string;
-  setAlertToggle: Dispatch<SetStateAction<boolean>>;
-  setAlertMessage: Dispatch<SetStateAction<string>>;
-  deleteHandler: (wishListId: string) => void;
+  wishLists: WishListType[];
+  setWishLists: Dispatch<SetStateAction<WishListType[]>>;
+  setShowLoadingOverlay: Dispatch<SetStateAction<boolean>>;
 }
 
 
-function WishListItem({ wishListId, wishListName, wishListAddress, wishListCreated, setAlertToggle, setAlertMessage, deleteHandler }: Props): React.ReactElement {
+function WishListItem({ wishListId, wishListName, wishListAddress, wishListCreated, wishLists, setWishLists, setShowLoadingOverlay }: Props): React.ReactElement {
+  const dispatch = useDispatch<any>();
   const [popUpToggle, setPopUpToggle] = useState(false);
   const [mapToggle, setMapToggle] = useState(false);
+
+  const [alertToggle, setAlertToggle] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const restaurant = {
     name: wishListName,
@@ -75,6 +86,18 @@ function WishListItem({ wishListId, wishListName, wishListAddress, wishListCreat
 
   const popUpMap = () => {
     setMapToggle(true);
+  };
+
+  const deleteHandler = (wishListId: string) => {
+    dispatch(deleteWishList(wishListId)).then(response => {
+      if (response.payload.success) {
+        setWishLists(wishLists.filter(wishList => wishList._id !== wishListId));
+      }
+    }).catch(err => {
+      setAlertToggle(true);
+      setAlertMessage("위시리스트 삭제에 실패했습니다");
+      console.log(err);
+    });
   };
 
   return (
@@ -107,12 +130,18 @@ function WishListItem({ wishListId, wishListName, wishListAddress, wishListCreat
         setAlertToggle={setAlertToggle}
         setAlertMessage={setAlertMessage}
         deleteHandler={deleteHandler}
+        setShowLoadingOverlay={setShowLoadingOverlay}
       />
       <KakaoMapModal
         Toggle={mapToggle}
         setToggle={setMapToggle}
         restaurant={restaurant}
       />
+      {
+        alertToggle ?
+          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
+          null
+      }
     </Item>
   );
 }

@@ -23,6 +23,7 @@
     "react-big-calendar": "^0.38.6",
     "react-bootstrap": "^2.0.0-beta.6",
     "react-icons": "^4.2.0",
+    "react-loading-overlay": "^1.0.1",
     "react-rating-stars-component": "^2.2.0",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
