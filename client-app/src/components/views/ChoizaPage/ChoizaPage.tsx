@@ -52,6 +52,7 @@ function ChoizaPage({ history }: Props): React.ReactElement {
         <Div onClick={() => onClickHandler("인더하우스", 5)}>인더하우스</Div>
         <Div onClick={() => onClickHandler("시즌5", 6)}>시즌5</Div>
         <Div onClick={() => onClickHandler("시즌6", 7)}>시즌6</Div>
+        <Div onClick={() => onClickHandler("시즌7", 8)}>시즌7</Div>
         <hr />
         <h2 style={{ marginTop: "50px" }}>
           {seasonName}
