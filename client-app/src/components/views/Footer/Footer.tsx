@@ -27,7 +27,7 @@ type FooterProps = {
 function Footer({ position, marginTop }: FooterProps): React.ReactElement {
   return (
     <FooterDiv marginTop={marginTop} position={position}>
-      <FooterP>Copyright &copy; 2021. All Rights Reserved.</FooterP>
+      <FooterP>Copyright &copy; 2022. All Rights Reserved.</FooterP>
     </FooterDiv>
   );
 }
