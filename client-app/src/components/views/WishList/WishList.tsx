@@ -8,6 +8,7 @@ import WishListItem from "./WishListItem";
 import styled from "styled-components";
 import { WishListType } from "../../interfaces/WishList";
 import LoadingOverlayDiv from "../../containers/LoadingOverlay/LoadingOverlay";
+import { WishListOrder } from "../../../library/def";
 
 
 const WishLists = styled.div`
@@ -38,7 +39,7 @@ const SortMenu = styled.div<{ color?: string; }>`
 function WishList(): React.ReactElement {
   const dispatch = useDispatch<any>();
   const [wishLists, setWishLists] = useState<WishListType[]>([]);
-  const [order, setOrder] = useState(1);
+  const [order, setOrder] = useState(WishListOrder.enrollAsc);
   const [showLoadingOverlay, setShowLoadingOverlay] = useState<boolean>(false);
 
   const userId = window.sessionStorage.getItem("userId") as string;
@@ -57,11 +58,17 @@ function WishList(): React.ReactElement {
   return (
     <div style={{ display: "inline-block", width: "100%" }}>
       <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-        <SortMenu onClick={() => onSetOrderHandler(order === 1 ? 2 : 1)} color={`${order === 1 || order === 2}`}>
-          {order === 1 ? "식당 이름 오름차순↑" : order === 2 ? "식당 이름 내림차순↓" : "식당 이름 오름차순↑"}
+        <SortMenu
+          onClick={() => onSetOrderHandler(order === WishListOrder.enrollAsc ? WishListOrder.enrollDesc : WishListOrder.enrollAsc)}
+          color={`${order === WishListOrder.enrollAsc || order === WishListOrder.enrollDesc}`}
+        >
+          {order === WishListOrder.enrollAsc ? "등록 날짜 순↑" : order === WishListOrder.enrollDesc ? "등록 날짜 순↓" : "등록 날짜 순↑"}
         </SortMenu>
-        <SortMenu onClick={() => onSetOrderHandler(order === 3 ? 4 : 3)} color={`${order === 3 || order === 4}`}>
-          {order === 3 ? "등록 날짜 순↑" : order === 4 ? "등록 날짜 순↓" : "등록 날짜 순↑"}
+        <SortMenu
+          onClick={() => onSetOrderHandler(order === WishListOrder.NameAsc ? WishListOrder.NameDesc : WishListOrder.NameAsc)}
+          color={`${order === WishListOrder.NameAsc || order === WishListOrder.NameDesc}`}
+        >
+          {order === WishListOrder.NameAsc ? "식당 이름 오름차순↑" : order === WishListOrder.NameDesc ? "식당 이름 내림차순↓" : "식당 이름 오름차순↑"}
         </SortMenu>
       </div>
       <WishLists>

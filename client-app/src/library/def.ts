@@ -24,3 +24,10 @@ export const RestaurantItemModalMenu = {
 };
 
 export const InputImageLimit = 5;
+
+export const WishListOrder = {
+    NameAsc: 1,
+    NameDesc: 2,
+    enrollAsc: 3,
+    enrollDesc: 4
+};
