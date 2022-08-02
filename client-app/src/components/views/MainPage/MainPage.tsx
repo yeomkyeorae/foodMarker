@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 import {
   readRestaurantsNoImage,
   readTenRestaurants
@@ -36,6 +36,15 @@ const FoodMarkerExplanation = styled.div`
   justify-content: center;
   @media screen and (max-width: 992px) {
     display: none;
+  }
+`;
+
+const FoodMarkerExplanationTitle = styled.span`
+  font-weight: 200;
+  font-size: 1.5rem;
+  color: black;
+  &:hover {
+    color: #ff6700;
   }
 `;
 
@@ -159,27 +168,33 @@ function MainPage({ history }: Props): React.ReactElement {
           </FoodMarkerTitle>
           <FoodMarkerExplanation>
             <div style={{ margin: "auto", textAlign: "left" }}>
-              <span style={{ fontWeight: "200", fontSize: "1.5rem" }}>
-                나의 맛집
-              </span>
+              <Link to={{ pathname: "/marker", state: { userId, menu: 2 } }} style={{ textDecoration: "none" }}>
+                <FoodMarkerExplanationTitle>
+                  나의 맛집
+                </FoodMarkerExplanationTitle>
+              </Link>
               <br />
               <span>당신이 최근에 방문한 최고의 맛집은 어디인가요?</span>
               <br />
               <span>인상 깊은 식당을 등록해 보세요.</span>
             </div>
             <div style={{ margin: "auto", textAlign: "left" }}>
-              <span style={{ fontWeight: "200", fontSize: "1.5rem" }}>
-                위시 맛집
-              </span>
+              <Link to={{ pathname: "/wish", state: { userId, menu: 3 } }} style={{ textDecoration: "none" }}>
+                <FoodMarkerExplanationTitle>
+                  위시 맛집
+                </FoodMarkerExplanationTitle>
+              </Link>
               <br />
               <span>시선을 사로잡은 맛집은 어디인가요?</span>
               <br />
               <span>방문하고자 하는 식당을 기록해 보세요.</span>
             </div>
             <div style={{ margin: "auto", textAlign: "left" }}>
-              <span style={{ fontWeight: "200", fontSize: "1.5rem" }}>
-                최자로드
-              </span>
+              <Link to={{ pathname: "/choizaroad", state: { userId, menu: 4 } }} style={{ textDecoration: "none" }}>
+                <FoodMarkerExplanationTitle>
+                  최자로드
+                </FoodMarkerExplanationTitle>
+              </Link>
               <br />
               <span>최자로드에 등장한 맛집이 궁금하신가요?</span>
               <br />
