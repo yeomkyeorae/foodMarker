@@ -14,6 +14,7 @@ import styled from "styled-components";
 import AlertModal from "../../containers/AlertModal/AlertModal";
 import LoadingOverlayDiv from "../../containers/LoadingOverlay/LoadingOverlay";
 import ImageInput from "../../containers/Input/ImageInput";
+import TextInput from "../../containers/Input/TextInput";
 
 
 const InputTitle = styled.div<{ fontSize?: string; borderBottom?: string; }>`
@@ -24,26 +25,6 @@ const InputTitle = styled.div<{ fontSize?: string; borderBottom?: string; }>`
   text-align: left;
   border-bottom: ${props => props.borderBottom ? props.borderBottom : '0.5px'} solid black;
   margin-bottom: 10px;
-`;
-
-const Input = styled.input`
-  margin: 3px 0;
-  padding: 15px 10px;
-  min-width: 300px;
-  max-width: 700px;
-  outline: none;
-  border: 1px solid #bbb;
-  border-radius: 20px;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-transition: 0.2s ease all;
-  -moz-transition: 0.2s ease all;
-  -ms-transition: 0.2s ease all;
-  -o-transition: 0.2s ease all;
-  transition: 0.2s ease all;
 `;
 
 interface Props extends RouteComponentProps {
@@ -309,9 +290,9 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
       >
         <div>
           <InputTitle fontSize={"1.5rem"} borderBottom={"2px"}>맛집 검색</InputTitle>
-          <Input
-            type="text"
+          <TextInput
             value={searchName}
+            placeholder={""}
             onChange={onChangeSearchNameHandler}
             id={`keyword`}
             onKeyPress={onSearchKeyPress}
@@ -346,8 +327,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
       <form onSubmit={onSubmitHandler} onKeyPress={e => { e.key === 'Enter' && e.preventDefault() }} encType="multipart/form-data">
         <div style={{ margin: "5px" }}>
           <InputTitle>맛집 이름 & 주소(검색해 선택해 주세요)</InputTitle>
-          <Input
-            type="text"
+          <TextInput
             value={name}
             placeholder="맛집 이름"
             onChange={onNameHandler}
@@ -355,12 +335,11 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
           />
         </div>
         <div style={{ margin: "5px" }}>
-          <Input
-            type="text"
+          <TextInput
             value={address}
             placeholder="맛집 주소"
             onChange={onAddressHandler}
-            readOnly
+            readOnly={true}
           />
         </div>
         {parentCompName === "MarkerPage" ? (
@@ -407,8 +386,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
             <div>
               <div style={{ margin: "5px" }}>
                 <InputTitle>메뉴</InputTitle>
-                <Input
-                  type="text"
+                <TextInput
                   value={newMenuItem}
                   placeholder="메뉴 입력 버튼 클릭"
                   onChange={e => onChangeNewMenuItem(e)}
