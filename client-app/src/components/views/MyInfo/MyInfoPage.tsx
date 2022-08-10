@@ -176,22 +176,22 @@ function MyInfoPage({ history }: Props): React.ReactElement {
               onChange={e => handleMyLocation(e)}
             >
               <option value="1">강원</option>
-              <option value="1">경기</option>
-              <option value="1">서울</option>
-              <option value="1">인천</option>
-              <option value="1">충남</option>
-              <option value="1">충북</option>
-              <option value="1">대전</option>
-              <option value="1">세종</option>
-              <option value="1">경북</option>
-              <option value="2">경남</option>
-              <option value="1">대구</option>
-              <option value="2">울산</option>
-              <option value="2">부산</option>
-              <option value="2">전북</option>
-              <option value="2">전남</option>
-              <option value="2">광주</option>
-              <option value="2">제주</option>
+              <option value="2">경기</option>
+              <option value="3">서울</option>
+              <option value="4">인천</option>
+              <option value="5">충남</option>
+              <option value="6">충북</option>
+              <option value="7">대전</option>
+              <option value="8">세종</option>
+              <option value="9">경북</option>
+              <option value="10">경남</option>
+              <option value="11">대구</option>
+              <option value="12">울산</option>
+              <option value="13">부산</option>
+              <option value="14">전북</option>
+              <option value="15">전남</option>
+              <option value="16">광주</option>
+              <option value="17">제주</option>
             </select>
             <Button
               variant="primary"
