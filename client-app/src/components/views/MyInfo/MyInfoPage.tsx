@@ -7,6 +7,7 @@ import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import MyCalendar from "./MyCalendar";
 import styled from "styled-components";
+import { Button } from "react-bootstrap";
 import { RestaurantDetail } from "../../interfaces/Restaurant";
 import { WishListType } from "../../interfaces/WishList";
 import { NavMenuType } from "../../../library/def";
@@ -53,6 +54,7 @@ function MyInfoPage({ history }: Props): React.ReactElement {
   const [myWishListCount, setMyWishListCount] = useState(0);
   const [myRestaurants, setMyRestaurants] = useState<RestaurantDetail[]>([]);
   const [myWishlists, setWishlists] = useState<WishListType[]>([]);
+  const [myLocation, setMyLocation] = useState<string>("1");
 
   const userId = window.sessionStorage.getItem("userId") as string;
 
@@ -91,6 +93,10 @@ function MyInfoPage({ history }: Props): React.ReactElement {
     myWishlistsCntObj[area] = myWishlistsCntObj[area] + 1 || 1;
   });
 
+  const handleMyLocation = e => {
+    setMyLocation(e.target.value);
+  };
+
   return (
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
       <div
@@ -105,45 +111,50 @@ function MyInfoPage({ history }: Props): React.ReactElement {
         <NavbarComp history={history} menu={NavMenuType.Myinfo} />
         <hr />
         <div>
-          <div style={{ height: "150px" }}>
+          <div style={{ height: "120px" }}>
             <h1>내 정보 페이지</h1>
           </div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <InfoBlock backgroundColor={"#5B6DCD"}>
-              <InfoTitle>등록한 나의 방문 맛집 개수</InfoTitle>
-              <div style={{ height: "100px" }}>
-                <InfoContent>{myRestaurantsCount}개</InfoContent>
-              </div>
-            </InfoBlock>
-            <InfoBlock backgroundColor={"#FFD703"}>
-              <InfoTitle>등록한 나의 위시 맛집 개수</InfoTitle>
-              <div style={{ height: "100px" }}>
-                <InfoContent>{myWishListCount}개</InfoContent>
-              </div>
-            </InfoBlock>
+          <hr />
+          <div style={{ marginBottom: "30px" }}>
+            <h3>맛집 통계</h3>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <InfoBlock backgroundColor={"#5B6DCD"}>
+                <InfoTitle>등록한 나의 방문 맛집 개수</InfoTitle>
+                <div style={{ height: "100px" }}>
+                  <InfoContent>{myRestaurantsCount}개</InfoContent>
+                </div>
+              </InfoBlock>
+              <InfoBlock backgroundColor={"#FFD703"}>
+                <InfoTitle>등록한 나의 위시 맛집 개수</InfoTitle>
+                <div style={{ height: "100px" }}>
+                  <InfoContent>{myWishListCount}개</InfoContent>
+                </div>
+              </InfoBlock>
+            </div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <InfoBlock backgroundColor={"#60F5D0"}>
+                <InfoTitle>지역별 나의 방문 맛집</InfoTitle>
+                <div style={{ height: "100px", display: "flex", flexDirection: "column" }}>
+                  {
+                    Object.keys(myRestaurantsCntObj).map(area =>
+                      <InfoContent key={area}>{area} {myRestaurantsCntObj[area]}개</InfoContent>
+                    )
+                  }
+                </div>
+              </InfoBlock>
+              <InfoBlock backgroundColor={"#FF91A4"}>
+                <InfoTitle>지역별 나의 위시 맛집</InfoTitle>
+                <div style={{ height: "100px", display: "flex", flexDirection: "column" }}>
+                  {
+                    Object.keys(myWishlistsCntObj).map(area =>
+                      <InfoContent key={area}>{area} {myWishlistsCntObj[area]}개</InfoContent>
+                    )
+                  }
+                </div>
+              </InfoBlock>
+            </div>
           </div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <InfoBlock backgroundColor={"#60F5D0"}>
-              <InfoTitle>지역별 나의 방문 맛집</InfoTitle>
-              <div style={{ height: "100px", display: "flex", flexDirection: "column" }}>
-                {
-                  Object.keys(myRestaurantsCntObj).map(area =>
-                    <InfoContent key={area}>{area} {myRestaurantsCntObj[area]}개</InfoContent>
-                  )
-                }
-              </div>
-            </InfoBlock>
-            <InfoBlock backgroundColor={"#FF91A4"}>
-              <InfoTitle>지역별 나의 위시 맛집</InfoTitle>
-              <div style={{ height: "100px", display: "flex", flexDirection: "column" }}>
-                {
-                  Object.keys(myWishlistsCntObj).map(area =>
-                    <InfoContent key={area}>{area} {myWishlistsCntObj[area]}개</InfoContent>
-                  )
-                }
-              </div>
-            </InfoBlock>
-          </div>
+          <hr />
           <div style={{ width: "50%", margin: "auto" }}>
             <h3>나의 방문 맛집 달력</h3>
             <div style={{ display: "flex" }}>
@@ -152,6 +163,42 @@ function MyInfoPage({ history }: Props): React.ReactElement {
               }
             </div>
             <MyCalendar restaurants={myRestaurants} />
+          </div>
+        </div>
+        <hr />
+        <div style={{ marginBottom: "30px" }}>
+          <h3>나의 맛집 지도 지역 설정</h3>
+          <div style={{ height: "50px", padding: "5px", display: 'flex', justifyContent: 'center' }}>
+            <select
+              id="select"
+              value={myLocation}
+              style={{ height: "100%", fontSize: "24px", minWidth: "20px", display: "block" }}
+              onChange={e => handleMyLocation(e)}
+            >
+              <option value="1">강원</option>
+              <option value="1">경기</option>
+              <option value="1">서울</option>
+              <option value="1">인천</option>
+              <option value="1">충남</option>
+              <option value="1">충북</option>
+              <option value="1">대전</option>
+              <option value="1">세종</option>
+              <option value="1">경북</option>
+              <option value="2">경남</option>
+              <option value="1">대구</option>
+              <option value="2">울산</option>
+              <option value="2">부산</option>
+              <option value="2">전북</option>
+              <option value="2">전남</option>
+              <option value="2">광주</option>
+              <option value="2">제주</option>
+            </select>
+            <Button
+              variant="primary"
+              style={{ marginLeft: "5px", display: "inline-block" }}
+            >
+              설정하기
+            </Button>
           </div>
         </div>
         <hr />
