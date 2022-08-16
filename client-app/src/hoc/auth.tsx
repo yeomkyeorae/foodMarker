@@ -24,6 +24,7 @@ export default function (SpecificComponent, option: boolean | null) {
           if (option === false) {
             window.sessionStorage.setItem("userId", response.payload._id);
             window.sessionStorage.setItem("username", response.payload.name);
+            window.sessionStorage.setItem("myPlace", response.payload.myPlace);
             props.history.push("/main", response.payload._id);
           }
         }

@@ -112,6 +112,7 @@ function Login({ setToggle, toggle, history }: Props): React.ReactElement {
       if (response.payload.loginSuccess) {
         window.sessionStorage.setItem("userId", response.payload.userId);
         window.sessionStorage.setItem("username", response.payload.name);
+        window.sessionStorage.setItem("myPlace", response.payload.myPlace);
         history.push({
           pathname: "/main"
         });

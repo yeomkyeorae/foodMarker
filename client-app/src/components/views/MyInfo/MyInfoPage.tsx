@@ -10,7 +10,7 @@ import styled from "styled-components";
 import { Button } from "react-bootstrap";
 import { RestaurantDetail } from "../../interfaces/Restaurant";
 import { WishListType } from "../../interfaces/WishList";
-import { NavMenuType } from "../../../library/def";
+import { LocationCode, NavMenuType } from "../../../library/def";
 
 
 const InfoBlock = styled.div<{ backgroundColor?: string; }>`
@@ -175,23 +175,23 @@ function MyInfoPage({ history }: Props): React.ReactElement {
               style={{ height: "100%", fontSize: "24px", minWidth: "20px", display: "block" }}
               onChange={e => handleMyLocation(e)}
             >
-              <option value="1">강원</option>
-              <option value="2">경기</option>
-              <option value="3">서울</option>
-              <option value="4">인천</option>
-              <option value="5">충남</option>
-              <option value="6">충북</option>
-              <option value="7">대전</option>
-              <option value="8">세종</option>
-              <option value="9">경북</option>
-              <option value="10">경남</option>
-              <option value="11">대구</option>
-              <option value="12">울산</option>
-              <option value="13">부산</option>
-              <option value="14">전북</option>
-              <option value="15">전남</option>
-              <option value="16">광주</option>
-              <option value="17">제주</option>
+              <option value={LocationCode.Gangwon}>강원</option>
+              <option value={LocationCode.Gyeonggi}>경기</option>
+              <option value={LocationCode.Seoul}>서울</option>
+              <option value={LocationCode.Incheon}>인천</option>
+              <option value={LocationCode.Chungnam}>충남</option>
+              <option value={LocationCode.Chungbuk}>충북</option>
+              <option value={LocationCode.Daejeon}>대전</option>
+              <option value={LocationCode.Sejong}>세종</option>
+              <option value={LocationCode.Gyeongbuk}>경북</option>
+              <option value={LocationCode.Gyeongnam}>경남</option>
+              <option value={LocationCode.Daegu}>대구</option>
+              <option value={LocationCode.Ulsan}>울산</option>
+              <option value={LocationCode.Busan}>부산</option>
+              <option value={LocationCode.Jeonbuk}>전북</option>
+              <option value={LocationCode.Jeonnam}>전남</option>
+              <option value={LocationCode.Gwangju}>광주</option>
+              <option value={LocationCode.Jeju}>제주</option>
             </select>
             <Button
               variant="primary"

@@ -31,3 +31,23 @@ export const WishListOrder = {
     enrollAsc: 3,
     enrollDesc: 4
 };
+
+export const LocationCode = {
+    Gangwon: 1,
+    Gyeonggi: 2,
+    Seoul: 3,
+    Incheon: 4,
+    Chungnam: 5,
+    Chungbuk: 6,
+    Daejeon: 7,
+    Sejong: 8,
+    Gyeongbuk: 9,
+    Gyeongnam: 10,
+    Daegu: 11,
+    Ulsan: 12,
+    Busan: 13,
+    Jeonbuk: 14,
+    Jeonnam: 15,
+    Gwangju: 16,
+    Jeju: 17
+}
