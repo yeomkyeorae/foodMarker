@@ -4,6 +4,7 @@ import { registerUser } from "../../../_actions/user_action";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import AlertModal from "../../containers/AlertModal/AlertModal";
+import { LocationCode } from "../../../library/def";
 
 
 const SignupBox = styled.div`
@@ -146,7 +147,7 @@ function Signup({ toggle, setToggle }: Props): React.ReactElement {
       return;
     }
 
-    const body = { email, name, password };
+    const body = { email, name, password, myPlace: LocationCode.Sejong };
 
     dispatch(registerUser(body)).then(response => {
       if (response.payload.success) {

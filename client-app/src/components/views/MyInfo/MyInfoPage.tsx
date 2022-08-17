@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { updateUserMyPlace } from "../../../_actions/user_action";
 import { readRestaurants, readRestaurantsCount } from '../../../_actions/restaurant_action';
 import { readWishList, readWishListCount } from '../../../_actions/wishList_action';
 import NavbarComp from "../Navbar/NavbarComp";
@@ -11,6 +12,7 @@ import { Button } from "react-bootstrap";
 import { RestaurantDetail } from "../../interfaces/Restaurant";
 import { WishListType } from "../../interfaces/WishList";
 import { LocationCode, NavMenuType } from "../../../library/def";
+import AlertModal from "../../containers/AlertModal/AlertModal";
 
 
 const InfoBlock = styled.div<{ backgroundColor?: string; }>`
@@ -54,7 +56,8 @@ function MyInfoPage({ history }: Props): React.ReactElement {
   const [myWishListCount, setMyWishListCount] = useState(0);
   const [myRestaurants, setMyRestaurants] = useState<RestaurantDetail[]>([]);
   const [myWishlists, setWishlists] = useState<WishListType[]>([]);
-  const [myLocation, setMyLocation] = useState<string>("1");
+  const [myPlace, setMyPlace] = useState<string>(window.sessionStorage.getItem("myPlace") ?? "1");
+  const [alertToggle, setAlertToggle] = useState(false);
 
   const userId = window.sessionStorage.getItem("userId") as string;
 
@@ -93,9 +96,19 @@ function MyInfoPage({ history }: Props): React.ReactElement {
     myWishlistsCntObj[area] = myWishlistsCntObj[area] + 1 || 1;
   });
 
-  const handleMyLocation = e => {
-    setMyLocation(e.target.value);
+  const handleMyPlace = e => {
+    setMyPlace(e.target.value);
   };
+
+  const changeMyPlace = () => {
+    const body = { myPlace };
+    dispatch(updateUserMyPlace(body)).then(response => {
+      if (response.payload.success) {
+        setAlertToggle(true);
+        window.sessionStorage.setItem("myPlace", myPlace);
+      }
+    });
+  }
 
   return (
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
@@ -171,9 +184,9 @@ function MyInfoPage({ history }: Props): React.ReactElement {
           <div style={{ height: "50px", padding: "5px", display: 'flex', justifyContent: 'center' }}>
             <select
               id="select"
-              value={myLocation}
+              value={myPlace}
               style={{ height: "100%", fontSize: "24px", minWidth: "20px", display: "block" }}
-              onChange={e => handleMyLocation(e)}
+              onChange={e => handleMyPlace(e)}
             >
               <option value={LocationCode.Gangwon}>강원</option>
               <option value={LocationCode.Gyeonggi}>경기</option>
@@ -196,6 +209,7 @@ function MyInfoPage({ history }: Props): React.ReactElement {
             <Button
               variant="primary"
               style={{ marginLeft: "5px", display: "inline-block" }}
+              onClick={() => changeMyPlace()}
             >
               설정하기
             </Button>
@@ -204,6 +218,11 @@ function MyInfoPage({ history }: Props): React.ReactElement {
         <hr />
         <Footer />
       </div>
+      {
+        alertToggle ?
+          <AlertModal setAlertToggle={setAlertToggle} alertMessage={"나의 맛집 지역 설정이 완료되었습니다"} /> :
+          null
+      }
     </div>
   );
 }

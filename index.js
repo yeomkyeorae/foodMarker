@@ -205,6 +205,16 @@ app.get("/api/users/logout", auth, (req, res) => {
   });
 });
 
+// update user myPlace
+app.put("/api/users/my-place", auth, (req, res) => {
+  User.findOneAndUpdate({ _id: req.user._id }, { myPlace: req.body.myPlace }, (err, user) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).send({
+      success: true
+    });
+  });
+});
+
 // get my restaurants
 app.get("/api/restaurants", (req, res) => {
   const userId = req.query.userId;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOGIN_USER, LOGOUT_USER, REGISTER_USER, AUTH_USER } from "./types";
+import { LOGIN_USER, LOGOUT_USER, REGISTER_USER, AUTH_USER, UPDATE_USER_MY_PLACE } from "./types";
 
 export function loginUser(body: { email: string, password: string }): { type: string, payload: Promise<{ loginSuccess: boolean, name: string, userId: string }> } {
   const request = axios
@@ -39,6 +39,17 @@ export function auth(): { type: string, payload: Promise<{ isAuth: boolean, erro
 
   return {
     type: AUTH_USER,
+    payload: request
+  };
+}
+
+export function updateUserMyPlace(body: { myPlace: string }): { type: string, payload: Promise<{ success: boolean }> } {
+  const request = axios
+    .put("/api/users/my-place", body)
+    .then(response => response.data);
+
+  return {
+    type: UPDATE_USER_MY_PLACE,
     payload: request
   };
 }
