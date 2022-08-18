@@ -56,7 +56,7 @@ function MyInfoPage({ history }: Props): React.ReactElement {
   const [myWishListCount, setMyWishListCount] = useState(0);
   const [myRestaurants, setMyRestaurants] = useState<RestaurantDetail[]>([]);
   const [myWishlists, setWishlists] = useState<WishListType[]>([]);
-  const [myPlace, setMyPlace] = useState<string>(window.sessionStorage.getItem("myPlace") ?? "1");
+  const [myPlace, setMyPlace] = useState<string>(window.sessionStorage.getItem("myPlace") ?? String(LocationCode.All));
   const [alertToggle, setAlertToggle] = useState(false);
 
   const userId = window.sessionStorage.getItem("userId") as string;
@@ -188,6 +188,7 @@ function MyInfoPage({ history }: Props): React.ReactElement {
               style={{ height: "100%", fontSize: "24px", minWidth: "20px", display: "block" }}
               onChange={e => handleMyPlace(e)}
             >
+              <option value={LocationCode.All}>전국</option>
               <option value={LocationCode.Gangwon}>강원</option>
               <option value={LocationCode.Gyeonggi}>경기</option>
               <option value={LocationCode.Seoul}>서울</option>

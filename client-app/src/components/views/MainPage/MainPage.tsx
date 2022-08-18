@@ -13,12 +13,16 @@ import "@brainhubeu/react-carousel/lib/style.css";
 import styled from "styled-components";
 import { Restaurant, RestaurantDetail } from '../../interfaces/Restaurant';
 import { WishListType } from '../../interfaces/WishList';
-import { NavMenuType } from '../../../library/def';
+import { NavMenuType, LocationCodeInfo } from '../../../library/def';
 
 
 const H2 = styled.h2`
   font-size: 2rem;
 `;
+
+const H3 = styled.h3`
+  font-size: 1.5rem;
+`
 
 const FoodMarkerTitle = styled.div`
   display: flex;
@@ -72,17 +76,6 @@ const List = styled.li`
   }
 `;
 
-const P = styled.p`
-  width: 50px;
-  cursor: pointer;
-  border-radius: 20px;
-  background-color: #e5f3e6;
-  font-weight: 200;
-  &:hover {
-    background-color: #c1e8c2;
-  }
-`;
-
 interface Props {
   history: RouteComponentProps["history"];
 }
@@ -94,11 +87,16 @@ function MainPage({ history }: Props): React.ReactElement {
 
   const dispatch = useDispatch<any>();
   const userId = window.sessionStorage.getItem("userId") as string;
+  const myPlace = window.sessionStorage.getItem("myPlace") as string;
 
   useEffect(() => {
-    const optionLocation = "서울";
+    const { locationName, latitude, longitude, mapLevel } = LocationCodeInfo[myPlace];
 
-    dispatch(readRestaurantsNoImage(userId, optionLocation)).then(response => {
+    setLatitude(latitude);
+    setLongitude(longitude);
+    setMapLevel(mapLevel);
+
+    dispatch(readRestaurantsNoImage(userId, locationName)).then(response => {
       setRestaurants(response.payload);
     });
     dispatch(readTenRestaurants()).then(response => {
@@ -113,38 +111,6 @@ function MainPage({ history }: Props): React.ReactElement {
   const [latitude, setLatitude] = useState(37.52393);
   const [longitude, setLongitude] = useState(126.980493);
   const [mapLevel, setMapLevel] = useState(8);
-
-  const onClickHandler = option => {
-    let optionLocation = '';
-    if (option === 1) {
-      // 영동군
-      setLatitude(36.1746815);
-      setLongitude(127.7830354);
-      setMapLevel(13);
-    } else if (option === 2) {
-      // 국립중앙박물관
-      setLatitude(37.52393);
-      setLongitude(126.980493);
-      setMapLevel(8);
-      optionLocation = "서울";
-    } else if (option === 3) {
-      // 대전 용문역
-      setLatitude(36.338262);
-      setLongitude(127.392768);
-      setMapLevel(8);
-      optionLocation = "대전";
-    } else if (option === 4) {
-      // 세종 종촌동
-      setLatitude(36.497149);
-      setLongitude(127.260632);
-      setMapLevel(8);
-      optionLocation = "세종";
-    }
-
-    dispatch(readRestaurantsNoImage(userId, optionLocation)).then(response => {
-      setRestaurants(response.payload);
-    });
-  };
 
   return (
     <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
@@ -206,45 +172,8 @@ function MainPage({ history }: Props): React.ReactElement {
         </div>
         <div style={{ padding: "5px" }}>
           <H2>나의 맛집 지도</H2>
+          <H3>현재 설정 지역: {LocationCodeInfo[myPlace].locationName}</H3>
         </div>
-        <ul
-          style={{
-            padding: "0px",
-            display: "flex",
-            justifyContent: "center",
-            listStyle: "none",
-            margin: "0px"
-          }}
-        >
-          <li
-            style={{
-              margin: "5px"
-            }}
-          >
-            <P onClick={() => onClickHandler(1)}>전국</P>
-          </li>
-          <li
-            style={{
-              margin: "5px"
-            }}
-          >
-            <P onClick={() => onClickHandler(2)}>서울</P>
-          </li>
-          <li
-            style={{
-              margin: "5px"
-            }}
-          >
-            <P onClick={() => onClickHandler(3)}>대전</P>
-          </li>
-          <li
-            style={{
-              margin: "5px"
-            }}
-          >
-            <P onClick={() => onClickHandler(4)}>세종</P>
-          </li>
-        </ul>
         <div>
           <KakaoMap
             latitude={latitude}
