@@ -13,7 +13,7 @@ import "@brainhubeu/react-carousel/lib/style.css";
 import styled from "styled-components";
 import { Restaurant, RestaurantDetail } from '../../interfaces/Restaurant';
 import { WishListType } from '../../interfaces/WishList';
-import { NavMenuType, LocationCodeInfo } from '../../../library/def';
+import { NavMenuType, LocationCodeInfo, LocationCode } from '../../../library/def';
 
 
 const H2 = styled.h2`
@@ -96,7 +96,9 @@ function MainPage({ history }: Props): React.ReactElement {
     setLongitude(longitude);
     setMapLevel(mapLevel);
 
-    dispatch(readRestaurantsNoImage(userId, locationName)).then(response => {
+    const optionLocation = myPlace === String(LocationCode.All) ? '' : locationName;
+
+    dispatch(readRestaurantsNoImage(userId, optionLocation)).then(response => {
       setRestaurants(response.payload);
     });
     dispatch(readTenRestaurants()).then(response => {
