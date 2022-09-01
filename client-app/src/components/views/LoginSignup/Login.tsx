@@ -91,11 +91,11 @@ function Login({ setToggle, toggle, history }: Props): React.ReactElement {
     inputRef.current?.focus();
   }, []);
 
-  const onEmailHandler = e => {
+  const onEmailHandler = (e: React.FormEvent<HTMLInputElement>) => {
     setEmail(e.currentTarget.value);
   };
 
-  const onPasswordHandler = e => {
+  const onPasswordHandler = (e: React.FormEvent<HTMLInputElement>) => {
     setPassword(e.currentTarget.value);
   };
 
@@ -103,7 +103,7 @@ function Login({ setToggle, toggle, history }: Props): React.ReactElement {
     setToggle(!toggle);
   };
 
-  const onSubmitHandler = e => {
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const body = { email, password };
