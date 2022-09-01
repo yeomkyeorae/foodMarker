@@ -5,7 +5,6 @@ import { readRestaurantsCount } from "../../../_actions/restaurant_action";
 import RestaurantListItem from "./RestaurantListItem";
 import { Row } from "react-bootstrap";
 import styled from "styled-components";
-import "./RestaurantList.css";
 import useFetch from "./useFetch";
 
 
