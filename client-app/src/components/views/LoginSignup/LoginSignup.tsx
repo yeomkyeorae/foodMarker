@@ -20,13 +20,8 @@ const Section = styled.section`
 function LoginSignup(): React.ReactElement {
   const [toggle, setToggle] = useState(true);
 
-  let loginOrSignup;
-  if (toggle) {
-    loginOrSignup = <Login toggle={toggle} setToggle={setToggle} />;
-  } else {
-    loginOrSignup = <Signup toggle={toggle} setToggle={setToggle} />;
-  }
-  
+  const loginOrSignup: React.ReactElement = toggle ? <Login toggle={toggle} setToggle={setToggle} /> : <Signup toggle={toggle} setToggle={setToggle} />;
+
   return (
     <Section>
       <div>{loginOrSignup}</div>
