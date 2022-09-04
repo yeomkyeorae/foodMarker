@@ -92,19 +92,19 @@ function Signup({ toggle, setToggle }: Props): React.ReactElement {
     inputRef.current?.focus();
   }, []);
 
-  const onEmailHandler = e => {
+  const onEmailHandler = (e: React.FormEvent<HTMLInputElement>) => {
     setEmail(e.currentTarget.value);
   };
 
-  const onNameHandler = e => {
+  const onNameHandler = (e: React.FormEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value);
   };
 
-  const onPasswordHandler = e => {
+  const onPasswordHandler = (e: React.FormEvent<HTMLInputElement>) => {
     setPassword(e.currentTarget.value);
   };
 
-  const onConfirmedPassword = e => {
+  const onConfirmedPassword = (e: React.FormEvent<HTMLInputElement>) => {
     setConfirmPassword(e.currentTarget.value);
   };
 
@@ -112,7 +112,7 @@ function Signup({ toggle, setToggle }: Props): React.ReactElement {
     setToggle(!toggle);
   };
 
-  const onSubmitHandler = e => {
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (email.length <= 6 ||
