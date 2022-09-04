@@ -14,6 +14,7 @@ import styled from "styled-components";
 import { Restaurant, RestaurantDetail } from '../../interfaces/Restaurant';
 import { WishListType } from '../../interfaces/WishList';
 import { NavMenuType, LocationCodeInfo, LocationCode } from '../../../library/def';
+import { BiUser, BiMapPin, BiMale } from "react-icons/bi";
 
 
 const H2 = styled.h2`
@@ -138,7 +139,7 @@ function MainPage({ history }: Props): React.ReactElement {
             <div style={{ margin: "auto", textAlign: "left" }}>
               <Link to={{ pathname: "/marker", state: { userId, menu: 2 } }} style={{ textDecoration: "none" }}>
                 <FoodMarkerExplanationTitle>
-                  나의 맛집
+                  <BiUser />나의 맛집
                 </FoodMarkerExplanationTitle>
               </Link>
               <br />
@@ -149,7 +150,7 @@ function MainPage({ history }: Props): React.ReactElement {
             <div style={{ margin: "auto", textAlign: "left" }}>
               <Link to={{ pathname: "/wish", state: { userId, menu: 3 } }} style={{ textDecoration: "none" }}>
                 <FoodMarkerExplanationTitle>
-                  위시 맛집
+                  <BiMapPin />위시 맛집
                 </FoodMarkerExplanationTitle>
               </Link>
               <br />
@@ -160,7 +161,7 @@ function MainPage({ history }: Props): React.ReactElement {
             <div style={{ margin: "auto", textAlign: "left" }}>
               <Link to={{ pathname: "/choizaroad", state: { userId, menu: 4 } }} style={{ textDecoration: "none" }}>
                 <FoodMarkerExplanationTitle>
-                  최자로드
+                  <BiMale />최자로드
                 </FoodMarkerExplanationTitle>
               </Link>
               <br />
