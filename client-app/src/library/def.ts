@@ -73,3 +73,14 @@ export const LocationCodeInfo = {
     16: { locationName: '광주', latitude: 35.1557054, longitude: 126.8354416, mapLevel: 8 },
     17: { locationName: '제주', latitude: 33.3616819, longitude: 126.5291548, mapLevel: 10 },
 }
+
+export const ChoizaRoadSeason = {
+    One: 1,
+    Two: 2,
+    Three: 3,
+    Four: 4,
+    InTheHouse: 5,
+    Five: 6,
+    Six: 7,
+    Seven: 8
+}
