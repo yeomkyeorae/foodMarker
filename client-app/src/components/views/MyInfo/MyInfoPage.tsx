@@ -15,6 +15,17 @@ import { LocationCode, NavMenuType } from "../../../library/def";
 import AlertModal from "../../containers/AlertModal/AlertModal";
 
 
+const MainDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  position: absolute;
+  top: 10px;
+  left: 0px;
+  right: 0px;
+  overflow: hidden;
+`;
+
 const InfoBlock = styled.div<{ backgroundColor?: string; }>`
   width: 25%;
   border-radius: 30px;
@@ -111,120 +122,110 @@ function MyInfoPage({ history }: Props): React.ReactElement {
   }
 
   return (
-    <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
-      <div
-        style={{
-          position: "absolute",
-          top: "10px",
-          left: "0px",
-          right: "0px",
-          overflow: "hidden"
-        }}
-      >
-        <NavbarComp history={history} menu={NavMenuType.Myinfo} />
-        <hr />
-        <div>
-          <div style={{ height: "120px" }}>
-            <h1>내 정보 페이지</h1>
-          </div>
-          <hr />
-          <div style={{ marginBottom: "30px" }}>
-            <h3>맛집 통계</h3>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <InfoBlock backgroundColor={"#5B6DCD"}>
-                <InfoTitle>등록한 나의 방문 맛집 개수</InfoTitle>
-                <div style={{ height: "100px" }}>
-                  <InfoContent>{myRestaurantsCount}개</InfoContent>
-                </div>
-              </InfoBlock>
-              <InfoBlock backgroundColor={"#FFD703"}>
-                <InfoTitle>등록한 나의 위시 맛집 개수</InfoTitle>
-                <div style={{ height: "100px" }}>
-                  <InfoContent>{myWishListCount}개</InfoContent>
-                </div>
-              </InfoBlock>
-            </div>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <InfoBlock backgroundColor={"#60F5D0"}>
-                <InfoTitle>지역별 나의 방문 맛집</InfoTitle>
-                <div style={{ height: "100px", display: "flex", flexDirection: "column" }}>
-                  {
-                    Object.keys(myRestaurantsCntObj).map(area =>
-                      <InfoContent key={area}>{area} {myRestaurantsCntObj[area]}개</InfoContent>
-                    )
-                  }
-                </div>
-              </InfoBlock>
-              <InfoBlock backgroundColor={"#FF91A4"}>
-                <InfoTitle>지역별 나의 위시 맛집</InfoTitle>
-                <div style={{ height: "100px", display: "flex", flexDirection: "column" }}>
-                  {
-                    Object.keys(myWishlistsCntObj).map(area =>
-                      <InfoContent key={area}>{area} {myWishlistsCntObj[area]}개</InfoContent>
-                    )
-                  }
-                </div>
-              </InfoBlock>
-            </div>
-          </div>
-          <hr />
-          <div style={{ width: "50%", margin: "auto" }}>
-            <h3>나의 방문 맛집 달력</h3>
-            <div style={{ display: "flex" }}>
-              {
-                colorBar.map((el, index) => <ColorBar key={`colorBar` + index} backgroundColor={el.color}>{el.text}</ColorBar>)
-              }
-            </div>
-            <MyCalendar restaurants={myRestaurants} />
-          </div>
+    <MainDiv>
+      <NavbarComp history={history} menu={NavMenuType.Myinfo} />
+      <hr />
+      <div>
+        <div style={{ height: "120px" }}>
+          <h1>내 정보 페이지</h1>
         </div>
         <hr />
         <div style={{ marginBottom: "30px" }}>
-          <h3>나의 맛집 지도 지역 설정</h3>
-          <div style={{ height: "50px", padding: "5px", display: 'flex', justifyContent: 'center' }}>
-            <select
-              id="select"
-              value={myPlace}
-              style={{ height: "100%", fontSize: "24px", minWidth: "20px", display: "block" }}
-              onChange={e => handleMyPlace(e)}
-            >
-              <option value={LocationCode.All}>전국</option>
-              <option value={LocationCode.Gangwon}>강원</option>
-              <option value={LocationCode.Gyeonggi}>경기</option>
-              <option value={LocationCode.Seoul}>서울</option>
-              <option value={LocationCode.Incheon}>인천</option>
-              <option value={LocationCode.Chungnam}>충남</option>
-              <option value={LocationCode.Chungbuk}>충북</option>
-              <option value={LocationCode.Daejeon}>대전</option>
-              <option value={LocationCode.Sejong}>세종</option>
-              <option value={LocationCode.Gyeongbuk}>경북</option>
-              <option value={LocationCode.Gyeongnam}>경남</option>
-              <option value={LocationCode.Daegu}>대구</option>
-              <option value={LocationCode.Ulsan}>울산</option>
-              <option value={LocationCode.Busan}>부산</option>
-              <option value={LocationCode.Jeonbuk}>전북</option>
-              <option value={LocationCode.Jeonnam}>전남</option>
-              <option value={LocationCode.Gwangju}>광주</option>
-              <option value={LocationCode.Jeju}>제주</option>
-            </select>
-            <Button
-              variant="primary"
-              style={{ marginLeft: "5px", display: "inline-block" }}
-              onClick={() => changeMyPlace()}
-            >
-              설정하기
-            </Button>
+          <h3>맛집 통계</h3>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <InfoBlock backgroundColor={"#5B6DCD"}>
+              <InfoTitle>등록한 나의 방문 맛집 개수</InfoTitle>
+              <div style={{ height: "100px" }}>
+                <InfoContent>{myRestaurantsCount}개</InfoContent>
+              </div>
+            </InfoBlock>
+            <InfoBlock backgroundColor={"#FFD703"}>
+              <InfoTitle>등록한 나의 위시 맛집 개수</InfoTitle>
+              <div style={{ height: "100px" }}>
+                <InfoContent>{myWishListCount}개</InfoContent>
+              </div>
+            </InfoBlock>
+          </div>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <InfoBlock backgroundColor={"#60F5D0"}>
+              <InfoTitle>지역별 나의 방문 맛집</InfoTitle>
+              <div style={{ height: "100px", display: "flex", flexDirection: "column" }}>
+                {
+                  Object.keys(myRestaurantsCntObj).map(area =>
+                    <InfoContent key={area}>{area} {myRestaurantsCntObj[area]}개</InfoContent>
+                  )
+                }
+              </div>
+            </InfoBlock>
+            <InfoBlock backgroundColor={"#FF91A4"}>
+              <InfoTitle>지역별 나의 위시 맛집</InfoTitle>
+              <div style={{ height: "100px", display: "flex", flexDirection: "column" }}>
+                {
+                  Object.keys(myWishlistsCntObj).map(area =>
+                    <InfoContent key={area}>{area} {myWishlistsCntObj[area]}개</InfoContent>
+                  )
+                }
+              </div>
+            </InfoBlock>
           </div>
         </div>
         <hr />
-        <Footer />
+        <div style={{ width: "50%", margin: "auto" }}>
+          <h3>나의 방문 맛집 달력</h3>
+          <div style={{ display: "flex" }}>
+            {
+              colorBar.map((el, index) => <ColorBar key={`colorBar` + index} backgroundColor={el.color}>{el.text}</ColorBar>)
+            }
+          </div>
+          <MyCalendar restaurants={myRestaurants} />
+        </div>
       </div>
+      <hr />
+      <div style={{ marginBottom: "30px" }}>
+        <h3>나의 맛집 지도 지역 설정</h3>
+        <div style={{ height: "50px", padding: "5px", display: 'flex', justifyContent: 'center' }}>
+          <select
+            id="select"
+            value={myPlace}
+            style={{ height: "100%", fontSize: "24px", minWidth: "20px", display: "block" }}
+            onChange={e => handleMyPlace(e)}
+          >
+            <option value={LocationCode.All}>전국</option>
+            <option value={LocationCode.Gangwon}>강원</option>
+            <option value={LocationCode.Gyeonggi}>경기</option>
+            <option value={LocationCode.Seoul}>서울</option>
+            <option value={LocationCode.Incheon}>인천</option>
+            <option value={LocationCode.Chungnam}>충남</option>
+            <option value={LocationCode.Chungbuk}>충북</option>
+            <option value={LocationCode.Daejeon}>대전</option>
+            <option value={LocationCode.Sejong}>세종</option>
+            <option value={LocationCode.Gyeongbuk}>경북</option>
+            <option value={LocationCode.Gyeongnam}>경남</option>
+            <option value={LocationCode.Daegu}>대구</option>
+            <option value={LocationCode.Ulsan}>울산</option>
+            <option value={LocationCode.Busan}>부산</option>
+            <option value={LocationCode.Jeonbuk}>전북</option>
+            <option value={LocationCode.Jeonnam}>전남</option>
+            <option value={LocationCode.Gwangju}>광주</option>
+            <option value={LocationCode.Jeju}>제주</option>
+          </select>
+          <Button
+            variant="primary"
+            style={{ marginLeft: "5px", display: "inline-block" }}
+            onClick={() => changeMyPlace()}
+          >
+            설정하기
+          </Button>
+        </div>
+      </div>
+      <hr />
+      <Footer />
       {
         alertToggle ?
           <AlertModal setAlertToggle={setAlertToggle} alertMessage={"나의 맛집 지역 설정이 완료되었습니다"} /> :
           null
       }
-    </div>
+    </MainDiv>
   );
 }
 
