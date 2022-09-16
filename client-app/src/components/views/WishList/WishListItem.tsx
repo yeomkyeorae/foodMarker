@@ -118,7 +118,7 @@ function WishListItem({ wishListId, wishListName, wishListAddress, wishListCreat
         </Dropdown>
       </div>
       <HeadLine>{wishListName}</HeadLine><br />
-      <Created>{wishListCreated}</Created> <br />
+      <Created>{new Date(wishListCreated).toLocaleString()}</Created> <br />
       <Address>{wishListAddress}</Address> <br />
       <UpdateModal
         toggle={popUpToggle}

@@ -23,7 +23,7 @@ const restaurantSchema = new Schema({
     maxlength: 300
   },
   date: {
-    type: String
+    type: Date
   },
   imgURL: {
     type: String
@@ -38,8 +38,7 @@ const restaurantSchema = new Schema({
     type: String
   },
   created: {
-    type: String,
-    maxlength: 300
+    type: Date
   },
   representIx: {
     type: Number,

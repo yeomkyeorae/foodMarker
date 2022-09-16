@@ -18,8 +18,7 @@ interface Props extends RouteComponentProps {
 
 
 function RestaurantListItem({ restaurant, restaurantList, setRestaurantList }: Props): React.ReactElement | null {
-  const restaurantDateSplit = String(restaurant.date).split("-");
-  const restaurantDate = `${restaurantDateSplit[0]}년 ${restaurantDateSplit[1]}월 ${restaurantDateSplit[2]}일`;
+  const restaurantDate = new Date(restaurant.date).toLocaleDateString();
   const [toggle, setToggle] = useState(false);
   const [hasHover, setHasHover] = useState(false);
   const [starSize, setStarSize] = useState(window.innerWidth / 30);
@@ -94,7 +93,7 @@ function RestaurantListItem({ restaurant, restaurantList, setRestaurantList }: P
                       <Card.Title>{restaurant.name}</Card.Title>
                       <Card.Text>{restaurant.address}</Card.Text>
                       <Card.Text>
-                        {restaurantDate}({EatingTimeType[restaurant.eatingTime]})
+                        {restaurantDate.slice(0, restaurantDate.length - 1)}({EatingTimeType[restaurant.eatingTime]})
                       </Card.Text>
                       <div
                         style={{

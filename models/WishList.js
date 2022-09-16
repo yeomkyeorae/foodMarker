@@ -23,8 +23,7 @@ const WishListSchema = new Schema({
     maxlength: 300
   },
   created: {
-    type: String,
-    maxlength: 300
+    type: Date
   }
 });
 

@@ -184,7 +184,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
         rating: rating,
         eatingTime: eatingTime,
         menus: JSON.stringify(menuItems),
-        created: new Date().toLocaleString(),
+        created: new Date().toISOString(),
         representIx: representImageIx
       };
 
@@ -221,7 +221,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
         username: username,
         name: name,
         address: address,
-        created: new Date().toLocaleString()
+        created: new Date().toISOString()
       };
       dispatch(registerWishList(body)).then(response => {
         if (response.payload.success) {

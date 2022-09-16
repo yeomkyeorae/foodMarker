@@ -138,7 +138,7 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
       rating: newRating,
       eatingTime: newEatingTime,
       menus: JSON.stringify(menuItems),
-      created: new Date().toLocaleDateString(),
+      created: new Date().toISOString(),
       representIx: representImageIx
     };
 

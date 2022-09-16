@@ -45,7 +45,7 @@ const UpdateBody = ({ restaurant, restaurantImgUrls, restaurantList, setRestaura
   const { date, menus, rating, eatingTime, representIx } = restaurant;
 
   const [newRating, setNewRating] = useState(rating);
-  const [visitedDate, setVisitedDate] = useState(date);
+  const [visitedDate, setVisitedDate] = useState(date.slice(0, 10));
   const [newEatingTime, setNewEatingTime] = useState(eatingTime);
   const [newMenuItem, setNewMenuItem] = useState("");
   const [menuItems, setMenuItems] = useState<string[]>(menus ? JSON.parse(menus) : []);
