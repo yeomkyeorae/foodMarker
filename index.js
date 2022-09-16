@@ -191,7 +191,8 @@ app.get("/api/users/auth", auth, (req, res) => {
     isAuth: true,
     email: req.user.email,
     name: req.user.name,
-    role: req.user.role
+    role: req.user.role,
+    myPlace: req.user.myPlace
   });
 });
 
