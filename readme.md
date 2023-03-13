@@ -59,14 +59,20 @@ npm run dev
 
 ## 구현 또는 수정 예정사항(TODO 📆)
 
-- 전체적인 UI 수정
+- 전체적인 UI 디자인 수정을 통한 사용성 향상
 - 클라이언트 구조 및 코드 리팩토링
-  - 다른 react 프로젝트 구조 참고
-  - typeScript 보다 적절히 적용
-  - style 변수, type 변수 등의 코드 분리
+  - 다른 react 프로젝트 구조 참고해 디자인 패턴 적용
+  - typeScript 보다 적절히 적용(any로 선언한 type 삭제 및 구체화)
+  - style 변수, type 변수 등의 코드 분리(all as styled-components)
+  - 복잡한 로직 간결하게
 - 기능 고도화
-  - 지도 API
-  - 통계 기능
+  - 지도 API(마커라는 이름답게 지도 상에서 활용할 수 있는 기능 추가)
+  - 통계 기능 추가
 - 최적화
-  - lighthouse
+  - lighthouse 점수 올리기(<프론트엔드 성능 최적화 가이드> 도서 기반 성능 최적화 방안 적용)
   - 모바일 대응
+- 새로운 기술 도입
+  - react-query 활용
+- 배포 및 테스트 자동화 도구 활용
+  - Jest
+  - CI/CD
