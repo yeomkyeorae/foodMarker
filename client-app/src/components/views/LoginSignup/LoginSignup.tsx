@@ -1,21 +1,7 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import Login from "./Login";
 import Signup from "./Signup";
-import background from "../../../assets/loginBackground.jpeg";
-
-
-const Section = styled.section`
-  width: 100%;
-  height: 100%;
-  margin: auto;
-  background: url(${background}) no-repeat 50% 50%;
-  top: 0;
-  display: table;
-  background-size: cover;
-  font-family: "Century Gothic", sans-serif;
-`;
-
+import * as S from "./LoginSignup.style";
 
 function LoginSignup(): React.ReactElement {
   const [toggle, setToggle] = useState(true);
@@ -23,9 +9,9 @@ function LoginSignup(): React.ReactElement {
   const loginOrSignup: React.ReactElement = toggle ? <Login toggle={toggle} setToggle={setToggle} /> : <Signup toggle={toggle} setToggle={setToggle} />;
 
   return (
-    <Section>
+    <S.Section>
       <div>{loginOrSignup}</div>
-    </Section>
+    </S.Section>
   );
 }
 

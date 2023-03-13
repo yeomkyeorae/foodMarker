@@ -28,3 +28,24 @@ body {
 .marker:hover {
   color: #4caf50;
 }
+
+._loading_overlay_wrapper {
+  display: flex;
+  width: 100%;
+}
+
+._loading_overlay_overlay {
+  justify-content: center;
+}
+
+/*
+on ChoizaListItem.tsx
+*/
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

@@ -2,81 +2,14 @@ import React, { useState, useEffect, useRef, Dispatch, SetStateAction } from "re
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../../_actions/user_action";
 import { withRouter, RouteComponentProps } from "react-router-dom";
-import styled from "styled-components";
 import AlertModal from "../../containers/AlertModal/AlertModal";
 import { LocationCode } from "../../../library/def";
-
-
-const SignupBox = styled.div`
-  width: 280px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  text-align: center;
-`;
-
-const SignupBoxH1 = styled.h1`
-  float: left;
-  font-size: 40px;
-  border-bottom: 6px solid #e56717;
-  margin-bottom: 50px;
-  padding: 13px 0;
-  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
-`;
-
-const TextBox = styled.div`
-  width: 100%;
-  overflow: hidden;
-  font-size: 20px;
-  padding: 8px 0;
-  margin: 8px 0;
-  border-bottom: 3px solid #e56717;
-`;
-
-const Input = styled.input`
-  border: none;
-  outline: none;
-  background: none;
-  color: white;
-  font-size: 18px;
-  width: 80%;
-  float: left;
-  margin: 0 10px;
-  ::placeholder {
-    color: white;
-    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
-  }
-`;
-
-const Btn = styled.button`
-  border-radius: 9px;
-  width: 100%;
-  background: #e56717;
-  border: 3px solid #e56717;
-  color: white;
-  padding: 5px;
-  font-size: 18px;
-  cursor: pointer;
-  margin: 12px 0;
-  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
-  &:hover {
-    color: #e56717;
-  }
-`;
-
-const Span = styled.span`
-  &:hover {
-    cursor: pointer;
-  }
-`;
+import * as S from "./Signup.style";
 
 interface Props extends RouteComponentProps {
   toggle: boolean;
   setToggle: Dispatch<SetStateAction<boolean>>;
 }
-
 
 function Signup({ toggle, setToggle }: Props): React.ReactElement {
   const [email, setEmail] = useState("");
@@ -160,53 +93,53 @@ function Signup({ toggle, setToggle }: Props): React.ReactElement {
   };
 
   return (
-    <SignupBox>
-      <SignupBoxH1>회원가입</SignupBoxH1>
+    <S.SignupBox>
+      <S.SignupBoxH1>회원가입</S.SignupBoxH1>
       <form onSubmit={onSubmitHandler}>
-        <TextBox>
-          <Input
+        <S.TextBox>
+          <S.Input
             type="email"
             value={email}
             placeholder="이메일"
             onChange={onEmailHandler}
             ref={inputRef}
           />
-        </TextBox>
-        <TextBox>
-          <Input
+        </S.TextBox>
+        <S.TextBox>
+          <S.Input
             type="text"
             value={name}
             placeholder="이름"
             onChange={onNameHandler}
             autoComplete="off"
           />
-        </TextBox>
-        <TextBox>
-          <Input
+        </S.TextBox>
+        <S.TextBox>
+          <S.Input
             type="password"
             value={password}
             placeholder="비밀번호"
             onChange={onPasswordHandler}
             autoComplete="new-password"
           />
-        </TextBox>
-        <TextBox>
-          <Input
+        </S.TextBox>
+        <S.TextBox>
+          <S.Input
             type="password"
             value={confirmPassword}
             placeholder="비밀번호 확인"
             onChange={onConfirmedPassword}
           />
-        </TextBox>
-        <Btn type="submit">회원가입</Btn>
+        </S.TextBox>
+        <S.Btn type="submit">회원가입</S.Btn>
         {
           alertToggle ?
             <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
             null
         }
       </form>
-      <Span onClick={onClickHandler}>로그인</Span>
-    </SignupBox>
+      <S.Span onClick={onClickHandler}>로그인</S.Span>
+    </S.SignupBox>
   );
 }
 

@@ -8,40 +8,9 @@ import {
 import UpdateModal from "../../containers/WishUpdateModal/UpdateModal";
 import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
 import { BsThreeDots } from "react-icons/bs";
-import styled from "styled-components";
 import AlertModal from "../../containers/AlertModal/AlertModal";
 import { WishListType } from "../../interfaces/WishList";
-
-
-const Item = styled.li`
-  display: block;
-  clear: both;
-  counter-increment: list;
-  font-size: 1.1rem;
-  line-height: 1.375;
-  position: relative;
-  border: 2px solid black;
-  margin-bottom: 5px;
-`;
-
-const HeadLine = styled.span`
-  padding: 0;
-  margin-left: 25px;
-  margin-bottom: 0;
-  font-size: 2vw;
-`;
-
-const Created = styled.span`
-  padding: 0;
-  margin-bottom: 0;
-  font-size: 1vw;
-`;
-
-const Address = styled.span`
-  padding: 0;
-  margin-bottom: 0;
-  font-size: 0.8vw;
-`;
+import * as S from "./WishListItem.style";
 
 const CustomToggle = React.forwardRef(({ children, onClick }: { children: React.ReactNode, onClick: React.MouseEventHandler<any> }, ref: any) => (
   <span
@@ -101,7 +70,7 @@ function WishListItem({ wishListId, wishListName, wishListAddress, wishListCreat
   };
 
   return (
-    <Item key={wishListId} style={{ width: "100%" }}>
+    <S.Item key={wishListId} style={{ width: "100%" }}>
       <div style={{ float: "right", marginRight: "10px" }}>
         <Dropdown>
           <Dropdown.Toggle as={CustomToggle}><BsThreeDots /></Dropdown.Toggle>
@@ -117,9 +86,9 @@ function WishListItem({ wishListId, wishListName, wishListAddress, wishListCreat
           </Dropdown.Menu>
         </Dropdown>
       </div>
-      <HeadLine>{wishListName}</HeadLine><br />
-      <Created>{new Date(wishListCreated).toLocaleString()}</Created> <br />
-      <Address>{wishListAddress}</Address> <br />
+      <S.HeadLine>{wishListName}</S.HeadLine><br />
+      <S.Created>{new Date(wishListCreated).toLocaleString()}</S.Created> <br />
+      <S.Address>{wishListAddress}</S.Address> <br />
       <UpdateModal
         toggle={popUpToggle}
         setToggle={setPopUpToggle}
@@ -142,7 +111,7 @@ function WishListItem({ wishListId, wishListName, wishListAddress, wishListCreat
           <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
           null
       }
-    </Item>
+    </S.Item>
   );
 }
 

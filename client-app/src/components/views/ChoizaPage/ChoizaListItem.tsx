@@ -8,10 +8,8 @@ import {
   deleteVisitedChoizaRoad
 } from "../../../_actions/choizaRoad_action";
 import { ChoizaRoad, VisitedChoizaRoads } from '../../interfaces/ChoizaRoad';
-import "./ChoizaListItem.css";
 import AlertModal from '../../containers/AlertModal/AlertModal';
 import deleteImage from "../../../assets/deleteImage.png";
-
 
 interface Visited {
   isVisited: boolean;

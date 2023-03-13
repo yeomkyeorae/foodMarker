@@ -3,26 +3,12 @@ import { withRouter, RouteComponentProps } from "react-router-dom";
 import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import ChoizaList from "./ChoizaList";
-import styled from "styled-components";
 import { NavMenuType, ChoizaRoadSeason } from '../../../library/def';
-
-
-const Div = styled.div`
-  display: inline-block;
-  width: 10rem;
-  color: ${props => props.color === 'true' ? '#ff6700' : 'black'};
-  &:hover {
-    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
-    color: #ff6700;
-  }
-  cursor: pointer;
-`;
-
+import * as S from "./ChoizaPage.style";
 
 interface Props {
   history: RouteComponentProps["history"];
 }
-
 
 function ChoizaPage({ history }: Props): React.ReactElement {
   const [season, setSeason] = useState<number>(ChoizaRoadSeason.Seven);
@@ -46,14 +32,14 @@ function ChoizaPage({ history }: Props): React.ReactElement {
       >
         <NavbarComp history={history} menu={NavMenuType.Choizaroad} />
         <hr />
-        <Div color={`${season === ChoizaRoadSeason.One}`} onClick={() => onClickHandler("시즌1", ChoizaRoadSeason.One)}>시즌1</Div>
-        <Div color={`${season === ChoizaRoadSeason.Two}`} onClick={() => onClickHandler("시즌2", ChoizaRoadSeason.Two)}>시즌2</Div>
-        <Div color={`${season === ChoizaRoadSeason.Three}`} onClick={() => onClickHandler("시즌3", ChoizaRoadSeason.Three)}>시즌3</Div>
-        <Div color={`${season === ChoizaRoadSeason.Four}`} onClick={() => onClickHandler("시즌4", ChoizaRoadSeason.Four)}>시즌4</Div>
-        <Div color={`${season === ChoizaRoadSeason.InTheHouse}`} onClick={() => onClickHandler("인더하우스", ChoizaRoadSeason.InTheHouse)}>인더하우스</Div>
-        <Div color={`${season === ChoizaRoadSeason.Five}`} onClick={() => onClickHandler("시즌5", ChoizaRoadSeason.Five)}>시즌5</Div>
-        <Div color={`${season === ChoizaRoadSeason.Six}`} onClick={() => onClickHandler("시즌6", ChoizaRoadSeason.Six)}>시즌6</Div>
-        <Div color={`${season === ChoizaRoadSeason.Seven}`} onClick={() => onClickHandler("시즌7", ChoizaRoadSeason.Seven)}>시즌7</Div>
+        <S.SeasonDiv color={`${season === ChoizaRoadSeason.One}`} onClick={() => onClickHandler("시즌1", ChoizaRoadSeason.One)}>시즌1</S.SeasonDiv>
+        <S.SeasonDiv color={`${season === ChoizaRoadSeason.Two}`} onClick={() => onClickHandler("시즌2", ChoizaRoadSeason.Two)}>시즌2</S.SeasonDiv>
+        <S.SeasonDiv color={`${season === ChoizaRoadSeason.Three}`} onClick={() => onClickHandler("시즌3", ChoizaRoadSeason.Three)}>시즌3</S.SeasonDiv>
+        <S.SeasonDiv color={`${season === ChoizaRoadSeason.Four}`} onClick={() => onClickHandler("시즌4", ChoizaRoadSeason.Four)}>시즌4</S.SeasonDiv>
+        <S.SeasonDiv color={`${season === ChoizaRoadSeason.InTheHouse}`} onClick={() => onClickHandler("인더하우스", ChoizaRoadSeason.InTheHouse)}>인더하우스</S.SeasonDiv>
+        <S.SeasonDiv color={`${season === ChoizaRoadSeason.Five}`} onClick={() => onClickHandler("시즌5", ChoizaRoadSeason.Five)}>시즌5</S.SeasonDiv>
+        <S.SeasonDiv color={`${season === ChoizaRoadSeason.Six}`} onClick={() => onClickHandler("시즌6", ChoizaRoadSeason.Six)}>시즌6</S.SeasonDiv>
+        <S.SeasonDiv color={`${season === ChoizaRoadSeason.Seven}`} onClick={() => onClickHandler("시즌7", ChoizaRoadSeason.Seven)}>시즌7</S.SeasonDiv>
         <hr />
         <h2 style={{ marginTop: "50px" }}>
           {seasonName}

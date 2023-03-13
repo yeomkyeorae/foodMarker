@@ -6,23 +6,11 @@ import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import { Button } from "react-bootstrap";
 import { NavMenuType } from '../../../library/def';
-import styled from "styled-components";
+import * as S from "./WishPage.style";
 
 interface Props {
   history: RouteComponentProps["history"];
 }
-
-const MainDiv = styled.div`
-  width: 100%; 
-  height: 100%;
-  text-align: center;
-  position: absolute;
-  top: 10px;
-  left: 0px;
-  right: 0px;
-  overflow: auto;
-`;
-
 
 function WishPage({ history }: Props): React.ReactElement {
   const [Toggle, setToggle] = useState(true);
@@ -51,7 +39,7 @@ function WishPage({ history }: Props): React.ReactElement {
   }
 
   return (
-    <MainDiv>
+    <S.MainDiv>
       <NavbarComp history={history} menu={NavMenuType.Wish} />
       <hr />
       <div>
@@ -66,7 +54,7 @@ function WishPage({ history }: Props): React.ReactElement {
       <hr />
       {MenuComponent}
       <Footer marginTop={5} />
-    </MainDiv>
+    </S.MainDiv>
   );
 }
 

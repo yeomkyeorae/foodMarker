@@ -10,72 +10,11 @@ import NavbarComp from "../Navbar/NavbarComp";
 import KakaoMap from "../../containers/KakaoMap/KakaoMap";
 import Footer from "../Footer/Footer";
 import "@brainhubeu/react-carousel/lib/style.css";
-import styled from "styled-components";
 import { Restaurant, RestaurantDetail } from '../../interfaces/Restaurant';
 import { WishListType } from '../../interfaces/WishList';
 import { NavMenuType, LocationCodeInfo, LocationCode } from '../../../library/def';
 import { BiUser, BiMapPin, BiMale } from "react-icons/bi";
-
-
-const H2 = styled.h2`
-  font-size: 2rem;
-`;
-
-const H3 = styled.h3`
-  font-size: 1.5rem;
-`
-
-const FoodMarkerTitle = styled.div`
-  display: flex;
-  height: 10vh;
-  justify-content: center;
-  align-items: center;
-  @media screen and (max-width: 992px) {
-    height: 20vh;
-  }
-`;
-
-const FoodMarkerExplanation = styled.div`
-  height: 30vh;
-  display: flex;
-  justify-content: center;
-  @media screen and (max-width: 992px) {
-    display: none;
-  }
-`;
-
-const FoodMarkerExplanationTitle = styled.span`
-  font-weight: 200;
-  font-size: 1.5rem;
-  color: black;
-  &:hover {
-    color: #ff6700;
-  }
-`;
-
-const OrderList = styled.ol`
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  height: 80%;
-  margin: 0;
-  padding: 0;
-`;
-
-const List = styled.li`
-  flex: 20%;
-  @media screen and (max-width: 992px) {
-    flex: 25%;
-  }
-  @media screen and (max-width: 630px) {
-    flex: 50%;
-  }
-  @media screen and (max-width: 384px) {
-    flex: 100%;
-  }
-`;
+import * as S from "./MainPage.style";
 
 interface Props {
   history: RouteComponentProps["history"];
@@ -128,19 +67,19 @@ function MainPage({ history }: Props): React.ReactElement {
       >
         <NavbarComp history={history} menu={NavMenuType.Main} />
         <div style={{ backgroundColor: "#FAF7F2" }}>
-          <FoodMarkerTitle>
+          <S.FoodMarkerTitle>
             <div>
               <span style={{ fontWeight: "300", fontSize: "2rem", textAlign: "center" }}>
                 푸드마커로 맛집의 지도를 완성해 보세요
               </span>
             </div>
-          </FoodMarkerTitle>
-          <FoodMarkerExplanation>
+          </S.FoodMarkerTitle>
+          <S.FoodMarkerExplanation>
             <div style={{ margin: "auto", textAlign: "left" }}>
               <Link to={{ pathname: "/marker", state: { userId, menu: 2 } }} style={{ textDecoration: "none" }}>
-                <FoodMarkerExplanationTitle>
+                <S.FoodMarkerExplanationTitle>
                   <BiUser />나의 맛집
-                </FoodMarkerExplanationTitle>
+                </S.FoodMarkerExplanationTitle>
               </Link>
               <br />
               <span>당신이 최근에 방문한 최고의 맛집은 어디인가요?</span>
@@ -149,9 +88,9 @@ function MainPage({ history }: Props): React.ReactElement {
             </div>
             <div style={{ margin: "auto", textAlign: "left" }}>
               <Link to={{ pathname: "/wish", state: { userId, menu: 3 } }} style={{ textDecoration: "none" }}>
-                <FoodMarkerExplanationTitle>
+                <S.FoodMarkerExplanationTitle>
                   <BiMapPin />위시 맛집
-                </FoodMarkerExplanationTitle>
+                </S.FoodMarkerExplanationTitle>
               </Link>
               <br />
               <span>시선을 사로잡은 맛집은 어디인가요?</span>
@@ -160,9 +99,9 @@ function MainPage({ history }: Props): React.ReactElement {
             </div>
             <div style={{ margin: "auto", textAlign: "left" }}>
               <Link to={{ pathname: "/choizaroad", state: { userId, menu: 4 } }} style={{ textDecoration: "none" }}>
-                <FoodMarkerExplanationTitle>
+                <S.FoodMarkerExplanationTitle>
                   <BiMale />최자로드
-                </FoodMarkerExplanationTitle>
+                </S.FoodMarkerExplanationTitle>
               </Link>
               <br />
               <span>최자로드에 등장한 맛집이 궁금하신가요?</span>
@@ -171,11 +110,11 @@ function MainPage({ history }: Props): React.ReactElement {
               <br />
               <span></span>
             </div>
-          </FoodMarkerExplanation>
+          </S.FoodMarkerExplanation>
         </div>
         <div style={{ padding: "5px" }}>
-          <H2>나의 맛집 지도</H2>
-          <H3>현재 설정 지역: {LocationCodeInfo[myPlace].locationName}</H3>
+          <S.H2>나의 맛집 지도</S.H2>
+          <S.H3>현재 설정 지역: {LocationCodeInfo[myPlace].locationName}</S.H3>
         </div>
         <div>
           <KakaoMap
@@ -196,11 +135,11 @@ function MainPage({ history }: Props): React.ReactElement {
           }}
         >
           <div style={{ paddingTop: "20px", marginBottom: "20px" }}>
-            <H2>최근에 등록된 나의 맛집들</H2>
+            <S.H2>최근에 등록된 나의 맛집들</S.H2>
           </div>
-          <OrderList>
+          <S.OrderList>
             {tenRestaurants.map((el, ix) => (
-              <List key={ix}>
+              <S.List key={ix}>
                 <div>
                   <img
                     src={el.imgURL.split(",")[0]}
@@ -228,9 +167,9 @@ function MainPage({ history }: Props): React.ReactElement {
                     </p>
                   </div>
                 </div>
-              </List>
+              </S.List>
             ))}
-          </OrderList>
+          </S.OrderList>
         </div>
         <div
           style={{
@@ -239,11 +178,11 @@ function MainPage({ history }: Props): React.ReactElement {
           }}
         >
           <div style={{ paddingTop: "20px", marginBottom: "20px" }}>
-            <H2>최근에 등록된 위시 맛집들</H2>
+            <S.H2>최근에 등록된 위시 맛집들</S.H2>
           </div>
-          <OrderList>
+          <S.OrderList>
             {tenWishList.map((wishListItem, ix) => (
-              <List key={ix}>
+              <S.List key={ix}>
                 <div style={{ marginBottom: "5px" }}>
                   <p style={{ fontWeight: "500", fontSize: "1.5rem", margin: "0", whiteSpace: "nowrap" }}>
                     {wishListItem.name}
@@ -255,9 +194,9 @@ function MainPage({ history }: Props): React.ReactElement {
                     {wishListItem.username}
                   </p>
                 </div>
-              </List>
+              </S.List>
             ))}
-          </OrderList>
+          </S.OrderList>
         </div>
         <Footer />
       </div>

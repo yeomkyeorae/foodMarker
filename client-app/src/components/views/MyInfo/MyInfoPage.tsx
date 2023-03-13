@@ -7,36 +7,12 @@ import { readWishList, readWishListCount } from '../../../_actions/wishList_acti
 import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import MyCalendar from "./MyCalendar";
-import styled from "styled-components";
 import { Button } from "react-bootstrap";
 import { RestaurantDetail } from "../../interfaces/Restaurant";
 import { WishListType } from "../../interfaces/WishList";
 import { LocationCode, NavMenuType } from "../../../library/def";
 import AlertModal from "../../containers/AlertModal/AlertModal";
-
-
-const InfoBlock = styled.div<{ backgroundColor?: string; }>`
-  width: 25%;
-  border-radius: 30px;
-  background-color: ${props => props.backgroundColor};
-  color: white;
-  margin: 10px;
-`;
-
-const InfoTitle = styled.h3`
-  margin-top: 10px;
-`;
-
-const InfoContent = styled.span`
-  font-size: 1.5rem;
-`;
-
-const ColorBar = styled.div<{ backgroundColor?: string; }>`
-  margin-right: 2px;
-  background-color: ${props => props.backgroundColor};
-  color: white;
-  width: 20%;
-`;
+import * as S from "./MyInfoPage.style";
 
 const colorBar = [
   { color: "gold", text: "평점 5점" },
@@ -131,40 +107,40 @@ function MyInfoPage({ history }: Props): React.ReactElement {
           <div style={{ marginBottom: "30px" }}>
             <h3>맛집 통계</h3>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <InfoBlock backgroundColor={"#5B6DCD"}>
-                <InfoTitle>등록한 나의 방문 맛집 개수</InfoTitle>
+              <S.InfoBlock backgroundColor={"#5B6DCD"}>
+                <S.InfoTitle>등록한 나의 방문 맛집 개수</S.InfoTitle>
                 <div style={{ height: "100px" }}>
-                  <InfoContent>{myRestaurantsCount}개</InfoContent>
+                  <S.InfoContent>{myRestaurantsCount}개</S.InfoContent>
                 </div>
-              </InfoBlock>
-              <InfoBlock backgroundColor={"#FFD703"}>
-                <InfoTitle>등록한 나의 위시 맛집 개수</InfoTitle>
+              </S.InfoBlock>
+              <S.InfoBlock backgroundColor={"#FFD703"}>
+                <S.InfoTitle>등록한 나의 위시 맛집 개수</S.InfoTitle>
                 <div style={{ height: "100px" }}>
-                  <InfoContent>{myWishListCount}개</InfoContent>
+                  <S.InfoContent>{myWishListCount}개</S.InfoContent>
                 </div>
-              </InfoBlock>
+              </S.InfoBlock>
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <InfoBlock backgroundColor={"#60F5D0"}>
-                <InfoTitle>지역별 나의 방문 맛집</InfoTitle>
+              <S.InfoBlock backgroundColor={"#60F5D0"}>
+                <S.InfoTitle>지역별 나의 방문 맛집</S.InfoTitle>
                 <div style={{ height: "100px", display: "flex", flexDirection: "column" }}>
                   {
                     Object.keys(myRestaurantsCntObj).map(area =>
-                      <InfoContent key={area}>{area} {myRestaurantsCntObj[area]}개</InfoContent>
+                      <S.InfoContent key={area}>{area} {myRestaurantsCntObj[area]}개</S.InfoContent>
                     )
                   }
                 </div>
-              </InfoBlock>
-              <InfoBlock backgroundColor={"#FF91A4"}>
-                <InfoTitle>지역별 나의 위시 맛집</InfoTitle>
+              </S.InfoBlock>
+              <S.InfoBlock backgroundColor={"#FF91A4"}>
+                <S.InfoTitle>지역별 나의 위시 맛집</S.InfoTitle>
                 <div style={{ height: "100px", display: "flex", flexDirection: "column" }}>
                   {
                     Object.keys(myWishlistsCntObj).map(area =>
-                      <InfoContent key={area}>{area} {myWishlistsCntObj[area]}개</InfoContent>
+                      <S.InfoContent key={area}>{area} {myWishlistsCntObj[area]}개</S.InfoContent>
                     )
                   }
                 </div>
-              </InfoBlock>
+              </S.InfoBlock>
             </div>
           </div>
           <hr />
@@ -172,7 +148,7 @@ function MyInfoPage({ history }: Props): React.ReactElement {
             <h3>나의 방문 맛집 달력</h3>
             <div style={{ display: "flex" }}>
               {
-                colorBar.map((el, index) => <ColorBar key={`colorBar` + index} backgroundColor={el.color}>{el.text}</ColorBar>)
+                colorBar.map((el, index) => <S.ColorBar key={`colorBar` + index} backgroundColor={el.color}>{el.text}</S.ColorBar>)
               }
             </div>
             <MyCalendar restaurants={myRestaurants} />

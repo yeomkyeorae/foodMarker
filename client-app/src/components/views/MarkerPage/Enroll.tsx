@@ -10,22 +10,11 @@ import { registerWishList } from "../../../_actions/wishList_action";
 import MapForEnroll from "../../containers/KakaoMap/MapForEnroll";
 import { Button } from "react-bootstrap";
 import ReactStars from "react-rating-stars-component";
-import styled from "styled-components";
 import AlertModal from "../../containers/AlertModal/AlertModal";
 import LoadingOverlayDiv from "../../containers/LoadingOverlay/LoadingOverlay";
 import ImageInput from "../../containers/Input/ImageInput";
 import TextInput from "../../containers/Input/TextInput";
-
-
-const InputTitle = styled.div<{ fontSize?: string; borderBottom?: string; }>`
-  max-width: 700px;
-  margin: auto;
-  font-weight: bold;
-  font-size: ${props => props.fontSize ? props.fontSize : "1rem"};
-  text-align: left;
-  border-bottom: ${props => props.borderBottom ? props.borderBottom : '0.5px'} solid black;
-  margin-bottom: 10px;
-`;
+import * as S from "./Enroll.style";
 
 interface Props extends RouteComponentProps {
   parentCompName: string;
@@ -289,7 +278,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
         style={{ display: "inline-block", width: "90%" }}
       >
         <div>
-          <InputTitle fontSize={"1.5rem"} borderBottom={"2px"}>맛집 검색</InputTitle>
+          <S.InputTitle fontSize={"1.5rem"} borderBottom={"2px"}>맛집 검색</S.InputTitle>
           <TextInput
             value={searchName}
             placeholder={""}
@@ -326,7 +315,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
 
       <form onSubmit={onSubmitHandler} onKeyPress={e => { e.key === 'Enter' && e.preventDefault() }} encType="multipart/form-data">
         <div style={{ margin: "5px" }}>
-          <InputTitle>맛집 이름 & 주소(검색해 선택해 주세요)</InputTitle>
+          <S.InputTitle>맛집 이름 & 주소(검색해 선택해 주세요)</S.InputTitle>
           <TextInput
             value={name}
             placeholder="맛집 이름"
@@ -349,7 +338,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
                 margin: "5px"
               }}
             >
-              <InputTitle>별점</InputTitle>
+              <S.InputTitle>별점</S.InputTitle>
               <div style={{ display: "inline-block" }}>
                 <ReactStars
                   count={5}
@@ -363,7 +352,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
             </div>
 
             <div style={{ margin: "5px" }}>
-              <InputTitle>방문 일시</InputTitle>
+              <S.InputTitle>방문 일시</S.InputTitle>
               <input
                 type="date"
                 value={visitedDate}
@@ -385,7 +374,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
 
             <div>
               <div style={{ margin: "5px" }}>
-                <InputTitle>메뉴</InputTitle>
+                <S.InputTitle>메뉴</S.InputTitle>
                 <TextInput
                   value={newMenuItem}
                   placeholder="메뉴 입력 버튼 클릭"
@@ -421,7 +410,7 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
               : null}
 
             <div style={{ margin: "5px" }}>
-              <InputTitle>이미지 업로드</InputTitle>
+              <S.InputTitle>이미지 업로드</S.InputTitle>
               <div style={{ display: "inline-block" }}>
                 <ImageInput
                   style={{ width: "70%" }}

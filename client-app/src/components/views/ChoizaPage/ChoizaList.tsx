@@ -2,27 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { Row } from "react-bootstrap";
-import styled from "styled-components";
 import ChoizaListItem from "./ChoizaListItem";
 import {
   readChoizaRoad,
   readVisitedChoizaRoad
 } from "../../../_actions/choizaRoad_action";
 import { ChoizaRoad, VisitedChoizaRoads } from '../../interfaces/ChoizaRoad'
-
-const ChoizaRoads = styled.div`
-  width: 95%;
-  height: 100%;
-  display: inline-block;
-  margin-top: 20px;
-`;
-
-const List = styled.ol`
-  list-style: none;
-  width: 100%;
-  max-width: 100%;
-  padding: 0px;
-`;
+import * as S from "./ChoizaList.style";
 
 interface Props extends RouteComponentProps {
   season: number;
@@ -48,8 +34,8 @@ function ChoizaList(props: Props): React.ReactElement {
   }, [season]);
 
   return (
-    <ChoizaRoads>
-      <List>
+    <S.ChoizaRoads>
+      <S.List>
         <Row className="show-grid">
           {choizaRoads.map(choizaRoad => (
             <ChoizaListItem
@@ -60,8 +46,8 @@ function ChoizaList(props: Props): React.ReactElement {
             ></ChoizaListItem>
           ))}
         </Row>
-      </List>
-    </ChoizaRoads>
+      </S.List>
+    </S.ChoizaRoads>
   );
 }
 

@@ -4,28 +4,8 @@ import { useDispatch } from "react-redux";
 import { readRestaurantsCount } from "../../../_actions/restaurant_action";
 import RestaurantListItem from "./RestaurantListItem";
 import { Row } from "react-bootstrap";
-import styled from "styled-components";
 import useFetch from "./useFetch";
-
-
-const Div = styled.div`
-  width: 90%;
-  display: inline-block;
-  height: 80vh;
-`;
-
-const Restaurants = styled.div`
-  width: 100%;
-  display: inline-block;
-  overflow-y: scroll;
-`;
-
-const List = styled.ol`
-  list-style: none;
-  width: 95%;
-  max-width: 100%;
-`;
-
+import * as S from "./RestaurantList.style";
 
 function RestaurantList(): React.ReactElement {
   const dispatch = useDispatch<any>();
@@ -66,9 +46,9 @@ function RestaurantList(): React.ReactElement {
 
   return (
     <div style={{ display: "inline-block", width: "100%" }}>
-      <Div>
-        <Restaurants>
-          <List>
+      <S.Div>
+        <S.Restaurants>
+          <S.List>
             <Row className="show-grid">
               {restaurantList.map((restaurant, index) => (
                 <RestaurantListItem
@@ -79,12 +59,12 @@ function RestaurantList(): React.ReactElement {
                 ></RestaurantListItem>
               ))}
             </Row>
-          </List>
-        </Restaurants>
+          </S.List>
+        </S.Restaurants>
         {loading && <p>Loading...</p>}
         {error && <p>페이지 끝입니다!</p>}
         <div ref={loader} />
-      </Div>
+      </S.Div>
     </div>
   );
 }
