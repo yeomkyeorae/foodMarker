@@ -89,7 +89,7 @@ function KakaoMapCoords(props: Props): React.ReactElement {
                 username: username,
                 name: place.place_name,
                 address: place.address_name,
-                created: new Date().toLocaleString()
+                created: new Date().toISOString()
               };
               dispatch(registerWishList(body)).then(()=> {
                 setAlertToggle(true);
