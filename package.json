@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "start": "NODE_ENV=production nodemon run start",
     "dev": "NODE_ENV=dev concurrently \"npm run dev:server\" \"npm run dev:client\"",

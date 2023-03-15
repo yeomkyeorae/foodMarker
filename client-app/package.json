@@ -2,6 +2,9 @@
   "name": "client-app",
   "version": "0.1.0",
   "main": "index.js",
+  "engines": {
+    "node": "16.x"
+  },
   "private": true,
   "dependencies": {
     "@babel/runtime": "^7.15.4",
