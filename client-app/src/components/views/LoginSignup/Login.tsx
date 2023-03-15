@@ -5,6 +5,7 @@ import { withRouter, RouteComponentProps } from "react-router-dom";
 import './Login.css';
 import AlertModal from "../../containers/AlertModal/AlertModal";
 import * as S from "./Login.style";
+import { encryptWithAES } from "../../../library/utils";
 
 interface Props extends RouteComponentProps {
   setToggle: Dispatch<SetStateAction<boolean>>;
@@ -40,7 +41,8 @@ function Login({ setToggle, toggle, history }: Props): React.ReactElement {
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const body = { email, password };
+    const encryptedPwd = encryptWithAES(password)
+    const body = { email, password: encryptedPwd };
 
     dispatch(loginUser(body)).then(response => {
       if (response.payload.loginSuccess) {
