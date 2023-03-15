@@ -5,6 +5,7 @@ import { withRouter, RouteComponentProps } from "react-router-dom";
 import AlertModal from "../../containers/AlertModal/AlertModal";
 import { LocationCode } from "../../../library/def";
 import * as S from "./Signup.style";
+import { encryptWithAES } from "../../../library/utils";
 
 interface Props extends RouteComponentProps {
   toggle: boolean;
@@ -80,7 +81,8 @@ function Signup({ toggle, setToggle }: Props): React.ReactElement {
       return;
     }
 
-    const body = { email, name, password, myPlace: LocationCode.Sejong };
+    const encryptedPwd = encryptWithAES(password);
+    const body = { email, name, password: encryptedPwd, myPlace: LocationCode.Sejong };
 
     dispatch(registerUser(body)).then(response => {
       if (response.payload.success) {

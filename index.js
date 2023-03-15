@@ -15,7 +15,7 @@ const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
 const dotenv = require("dotenv");
-const { type } = require("os");
+const { decryptWithAES } = require("./library/utils");
 
 dotenv.config({ path: './.env'});
 
@@ -134,7 +134,13 @@ app.get("/api/hello", (req, res) => {
 // singup
 app.post("/api/users/signup", (req, res) => {
   // 회원가입할 떄 필요한 정보들을 client에서 가져오면 그것들을 DB에 넣음
-  const user = User(req.body);
+  
+  const newUserInfo = {
+    ...req.body,
+    password: decryptWithAES(req.body.password)
+  };
+
+  const user = User(newUserInfo);
   user.save((err, userInfo) => {
     if (err)
       return res.json({
@@ -158,7 +164,7 @@ app.post("/api/users/login", (req, res) => {
       });
     }
     // 2. 데이터베이스에 이메일이 있으면 비밀번호가 맞는지 확인
-    user.comparePassword(req.body.password, (err, isMatch) => {
+    user.comparePassword(decryptWithAES(req.body.password), (err, isMatch) => {
       if (!isMatch) {
         return res.json({
           loginSuccess: false,
