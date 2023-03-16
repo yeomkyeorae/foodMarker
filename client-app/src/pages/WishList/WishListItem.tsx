@@ -4,12 +4,12 @@ import { withRouter, RouteComponentProps } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import {
   deleteWishList
-} from "../../../_actions/wishList_action";
-import UpdateModal from "../../containers/WishUpdateModal/UpdateModal";
-import KakaoMapModal from "../../containers/KakaoMap/KakaoMapModal";
+} from "../../_actions/wishList_action";
+import UpdateModal from "../../components/containers/WishUpdateModal/UpdateModal";
+import KakaoMapModal from "../../components/containers/KakaoMap/KakaoMapModal";
 import { BsThreeDots } from "react-icons/bs";
-import AlertModal from "../../containers/AlertModal/AlertModal";
-import { WishListType } from "../../interfaces/WishList";
+import AlertModal from "../../components/containers/AlertModal/AlertModal";
+import { WishListType } from "../../components/interfaces/WishList";
 import * as S from "./WishListItem.style";
 
 const CustomToggle = React.forwardRef(({ children, onClick }: { children: React.ReactNode, onClick: React.MouseEventHandler<any> }, ref: any) => (

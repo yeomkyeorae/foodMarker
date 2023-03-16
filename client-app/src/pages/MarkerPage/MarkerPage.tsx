@@ -5,7 +5,7 @@ import Enroll from "./Enroll";
 import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import { Button } from "react-bootstrap";
-import { NavMenuType } from '../../../library/def';
+import { NavMenuType } from '../../library/def';
 
 interface Props {
   history: RouteComponentProps["history"];

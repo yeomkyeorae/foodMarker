@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import background from "../../../assets/loginBackground.jpeg";
+import background from "../../assets/loginBackground.jpeg";
 
 export const Section = styled.section`
   width: 100%;

@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
-import KakaoMapCoords from "../../containers/KakaoMap/KakaoMapCoords";
+import KakaoMapCoords from "../../components/containers/KakaoMap/KakaoMapCoords";
 import SubPage from "./SubPage";
 import LoadingPage from "./LoadingPage";
-import AlertModal from "../../containers/AlertModal/AlertModal";
-import { NavMenuType } from '../../../library/def';
+import AlertModal from "../../components/containers/AlertModal/AlertModal";
+import { NavMenuType } from '../../library/def';
 
 interface Props {
   history: RouteComponentProps["history"]

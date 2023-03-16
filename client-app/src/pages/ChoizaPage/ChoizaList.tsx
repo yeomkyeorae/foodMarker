@@ -6,8 +6,8 @@ import ChoizaListItem from "./ChoizaListItem";
 import {
   readChoizaRoad,
   readVisitedChoizaRoad
-} from "../../../_actions/choizaRoad_action";
-import { ChoizaRoad, VisitedChoizaRoads } from '../../interfaces/ChoizaRoad'
+} from "../../_actions/choizaRoad_action";
+import { ChoizaRoad, VisitedChoizaRoads } from '../../components/interfaces/ChoizaRoad'
 import * as S from "./ChoizaList.style";
 
 interface Props extends RouteComponentProps {

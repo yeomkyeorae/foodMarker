@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import { useDispatch } from "react-redux";
-import { registerUser } from "../../../_actions/user_action";
+import { registerUser } from "../../_actions/user_action";
 import { withRouter, RouteComponentProps } from "react-router-dom";
-import AlertModal from "../../containers/AlertModal/AlertModal";
-import { LocationCode } from "../../../library/def";
+import AlertModal from "../../components/containers/AlertModal/AlertModal";
+import { LocationCode } from "../../library/def";
 import * as S from "./Signup.style";
-import { encryptWithAES } from "../../../library/utils";
+import { encryptWithAES } from "../../library/utils";
 
 interface Props extends RouteComponentProps {
   toggle: boolean;

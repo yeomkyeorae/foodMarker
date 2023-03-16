@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { readRestaurantsCount } from "../../../_actions/restaurant_action";
+import { readRestaurantsCount } from "../../_actions/restaurant_action";
 import RestaurantListItem from "./RestaurantListItem";
 import { Row } from "react-bootstrap";
 import useFetch from "./useFetch";

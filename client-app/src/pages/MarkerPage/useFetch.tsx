@@ -2,9 +2,9 @@ import { useState, useEffect, useCallback, Dispatch, SetStateAction } from 'reac
 import { useDispatch } from "react-redux";
 import {
     readRestaurants,
-} from "../../../_actions/restaurant_action";
-import { ItemPerPage } from '../../../library/def';
-import { RestaurantDetail } from '../../interfaces/Restaurant';
+} from "../../_actions/restaurant_action";
+import { ItemPerPage } from '../../library/def';
+import { RestaurantDetail } from '../../components/interfaces/Restaurant';
 
 
 function useFetch(page: number, totalItemCount: number): { loading: boolean, error: boolean, restaurantList: RestaurantDetail[], setRestaurantList: Dispatch<SetStateAction<any>> } {

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../../../_actions/user_action";
+import { logoutUser } from "../../_actions/user_action";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import AlertModal from "../../containers/AlertModal/AlertModal";
+import AlertModal from "../../components/containers/AlertModal/AlertModal";
 import { GiMagicLamp, GiRoad } from "react-icons/gi";
 import { BiUser, BiMapPin, BiMale } from "react-icons/bi";
 import * as S from "./NavbarComp.style";

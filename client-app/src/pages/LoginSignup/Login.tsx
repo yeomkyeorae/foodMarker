@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../../_actions/user_action";
+import { loginUser } from "../../_actions/user_action";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import './Login.css';
-import AlertModal from "../../containers/AlertModal/AlertModal";
+import AlertModal from "../../components/containers/AlertModal/AlertModal";
 import * as S from "./Login.style";
-import { encryptWithAES } from "../../../library/utils";
+import { encryptWithAES } from "../../library/utils";
 
 interface Props extends RouteComponentProps {
   setToggle: Dispatch<SetStateAction<boolean>>;

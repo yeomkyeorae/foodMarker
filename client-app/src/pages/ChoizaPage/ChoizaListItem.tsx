@@ -6,10 +6,10 @@ import { FaSearch, FaPlus, FaCheck } from "react-icons/fa";
 import {
   registerVisitedChoizaRoad,
   deleteVisitedChoizaRoad
-} from "../../../_actions/choizaRoad_action";
-import { ChoizaRoad, VisitedChoizaRoads } from '../../interfaces/ChoizaRoad';
-import AlertModal from '../../containers/AlertModal/AlertModal';
-import deleteImage from "../../../assets/deleteImage.png";
+} from "../../_actions/choizaRoad_action";
+import { ChoizaRoad, VisitedChoizaRoads } from '../../components/interfaces/ChoizaRoad';
+import AlertModal from '../../components/containers/AlertModal/AlertModal';
+import deleteImage from "../../assets/deleteImage.png";
 
 interface Visited {
   isVisited: boolean;

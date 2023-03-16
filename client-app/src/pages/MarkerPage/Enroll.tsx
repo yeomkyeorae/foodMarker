@@ -5,15 +5,15 @@ import {
   registerRestaurant,
   registerJpegImg,
   registerHeicImg
-} from "../../../_actions/restaurant_action";
-import { registerWishList } from "../../../_actions/wishList_action";
-import MapForEnroll from "../../containers/KakaoMap/MapForEnroll";
+} from "../../_actions/restaurant_action";
+import { registerWishList } from "../../_actions/wishList_action";
+import MapForEnroll from "../../components/containers/KakaoMap/MapForEnroll";
 import { Button } from "react-bootstrap";
 import ReactStars from "react-rating-stars-component";
-import AlertModal from "../../containers/AlertModal/AlertModal";
-import LoadingOverlayDiv from "../../containers/LoadingOverlay/LoadingOverlay";
-import ImageInput from "../../containers/Input/ImageInput";
-import TextInput from "../../containers/Input/TextInput";
+import AlertModal from "../../components/containers/AlertModal/AlertModal";
+import LoadingOverlayDiv from "../../components/containers/LoadingOverlay/LoadingOverlay";
+import ImageInput from "../../components/containers/Input/ImageInput";
+import TextInput from "../../components/containers/Input/TextInput";
 import * as S from "./Enroll.style";
 
 interface Props extends RouteComponentProps {

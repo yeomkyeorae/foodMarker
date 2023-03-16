@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback, Dispatch, SetStateAction } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { Card, Col } from "react-bootstrap";
-import RestaurantItemModal from "../../containers/RestaurantItemModal/RestaurantItemModal";
+import RestaurantItemModal from "../../components/containers/RestaurantItemModal/RestaurantItemModal";
 import ReactStars from "react-rating-stars-component";
-import { EatingTimeType } from "../../../library/def";
-import noImage from "../../../assets/noImage.jpeg";
+import { EatingTimeType } from "../../library/def";
+import noImage from "../../assets/noImage.jpeg";
 import "./RestaurantListItem.css";
-import { RestaurantDetail } from '../../interfaces/Restaurant';
-import AlertModal from '../../containers/AlertModal/AlertModal';
+import { RestaurantDetail } from '../../components/interfaces/Restaurant';
+import AlertModal from '../../components/containers/AlertModal/AlertModal';
 
 
 interface Props extends RouteComponentProps {

@@ -4,15 +4,15 @@ import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 import {
   readRestaurantsNoImage,
   readTenRestaurants
-} from "../../../_actions/restaurant_action";
-import { readTenWishList } from "../../../_actions/wishList_action";
+} from "../../_actions/restaurant_action";
+import { readTenWishList } from "../../_actions/wishList_action";
 import NavbarComp from "../Navbar/NavbarComp";
-import KakaoMap from "../../containers/KakaoMap/KakaoMap";
+import KakaoMap from "../../components/containers/KakaoMap/KakaoMap";
 import Footer from "../Footer/Footer";
 import "@brainhubeu/react-carousel/lib/style.css";
-import { Restaurant, RestaurantDetail } from '../../interfaces/Restaurant';
-import { WishListType } from '../../interfaces/WishList';
-import { NavMenuType, LocationCodeInfo, LocationCode } from '../../../library/def';
+import { Restaurant, RestaurantDetail } from '../../components/interfaces/Restaurant';
+import { WishListType } from '../../components/interfaces/WishList';
+import { NavMenuType, LocationCodeInfo, LocationCode } from '../../library/def';
 import { BiUser, BiMapPin, BiMale } from "react-icons/bi";
 import * as S from "./MainPage.style";
 

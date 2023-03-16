@@ -3,9 +3,9 @@ import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import moment from "moment";
 import "moment/locale/ko";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { RestaurantDetail } from '../../interfaces/Restaurant';
-import RestaurantItemModal from "../../containers/RestaurantItemModal/RestaurantItemModal";
-import noImage from "../../../assets/noImage.jpeg";
+import { RestaurantDetail } from '../../components/interfaces/Restaurant';
+import RestaurantItemModal from "../../components/containers/RestaurantItemModal/RestaurantItemModal";
+import noImage from "../../assets/noImage.jpeg";
 
 
 type MyCalendarProps = {

@@ -3,11 +3,11 @@ import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   readWishList,
-} from "../../../_actions/wishList_action";
+} from "../../_actions/wishList_action";
 import WishListItem from "./WishListItem";
-import { WishListType } from "../../interfaces/WishList";
-import LoadingOverlayDiv from "../../containers/LoadingOverlay/LoadingOverlay";
-import { WishListOrder } from "../../../library/def";
+import { WishListType } from "../../components/interfaces/WishList";
+import LoadingOverlayDiv from "../../components/containers/LoadingOverlay/LoadingOverlay";
+import { WishListOrder } from "../../library/def";
 import * as S from "./WishList.style";
 
 function WishList(): React.ReactElement {

@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { updateUserMyPlace } from "../../../_actions/user_action";
-import { readRestaurants, readRestaurantsCount } from '../../../_actions/restaurant_action';
-import { readWishList, readWishListCount } from '../../../_actions/wishList_action';
+import { updateUserMyPlace } from "../../_actions/user_action";
+import { readRestaurants, readRestaurantsCount } from '../../_actions/restaurant_action';
+import { readWishList, readWishListCount } from '../../_actions/wishList_action';
 import NavbarComp from "../Navbar/NavbarComp";
 import Footer from "../Footer/Footer";
 import MyCalendar from "./MyCalendar";
 import { Button } from "react-bootstrap";
-import { RestaurantDetail } from "../../interfaces/Restaurant";
-import { WishListType } from "../../interfaces/WishList";
-import { LocationCode, NavMenuType } from "../../../library/def";
-import AlertModal from "../../containers/AlertModal/AlertModal";
+import { RestaurantDetail } from "../../components/interfaces/Restaurant";
+import { WishListType } from "../../components/interfaces/WishList";
+import { LocationCode, NavMenuType } from "../../library/def";
+import AlertModal from "../../components/containers/AlertModal/AlertModal";
 import * as S from "./MyInfoPage.style";
 
 const colorBar = [
