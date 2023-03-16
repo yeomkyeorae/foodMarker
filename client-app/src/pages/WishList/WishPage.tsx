@@ -3,7 +3,7 @@ import { withRouter, RouteComponentProps } from "react-router-dom";
 import Enroll from "../MarkerPage/Enroll";
 import WishList from "./WishList";
 import NavbarComp from "../Navbar/NavbarComp";
-import Footer from "../Footer/Footer";
+import Footer from "../../components/containers/Footer/Footer";
 import { Button } from "react-bootstrap";
 import { NavMenuType } from '../../library/def';
 import * as S from "./WishPage.style";

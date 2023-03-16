@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import NavbarComp from "../Navbar/NavbarComp";
-import Footer from "../Footer/Footer";
+import Footer from "../../components/containers/Footer/Footer";
 import KakaoMapCoords from "../../components/containers/KakaoMap/KakaoMapCoords";
 import SubPage from "./SubPage";
 import LoadingPage from "./LoadingPage";

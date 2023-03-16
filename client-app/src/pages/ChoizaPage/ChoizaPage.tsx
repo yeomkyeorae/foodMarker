@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import NavbarComp from "../Navbar/NavbarComp";
-import Footer from "../Footer/Footer";
+import Footer from "../../components/containers/Footer/Footer";
 import ChoizaList from "./ChoizaList";
 import { NavMenuType, ChoizaRoadSeason } from '../../library/def';
 import * as S from "./ChoizaPage.style";

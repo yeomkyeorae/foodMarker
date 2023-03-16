@@ -5,7 +5,7 @@ import { updateUserMyPlace } from "../../_actions/user_action";
 import { readRestaurants, readRestaurantsCount } from '../../_actions/restaurant_action';
 import { readWishList, readWishListCount } from '../../_actions/wishList_action';
 import NavbarComp from "../Navbar/NavbarComp";
-import Footer from "../Footer/Footer";
+import Footer from "../../components/containers/Footer/Footer";
 import MyCalendar from "./MyCalendar";
 import { Button } from "react-bootstrap";
 import { RestaurantDetail } from "../../components/interfaces/Restaurant";

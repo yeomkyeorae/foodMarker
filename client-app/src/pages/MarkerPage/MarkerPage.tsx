@@ -3,7 +3,7 @@ import { withRouter, RouteComponentProps } from "react-router-dom";
 import RestaurantList from "./RestaurantList";
 import Enroll from "./Enroll";
 import NavbarComp from "../Navbar/NavbarComp";
-import Footer from "../Footer/Footer";
+import Footer from "../../components/containers/Footer/Footer";
 import { Button } from "react-bootstrap";
 import { NavMenuType } from '../../library/def';
 

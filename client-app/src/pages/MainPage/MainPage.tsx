@@ -8,7 +8,7 @@ import {
 import { readTenWishList } from "../../_actions/wishList_action";
 import NavbarComp from "../Navbar/NavbarComp";
 import KakaoMap from "../../components/containers/KakaoMap/KakaoMap";
-import Footer from "../Footer/Footer";
+import Footer from "../../components/containers/Footer/Footer";
 import "@brainhubeu/react-carousel/lib/style.css";
 import { Restaurant, RestaurantDetail } from '../../components/interfaces/Restaurant';
 import { WishListType } from '../../components/interfaces/WishList';
