@@ -3,14 +3,12 @@ import * as S from "./LandingPage.style";
 
 function LadingPage(): React.ReactElement {
   return (
-    <S.Section>
-      <S.Div>
-        <S.Content className="content">
-          <S.ContentH1>Food Marker</S.ContentH1>
-          <S.Btn href="/loginSignup">GET STARTED</S.Btn>
-        </S.Content>
-      </S.Div>
-    </S.Section>
+    <S.Container>
+      <S.Content>
+        <S.Title>Food Marker</S.Title>
+        <S.Link href="/loginSignup">시작하기</S.Link>
+      </S.Content>
+    </S.Container>
   );
 }
 

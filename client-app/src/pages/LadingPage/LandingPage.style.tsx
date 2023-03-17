@@ -1,21 +1,16 @@
 import styled from "styled-components";
 import background from "../../assets/background.jpeg";
 
-export const Section = styled.section`
+export const Container = styled.div`
   width: 100%;
   height: 100%;
   margin: auto;
   background: url(${background}) no-repeat 50% 50%;
   top: 0;
-  display: table;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-size: cover;
-`;
-
-export const Div = styled.div`
-  display: table-cell;
-  vertical-align: middle;
-  width: 100%;
-  max-width: none;
 `;
 
 export const Content = styled.div`
@@ -24,9 +19,9 @@ export const Content = styled.div`
   text-align: center;
 `;
 
-export const ContentH1 = styled.h1`
+export const Title = styled.h1`
   font-family: "Century Gothic", sans-serif;
-  color: #cdb891;
+  color: #e67e22;
   font-size: 500%;
   text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
   -webkit-touch-callout: none;
@@ -37,18 +32,15 @@ export const ContentH1 = styled.h1`
   user-select: none;
 `;
 
-export const Btn = styled.a`
-  border-radius: 9px;
-  color: #cdb891;
+export const Link = styled.a`
+  color: #e67e22;
   text-decoration: none;
   font-family: "Century Gothic", sans-serif;
-  border: 1px solid black;
   padding: 10px 15px;
-  font-size: 20px;
+  font-size: 1.5rem;
   font-weight: bold;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   &:hover {
-    color: #4caf50;
+    color: #d35400;
     text-decoration: none;
   }
 `;
