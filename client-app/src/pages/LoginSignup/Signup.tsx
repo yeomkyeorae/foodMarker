@@ -4,8 +4,8 @@ import { registerUser } from "../../_actions/user_action";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import AlertModal from "../../components/containers/AlertModal/AlertModal";
 import { LocationCode } from "../../library/def";
-import * as S from "./Signup.style";
 import { encryptWithAES } from "../../library/utils";
+import * as S from "./LoginSignup.style";
 
 interface Props extends RouteComponentProps {
   toggle: boolean;
@@ -40,10 +40,6 @@ function Signup({ toggle, setToggle }: Props): React.ReactElement {
 
   const onConfirmedPassword = (e: React.FormEvent<HTMLInputElement>) => {
     setConfirmPassword(e.currentTarget.value);
-  };
-
-  const onClickHandler = () => {
-    setToggle(!toggle);
   };
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
@@ -95,10 +91,10 @@ function Signup({ toggle, setToggle }: Props): React.ReactElement {
   };
 
   return (
-    <S.SignupBox>
-      <S.SignupBoxH1>회원가입</S.SignupBoxH1>
+    <S.SubContainer>
+      <S.Title color={"#e56717"}>회원가입</S.Title>
       <form onSubmit={onSubmitHandler}>
-        <S.TextBox>
+        <S.InputBox color={"#e56717"}>
           <S.Input
             type="email"
             value={email}
@@ -106,8 +102,8 @@ function Signup({ toggle, setToggle }: Props): React.ReactElement {
             onChange={onEmailHandler}
             ref={inputRef}
           />
-        </S.TextBox>
-        <S.TextBox>
+        </S.InputBox>
+        <S.InputBox color={"#e56717"}>
           <S.Input
             type="text"
             value={name}
@@ -115,8 +111,8 @@ function Signup({ toggle, setToggle }: Props): React.ReactElement {
             onChange={onNameHandler}
             autoComplete="off"
           />
-        </S.TextBox>
-        <S.TextBox>
+        </S.InputBox>
+        <S.InputBox color={"#e56717"}>
           <S.Input
             type="password"
             value={password}
@@ -124,24 +120,24 @@ function Signup({ toggle, setToggle }: Props): React.ReactElement {
             onChange={onPasswordHandler}
             autoComplete="new-password"
           />
-        </S.TextBox>
-        <S.TextBox>
+        </S.InputBox>
+        <S.InputBox color={"#e56717"}>
           <S.Input
             type="password"
             value={confirmPassword}
             placeholder="비밀번호 확인"
             onChange={onConfirmedPassword}
           />
-        </S.TextBox>
-        <S.Btn type="submit">회원가입</S.Btn>
+        </S.InputBox>
+        <S.Btn type="submit" color={"#e56717"}>회원가입</S.Btn>
         {
           alertToggle ?
             <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
             null
         }
       </form>
-      <S.Span onClick={onClickHandler}>로그인</S.Span>
-    </S.SignupBox>
+      <S.Span onClick={() => setToggle(!toggle)} color={"#e56717"}>로그인</S.Span>
+    </S.SubContainer>
   );
 }
 

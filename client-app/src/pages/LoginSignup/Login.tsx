@@ -4,15 +4,14 @@ import { loginUser } from "../../_actions/user_action";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import './Login.css';
 import AlertModal from "../../components/containers/AlertModal/AlertModal";
-import * as S from "./Login.style";
 import { encryptWithAES } from "../../library/utils";
+import * as S from "./LoginSignup.style";
 
 interface Props extends RouteComponentProps {
   setToggle: Dispatch<SetStateAction<boolean>>;
   toggle: boolean;
   history: RouteComponentProps["history"];
 }
-
 
 function Login({ setToggle, toggle, history }: Props): React.ReactElement {
   const [email, setEmail] = useState("");
@@ -32,10 +31,6 @@ function Login({ setToggle, toggle, history }: Props): React.ReactElement {
 
   const onPasswordHandler = (e: React.FormEvent<HTMLInputElement>) => {
     setPassword(e.currentTarget.value);
-  };
-
-  const onClickHandler = () => {
-    setToggle(!toggle);
   };
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
@@ -60,10 +55,10 @@ function Login({ setToggle, toggle, history }: Props): React.ReactElement {
   };
 
   return (
-    <S.LoginBox>
-      <S.LoginBoxH1>로그인</S.LoginBoxH1>
+    <S.SubContainer>
+      <S.Title color={"#4caf50"}>로그인</S.Title>
       <form onSubmit={onSubmitHandler}>
-        <S.TextBox>
+        <S.InputBox color={"#4caf50"}>
           <S.Input
             type="email"
             value={email}
@@ -71,24 +66,24 @@ function Login({ setToggle, toggle, history }: Props): React.ReactElement {
             onChange={onEmailHandler}
             ref={inputRef}
           />
-        </S.TextBox>
-        <S.TextBox>
+        </S.InputBox>
+        <S.InputBox color={"#4caf50"}>
           <S.Input
             type="password"
             value={password}
             placeholder="비밀번호"
             onChange={onPasswordHandler}
           />
-        </S.TextBox>
-        <S.Btn type="submit">로그인</S.Btn>
+        </S.InputBox>
+        <S.Btn type="submit" color={"#4caf50"}>로그인</S.Btn>
       </form>
-      <S.Span onClick={onClickHandler}>회원가입</S.Span>
+      <S.Span onClick={() => setToggle(!toggle)} color={"#4caf50"}>회원가입</S.Span>
       {
         alertToggle ?
           <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
           null
       }
-    </S.LoginBox>
+    </S.SubContainer>
   );
 }
 

@@ -9,9 +9,9 @@ function LoginSignup(): React.ReactElement {
   const loginOrSignup: React.ReactElement = toggle ? <Login toggle={toggle} setToggle={setToggle} /> : <Signup toggle={toggle} setToggle={setToggle} />;
 
   return (
-    <S.Section>
-      <div>{loginOrSignup}</div>
-    </S.Section>
+    <S.Container>
+      {loginOrSignup}
+    </S.Container>
   );
 }
 
