@@ -15,8 +15,6 @@ interface Props {
 }
 
 function NavbarComp({ menu, history }: Props): React.ReactElement {
-  const selectedMenu = menu ?? 0;
-
   const userId = window.sessionStorage.getItem("userId");
   const [openState, setOpenState] = useState(false);
   const [alertToggle, setAlertToggle] = useState(false);
@@ -47,28 +45,28 @@ function NavbarComp({ menu, history }: Props): React.ReactElement {
         <Link
           to={{ pathname: "/current-location", state: { userId, menu: 1 }}}
           style={{ textDecoration: "none" }}>
-          <S.Menu color={`${selectedMenu === 1}`}>
+          <S.Menu color={`${menu === 1}`}>
             <BiMapPin />현재 주변 맛집
           </S.Menu>
         </Link>
         <Link
           to={{ pathname: "/marker", state: { userId, menu: 2 }}}
           style={{ textDecoration: "none" }}>
-          <S.Menu color={`${selectedMenu === 2}`}>
+          <S.Menu color={`${menu === 2}`}>
             <BiUser />나의 맛집
           </S.Menu>
         </Link>
         <Link
           to={{ pathname: "/wish", state: { userId, menu: 3 }}}
           style={{ textDecoration: "none" }}>
-          <S.Menu color={`${selectedMenu === 3}`}>
+          <S.Menu color={`${menu === 3}`}>
             <GiMagicLamp />위시 맛집
           </S.Menu>
         </Link>
         <Link
           to={{ pathname: "/choizaroad", state: { userId, menu: 4 }}}
           style={{ textDecoration: "none" }}>
-          <S.Menu color={`${selectedMenu === 4}`}>
+          <S.Menu color={`${menu === 4}`}>
             <GiRoad />최자 로드
           </S.Menu>
         </Link>
@@ -92,35 +90,35 @@ function NavbarComp({ menu, history }: Props): React.ReactElement {
             <Link
               to={{ pathname: "/current-location", state: { userId, menu: 1 }}}
               style={{ textDecoration: "none" }}>
-              <S.DownMenu color={`${selectedMenu === 1}`}>
+              <S.DownMenu color={`${menu === 1}`}>
                 <BiMapPin />현재 주변 맛집
               </S.DownMenu>
             </Link>
             <Link
               to={{ pathname: "/marker", state: { userId, menu: 2 }}}
               style={{ textDecoration: "none" }}>
-              <S.DownMenu color={`${selectedMenu === 2}`}>
+              <S.DownMenu color={`${menu === 2}`}>
                 <BiUser />나의 맛집
               </S.DownMenu>
             </Link>
             <Link
               to={{ pathname: "/wish", state: { userId, menu: 3 }}}
               style={{ textDecoration: "none" }}>
-              <S.DownMenu color={`${selectedMenu === 3}`}>
+              <S.DownMenu color={`${menu === 3}`}>
                 <GiMagicLamp />위시 맛집
               </S.DownMenu>
             </Link>
             <Link
               to={{ pathname: "/choizaroad", state: { userId, menu: 4 }}}
               style={{ textDecoration: "none" }}>
-              <S.DownMenu color={`${selectedMenu === 4}`}>
+              <S.DownMenu color={`${menu === 4}`}>
                 <GiRoad />최자 로드
               </S.DownMenu>
             </Link>
             <Link
               to={{ pathname: "/my-info", state: { userId, menu: 5 }}}
               style={{ textDecoration: "none" }}>
-              <S.DownMenu color={`${selectedMenu === 5}`}>
+              <S.DownMenu color={`${menu === 5}`}>
                 <BiMale />내 정보
               </S.DownMenu>
             </Link>
