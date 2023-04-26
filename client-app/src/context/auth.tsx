@@ -1,9 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, createContext, useContext ,useState } from "react";
 import { useDispatch } from "react-redux";
 import { auth } from "../_actions/user_action";
 import { withRouter } from "react-router-dom";
 
+type User = { userId: null | string; userName: null | string; myPlace: null | string };
+
+const AuthContext = createContext<User>({ userId: null, userName: null, myPlace: null });
+
 export default function (SpecificComponent, option: boolean | null) {
+  const [userId, setUserId] = useState<null | string>(null);
+  const [userName, setUserName] = useState<null | string>(null);
+  const [myPlace, setMyPlace] = useState<null | string>(null);
+
   // option:
   //  null - 아무나 접근 가능
   //  true - 로그인한 유저만
@@ -20,19 +28,28 @@ export default function (SpecificComponent, option: boolean | null) {
             props.history.push("/loginSignup");
           }
         } else {
+          setUserId(response.payload._id);
+          setUserName(response.payload.name);
+          setMyPlace(response.payload.myPlace);
+
           // 로그인한 상태
           if (option === false) {
-            window.sessionStorage.setItem("userId", response.payload._id);
-            window.sessionStorage.setItem("username", response.payload.name);
-            window.sessionStorage.setItem("myPlace", response.payload.myPlace);
             props.history.push("/main", response.payload._id);
           }
         }
       });
-    });
+    }, []);
 
-    return <SpecificComponent />;
+    return (
+      <AuthContext.Provider value={{ userId, userName, myPlace }}>
+        <SpecificComponent />
+      </AuthContext.Provider>
+    );
   }
 
   return withRouter(AuthenticationCheck);
+}
+
+export function useAuthContext() {
+  return useContext(AuthContext);
 }
