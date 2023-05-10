@@ -16,6 +16,7 @@ import {WishListType} from '../../components/interfaces/WishList';
 import {LocationCode, NavMenuType} from '../../library/def';
 import AlertModal from '../../components/containers/AlertModal/AlertModal';
 import * as S from './MyInfoPage.style';
+import { useAuthContext } from '../../context/auth';
 
 const colorBar = [
   {color: 'gold', text: '평점 5점'},
@@ -30,50 +31,53 @@ interface Props {
 }
 
 function MyInfoPage({history}: Props): React.ReactElement {
+  const user = useAuthContext();
+
   const [myRestaurantsCount, setMyRestaurantsCount] = useState(0);
   const [myWishListCount, setMyWishListCount] = useState(0);
   const [myRestaurants, setMyRestaurants] = useState<RestaurantDetail[]>([]);
   const [myWishlists, setWishlists] = useState<WishListType[]>([]);
-  const [myPlace, setMyPlace] = useState<string>(
-    window.sessionStorage.getItem('myPlace') ?? String(LocationCode.All),
-  );
+  const [myPlace, setMyPlace] = useState<string>(user.myPlace as string ?? String(LocationCode.All));
   const [alertToggle, setAlertToggle] = useState(false);
 
-  const userId = window.sessionStorage.getItem('userId') as string;
+  const userId = user.userId as string;
 
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    dispatch(readRestaurantsCount(userId)).then(response => {
-      setMyRestaurantsCount(response.payload);
-    });
-
-    dispatch(readWishListCount(userId)).then(response => {
-      setMyWishListCount(response.payload);
-    });
-
-    dispatch(readRestaurants(userId, 1, 1000)).then(response => {
-      setMyRestaurants(response.payload);
-    });
-
-    const DEFAULT_ORDER = 1;
-    dispatch(readWishList(userId, DEFAULT_ORDER)).then(response => {
-      setWishlists(response.payload);
-    });
+    if(userId) {
+      dispatch(readRestaurantsCount(userId)).then(response => {
+        setMyRestaurantsCount(response.payload);
+      });
+  
+      dispatch(readWishListCount(userId)).then(response => {
+        setMyWishListCount(response.payload);
+      });
+  
+      dispatch(readRestaurants(userId, 1, 1000)).then(response => {
+        setMyRestaurants(response.payload);
+      });
+  
+      const DEFAULT_ORDER = 1;
+      dispatch(readWishList(userId, DEFAULT_ORDER)).then(response => {
+        setWishlists(response.payload);
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const myRestaurantsCntObj = {};
-  myRestaurants.forEach(restaurant => {
-    const area = restaurant.address.split(' ')[0];
-    myRestaurantsCntObj[area] = myRestaurantsCntObj[area] + 1 || 1;
-  });
+  const getInfosCnt = (infos) => {
+    const infosCntObj = {};
+    infos?.forEach(info => {
+      const area = info.address.split(' ')[0];
+      infosCntObj[area] = infosCntObj[area] + 1 || 1;
+    });
 
-  const myWishlistsCntObj = {};
-  myWishlists.forEach(wishlist => {
-    const area = wishlist.address.split(' ')[0];
-    myWishlistsCntObj[area] = myWishlistsCntObj[area] + 1 || 1;
-  });
+    return infosCntObj;
+  }
+
+  const myRestaurantsCntObj = getInfosCnt(myRestaurants);
+  const myWishlistsCntObj = getInfosCnt(myWishlists);
 
   const handleMyPlace = e => {
     setMyPlace(e.target.value);

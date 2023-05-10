@@ -11,7 +11,7 @@ import MarkerPage from "./pages/MarkerPage/MarkerPage";
 import WishPage from "./pages/WishList/WishPage";
 import ChoizaPage from "./pages/ChoizaPage/ChoizaPage";
 import MyInfoPage from "./pages/MyInfo/MyInfoPage";
-import Auth from "./hoc/auth";
+import Auth from "./context/auth";
 
 function App() {
   return (

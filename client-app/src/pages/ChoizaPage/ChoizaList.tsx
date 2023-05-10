@@ -9,6 +9,7 @@ import {
 } from "../../_actions/choizaRoad_action";
 import { ChoizaRoad, VisitedChoizaRoads } from '../../components/interfaces/ChoizaRoad'
 import * as S from "./ChoizaList.style";
+import { useAuthContext } from "../../context/auth";
 
 interface Props extends RouteComponentProps {
   season: number;
@@ -19,7 +20,9 @@ function ChoizaList(props: Props): React.ReactElement {
   const [choizaRoads, setChoizaRoads] = useState<ChoizaRoad[]>([]);
   const [visitedChoizaRoads, setVisitedChoizaRoads] = useState<VisitedChoizaRoads[]>([]);
 
-  const userId = window.sessionStorage.getItem("userId") as string;
+  const user = useAuthContext();
+  const userId = user.userId as string;
+  
   const season = props.season;
 
   useEffect(() => {

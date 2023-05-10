@@ -9,6 +9,7 @@ import { WishListType } from "../../components/interfaces/WishList";
 import LoadingOverlayDiv from "../../components/containers/LoadingOverlay/LoadingOverlay";
 import { WishListOrder } from "../../library/def";
 import * as S from "./WishList.style";
+import { useAuthContext } from "../../context/auth";
 
 function WishList(): React.ReactElement {
   const dispatch = useDispatch<any>();
@@ -16,7 +17,8 @@ function WishList(): React.ReactElement {
   const [order, setOrder] = useState(WishListOrder.enrollAsc);
   const [showLoadingOverlay, setShowLoadingOverlay] = useState<boolean>(false);
 
-  const userId = window.sessionStorage.getItem("userId") as string;
+  const user = useAuthContext();
+  const userId = user.userId as string;
 
   useEffect(() => {
     dispatch(readWishList(userId, order)).then(response => {

@@ -10,6 +10,7 @@ import {
 import { ChoizaRoad, VisitedChoizaRoads } from '../../components/interfaces/ChoizaRoad';
 import AlertModal from '../../components/containers/AlertModal/AlertModal';
 import deleteImage from "../../assets/deleteImage.png";
+import { useAuthContext } from "../../context/auth";
 
 interface Visited {
   isVisited: boolean;
@@ -31,6 +32,9 @@ function ChoizaListItem(props: Props): React.ReactElement {
 
   const deleted = choizaRoad.delete;
   const choizaRestaurants = choizaRoad.restaurants;
+
+  const user = useAuthContext();
+  const userId = user.userId as string;
 
   const [visitedList, setVisitedList] = useState<Visited[]>([]);
   const [alertToggle, setAlertToggle] = useState<boolean>(false);
@@ -71,8 +75,6 @@ function ChoizaListItem(props: Props): React.ReactElement {
 
     // 체크돼 있으면 방문 삭제, 안돼 있으면 방문 체크
     if (!toBeEnrolled) {
-      const userId = window.sessionStorage.getItem("userId") as string;
-
       const body = {
         userId,
         restaurantName,

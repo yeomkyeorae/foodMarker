@@ -18,6 +18,7 @@ import {WishListType} from '../../components/interfaces/WishList';
 import {NavMenuType, LocationCodeInfo, LocationCode} from '../../library/def';
 import {BiUser, BiMapPin, BiMale} from 'react-icons/bi';
 import * as S from './MainPage.style';
+import { useAuthContext } from '../../context/auth';
 
 interface Props {
   history: RouteComponentProps['history'];
@@ -29,8 +30,10 @@ function MainPage({history}: Props): React.ReactElement {
   const [tenWishList, setTenWishList] = useState<WishListType[]>([]);
 
   const dispatch = useDispatch<any>();
-  const userId = window.sessionStorage.getItem('userId') as string;
-  const myPlace = window.sessionStorage.getItem('myPlace') as string;
+
+  const user = useAuthContext();
+  const userId = user.userId as string;
+  const myPlace = user.myPlace as string ?? '0';
 
   useEffect(() => {
     const {locationName, latitude, longitude, mapLevel} =
@@ -52,7 +55,6 @@ function MainPage({history}: Props): React.ReactElement {
     dispatch(readTenWishList()).then(response => {
       setTenWishList(response.payload.wishLists);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [latitude, setLatitude] = useState(37.52393);

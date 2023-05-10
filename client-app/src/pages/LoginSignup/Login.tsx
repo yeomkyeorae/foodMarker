@@ -6,6 +6,7 @@ import './Login.css';
 import AlertModal from "../../components/containers/AlertModal/AlertModal";
 import { encryptWithAES } from "../../library/utils";
 import * as S from "./LoginSignup.style";
+import { useAuthContext } from "../../context/auth";
 
 interface Props extends RouteComponentProps {
   setToggle: Dispatch<SetStateAction<boolean>>;
@@ -19,6 +20,8 @@ function Login({ setToggle, toggle, history }: Props): React.ReactElement {
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const dispatch = useDispatch<any>();
+
+  const { setUserInfo } = useAuthContext();
 
   const inputRef: React.RefObject<any> = useRef(null);
   useEffect(() => {
@@ -41,9 +44,10 @@ function Login({ setToggle, toggle, history }: Props): React.ReactElement {
 
     dispatch(loginUser(body)).then(response => {
       if (response.payload.loginSuccess) {
-        window.sessionStorage.setItem("userId", response.payload.userId);
-        window.sessionStorage.setItem("username", response.payload.name);
-        window.sessionStorage.setItem("myPlace", response.payload.myPlace);
+        const { userId, name, myPlace } = response.payload;
+
+        setUserInfo(userId, name, myPlace);
+
         history.push({
           pathname: "/main"
         });

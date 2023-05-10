@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const TopNav = styled.div`
+export const TopNav = styled.nav`
   height: 50px;
   display: flex;
   align-items: center;

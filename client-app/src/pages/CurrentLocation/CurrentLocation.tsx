@@ -38,6 +38,8 @@ function CurrentLocation({history}: Props): React.ReactElement {
         '이 브라우저에서는 사용자 현재 위치 기반 주변 맛집 기능이 지원되지 않습니다.',
       );
     }
+    
+    return () => { return; };
   }, []);
 
   return (

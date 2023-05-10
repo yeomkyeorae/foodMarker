@@ -8,6 +8,7 @@ import AlertModal from "../../components/containers/AlertModal/AlertModal";
 import { GiMagicLamp, GiRoad } from "react-icons/gi";
 import { BiUser, BiMapPin, BiMale } from "react-icons/bi";
 import * as S from "./NavbarComp.style";
+import { useAuthContext } from "../../context/auth";
 
 interface Props {
   menu: number;
@@ -15,7 +16,9 @@ interface Props {
 }
 
 function NavbarComp({ menu, history }: Props): React.ReactElement {
-  const userId = window.sessionStorage.getItem("userId");
+  const user = useAuthContext();
+  const userId = user.userId as string;
+
   const [openState, setOpenState] = useState(false);
   const [alertToggle, setAlertToggle] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
