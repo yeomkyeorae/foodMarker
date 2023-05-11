@@ -8,11 +8,10 @@ type User = { userId: T; userName: T; myPlace: T, setUserInfo: (id: T, name: T, 
 
 const AuthContext = createContext<User>({ userId: null, userName: null, myPlace: null, setUserInfo: () => { return; } });
 
-export default function (SpecificComponent, option: boolean | null) {
+export default function (component: React.ReactNode, option: boolean | null) {
   const [userId, setUserId] = useState<T>(null);
   const [userName, setUserName] = useState<T>(null);
   const [myPlace, setMyPlace] = useState<T>(null);
-  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch<any>();
 
@@ -23,9 +22,7 @@ export default function (SpecificComponent, option: boolean | null) {
   }
 
   function AuthenticationCheck(props): React.ReactElement {
-    useEffect(() => {
-      setLoading(true);
-      
+    useEffect(() => {      
       dispatch(auth()).then(response => {
         // option:
         //  null - 아무나 접근 가능
@@ -38,11 +35,9 @@ export default function (SpecificComponent, option: boolean | null) {
             props.history.push("/loginSignup");
           }
         } else {
-          if(loading) {
-            setUserId(response.payload._id);
-            setUserName(response.payload.name);
-            setMyPlace(response.payload.myPlace);
-          }
+          setUserId(response.payload._id);
+          setUserName(response.payload.name);
+          setMyPlace(response.payload.myPlace);
 
           // 로그인한 상태
           if (option === false) {
@@ -50,13 +45,11 @@ export default function (SpecificComponent, option: boolean | null) {
           }
         }
       });
-
-      setLoading(false);
     }, []);
 
     return (
       <AuthContext.Provider value={{ userId, userName, myPlace, setUserInfo }}>
-        <SpecificComponent />
+        {component}
       </AuthContext.Provider>
     );
   }
