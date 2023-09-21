@@ -10,6 +10,7 @@ import {
 } from "../../../_actions/restaurant_action";
 import ImageInput from "../Input/ImageInput";
 import * as S from "./UpdateModal.style";
+import { useAuthContext } from "../../../context/auth";
 
 interface Props extends RouteComponentProps {
   toggle: boolean;
@@ -97,9 +98,10 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
 
     const imagePath = jpegPath.concat(heicPath).join(",");
 
-    const userId = window.sessionStorage.getItem("userId") as string;
-    const username = window.sessionStorage.getItem("username") as string;
-
+    const user = useAuthContext();
+    const userId = user.userId as string;
+    const username = user.userName as string;
+    
     const body = {
       visitor: userId,
       username: username,

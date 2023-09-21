@@ -3,6 +3,7 @@ import { withRouter, RouteComponentProps } from "react-router-dom";
 import { registerWishList } from "../../../_actions/wishList_action";
 import AlertModal from "../AlertModal/AlertModal";
 import { useDispatch } from "react-redux";
+import { useAuthContext } from "../../../context/auth";
 
 const { kakao } = window;
 
@@ -20,8 +21,9 @@ function KakaoMapCoords(props: Props): React.ReactElement {
 
   const dispatch = useDispatch<any>();
 
-  const userId = window.sessionStorage.getItem("userId") as string;
-  const username = window.sessionStorage.getItem("username") as string;
+  const user = useAuthContext();
+  const userId = user.userId as string;
+  const username = user.userName as string;
 
   useEffect(() => {
     kakao.maps.load(async () => {
