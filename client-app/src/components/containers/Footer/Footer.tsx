@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 import * as S from './Footer.style';
 
-type FooterProps = {
+type Props = {
   marginTop?: number;
   position?: string;
 };
 
-function Footer({ position, marginTop }: FooterProps): React.ReactElement {
+function Footer({ position, marginTop }: Props): React.ReactElement {
   return (
-    <S.FooterDiv marginTop={marginTop} position={position}>
-      <S.FooterP>Copyright &copy; 2022. All Rights Reserved.</S.FooterP>
-    </S.FooterDiv>
+    <S.Container marginTop={marginTop} position={position}>
+      <S.Content>Copyright &copy; 2023. All Rights Reserved.</S.Content>
+    </S.Container>
   );
 }
 
