@@ -1,28 +1,30 @@
-import React from "react";
-import * as S from "./TextInput.style";
+import React from 'react';
+import * as S from './TextInput.style';
 
 interface Props {
-    id?: string,
-    value: string,
-    placeholder: string,
-    onChange: any,
-    onKeyPress?: any,
-    readOnly?: boolean
+  id?: string;
+  value: string;
+  placeholder: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  readOnly?: boolean;
 }
 
 const TextInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
-    const { id, value, placeholder, onChange, onKeyPress, readOnly } = props;
+  const { id, value, placeholder, onChange, onKeyPress, readOnly } = props;
 
-    return <S.Input
-        type="text"
-        id={id}
-        value={value}
-        placeholder={placeholder}
-        onChange={onChange}
-        onKeyPress={onKeyPress}
-        readOnly={readOnly}
-        ref={ref}
+  return (
+    <S.Input
+      type='text'
+      id={id}
+      value={value}
+      placeholder={placeholder}
+      onChange={onChange}
+      onKeyPress={onKeyPress}
+      readOnly={readOnly}
+      ref={ref}
     />
-})
+  );
+});
 
 export default TextInput;
