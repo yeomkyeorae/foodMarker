@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { withRouter, RouteComponentProps } from "react-router-dom";
-import { registerWishList } from "../../../_actions/wishList_action";
-import AlertModal from "../AlertModal/AlertModal";
-import { useDispatch } from "react-redux";
-import { useAuthContext } from "../../../context/auth";
+import React, { useEffect, useState } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { registerWishList } from '../../../_actions/wishList_action';
+import AlertModal from '../AlertModal/AlertModal';
+import { useDispatch } from 'react-redux';
+import { useAuthContext } from '../../../context/auth';
 
 const { kakao } = window;
 
@@ -13,10 +13,9 @@ interface Props extends RouteComponentProps {
   mapLevel: number;
 }
 
-function KakaoMapCoords(props: Props): React.ReactElement {
-  const { latitude, longitude, mapLevel } = props;
+function KakaoMapCoords({ latitude, longitude, mapLevel }: Props): React.ReactElement {
   const [alertToggle, setAlertToggle] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+  const [alertMessage, setAlertMessage] = useState('');
   const [dong, setDong] = useState();
 
   const dispatch = useDispatch<any>();
@@ -27,10 +26,10 @@ function KakaoMapCoords(props: Props): React.ReactElement {
 
   useEffect(() => {
     kakao.maps.load(async () => {
-      const container = document.getElementById("map");
+      const container = document.getElementById('map');
       const map = new kakao.maps.Map(container, {
         center: new kakao.maps.LatLng(latitude, longitude),
-        level: mapLevel
+        level: mapLevel,
       });
 
       const zoomControl = new kakao.maps.ZoomControl();
@@ -38,7 +37,7 @@ function KakaoMapCoords(props: Props): React.ReactElement {
 
       const infowindow = new kakao.maps.InfoWindow({
         zIndex: 1,
-        removable: true
+        removable: true,
       });
       const geocoder = new kakao.maps.services.Geocoder();
 
@@ -56,7 +55,7 @@ function KakaoMapCoords(props: Props): React.ReactElement {
 
       function displayCenterInfo(result, status) {
         if (status === kakao.maps.services.Status.OK) {
-          setDong(result[0]["address"]["address_name"]);
+          setDong(result[0]['address']['address_name']);
         }
       }
 
@@ -67,42 +66,44 @@ function KakaoMapCoords(props: Props): React.ReactElement {
           // 마커를 생성하고 지도에 표시합니다
           const marker = new kakao.maps.Marker({
             map: map,
-            position: new kakao.maps.LatLng(place.y, place.x)
+            position: new kakao.maps.LatLng(place.y, place.x),
           });
 
           // 마커에 클릭이벤트를 등록합니다
-          kakao.maps.event.addListener(marker, "click", function() {
+          kakao.maps.event.addListener(marker, 'click', function () {
             // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
             infowindow.setContent(
               '<div style="padding:5px;font-size:12px;text-align:left">' +
                 place.place_name +
-                "<br />" +
+                '<br />' +
                 '<div class="marker">' +
-                "위시 맛집 등록하기" +
-                "</div>" +
-                "</div>"
+                '위시 맛집 등록하기' +
+                '</div>' +
+                '</div>',
             );
             infowindow.open(map, marker);
-            const markerElement = document.getElementsByClassName("marker");
+            const markerElement = document.getElementsByClassName('marker');
 
-            markerElement[0].addEventListener("click", () => {
+            markerElement[0].addEventListener('click', () => {
               const body = {
                 user: userId,
                 username: username,
                 name: place.place_name,
                 address: place.address_name,
-                created: new Date().toISOString()
+                created: new Date().toISOString(),
               };
-              dispatch(registerWishList(body)).then(()=> {
-                setAlertToggle(true);
-                setAlertMessage("위시 맛집에 등록되었습니다");
-              }).catch(() => {
-                setAlertToggle(true);
-                setAlertMessage("위시 맛집에 등록이 실패했습니다");
-              });
+              dispatch(registerWishList(body))
+                .then(() => {
+                  setAlertToggle(true);
+                  setAlertMessage('위시 맛집에 등록되었습니다');
+                })
+                .catch(() => {
+                  setAlertToggle(true);
+                  setAlertMessage('위시 맛집에 등록이 실패했습니다');
+                });
             });
           });
-        }
+        };
 
         // 키워드 검색 완료 시 호출되는 콜백함수 입니다
         const placesSearchCB = (data, status) => {
@@ -119,7 +120,7 @@ function KakaoMapCoords(props: Props): React.ReactElement {
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
             // map.setBounds(bounds);
           }
-        }
+        };
 
         // 키워드로 장소를 검색합니다
         ps.keywordSearch(`${dong} 맛집`, placesSearchCB);
@@ -131,15 +132,11 @@ function KakaoMapCoords(props: Props): React.ReactElement {
     <div
       id={`map`}
       style={{
-        width: "100%",
-        height: "80%"
+        width: '100%',
+        height: '80%',
       }}
     >
-    {
-      alertToggle ?
-      <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
-      null
-    }
+      {alertToggle ? <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> : null}
     </div>
   );
 }
