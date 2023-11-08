@@ -1,43 +1,40 @@
-import React, {useState, useEffect} from 'react';
-import {withRouter, RouteComponentProps} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
-import {updateUserMyPlace} from '../../_actions/user_action';
-import {
-  readRestaurants,
-  readRestaurantsCount,
-} from '../../_actions/restaurant_action';
-import {readWishList, readWishListCount} from '../../_actions/wishList_action';
-import NavbarComp from '../Navbar/NavbarComp';
+import React, { useState, useEffect } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { updateUserMyPlace } from '../../_actions/user_action';
+import { readRestaurants, readRestaurantsCount } from '../../_actions/restaurant_action';
+import { readWishList, readWishListCount } from '../../_actions/wishList_action';
+import NavbarComp from '../Navbar/Navbar';
 import Footer from '../../components/containers/Footer/Footer';
 import MyCalendar from './MyCalendar';
-import {Button} from 'react-bootstrap';
-import {RestaurantDetail} from '../../components/interfaces/Restaurant';
-import {WishListType} from '../../components/interfaces/WishList';
-import {LocationCode, NavMenuType} from '../../library/def';
+import { Button } from 'react-bootstrap';
+import { RestaurantDetail } from '../../components/interfaces/Restaurant';
+import { WishListType } from '../../components/interfaces/WishList';
+import { LocationCode, NavMenuType } from '../../library/def';
 import AlertModal from '../../components/containers/AlertModal/AlertModal';
 import * as S from './MyInfoPage.style';
 import { useAuthContext } from '../../context/auth';
 
 const colorBar = [
-  {color: 'gold', text: '평점 5점'},
-  {color: '#8bc34a', text: '평점 4점대'},
-  {color: '#35baf6', text: '평점 3점대'},
-  {color: '#ed4b82', text: '평점 2점대'},
-  {color: 'gray', text: '평점 1점대'},
+  { color: 'gold', text: '평점 5점' },
+  { color: '#8bc34a', text: '평점 4점대' },
+  { color: '#35baf6', text: '평점 3점대' },
+  { color: '#ed4b82', text: '평점 2점대' },
+  { color: 'gray', text: '평점 1점대' },
 ];
 
 interface Props {
   history: RouteComponentProps['history'];
 }
 
-function MyInfoPage({history}: Props): React.ReactElement {
+function MyInfoPage({ history }: Props): React.ReactElement {
   const user = useAuthContext();
 
   const [myRestaurantsCount, setMyRestaurantsCount] = useState(0);
   const [myWishListCount, setMyWishListCount] = useState(0);
   const [myRestaurants, setMyRestaurants] = useState<RestaurantDetail[]>([]);
   const [myWishlists, setWishlists] = useState<WishListType[]>([]);
-  const [myPlace, setMyPlace] = useState<string>(user.myPlace as string ?? String(LocationCode.All));
+  const [myPlace, setMyPlace] = useState<string>((user.myPlace as string) ?? String(LocationCode.All));
   const [alertToggle, setAlertToggle] = useState(false);
 
   const userId = user.userId as string;
@@ -45,21 +42,21 @@ function MyInfoPage({history}: Props): React.ReactElement {
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    if(userId) {
-      dispatch(readRestaurantsCount(userId)).then(response => {
+    if (userId) {
+      dispatch(readRestaurantsCount(userId)).then((response) => {
         setMyRestaurantsCount(response.payload);
       });
-  
-      dispatch(readWishListCount(userId)).then(response => {
+
+      dispatch(readWishListCount(userId)).then((response) => {
         setMyWishListCount(response.payload);
       });
-  
-      dispatch(readRestaurants(userId, 1, 1000)).then(response => {
+
+      dispatch(readRestaurants(userId, 1, 1000)).then((response) => {
         setMyRestaurants(response.payload);
       });
-  
+
       const DEFAULT_ORDER = 1;
-      dispatch(readWishList(userId, DEFAULT_ORDER)).then(response => {
+      dispatch(readWishList(userId, DEFAULT_ORDER)).then((response) => {
         setWishlists(response.payload);
       });
     }
@@ -68,24 +65,24 @@ function MyInfoPage({history}: Props): React.ReactElement {
 
   const getInfosCnt = (infos) => {
     const infosCntObj = {};
-    infos?.forEach(info => {
+    infos?.forEach((info) => {
       const area = info.address.split(' ')[0];
       infosCntObj[area] = infosCntObj[area] + 1 || 1;
     });
 
     return infosCntObj;
-  }
+  };
 
   const myRestaurantsCntObj = getInfosCnt(myRestaurants);
   const myWishlistsCntObj = getInfosCnt(myWishlists);
 
-  const handleMyPlace = e => {
+  const handleMyPlace = (e) => {
     setMyPlace(e.target.value);
   };
 
   const changeMyPlace = () => {
-    const body = {myPlace};
-    dispatch(updateUserMyPlace(body)).then(response => {
+    const body = { myPlace };
+    dispatch(updateUserMyPlace(body)).then((response) => {
       if (response.payload.success) {
         setAlertToggle(true);
         window.sessionStorage.setItem('myPlace', myPlace);
@@ -102,31 +99,32 @@ function MyInfoPage({history}: Props): React.ReactElement {
           left: '0px',
           right: '0px',
           overflow: 'hidden',
-        }}>
+        }}
+      >
         <NavbarComp history={history} menu={NavMenuType.Myinfo} />
         <hr />
         <div>
-          <div style={{height: '120px'}}>
+          <div style={{ height: '120px' }}>
             <h1>내 정보 페이지</h1>
           </div>
           <hr />
-          <div style={{marginBottom: '30px'}}>
+          <div style={{ marginBottom: '30px' }}>
             <h3>맛집 통계</h3>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
               <S.InfoBlock backgroundColor={'#5B6DCD'}>
                 <S.InfoTitle>등록한 나의 방문 맛집 개수</S.InfoTitle>
-                <div style={{height: '100px'}}>
+                <div style={{ height: '100px' }}>
                   <S.InfoContent>{myRestaurantsCount}개</S.InfoContent>
                 </div>
               </S.InfoBlock>
               <S.InfoBlock backgroundColor={'#FFD703'}>
                 <S.InfoTitle>등록한 나의 위시 맛집 개수</S.InfoTitle>
-                <div style={{height: '100px'}}>
+                <div style={{ height: '100px' }}>
                   <S.InfoContent>{myWishListCount}개</S.InfoContent>
                 </div>
               </S.InfoBlock>
             </div>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
               <S.InfoBlock backgroundColor={'#60F5D0'}>
                 <S.InfoTitle>지역별 나의 방문 맛집</S.InfoTitle>
                 <div
@@ -134,8 +132,9 @@ function MyInfoPage({history}: Props): React.ReactElement {
                     height: '100px',
                     display: 'flex',
                     flexDirection: 'column',
-                  }}>
-                  {Object.keys(myRestaurantsCntObj).map(area => (
+                  }}
+                >
+                  {Object.keys(myRestaurantsCntObj).map((area) => (
                     <S.InfoContent key={area}>
                       {area} {myRestaurantsCntObj[area]}개
                     </S.InfoContent>
@@ -149,8 +148,9 @@ function MyInfoPage({history}: Props): React.ReactElement {
                     height: '100px',
                     display: 'flex',
                     flexDirection: 'column',
-                  }}>
-                  {Object.keys(myWishlistsCntObj).map(area => (
+                  }}
+                >
+                  {Object.keys(myWishlistsCntObj).map((area) => (
                     <S.InfoContent key={area}>
                       {area} {myWishlistsCntObj[area]}개
                     </S.InfoContent>
@@ -160,9 +160,9 @@ function MyInfoPage({history}: Props): React.ReactElement {
             </div>
           </div>
           <hr />
-          <div style={{width: '50%', margin: 'auto'}}>
+          <div style={{ width: '50%', margin: 'auto' }}>
             <h3>나의 방문 맛집 달력</h3>
-            <div style={{display: 'flex'}}>
+            <div style={{ display: 'flex' }}>
               {colorBar.map((el, index) => (
                 <S.ColorBar key={`colorBar` + index} backgroundColor={el.color}>
                   {el.text}
@@ -173,7 +173,7 @@ function MyInfoPage({history}: Props): React.ReactElement {
           </div>
         </div>
         <hr />
-        <div style={{marginBottom: '30px'}}>
+        <div style={{ marginBottom: '30px' }}>
           <h3>나의 맛집 지도 지역 설정</h3>
           <div
             style={{
@@ -181,9 +181,10 @@ function MyInfoPage({history}: Props): React.ReactElement {
               padding: '5px',
               display: 'flex',
               justifyContent: 'center',
-            }}>
+            }}
+          >
             <select
-              id="select"
+              id='select'
               value={myPlace}
               style={{
                 height: '100%',
@@ -191,7 +192,8 @@ function MyInfoPage({history}: Props): React.ReactElement {
                 minWidth: '20px',
                 display: 'block',
               }}
-              onChange={e => handleMyPlace(e)}>
+              onChange={(e) => handleMyPlace(e)}
+            >
               <option value={LocationCode.All}>전국</option>
               <option value={LocationCode.Gangwon}>강원</option>
               <option value={LocationCode.Gyeonggi}>경기</option>
@@ -212,9 +214,10 @@ function MyInfoPage({history}: Props): React.ReactElement {
               <option value={LocationCode.Jeju}>제주</option>
             </select>
             <Button
-              variant="primary"
-              style={{marginLeft: '5px', display: 'inline-block'}}
-              onClick={() => changeMyPlace()}>
+              variant='primary'
+              style={{ marginLeft: '5px', display: 'inline-block' }}
+              onClick={() => changeMyPlace()}
+            >
               설정하기
             </Button>
           </div>
@@ -223,10 +226,7 @@ function MyInfoPage({history}: Props): React.ReactElement {
         <Footer />
       </div>
       {alertToggle ? (
-        <AlertModal
-          setAlertToggle={setAlertToggle}
-          alertMessage={'나의 맛집 지역 설정이 완료되었습니다'}
-        />
+        <AlertModal setAlertToggle={setAlertToggle} alertMessage={'나의 맛집 지역 설정이 완료되었습니다'} />
       ) : null}
     </>
   );

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const TopNav = styled.nav`
   height: 50px;
@@ -12,6 +12,7 @@ export const Home = styled.div`
   color: #ff6700;
   &:hover {
     text-decoration: none;
+    color: #e74c3c;
   }
   font-size: 2rem;
   font-weight: 500;
@@ -22,7 +23,7 @@ export const Menu = styled.div`
   width: 10vw;
   text-align: center;
   text-decoration: none;
-  color: ${props => (props.color === "true" ? "#ff6700" : "black")};
+  color: ${(props) => (props.color === 'true' ? '#ff6700' : 'black')};
   &:hover {
     color: #ff6700;
     text-decoration: none;
@@ -39,7 +40,7 @@ export const DownMenu = styled.div`
   width: 100%;
   text-align: center;
   text-decoration: none;
-  color: ${props => (props.color === "true" ? "#ff6700" : "black")};
+  color: ${(props) => (props.color === 'true' ? '#ff6700' : 'black')};
   &:hover {
     color: #ff6700;
     text-decoration: none;
@@ -73,11 +74,11 @@ export const DownRightMenuDiv = styled.div`
   width: 100%;
 `;
 
-export const RightMenuSpan = styled.span<{color?: string; marginRight?: string; hoverColor?: string;}>`
-  color: ${props => props.color ?? 'black'};
-  margin-right: ${props => props.marginRight ?? '0px'};
+export const RightMenuSpan = styled.span<{ color?: string; marginRight?: string; hoverColor?: string }>`
+  color: ${(props) => props.color ?? 'black'};
+  margin-right: ${(props) => props.marginRight ?? '0px'};
   &:hover {
-    color: ${props => props.hoverColor ?? null};
+    color: ${(props) => props.hoverColor ?? null};
     font-weight: bold;
   }
 `;

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const H2 = styled.h2`
   font-size: 2rem;
@@ -6,7 +6,7 @@ export const H2 = styled.h2`
 
 export const H3 = styled.h3`
   font-size: 1.5rem;
-`
+`;
 
 export const FoodMarkerTitle = styled.div`
   display: flex;
@@ -30,9 +30,9 @@ export const FoodMarkerExplanation = styled.div`
 export const FoodMarkerExplanationTitle = styled.span`
   font-weight: 200;
   font-size: 1.5rem;
-  color: black;
+  color: #ff6700;
   &:hover {
-    color: #ff6700;
+    color: #e74c3c;
   }
 `;
 
