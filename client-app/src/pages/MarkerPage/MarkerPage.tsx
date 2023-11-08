@@ -1,17 +1,17 @@
-import React, {useState} from 'react';
-import {withRouter, RouteComponentProps} from 'react-router-dom';
+import React, { useState } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import RestaurantList from './RestaurantList';
 import Enroll from './Enroll';
-import NavbarComp from '../Navbar/NavbarComp';
+import NavbarComp from '../Navbar/Navbar';
 import Footer from '../../components/containers/Footer/Footer';
-import {Button} from 'react-bootstrap';
-import {NavMenuType} from '../../library/def';
+import { Button } from 'react-bootstrap';
+import { NavMenuType } from '../../library/def';
 
 interface Props {
   history: RouteComponentProps['history'];
 }
 
-function MarkerPage({history}: Props): React.ReactElement {
+function MarkerPage({ history }: Props): React.ReactElement {
   const [Toggle, setToggle] = useState(true);
   const [Menu, setMenu] = useState('나의 맛집 등록하기');
 
@@ -28,13 +28,7 @@ function MarkerPage({history}: Props): React.ReactElement {
   if (Toggle) {
     MenuComponent = <RestaurantList />;
   } else {
-    MenuComponent = (
-      <Enroll
-        parentCompName={'MarkerPage'}
-        setToggle={setToggle}
-        setMenu={setMenu}
-      />
-    );
+    MenuComponent = <Enroll parentCompName={'MarkerPage'} setToggle={setToggle} setMenu={setMenu} />;
   }
 
   return (
@@ -45,14 +39,12 @@ function MarkerPage({history}: Props): React.ReactElement {
         left: '0px',
         right: '0px',
         overflow: 'auto',
-      }}>
+      }}
+    >
       <NavbarComp history={history} menu={NavMenuType.Marker} />
       <hr />
       <div>
-        <Button
-          variant="primary"
-          onClick={onClickChangeMenuHandler}
-          style={{margin: '20px'}}>
+        <Button variant='primary' onClick={onClickChangeMenuHandler} style={{ margin: '20px' }}>
           {Menu}
         </Button>
       </div>
