@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import NavbarComp from '../navbar/Navbar';
+import Navbar from '../navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 import ChoizaList from './ChoizaList';
 import { NavMenuType, ChoizaRoadSeason } from '../../library/def';
@@ -29,7 +29,7 @@ function ChoizaPage({ history }: Props): React.ReactElement {
         overflow: 'hidden',
       }}
     >
-      <NavbarComp history={history} menu={NavMenuType.Choizaroad} />
+      <Navbar history={history} menu={NavMenuType.Choizaroad} />
       <hr />
       <S.SeasonDiv
         color={`${season === ChoizaRoadSeason.One}`}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import RestaurantList from './RestaurantList';
 import Enroll from './Enroll';
-import NavbarComp from '../navbar/Navbar';
+import Navbar from '../navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 import { Button } from 'react-bootstrap';
 import { NavMenuType } from '../../library/def';
@@ -41,7 +41,7 @@ function MarkerPage({ history }: Props): React.ReactElement {
         overflow: 'auto',
       }}
     >
-      <NavbarComp history={history} menu={NavMenuType.Marker} />
+      <Navbar history={history} menu={NavMenuType.Marker} />
       <hr />
       <div>
         <Button variant='primary' onClick={onClickChangeMenuHandler} style={{ margin: '20px' }}>
