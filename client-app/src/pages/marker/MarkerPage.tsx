@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import RestaurantList from './RestaurantList';
 import Enroll from './Enroll';
-import NavbarComp from '../Navbar/Navbar';
-import Footer from '../../components/containers/Footer/Footer';
+import NavbarComp from '../navbar/Navbar';
+import Footer from '../../components/footer/Footer';
 import { Button } from 'react-bootstrap';
 import { NavMenuType } from '../../library/def';
 

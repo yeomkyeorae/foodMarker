@@ -1,13 +1,20 @@
-import heic2any from "heic2any";
-import { InputImageLimit } from "../../../library/def";
-
+import heic2any from 'heic2any';
+import { InputImageLimit } from '../../library/def';
 
 const onImageDataHandler = (e, props) => {
   e.preventDefault();
 
-  const { setAlertToggle, setAlertMessage, setIsConverting,
-    setHeicImageData, setHeicImageName, setHeicCount,
-    setJpegImageData, setJpegCount, setPreImages } = props;
+  const {
+    setAlertToggle,
+    setAlertMessage,
+    setIsConverting,
+    setHeicImageData,
+    setHeicImageName,
+    setHeicCount,
+    setJpegImageData,
+    setJpegCount,
+    setPreImages,
+  } = props;
 
   const files = e.target.files;
 
@@ -21,8 +28,8 @@ const onImageDataHandler = (e, props) => {
   let heicTotalCnt = 0;
   let jpegTotalCnt = 0;
 
-  Object.keys(files).forEach(key => {
-    if (files[key].type === "image/heic") {
+  Object.keys(files).forEach((key) => {
+    if (files[key].type === 'image/heic') {
       heicTotalCnt += 1;
     } else {
       jpegTotalCnt += 1;
@@ -45,22 +52,20 @@ const onImageDataHandler = (e, props) => {
   Object.keys(files).forEach((key) => {
     const file = files[key];
 
-    if (file.type === "image/heic") {
+    if (file.type === 'image/heic') {
       const reader = new FileReader();
 
       reader.onloadend = function () {
         const image = reader.result as string;
 
         fetch(image)
-          .then(res => res.blob())
-          .then(blob =>
-            heic2any({ blob, toType: "image/jpeg", quality: 0.7 })
-          )
-          .then(conversionResult => {
+          .then((res) => res.blob())
+          .then((blob) => heic2any({ blob, toType: 'image/jpeg', quality: 0.7 }))
+          .then((conversionResult) => {
             // heic type 제거한 imageName
-            const splited = file.name.split(".");
+            const splited = file.name.split('.');
             const removedType = splited.slice(0, splited.length - 1);
-            const newImageName = removedType.join("");
+            const newImageName = removedType.join('');
 
             const fileReader = new FileReader();
             fileReader.onload = (e: any) => {
@@ -74,21 +79,21 @@ const onImageDataHandler = (e, props) => {
                 setHeicImageName(imageNames);
                 setHeicCount(heicCnt);
 
-                setPreImages(preImages => preImages.concat(heicPreImages));
+                setPreImages((preImages) => preImages.concat(heicPreImages));
                 setIsConverting(false);
               }
             };
             fileReader.readAsDataURL(conversionResult as Blob);
           })
-          .catch(err => {
+          .catch((err) => {
             setAlertToggle(true);
-            setAlertMessage("HEIC 이미지 파일 변환에 실패했습니다");
+            setAlertMessage('HEIC 이미지 파일 변환에 실패했습니다');
             console.log(err);
           });
       };
       reader.readAsDataURL(file);
     } else {
-      formData.append("restaurant_jpeg_img", file);
+      formData.append('restaurant_jpeg_img', file);
       const reader = new FileReader();
       reader.onload = () => {
         jpegCnt += 1;
@@ -96,7 +101,7 @@ const onImageDataHandler = (e, props) => {
 
         if (jpegCnt === jpegTotalCnt) {
           setJpegCount(jpegCnt);
-          setPreImages(preImages => preImages.concat(jpegPreImages));
+          setPreImages((preImages) => preImages.concat(jpegPreImages));
         }
         if (heicTotalCnt === 0) {
           setIsConverting(false);
@@ -106,20 +111,20 @@ const onImageDataHandler = (e, props) => {
     }
   });
   setJpegImageData(formData);
-}
+};
 
 const ImageInput = (props) => {
   const { inputRef } = props;
 
   return (
     <input
-      type="file"
+      type='file'
       ref={inputRef}
-      onChange={e => onImageDataHandler(e, props)}
-      style={{ width: "70%" }}
+      onChange={(e) => onImageDataHandler(e, props)}
+      style={{ width: '70%' }}
       multiple
     />
-  )
-}
+  );
+};
 
 export default ImageInput;

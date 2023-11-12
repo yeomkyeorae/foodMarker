@@ -1,16 +1,12 @@
-import React, { useState, useRef, Dispatch, SetStateAction } from "react";
-import { Button, Modal } from "react-bootstrap";
-import { withRouter, RouteComponentProps } from "react-router-dom";
-import ReactStars from "react-rating-stars-component";
-import { useDispatch } from "react-redux";
-import {
-  registerRestaurant,
-  registerJpegImg,
-  registerHeicImg
-} from "../../../_actions/restaurant_action";
-import ImageInput from "../Input/ImageInput";
-import * as S from "./UpdateModal.style";
-import { useAuthContext } from "../../../context/auth";
+import React, { useState, useRef, Dispatch, SetStateAction } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import ReactStars from 'react-rating-stars-component';
+import { useDispatch } from 'react-redux';
+import { registerRestaurant, registerJpegImg, registerHeicImg } from '../../_actions/restaurant_action';
+import ImageInput from '../input/ImageInput';
+import * as S from './UpdateModal.style';
+import { useAuthContext } from '../../context/auth';
 
 interface Props extends RouteComponentProps {
   toggle: boolean;
@@ -25,11 +21,22 @@ interface Props extends RouteComponentProps {
   setShowLoadingOverlay: Dispatch<SetStateAction<boolean>>;
 }
 
-function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListName, wishListAddress, setAlertToggle, setAlertMessage, deleteHandler, setShowLoadingOverlay }: Props): React.ReactElement {
+function UpdateModal({
+  toggle,
+  setToggle,
+  restaurantName,
+  wishListId,
+  wishListName,
+  wishListAddress,
+  setAlertToggle,
+  setAlertMessage,
+  deleteHandler,
+  setShowLoadingOverlay,
+}: Props): React.ReactElement {
   const [newRating, setNewRating] = useState(0);
-  const [visitedDate, setVisitedDate] = useState("");
+  const [visitedDate, setVisitedDate] = useState('');
   const [newEatingTime, setNewEatingTime] = useState(1);
-  const [newMenuItem, setNewMenuItem] = useState("");
+  const [newMenuItem, setNewMenuItem] = useState('');
   const [menuItems, setMenuItems] = useState<string[]>([]);
 
   // JPEG 이미지
@@ -52,29 +59,29 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
   const inputRef: React.RefObject<any> = useRef();
 
   // Handlers
-  const onVisitedDateHandler = e => {
+  const onVisitedDateHandler = (e) => {
     setVisitedDate(String(e.currentTarget.value));
   };
 
-  const onChangeNewMenuItem = e => {
+  const onChangeNewMenuItem = (e) => {
     setNewMenuItem(e.currentTarget.value);
   };
 
   const onMenuAddHandler = () => {
     setMenuItems(menuItems.concat([newMenuItem]));
-    setNewMenuItem("");
+    setNewMenuItem('');
   };
 
-  const onMenuDeleteHandler = index => {
+  const onMenuDeleteHandler = (index) => {
     setMenuItems(menuItems.filter((menu, menuIx) => menuIx !== index));
   };
 
-  const delWishEnrollRestaurant = async e => {
+  const delWishEnrollRestaurant = async (e) => {
     e.preventDefault();
 
     if (visitedDate.length === 0) {
       setAlertToggle(true);
-      setAlertMessage("방문 날짜를 입력해주세요!");
+      setAlertMessage('방문 날짜를 입력해주세요!');
       return;
     }
 
@@ -90,18 +97,18 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
     if (heicCount) {
       const heicBody = {
         images: heicImageData,
-        imgNames: heicImageName
+        imgNames: heicImageName,
       };
       const response = await dispatch(registerHeicImg(heicBody));
       heicPath = response.payload.fileNames;
     }
 
-    const imagePath = jpegPath.concat(heicPath).join(",");
+    const imagePath = jpegPath.concat(heicPath).join(',');
 
     const user = useAuthContext();
     const userId = user.userId as string;
     const username = user.userName as string;
-    
+
     const body = {
       visitor: userId,
       username: username,
@@ -113,30 +120,30 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
       eatingTime: newEatingTime,
       menus: JSON.stringify(menuItems),
       created: new Date().toISOString(),
-      representIx: representImageIx
+      representIx: representImageIx,
     };
 
     setShowLoadingOverlay(true);
     dispatch(registerRestaurant(body))
-      .then(response => {
+      .then((response) => {
         if (response.payload.success) {
           setShowLoadingOverlay(false);
           setAlertToggle(true);
-          setAlertMessage("방문 표시되었습니다.");
+          setAlertMessage('방문 표시되었습니다.');
 
           deleteHandler(wishListId);
         } else {
           setAlertToggle(true);
-          setAlertMessage("방문 표시에 실패했습니다");
+          setAlertMessage('방문 표시에 실패했습니다');
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
 
   const initAllImages = () => {
-    inputRef.current.value = "";
+    inputRef.current.value = '';
 
     setJpegImageData([]);
     setJpegCount(0);
@@ -154,17 +161,17 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
       show={toggle}
       onHide={() => setToggle(false)}
       style={{
-        textAlign: "center"
+        textAlign: 'center',
       }}
-      aria-labelledby="contained-modal-title-vcenter"
+      aria-labelledby='contained-modal-title-vcenter'
       centered
     >
       <Modal.Header closeButton />
       <Modal.Header
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <Modal.Title>{restaurantName}</Modal.Title>
@@ -173,8 +180,8 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
         <S.InputTitle>별점</S.InputTitle>
         <div
           style={{
-            margin: "auto",
-            width: "36%"
+            margin: 'auto',
+            width: '36%',
           }}
         >
           <ReactStars
@@ -183,69 +190,57 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
             onChange={setNewRating}
             size={32}
             isHalf={true}
-            activeColor="#ffd700"
+            activeColor='#ffd700'
           />
         </div>
         <S.InputTitle>방문 일시</S.InputTitle>
-        <div style={{ margin: "10px" }}>
-          <input
-            type="date"
-            value={visitedDate}
-            placeholder="방문 일시"
-            onChange={e => onVisitedDateHandler(e)}
-          />
+        <div style={{ margin: '10px' }}>
+          <input type='date' value={visitedDate} placeholder='방문 일시' onChange={(e) => onVisitedDateHandler(e)} />
           <select
-            id="select"
+            id='select'
             value={newEatingTime}
-            style={{ marginLeft: "5px" }}
-            onChange={e => setNewEatingTime(parseInt(e.target.value))}
+            style={{ marginLeft: '5px' }}
+            onChange={(e) => setNewEatingTime(parseInt(e.target.value))}
           >
-            <option value="1">아침</option>
-            <option value="2">점심</option>
-            <option value="3">저녁</option>
-            <option value="4">기타</option>
+            <option value='1'>아침</option>
+            <option value='2'>점심</option>
+            <option value='3'>저녁</option>
+            <option value='4'>기타</option>
           </select>
         </div>
         <S.InputTitle>메뉴</S.InputTitle>
         <div>
-          <div style={{ margin: "5px" }}>
+          <div style={{ margin: '5px' }}>
             <S.Input
-              type="text"
+              type='text'
               value={newMenuItem}
-              placeholder="메뉴 입력"
-              onChange={e => onChangeNewMenuItem(e)}
-              style={{ width: "30%" }}
+              placeholder='메뉴 입력'
+              onChange={(e) => onChangeNewMenuItem(e)}
+              style={{ width: '30%' }}
             />
             <Button
-              variant="success"
-              style={{ margin: "10px", display: "inline-block" }}
+              variant='success'
+              style={{ margin: '10px', display: 'inline-block' }}
               onClick={() => onMenuAddHandler()}
             >
               +
             </Button>
             {menuItems.length
               ? menuItems.map((menu, index) => (
-                <div
-                  key={index}
-                  style={{ marginTop: "2px", marginBottom: "10px" }}
-                >
-                  {menu}
-                  <Button
-                    variant="danger"
-                    style={{ marginLeft: "10px" }}
-                    onClick={() => onMenuDeleteHandler(index)}
-                  >
-                    X
-                  </Button>
-                </div>
-              ))
+                  <div key={index} style={{ marginTop: '2px', marginBottom: '10px' }}>
+                    {menu}
+                    <Button variant='danger' style={{ marginLeft: '10px' }} onClick={() => onMenuDeleteHandler(index)}>
+                      X
+                    </Button>
+                  </div>
+                ))
               : null}
           </div>
         </div>
       </Modal.Body>
-      <Modal.Footer style={{ flexDirection: "column" }}>
+      <Modal.Footer style={{ flexDirection: 'column' }}>
         <S.InputTitle>이미지 업로드</S.InputTitle>
-        <div style={{ marginLeft: "100px", display: "inline-block" }}>
+        <div style={{ marginLeft: '100px', display: 'inline-block' }}>
           <ImageInput
             inputRef={inputRef}
             setAlertToggle={setAlertToggle}
@@ -260,45 +255,48 @@ function UpdateModal({ toggle, setToggle, restaurantName, wishListId, wishListNa
           />
         </div>
         {preImages.length > 0 && isConverting === false ? (
-          <div style={{ marginTop: "10px" }}>
-            <Button variant="danger" onClick={() => initAllImages()}>
+          <div style={{ marginTop: '10px' }}>
+            <Button variant='danger' onClick={() => initAllImages()}>
               초기화
             </Button>
           </div>
         ) : null}
-        <div style={{ marginTop: "10px", margin: "auto" }}>
+        <div style={{ marginTop: '10px', margin: 'auto' }}>
           {preImages && preImages.length > 0
             ? preImages.map((url, index) => {
-              return (
-                <div
-                  key={index}
-                  style={{ display: "inline-block", margin: "5px", cursor: "pointer", border: `${index === representImageIx ? "5px solid red" : "0px"}` }}
-                  onClick={() => setRepresentImageIx(index)}
-                >
-                  <img src={url} alt={"jpeg"} width="100px" height="100px" />
-                </div>
-              );
-            })
+                return (
+                  <div
+                    key={index}
+                    style={{
+                      display: 'inline-block',
+                      margin: '5px',
+                      cursor: 'pointer',
+                      border: `${index === representImageIx ? '5px solid red' : '0px'}`,
+                    }}
+                    onClick={() => setRepresentImageIx(index)}
+                  >
+                    <img src={url} alt={'jpeg'} width='100px' height='100px' />
+                  </div>
+                );
+              })
             : null}
         </div>
       </Modal.Footer>
       <Modal.Footer
         style={{
-          display: "flex",
-          justifyContent: "center"
+          display: 'flex',
+          justifyContent: 'center',
         }}
       >
-        {
-          isConverting ? (
-            <Button variant="danger" disabled>
-              방문 표시하기
-            </Button>
-          ) : (
-            <Button variant="success" onClick={delWishEnrollRestaurant}>
-              방문 표시하기
-            </Button>
-          )
-        }
+        {isConverting ? (
+          <Button variant='danger' disabled>
+            방문 표시하기
+          </Button>
+        ) : (
+          <Button variant='success' onClick={delWishEnrollRestaurant}>
+            방문 표시하기
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   );

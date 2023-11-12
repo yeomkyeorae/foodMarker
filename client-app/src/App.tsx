@@ -2,14 +2,14 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import LandingPage from './pages/LadingPage/LadingPage';
-import LoginSignup from './pages/LoginSignup/LoginSignup';
-import MainPage from './pages/MainPage/MainPage';
-import CurrentLocation from './pages/CurrentLocation/CurrentLocation';
-import MarkerPage from './pages/MarkerPage/MarkerPage';
-import WishPage from './pages/WishList/WishPage';
-import ChoizaPage from './pages/ChoizaPage/ChoizaPage';
-import MyInfoPage from './pages/MyInfo/MyInfoPage';
+import LandingPage from './pages/landing/LadingPage';
+import LoginSignup from './pages/sign/LoginSignup';
+import MainPage from './pages/main/MainPage';
+import CurrentLocation from './pages/nearby/CurrentLocation';
+import MarkerPage from './pages/marker/MarkerPage';
+import WishPage from './pages/wishlist/WishPage';
+import ChoizaPage from './pages/choizeRoad/ChoizaPage';
+import MyInfoPage from './pages/myInfo/MyInfoPage';
 import Auth from './context/auth';
 
 function App() {

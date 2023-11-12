@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import Enroll from '../MarkerPage/Enroll';
+import Enroll from '../marker/Enroll';
 import WishList from './WishList';
-import NavbarComp from '../Navbar/Navbar';
-import Footer from '../../components/containers/Footer/Footer';
+import NavbarComp from '../navbar/Navbar';
+import Footer from '../../components/footer/Footer';
 import { Button } from 'react-bootstrap';
 import { NavMenuType } from '../../library/def';
 import * as S from './WishPage.style';
