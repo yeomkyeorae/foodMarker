@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import NavbarComp from '../Navbar/Navbar';
-import Footer from '../../components/containers/Footer/Footer';
+import NavbarComp from '../navbar/Navbar';
+import Footer from '../../components/footer/Footer';
 import ChoizaList from './ChoizaList';
 import { NavMenuType, ChoizaRoadSeason } from '../../library/def';
 import * as S from './ChoizaPage.style';
@@ -11,7 +11,7 @@ interface Props {
 }
 
 function ChoizaPage({ history }: Props): React.ReactElement {
-  const [season, setSeason] = useState<number>(ChoizaRoadSeason.Seven);
+  const [season, setSeason] = useState<number>(ChoizaRoadSeason.Eight);
   const [seasonName, setSeasonName] = useState<string>('시즌8');
 
   const onClickHandler = (seansonName: string, season: number) => {

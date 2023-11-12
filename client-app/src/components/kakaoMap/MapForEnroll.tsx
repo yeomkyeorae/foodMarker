@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import AlertModal from '../AlertModal/AlertModal';
+import AlertModal from '../alert/AlertModal';
 // import "react-datepicker/dist/react-datepicker.css";
 
 const { kakao } = window;

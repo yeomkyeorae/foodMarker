@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import NavbarComp from '../Navbar/Navbar';
-import Footer from '../../components/containers/Footer/Footer';
-import KakaoMapCoords from '../../components/containers/KakaoMap/KakaoMapCoords';
+import NavbarComp from '../navbar/Navbar';
+import Footer from '../../components/footer/Footer';
+import KakaoMapCoords from '../../components/kakaoMap/KakaoMapCoords';
 import SubPage from './SubPage';
 import LoadingPage from './LoadingPage';
-import AlertModal from '../../components/containers/AlertModal/AlertModal';
+import AlertModal from '../../components/alert/AlertModal';
 import { NavMenuType } from '../../library/def';
 
 interface Props {

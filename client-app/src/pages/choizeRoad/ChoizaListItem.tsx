@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { withRouter, RouteComponentProps } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { Card, Col, OverlayTrigger, Popover, PopoverHeader, PopoverBody } from "react-bootstrap";
-import { FaSearch, FaPlus, FaCheck } from "react-icons/fa";
-import {
-  registerVisitedChoizaRoad,
-  deleteVisitedChoizaRoad
-} from "../../_actions/choizaRoad_action";
-import { ChoizaRoad, VisitedChoizaRoads } from '../../components/interfaces/ChoizaRoad';
-import AlertModal from '../../components/containers/AlertModal/AlertModal';
-import deleteImage from "../../assets/deleteImage.png";
-import { useAuthContext } from "../../context/auth";
+import React, { useState, useEffect } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Card, Col, OverlayTrigger, Popover, PopoverHeader, PopoverBody } from 'react-bootstrap';
+import { FaSearch, FaPlus, FaCheck } from 'react-icons/fa';
+import { registerVisitedChoizaRoad, deleteVisitedChoizaRoad } from '../../_actions/choizaRoad_action';
+import { ChoizaRoad, VisitedChoizaRoads } from '../../interfaces/ChoizaRoad';
+import AlertModal from '../../components/alert/AlertModal';
+import deleteImage from '../../assets/deleteImage.png';
+import { useAuthContext } from '../../context/auth';
 
 interface Visited {
   isVisited: boolean;
@@ -38,22 +35,22 @@ function ChoizaListItem(props: Props): React.ReactElement {
 
   const [visitedList, setVisitedList] = useState<Visited[]>([]);
   const [alertToggle, setAlertToggle] = useState<boolean>(false);
-  const [alertMessage, setAlertMessage] = useState("");
+  const [alertMessage, setAlertMessage] = useState('');
 
   useEffect(() => {
-    const firstVisitedList = choizaRestaurants.split(",").map(restaurant => {
+    const firstVisitedList = choizaRestaurants.split(',').map((restaurant) => {
       const visitedItem = visitedChoizaRoads.find(
-        visitedChoizaRoad => visitedChoizaRoad.restaurantName === restaurant
+        (visitedChoizaRoad) => visitedChoizaRoad.restaurantName === restaurant,
       );
 
       if (visitedItem) {
         return {
           isVisited: true,
-          ...visitedItem
+          ...visitedItem,
         };
       } else {
         return {
-          isVisited: false
+          isVisited: false,
         };
       }
     });
@@ -66,7 +63,7 @@ function ChoizaListItem(props: Props): React.ReactElement {
       setAlertMessage('삭제된 회차입니다!');
       setAlertToggle(true);
     } else {
-      window.open(URL, "_blank");
+      window.open(URL, '_blank');
     }
   };
 
@@ -78,15 +75,15 @@ function ChoizaListItem(props: Props): React.ReactElement {
       const body = {
         userId,
         restaurantName,
-        season
+        season,
       };
       dispatch(registerVisitedChoizaRoad(body))
-        .then(response => {
+        .then((response) => {
           const newVisitedList = visitedList.map((visitedItem, ix) => {
             if (ix === index) {
               return {
                 ...response.payload.info,
-                isVisited: true
+                isVisited: true,
               };
             }
             return visitedItem;
@@ -94,7 +91,7 @@ function ChoizaListItem(props: Props): React.ReactElement {
 
           setVisitedList(newVisitedList);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     } else {
@@ -104,7 +101,7 @@ function ChoizaListItem(props: Props): React.ReactElement {
           const newVisitedList = visitedList.map((visitedItem, ix) => {
             if (ix === index) {
               return {
-                isVisited: false
+                isVisited: false,
               };
             }
             return visitedItem;
@@ -112,34 +109,34 @@ function ChoizaListItem(props: Props): React.ReactElement {
 
           setVisitedList(newVisitedList);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     }
   };
 
   return (
-    <Col sm={6} md={4} lg={3} style={{ paddingBottom: "10px" }}>
-      <Card style={{ width: "100%", height: "100%" }}>
+    <Col sm={6} md={4} lg={3} style={{ paddingBottom: '10px' }}>
+      <Card style={{ width: '100%', height: '100%' }}>
         <Card.Body>
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <OverlayTrigger
-              trigger="click"
-              key="top"
-              placement="top"
+              trigger='click'
+              key='top'
+              placement='top'
               rootClose={true}
               overlay={
                 <Popover id={`popover-positioned-left`}>
-                  <PopoverHeader as="h3">최자로드 식당 검색</PopoverHeader>
+                  <PopoverHeader as='h3'>최자로드 식당 검색</PopoverHeader>
                   {choizaRestaurants ? (
-                    choizaRestaurants.split(",").map(restaurant => (
+                    choizaRestaurants.split(',').map((restaurant) => (
                       <PopoverBody key={restaurant}>
-                        <div style={{ textAlign: "center" }}>
+                        <div style={{ textAlign: 'center' }}>
                           <a
                             href={`https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=${restaurant}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ textDecoration: "none" }}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            style={{ textDecoration: 'none' }}
                           >
                             {restaurant}
                           </a>
@@ -154,51 +151,46 @@ function ChoizaListItem(props: Props): React.ReactElement {
             >
               <div
                 style={{
-                  cursor: "pointer",
-                  marginBottom: "5px",
-                  marginRight: "5px"
+                  cursor: 'pointer',
+                  marginBottom: '5px',
+                  marginRight: '5px',
                 }}
               >
-                <FaSearch color="#999DA0" size="28" />
+                <FaSearch color='#999DA0' size='28' />
               </div>
             </OverlayTrigger>
             <OverlayTrigger
-              trigger="click"
-              key="top_wish"
-              placement="top"
+              trigger='click'
+              key='top_wish'
+              placement='top'
               rootClose={true}
               overlay={
                 <Popover id={`popover-positioned-left`}>
-                  <PopoverHeader as="h3" className="noselect">
+                  <PopoverHeader as='h3' className='noselect'>
                     최자로드 식당 방문 체크
                   </PopoverHeader>
                   {choizaRestaurants && visitedList.length > 0 ? (
-                    choizaRestaurants.split(",").map((restaurant, ix) => {
+                    choizaRestaurants.split(',').map((restaurant, ix) => {
                       const isVisited = visitedList[ix].isVisited;
 
                       return (
                         <PopoverBody key={restaurant}>
                           <div
                             style={{
-                              display: "flex",
-                              justifyContent: "space-around"
+                              display: 'flex',
+                              justifyContent: 'space-around',
                             }}
                           >
-                            <div className="noselect">{restaurant}</div>
+                            <div className='noselect'>{restaurant}</div>
                             <div
                               style={{
-                                cursor: "pointer",
-                                marginLeft: "5px",
-                                margin: "0px"
+                                cursor: 'pointer',
+                                marginLeft: '5px',
+                                margin: '0px',
                               }}
-                              onClick={() =>
-                                checkVisitedChoizaRoad(restaurant, ix)
-                              }
+                              onClick={() => checkVisitedChoizaRoad(restaurant, ix)}
                             >
-                              <FaCheck
-                                color={isVisited ? "green" : "gray"}
-                                size="20"
-                              />
+                              <FaCheck color={isVisited ? 'green' : 'gray'} size='20' />
                             </div>
                           </div>
                         </PopoverBody>
@@ -212,46 +204,37 @@ function ChoizaListItem(props: Props): React.ReactElement {
             >
               <div
                 style={{
-                  cursor: "pointer",
-                  marginBottom: "5px",
-                  marginLeft: "5px"
+                  cursor: 'pointer',
+                  marginBottom: '5px',
+                  marginLeft: '5px',
                 }}
               >
-                <FaPlus color="#999DA0" size="28" />
+                <FaPlus color='#999DA0' size='28' />
               </div>
             </OverlayTrigger>
           </div>
-          <div
-            onClick={() => clickChoizaRoad(choizaRoad.youtubeURL, deleted)}
-            style={{ cursor: "pointer" }}
-          >
+          <div onClick={() => clickChoizaRoad(choizaRoad.youtubeURL, deleted)} style={{ cursor: 'pointer' }}>
             <div
               style={{
-                width: "100%",
-                height: "240px",
-                overflow: "hidden"
+                width: '100%',
+                height: '240px',
+                overflow: 'hidden',
               }}
             >
               <Card.Img
-                variant="top"
+                variant='top'
                 src={deleted === true ? deleteImage : choizaRoad.thumbnailURL}
                 style={{
-                  width: "100%",
-                  height: "100%"
+                  width: '100%',
+                  height: '100%',
                 }}
               />
             </div>
-            <p style={{ fontSize: "20px" }}>
-              {choizaRoad.title}
-            </p>
+            <p style={{ fontSize: '20px' }}>{choizaRoad.title}</p>
           </div>
         </Card.Body>
       </Card>
-      {
-        alertToggle ?
-          <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> :
-          null
-      }
+      {alertToggle ? <AlertModal setAlertToggle={setAlertToggle} alertMessage={alertMessage} /> : null}
     </Col>
   );
 }

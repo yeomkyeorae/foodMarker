@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { registerWishList } from '../../../_actions/wishList_action';
-import AlertModal from '../AlertModal/AlertModal';
+import { registerWishList } from '../../_actions/wishList_action';
+import AlertModal from '../alert/AlertModal';
 import { useDispatch } from 'react-redux';
-import { useAuthContext } from '../../../context/auth';
+import { useAuthContext } from '../../context/auth';
 
 const { kakao } = window;
 
