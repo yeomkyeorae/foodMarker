@@ -15,7 +15,7 @@ interface Props {
   history: RouteComponentProps['history'];
 }
 
-function NavbarComp({ menu, history }: Props): React.ReactElement {
+function Navbar({ menu, history }: Props): React.ReactElement {
   const user = useAuthContext();
   const userId = user.userId as string;
 
@@ -123,4 +123,4 @@ function NavbarComp({ menu, history }: Props): React.ReactElement {
   );
 }
 
-export default NavbarComp;
+export default Navbar;

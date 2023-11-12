@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Enroll from '../marker/Enroll';
 import WishList from './WishList';
-import NavbarComp from '../navbar/Navbar';
+import Navbar from '../navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 import { Button } from 'react-bootstrap';
 import { NavMenuType } from '../../library/def';
@@ -34,7 +34,7 @@ function WishPage({ history }: Props): React.ReactElement {
 
   return (
     <S.MainDiv>
-      <NavbarComp history={history} menu={NavMenuType.Wish} />
+      <Navbar history={history} menu={NavMenuType.Wish} />
       <hr />
       <div>
         <Button variant='success' onClick={onClickChangeMenuHandler} style={{ margin: '20px' }}>

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { updateUserMyPlace } from '../../_actions/user_action';
 import { readRestaurants, readRestaurantsCount } from '../../_actions/restaurant_action';
 import { readWishList, readWishListCount } from '../../_actions/wishList_action';
-import NavbarComp from '../navbar/Navbar';
+import Navbar from '../navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 import MyCalendar from './MyCalendar';
 import { Button } from 'react-bootstrap';
@@ -101,7 +101,7 @@ function MyInfoPage({ history }: Props): React.ReactElement {
           overflow: 'hidden',
         }}
       >
-        <NavbarComp history={history} menu={NavMenuType.Myinfo} />
+        <Navbar history={history} menu={NavMenuType.Myinfo} />
         <hr />
         <div>
           <div style={{ height: '120px' }}>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import NavbarComp from '../navbar/Navbar';
+import Navbar from '../navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 import KakaoMapCoords from '../../components/kakaoMap/KakaoMapCoords';
 import SubPage from './SubPage';
@@ -53,7 +53,7 @@ function CurrentLocation({ history }: Props): React.ReactElement {
         overflow: 'auto',
       }}
     >
-      <NavbarComp history={history} menu={NavMenuType.CurrentLocation} />
+      <Navbar history={history} menu={NavMenuType.CurrentLocation} />
       <hr />
       {latitude > 0 && longitude > 0 ? (
         <KakaoMapCoords latitude={latitude} longitude={longitude} mapLevel={4} />
