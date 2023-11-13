@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import Navbar from '../navbar/Navbar';
+import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 import KakaoMapCoords from '../../components/kakaoMap/KakaoMapCoords';
 import SubPage from './SubPage';

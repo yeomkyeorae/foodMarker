@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import { readRestaurantsNoImage, readTenRestaurants } from '../../_actions/restaurant_action';
 import { readTenWishList } from '../../_actions/wishList_action';
-import Navbar from '../navbar/Navbar';
+import Navbar from '../../components/navbar/Navbar';
 import KakaoMap from '../../components/kakaoMap/KakaoMap';
 import Footer from '../../components/footer/Footer';
 import '@brainhubeu/react-carousel/lib/style.css';

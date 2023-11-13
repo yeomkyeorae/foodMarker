@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { logoutUser } from '../../_actions/user_action';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import AlertModal from '../../components/alert/AlertModal';
+import AlertModal from '../alert/AlertModal';
 import { GiMagicLamp, GiRoad } from 'react-icons/gi';
 import { BiUser, BiMapPin, BiMale } from 'react-icons/bi';
 import * as S from './Navbar.style';

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Enroll from '../marker/Enroll';
 import WishList from './WishList';
-import Navbar from '../navbar/Navbar';
+import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 import { Button } from 'react-bootstrap';
 import { NavMenuType } from '../../library/def';

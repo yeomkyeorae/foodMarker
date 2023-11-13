@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { updateUserMyPlace } from '../../_actions/user_action';
 import { readRestaurants, readRestaurantsCount } from '../../_actions/restaurant_action';
 import { readWishList, readWishListCount } from '../../_actions/wishList_action';
-import Navbar from '../navbar/Navbar';
+import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 import MyCalendar from './MyCalendar';
 import { Button } from 'react-bootstrap';
