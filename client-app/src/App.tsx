@@ -7,9 +7,9 @@ import LoginSignup from './pages/sign/LoginSignup';
 import MainPage from './pages/main/MainPage';
 import CurrentLocation from './pages/nearby/CurrentLocation';
 import MarkerPage from './pages/marker/MarkerPage';
-// import WishPage from './pages/wishlist/WishPage';
+import WishPage from './pages/wishlist/WishPage';
 import ChoizaPage from './pages/choizeRoad/ChoizaPage';
-// import MyInfoPage from './pages/myInfo/MyInfoPage';
+import MyInfoPage from './pages/myInfo/MyInfoPage';
 import Auth from './context/auth';
 
 function App() {
@@ -21,8 +21,8 @@ function App() {
         <Route exact path='/main' component={Auth(<MainPage />, true)} />
         <Route exact path='/current-location' component={Auth(<CurrentLocation />, true)} />
         <Route exact path='/marker' component={Auth(<MarkerPage />, true)} />
-        {/* <Route exact path='/wish' component={Auth(<WishPage />, true)} />
-        <Route exact path='/my-info' component={Auth(<MyInfoPage />, true)} /> */}
+        <Route exact path='/wish' component={Auth(<WishPage />, true)} />
+        <Route exact path='/my-info' component={Auth(<MyInfoPage />, true)} />
         <Route exact path='/choizaroad' component={Auth(<ChoizaPage />, true)} />
       </Switch>
     </Router>
