@@ -22,8 +22,8 @@ function App() {
         <Route exact path='/current-location' component={Auth(<CurrentLocation />, true)} />
         <Route exact path='/marker' component={Auth(<MarkerPage />, true)} />
         <Route exact path='/wish' component={Auth(<WishPage />, true)} />
-        <Route exact path='/choizaroad' component={Auth(<ChoizaPage />, true)} />
         <Route exact path='/my-info' component={Auth(<MyInfoPage />, true)} />
+        <Route exact path='/choizaroad' component={Auth(<ChoizaPage />, true)} />
       </Switch>
     </Router>
   );
