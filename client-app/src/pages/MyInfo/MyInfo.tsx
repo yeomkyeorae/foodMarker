@@ -12,7 +12,7 @@ import { RestaurantDetail } from '../../interfaces/Restaurant';
 import { WishListType } from '../../interfaces/WishList';
 import { LocationCode, NavMenuType } from '../../library/def';
 import AlertModal from '../../components/alert/AlertModal';
-import * as S from './MyInfoPage.style';
+import * as S from './MyInfo.style';
 import { useAuthContext } from '../../context/auth';
 
 const colorBar = [
@@ -27,7 +27,7 @@ interface Props {
   history: RouteComponentProps['history'];
 }
 
-function MyInfoPage({ history }: Props): React.ReactElement {
+function MyInfo({ history }: Props): React.ReactElement {
   const user = useAuthContext();
 
   const [myRestaurantsCount, setMyRestaurantsCount] = useState(0);
@@ -232,4 +232,4 @@ function MyInfoPage({ history }: Props): React.ReactElement {
   );
 }
 
-export default withRouter(MyInfoPage);
+export default withRouter(MyInfo);

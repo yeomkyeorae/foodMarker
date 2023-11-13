@@ -12,7 +12,7 @@ interface Props {
   history: RouteComponentProps['history'];
 }
 
-function WishPage({ history }: Props): React.ReactElement {
+function Wish({ history }: Props): React.ReactElement {
   const [Toggle, setToggle] = useState(true);
   const [Menu, setMenu] = useState('위시 맛집 등록하기');
 
@@ -48,4 +48,4 @@ function WishPage({ history }: Props): React.ReactElement {
   );
 }
 
-export default withRouter(WishPage);
+export default withRouter(Wish);

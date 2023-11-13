@@ -6,7 +6,7 @@ import WishListItem from './WishListItem';
 import { WishListType } from '../../interfaces/WishList';
 import LoadingOverlayDiv from '../../components/loadingOverlay/LoadingOverlay';
 import { WishListOrder } from '../../library/def';
-import * as S from './WishList.style';
+import * as S from './Wish.style';
 import { useAuthContext } from '../../context/auth';
 
 function WishList(): React.ReactElement {
