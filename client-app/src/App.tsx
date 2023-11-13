@@ -2,14 +2,14 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Wish from './pages/wishlist/Wish';
-import MyInfo from './pages/myInfo/MyInfo';
+import Wish from './pages/wish-list/Wish';
+import MyInfo from './pages/my-info/MyInfo';
 import LandingPage from './pages/landing/LadingPage';
 import LoginSignup from './pages/sign/LoginSignup';
 import MainPage from './pages/main/MainPage';
 import CurrentLocation from './pages/nearby/CurrentLocation';
 import MarkerPage from './pages/marker/MarkerPage';
-import ChoizaPage from './pages/choizeRoad/ChoizaPage';
+import ChoizaPage from './pages/choiza-road/ChoizaPage';
 import Auth from './context/auth';
 
 function App() {
