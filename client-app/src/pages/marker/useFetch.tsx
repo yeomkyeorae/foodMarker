@@ -25,8 +25,7 @@ function useFetch(
           totalItemCount % ItemPerPage === 0
             ? Math.floor(totalItemCount / ItemPerPage)
             : Math.floor(totalItemCount / ItemPerPage) + 1;
-
-        if (maxPage !== 0 && maxPage < page) {
+        if (maxPage === 0 || (maxPage !== 0 && maxPage < page)) {
           setLoading(false);
           setError(true);
         } else {
