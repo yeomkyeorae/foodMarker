@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { withRouter } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { readRestaurantsCount } from "../../_actions/restaurant_action";
-import RestaurantListItem from "./RestaurantListItem";
-import { Row } from "react-bootstrap";
-import useFetch from "./useFetch";
-import * as S from "./RestaurantList.style";
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { withRouter } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { readRestaurantsCount } from '../../_actions/restaurant_action';
+import RestaurantListItem from './RestaurantListItem';
+import { Row } from 'react-bootstrap';
+import useFetch from './useFetch';
+import * as S from './RestaurantList.style';
 
 function RestaurantList(): React.ReactElement {
   const dispatch = useDispatch<any>();
@@ -15,25 +15,32 @@ function RestaurantList(): React.ReactElement {
   const { loading, error, restaurantList, setRestaurantList } = useFetch(page, totalItemCount);
   const loader = useRef(null);
 
-  const userId = window.sessionStorage.getItem("userId") as string;
+  const userId = window.sessionStorage.getItem('userId') as string;
 
-  const handleObserver = useCallback((entries) => {
-    const target = entries[0];
+  const handleObserver = useCallback(
+    (entries) => {
+      const target = entries[0];
 
-    if (target.isIntersecting) {
-      setPage(page => page + 1);
-    }
-  }, [totalItemCount, setTotalItemCount]);
+      if (target.isIntersecting) {
+        setPage((page) => page + 1);
+      }
+    },
+    [totalItemCount, setTotalItemCount],
+  );
 
   useEffect(() => {
-    dispatch(readRestaurantsCount(userId)).then(response => {
-      setTotalItemCount(response.payload);
+    dispatch(readRestaurantsCount(userId)).then((response) => {
+      if (response.payload?.success === false) {
+        setTotalItemCount(0);
+      } else {
+        setTotalItemCount(response.payload);
+      }
     });
 
     const option = {
       root: null,
-      rootMargin: "20px",
-      threshold: 1
+      rootMargin: '20px',
+      threshold: 1,
     };
 
     if (totalItemCount > 0) {
@@ -45,11 +52,11 @@ function RestaurantList(): React.ReactElement {
   }, [totalItemCount]);
 
   return (
-    <div style={{ display: "inline-block", width: "100%" }}>
+    <div style={{ display: 'inline-block', width: '100%' }}>
       <S.Div>
         <S.Restaurants>
           <S.List>
-            <Row className="show-grid">
+            <Row className='show-grid'>
               {restaurantList.map((restaurant, index) => (
                 <RestaurantListItem
                   key={'restaurantListItem' + index}

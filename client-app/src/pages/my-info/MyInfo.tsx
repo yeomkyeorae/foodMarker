@@ -44,11 +44,19 @@ function MyInfo({ history }: Props): React.ReactElement {
   useEffect(() => {
     if (userId) {
       dispatch(readRestaurantsCount(userId)).then((response) => {
-        setMyRestaurantsCount(response.payload);
+        if (response.payload?.success === false) {
+          setMyRestaurantsCount(0);
+        } else {
+          setMyRestaurantsCount(response.payload);
+        }
       });
 
       dispatch(readWishListCount(userId)).then((response) => {
-        setMyWishListCount(response.payload);
+        if (response.payload?.success === false) {
+          setMyWishListCount(0);
+        } else {
+          setMyWishListCount(response.payload);
+        }
       });
 
       dispatch(readRestaurants(userId, 1, 1000)).then((response) => {
