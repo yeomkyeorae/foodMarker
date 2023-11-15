@@ -38,6 +38,7 @@ function MyInfo({ history }: Props): React.ReactElement {
   const [alertToggle, setAlertToggle] = useState(false);
 
   const userId = user.userId as string;
+  const username = user.userName as string;
 
   const dispatch = useDispatch<any>();
 
@@ -93,7 +94,7 @@ function MyInfo({ history }: Props): React.ReactElement {
     dispatch(updateUserMyPlace(body)).then((response) => {
       if (response.payload.success) {
         setAlertToggle(true);
-        window.sessionStorage.setItem('myPlace', myPlace);
+        user.setUserInfo(userId, username, myPlace);
       }
     });
   };

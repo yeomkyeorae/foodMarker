@@ -27,7 +27,7 @@ function Navbar({ menu, history }: Props): React.ReactElement {
   const onClickHandler = () => {
     dispatch(logoutUser()).then((response) => {
       if (response.payload.success) {
-        window.sessionStorage.clear();
+        user.setUserInfo(null, null, null);
         history.push('/loginSignup');
       } else {
         setAlertToggle(true);

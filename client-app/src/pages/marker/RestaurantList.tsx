@@ -5,6 +5,7 @@ import { readRestaurantsCount } from '../../_actions/restaurant_action';
 import RestaurantListItem from './RestaurantListItem';
 import { Row } from 'react-bootstrap';
 import useFetch from './useFetch';
+import { useAuthContext } from '../../context/auth';
 import * as S from './RestaurantList.style';
 
 function RestaurantList(): React.ReactElement {
@@ -15,7 +16,7 @@ function RestaurantList(): React.ReactElement {
   const { loading, error, restaurantList, setRestaurantList } = useFetch(page, totalItemCount);
   const loader = useRef(null);
 
-  const userId = window.sessionStorage.getItem('userId') as string;
+  const { userId } = useAuthContext();
 
   const handleObserver = useCallback(
     (entries) => {
@@ -29,7 +30,7 @@ function RestaurantList(): React.ReactElement {
   );
 
   useEffect(() => {
-    dispatch(readRestaurantsCount(userId)).then((response) => {
+    dispatch(readRestaurantsCount(userId as string)).then((response) => {
       if (response.payload?.success === false) {
         setTotalItemCount(0);
       } else {

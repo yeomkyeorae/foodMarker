@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { readRestaurants } from '../../_actions/restaurant_action';
 import { ItemPerPage } from '../../library/def';
 import { RestaurantDetail } from '../../interfaces/Restaurant';
+import { useAuthContext } from '../../context/auth';
 
 function useFetch(
   page: number,
@@ -17,6 +18,7 @@ function useFetch(
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [restaurantList, setRestaurantList] = useState([]);
+  const { userId } = useAuthContext();
 
   const sendQuery = useCallback(
     async (totalItemCount) => {
@@ -32,10 +34,8 @@ function useFetch(
           setLoading(true);
           setError(false);
 
-          const userId = window.sessionStorage.getItem('userId') as string;
-
           if (Math.ceil(restaurantList.length / totalItemCount) < page) {
-            const newRestaurantList = (await dispatch(readRestaurants(userId, page, ItemPerPage))).payload;
+            const newRestaurantList = (await dispatch(readRestaurants(userId as string, page, ItemPerPage))).payload;
 
             if (!newRestaurantList.length) {
               setLoading(false);

@@ -10,6 +10,7 @@ import AlertModal from '../../components/alert/AlertModal';
 import LoadingOverlayDiv from '../../components/loadingOverlay/LoadingOverlay';
 import ImageInput from '../../components/input/ImageInput';
 import TextInput from '../../components/input/TextInput';
+import { useAuthContext } from '../../context/auth';
 import * as S from './Enroll.style';
 
 interface Props extends RouteComponentProps {
@@ -66,9 +67,8 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
   // 맛집 등록 오버레이
   const [showLoadingOverlay, setShowLoadingOverlay] = useState<boolean>(false);
 
-  // Props, etc.
-  const userId = window.sessionStorage.getItem('userId') as string;
-  const username = window.sessionStorage.getItem('username') as string;
+  // user context
+  const { userId, userName } = useAuthContext();
 
   const dispatch = useDispatch<any>();
   const searchInputRef: React.RefObject<any> = useRef();
@@ -160,8 +160,8 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
       const imagePath = jpegPath.concat(heicPath).join(',');
 
       const body = {
-        visitor: userId,
-        username: username,
+        visitor: userId as string,
+        username: userName as string,
         name: name,
         address: address,
         date: visitedDate,
@@ -202,8 +202,8 @@ function Enroll({ parentCompName, setToggle, setMenu, history }: Props): React.R
     } else if (parentCompName === 'WishPage') {
       // 위시 맛집
       const body = {
-        user: userId,
-        username: username,
+        user: userId as string,
+        username: userName as string,
         name: name,
         address: address,
         created: new Date().toISOString(),
