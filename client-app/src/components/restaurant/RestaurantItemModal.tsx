@@ -8,6 +8,8 @@ import { deleteRestaurant } from '../../_actions/restaurant_action';
 import ImageListBody from './ImageListBody';
 import { RestaurantDetail } from '../../interfaces/Restaurant';
 import UpdateBody from './UpdateBody';
+import { FaImage, FaMapMarkedAlt, FaPencilAlt, FaTimes } from 'react-icons/fa';
+import * as S from './RestaurantItemModal.style';
 
 interface Props extends RouteComponentProps {
   toggle: boolean;
@@ -156,22 +158,24 @@ function RestaurantItemModal({
           alignItems: 'center',
         }}
       >
-        <Button variant='success' style={{ margin: '5px' }} onClick={() => menuChange(0)}>
-          이미지
-        </Button>
-        {!readOnly ? (
-          <Button variant='primary' style={{ margin: '5px' }} onClick={() => menuChange(1)}>
-            수정
-          </Button>
-        ) : null}
-        <Button variant='secondary' style={{ margin: '5px' }} onClick={() => menuChange(2)}>
-          지도
-        </Button>
-        {!readOnly ? (
-          <Button variant='danger' style={{ margin: '5px' }} onClick={() => menuChange(3)}>
-            삭제
-          </Button>
-        ) : null}
+        <div style={{ width: '80%', display: 'flex', justifyContent: 'space-around' }}>
+          <S.MenuBtn>
+            <FaImage size={28} color={modalMenu === 0 ? '#ff6700' : 'black'} onClick={() => menuChange(0)} />
+          </S.MenuBtn>
+          <S.MenuBtn>
+            <FaMapMarkedAlt size={28} color={modalMenu === 2 ? '#ff6700' : 'black'} onClick={() => menuChange(2)} />
+          </S.MenuBtn>
+          {!readOnly ? (
+            <>
+              <S.MenuBtn>
+                <FaPencilAlt size={28} color={modalMenu === 1 ? '#ff6700' : 'black'} onClick={() => menuChange(1)} />
+              </S.MenuBtn>
+              <S.MenuBtn>
+                <FaTimes size={28} color={modalMenu === 3 ? '#ff6700' : 'black'} onClick={() => menuChange(3)} />
+              </S.MenuBtn>
+            </>
+          ) : null}
+        </div>
       </Modal.Header>
       {modalBody}
     </Modal>
