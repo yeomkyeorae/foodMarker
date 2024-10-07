@@ -4,7 +4,7 @@
 
 ## 1. 데모 페이지🕹️
 
-<a href="https://food-marker-yeomkyeorae.koyeb.app/" target="_blank">😄 푸드마커 방문하기</a>
+<a href="https://food-marker-yeomkyeorae.koyeb.app/" target="_blank">😄 푸드마커 방문하기</a> (Unavailable now...)
 
 ## 2. 사용 기술 스택🖐
 
